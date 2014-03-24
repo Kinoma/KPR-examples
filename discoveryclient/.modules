@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modulepath>
+   <modulepathentry path="com.marvell.kinoma.kpr:/libraries/MobileFramework.zip" type="lib" kind="plugin"></modulepathentry>
+   <modulepathentry path="src" type="src"></modulepathentry>
+</modulepath>

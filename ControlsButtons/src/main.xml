@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2011-2014 Marvell Semiconductor, Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<program xmlns="http://www.kinoma.com/kpr/1">
+
+	<require id="THEME" path="themes/flat/theme"/>
+	<require id="BUTTONS" path="controls/buttons"/>
+
+    <container id="Background" left="0" top="0" right="0" bottom="0" skin="THEME.whiteSkin"/>
+	
+	<container id="MyButton" left="10" top="10" width="60" height="30" like="BUTTONS.Button">
+		<behavior like="BUTTONS.ButtonBehavior">
+            <method id="onTap"><![CDATA[
+            	trace("Button was tapped \n");               
+           ]]></method>
+        </behavior>
+	</container>                
+	
+    <container id="MyCheckbox" left="100" top="10" width="30" height="30" like="BUTTONS.Checkbox">    	
+		<behavior like="BUTTONS.CheckboxBehavior">
+            <method id="onSelected"><![CDATA[
+            	trace("Checkbox was selected \n");               
+           ]]></method>
+           <method id="onUnselected"><![CDATA[
+            	trace("Checkbox was unselected \n");               
+           ]]></method>
+        </behavior>
+	</container>                
+
+    <container id="MyRadio" left="150" top="10" width="30" height="30" like="BUTTONS.Radio">
+		<behavior like="BUTTONS.RadioBehavior">
+            <method id="onSelected"><![CDATA[
+            	trace("Radio was selected \n");               
+           ]]></method>
+           <method id="onUnselected"><![CDATA[
+            	trace("Radio was unselected \n");               
+           ]]></method>
+        </behavior>
+	</container>                
+
+	<container id="MyLabeledButton" right="10" top="10" width="90" height="30" like="BUTTONS.LabeledButton">
+		<behavior like="BUTTONS.LabeledButtonBehavior">
+            <method id="onTap"><![CDATA[
+            	trace("LabeledButton was tapped \n");               
+           ]]></method>
+        </behavior>
+	</container>                              
+	
+	<container id="MyLabeledCheckbox" left="10" top="60" width="90" height="30" like="BUTTONS.LabeledCheckbox">
+		<behavior like="BUTTONS.LabeledCheckboxBehavior">
+            <method id="onSelected"><![CDATA[
+            	trace("LabeledCheckbox was selected \n");               
+           ]]></method>
+           <method id="onUnselected"><![CDATA[
+            	trace("LabeledCheckbox was unselected \n");               
+           ]]></method>
+        </behavior>
+	</container>                              
+	
+	<container id="MyLabeledRadio" right="10" top="60" like="BUTTONS.LabeledRadio">
+		<behavior like="BUTTONS.LabeledRadioBehavior">
+            <method id="onSelected"><![CDATA[
+            	trace("LabeledRadio was selected \n");               
+           ]]></method>
+           <method id="onUnselected"><![CDATA[
+            	trace("LabeledRadio was unselected \n");               
+           ]]></method>
+        </behavior>
+	</container>                              
+	
+    <container id="MyRadioGroup" top="110" width="120" like="BUTTONS.RadioGroup">
+  		<behavior like="BUTTONS.RadioGroupBehavior">
+            <method id="onRadioButtonSelected" params="buttonName"><![CDATA[
+            	trace("Radio button named " + buttonName + " was selected \n");               
+           ]]></method>
+        </behavior>
+	</container>                              
+        
+    <script><![CDATA[
+    	var background = new Background;
+    	application.add( background );
+ 	
+		var myButton = new MyButton();
+		application.add( myButton );
+  		
+		var myCheckbox = new MyCheckbox();
+		application.add( myCheckbox );
+
+		var myRadio = new MyRadio();
+		application.add( myRadio );
+		
+		var myLabeledButton = new MyLabeledButton( { name : "Button"} );
+		application.add( myLabeledButton );
+ 		
+		var myLabeledCheckbox = new MyLabeledCheckbox( { name : "Checkbox"} );
+		application.add( myLabeledCheckbox );
+ 		
+		var myLabeledRadio = new MyLabeledRadio( { name : "Radio"} );
+		application.add( myLabeledRadio );
+ 		
+		var myRadioGroup = new MyRadioGroup( { buttonNames : "Red,Yellow ,Green,Blue,Purple,Orange", selected : "Green" } );
+		application.add( myRadioGroup );
+    ]]></script>
+</program>

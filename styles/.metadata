@@ -1,0 +1,14 @@
+<example 
+	id="com.marvell.kinoma.example.styles"
+	title="Styles"
+	project="Styles Example"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+	This example displays a vertical scrolling column of text formatted with a wide variety of styles. Usage of all the common text style attributes are demonstrated, including font, text style, point size, alignment, leading, color and margins.
+	]]></description>
+
+</example>

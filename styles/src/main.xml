@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2011-2014 Marvell Semiconductor, Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<program xmlns="http://www.kinoma.com/kpr/1">
+
+    <require path="themes/sample/theme" id="THEME"/>
+    <require path="mobile/scroller" id="SCROLLER"/>
+
+    <skin id="mainSkin" color="white"/>
+    
+    <skin id="debugSkin" color="#444"/>
+    <skin id="sampleSkin">
+		<borders left="0" top="0" right="0" bottom="1" color="gray"/>
+	</skin>
+
+    <style id="mainStyle" font="plain 24px Arial" color="black" align="left,middle"/>
+
+    <style id="titleStyle" font="plain 36px Arial" color="gray" align="center,middle"/>
+
+    <skin id="subtitleSkin" color="#888"/>
+    <style id="subtitleStyle" font="bold 16px" color="white" align="left,middle"/>
+    
+    <container id="Subtitle" skin="subtitleSkin" left="0" right="0" height="20">
+        <label style="subtitleStyle" left="4" right="4" top="4" bottom="4" string="$.string"/>
+    </container>
+
+    <label id="LabelSample" style="$.style" string="$.label" left="8" right="8" height="44"/>
+    <text id="TextSample" style="$.style" string="$.text" left="8" right="8" height="96"/>
+
+	<container id="StyleSamplerContainer" top="0" right="0" bottom="0" left="0" style="mainStyle" skin="mainSkin">
+		<scroller like="SCROLLER.VerticalScroller">
+			<column left="0" top="0" right="0">
+				<behavior>
+					<method id="onCreate" params="column, data"><![CDATA[
+                        var items = data.items;
+						for ( var i = 0, c = items.length; i < c; i++ ) {
+                            var item = items[i];
+
+                            if ('comment' in item) 
+                                column.add(new Subtitle({string: item.comment}));
+                            if ('label' in item)
+                                column.add(new LabelSample(item));
+                            if ('text' in item)
+                                column.add(new TextSample(item));
+						}
+					]]></method>	
+				</behavior>
+			</column>
+		</scroller>
+	</container>
+
+    <!-- Sampler Styles -->
+    <style id="fontSizeSample1" font="16px"/>
+    <style id="fontSizeSample2" font="32px"/>
+    <style id="fontSizeSample3" font="48px"/>
+     
+    <style id="fontStyleSample1" font="bold"/>
+    <style id="fontStyleSample2" font="italic"/>
+    <style id="fontStyleSample3" font="underline"/>
+     
+    <style id="colorSample1" color="red"/>
+    <style id="colorSample2" color="blue"/>
+    <style id="colorSample3" color="#e94"/>
+     
+    <style id="hAlignSample1" align="left"/>
+    <style id="hAlignSample2" align="center"/>
+    <style id="hAlignSample3" align="right"/>
+    <style id="hAlignSample4" align="justify"/>
+     
+    <style id="vAlignSample1" align="top"/>
+    <style id="vAlignSample2" align="middle"/>
+    <style id="vAlignSample3" align="bottom"/>
+
+    <style id="alignSampleMix" align="right,top"/>
+
+    <style id="indentationSample" indentation="40"/>
+    
+    <style id="leadingSample1" leading="24"/>
+    <style id="leadingSample2" leading="-10"/>
+
+    <style id="marginSample">
+        <margins left="20" right="20" top="10" bottom="10"/>
+    </style>
+
+    <script>
+        <![CDATA[
+            var sample = "The quick brown fox jumps over the lazy dog. ";
+            var long_sample = sample + sample + sample + sample + sample + sample;
+
+        	var data = {
+        		items: [
+                  {label:"Label Examples", style: titleStyle},
+
+                  {label:sample, comment: "font = 16px", style: fontSizeSample1},
+                  {label:sample, comment: "font = 32px", style: fontSizeSample2},
+                  {label:sample, comment: "font = 48px", style: fontSizeSample3},
+                  
+                  {label:sample, comment: "font = bold", style: fontStyleSample1},
+                  {label:sample, comment: "font = italic", style: fontStyleSample2},
+                  {label:sample, comment: "font = underline", style: fontStyleSample3},
+
+                  {label:"Red is the hot color.", comment: "color = red", style: colorSample1},
+                  {label:"Blue is always cool.", comment: "color = blue", style: colorSample2},
+                  {label:"Color can be CSS color.", comment: "color = #e94", style: colorSample3},
+                  
+        		  {label:"Left aligned text.", comment: "align = left", style: hAlignSample1},
+        		  {label:"Center aligned text.", comment: "align = center", style: hAlignSample2},
+        		  {label:"Right aligned text.", comment: "align = right", style: hAlignSample3},
+        		  {label:"Left and right justified text.", comment: "align = justify", style: hAlignSample4},
+
+                  {label:"Top aligned text.", comment: "align = top", style: vAlignSample1},
+                  {label:"Middle aligned text.", comment: "align = middle", style: vAlignSample2},
+                  {label:"Bottom aligned text.", comment: "align = bottom", style: vAlignSample3},
+
+                  {label:"Top and right aligned text.", comment: "align = right,top", style: alignSampleMix},
+
+                  {label:sample, comment: "indentation = 20", style: indentationSample},
+
+                  {label:sample, comment: "margins left=10 right=10 top=10 bottom=10", style: marginSample},
+
+                  {label:"Text Examples", style: titleStyle},
+
+                  {text:sample, comment: "font = 16px", style: fontSizeSample1},
+                  {text:sample, comment: "font = 32px", style: fontSizeSample2},
+                  {text:sample, comment: "font = 48px", style: fontSizeSample3},
+                  
+                  {text:long_sample, comment: "font = bold", style: fontStyleSample1},
+                  {text:long_sample, comment: "font = italic", style: fontStyleSample2},
+                  {text:long_sample, comment: "font = underline", style: fontStyleSample3},
+
+                  {text:"Red is the hot color. " + long_sample, comment: "color = red", style: colorSample1},
+                  {text:"Blue is always cool. " + long_sample, comment: "color = blue", style: colorSample2},
+                  {text:"Color can be CSS color. " + long_sample, comment: "color = #e94", style: colorSample3},
+                  
+                  {text:"Left aligned text. " + long_sample, comment: "align = left", style: hAlignSample1},
+                  {text:"Center aligned text. " + long_sample, comment: "align = center", style: hAlignSample2},
+                  {text:"Right aligned text. " + long_sample, comment: "align = right", style: hAlignSample3},
+                  {text:"Left and right justified text. " + long_sample, comment: "align = justify", style: hAlignSample4},
+
+                  {text:long_sample, comment: "indentation = 40", style: indentationSample},
+
+                  {text:long_sample, comment: "leading = 24", style: leadingSample1},
+                  {text:long_sample, comment: "leading = -10", style: leadingSample2},
+                  
+                  {text:long_sample, comment: "margins left=20 right=20 top=10 bottom=10", style: marginSample},
+        		]
+        	};
+        	application.add(new StyleSamplerContainer(data));
+        ]]>
+    </script>
+</program>
