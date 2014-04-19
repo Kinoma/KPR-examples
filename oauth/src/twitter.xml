@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2011-2014 Marvell Semiconductor, Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<module xmlns="http://www.kinoma.com/kpr/1">
+	<require path="oauth" id="OAUTH"/>
+	
+	<script><![CDATA[
+	
+	var CONSUMER_KEY = 'Your consumer key goes here';
+	var CONSUMER_SECRET = 'Your consumer secret goes here';
+    
+	// Setup consumer key and secret for Twitter application
+	var authorizer = new OAUTH.OAuth1.Authorizer(CONSUMER_KEY, CONSUMER_SECRET);
+	
+	var BaseURL = 'https://api.twitter.com';
+	var CallbackUrl = "kinoma://twitter/oauth";
+	
+	var RequestTokenURL = "https://api.twitter.com/oauth/request_token";
+	var AuthorizeURL = "https://api.twitter.com/oauth/authorize";
+	var AccessTokenURL = "https://api.twitter.com/oauth/access_token";
+	
+	var UserInfoURL = 'https://api.twitter.com/1.1/account/verify_credentials.json';
+
+	var checkCredentialsValid = function() {
+		if (CONSUMER_KEY.indexOf("Your consumer key goes here") >= 0) return false;
+		if (CONSUMER_SECRET.indexOf("Your consumer secret goes here") >= 0) return false;
+		return true;
+	};
+	exports.checkCredentialsValid = checkCredentialsValid;
+
+	var fetchRequestTokenMessage = function() {
+		var message = new Message(RequestTokenURL);
+		message.method = "POST";
+		message.requestText = "";
+		
+		authorizer.authorize(message, null, {
+			"oauth_callback": CallbackUrl,
+		});
+		
+		return message;
+	}
+	exports.fetchRequestTokenMessage = fetchRequestTokenMessage;
+
+	var gotRequestToken = function(session, response) {
+		var token = OAUTH.parseTokenResponse(response);
+		
+		session.requestToken = token;
+	}
+	exports.gotRequestToken = gotRequestToken;
+
+	var authorizePageUrl = function(session) {
+		var params = {
+			oauth_token: session.requestToken.token
+		};
+	
+		return AuthorizeURL + "?" + serializeQuery(params);
+	}
+	exports.authorizePageUrl = authorizePageUrl;
+
+	var gotAuthorizeResponse = function(session, query) {
+		if ('denied' in query) return false;
+		
+		session.verifier = query.oauth_verifier;
+		return true;
+	};
+	exports.gotAuthorizeResponse = gotAuthorizeResponse;
+
+	var fetchAccessTokenMessage = function(session) {
+		var message = new Message(AccessTokenURL);
+		message.method = "POST";
+		var body = serializeQuery({
+			oauth_verifier: session.verifier
+		});
+		message.requestText = body;
+		message.setRequestHeader("Content-Length", body.length);
+		
+		authorizer.authorize(message, session.requestToken);
+		
+		return message;
+	}
+	exports.fetchAccessTokenMessage = fetchAccessTokenMessage;
+
+	var gotAccessToken = function(response) {
+		return OAUTH.parseTokenResponse(response);
+	}
+	exports.gotAccessToken = gotAccessToken;
+
+	var userInfoMessage = function(accessToken) {
+		var message = new Message(UserInfoURL);
+		message.method = "GET";
+		message.requestText = "";
+		
+		authorizer.authorize(message, accessToken);
+		
+		return message;
+	}
+	exports.userInfoMessage = userInfoMessage;
+	
+	]]></script>
+</module>

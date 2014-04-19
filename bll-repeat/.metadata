@@ -1,0 +1,14 @@
+<example 
+	id="com.marvell.kinoma.sampleBllRepeat"
+	title="Sample BLL Repeat"
+	project="Sample BLL Repeat"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+		A sample that demonstrates how to repeatedly run a Kinoma Blinking Light Library (BLL).  This is useful when, for instance, polling a sensor.  The example calls a BLL that traces to the console 10 times and the stops the repetition.
+	]]></description>
+
+</example>
