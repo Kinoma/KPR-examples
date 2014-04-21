@@ -20,7 +20,7 @@
 	<require path="mobile/scroller" id="SCROLLER"/>
 	<require path="mobile/transition" id="MTRANSITION"/>
 	<require path="mobile/keyboard" id="KEYBOARD"/>
-    <require path="mobile/dialog" id="DIALOG"/>
+	<require path="mobile/dialog" id="DIALOG"/>
 	<require path="mobile/model" id="MODEL"/>
 	<require path="mobile/screen" id="SCREEN"/>
 	<require path="mobile/tool" id="TOOL"/>

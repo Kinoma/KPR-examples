@@ -31,12 +31,12 @@ SpriteBehavior.prototype = Object.create( Object.prototype,
 {
 	x01				: { value: 0.5, writable: true },
 	y01				: { value: 0.5, writable: true },
-	index 			: { value: 0.5, writable: true },
-	mode 			: { value: 0, writable: true },
-	frequency 		: { value: 5, writable: true },
-	t1cycle  		: { value: 0.0, writable: true },
-	dtcycle  		: { value: dtcycle, writable: true },
-	tcycleoffset 	: { value: 0.0, writable: true },
+	index			: { value: 0.5, writable: true },
+	mode			: { value: 0, writable: true },
+	frequency		: { value: 5, writable: true },
+	t1cycle			: { value: 0.0, writable: true },
+	dtcycle			: { value: dtcycle, writable: true },
+	tcycleoffset	: { value: 0.0, writable: true },
 	radius01		: { value: 0.0, writable: true },
 
 	onDisplaying: {

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 <program xmlns="http://www.kinoma.com/kpr/1">
-    
+
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!-- ASSETS -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
@@ -36,7 +36,7 @@
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
 	<behavior id="ToggleSwitchBehavior">
-        <method id="onCreate" params="port, data"><![CDATA[
+		<method id="onCreate" params="port, data"><![CDATA[
 			this.onOff = data.onOff;
 			this.switchForeground = toggleSwitchForegroundTexture;
 			this.switchBackground = toggleSwitchBackgroundTexture;
@@ -47,7 +47,7 @@
 			this.$capturing = false;
 			this.$touchMovedOffset = 15;
 		]]></method>
-        <method id="onTouchBegan" params="port, id, x, y, ticks"><![CDATA[
+		<method id="onTouchBegan" params="port, id, x, y, ticks"><![CDATA[
 			if (port.running) {
 				port.stop();
 				port.time = port.duration;
@@ -57,10 +57,10 @@
 			this.$touched = true;
 			port.invalidate();
 		]]></method>
-        <method id="onTouchCancelled" params="port, id, x, y, ticks"><![CDATA[
+		<method id="onTouchCancelled" params="port, id, x, y, ticks"><![CDATA[
 			this.$touched = false;
 		]]></method>
-        <method id="onTouchMoved" params="port, id, x, y, ticks"><![CDATA[
+		<method id="onTouchMoved" params="port, id, x, y, ticks"><![CDATA[
 			if (this.$capturing)
 				this.$offset = this.constraint(port, this.$delta - x);
 			else if (Math.abs(x - this.$anchor) >= this.$touchMovedOffset) {
@@ -70,7 +70,7 @@
 			}
 			port.invalidate();
 		]]></method>
-        <method id="onTouchEnded" params="port, id, x, y, ticks"><![CDATA[
+		<method id="onTouchEnded" params="port, id, x, y, ticks"><![CDATA[
 			var offset = this.$offset;
 			var size = this.$size;
 			var delta = size >> 1;
@@ -97,12 +97,12 @@
 				this.onFinished(port);
 			port.invalidate();
 		]]></method>
-        <method id="onTimeChanged" params="port"><![CDATA[
+		<method id="onTimeChanged" params="port"><![CDATA[
 			var fraction = port.fraction;
 			this.$offset = this.$anchor + Math.round(this.$delta * fraction);
 			port.invalidate();
 		]]></method>
-        <method id="onFinished" params="port"><![CDATA[
+		<method id="onFinished" params="port"><![CDATA[
 			this.$touched = false;
 			this.$capturing = false;
 			
@@ -113,17 +113,17 @@
 				
 			this.onSwitchChanged(port, this.onOff);
 		]]></method>
-        <method id="onSwitchChanged" params="port, onOff"><![CDATA[
+		<method id="onSwitchChanged" params="port, onOff"><![CDATA[
 			debugger
 		]]></method>
-        <method id="constraint" params="port, offset"><![CDATA[
+		<method id="constraint" params="port, offset"><![CDATA[
 			if (offset < 0)
 				offset = 0;
 			else if (offset > this.$size)
 				offset = this.$size;
 			return offset;
 		]]></method>
-        <method id="onDraw" params="port, x, y, width, height"><![CDATA[
+		<method id="onDraw" params="port, x, y, width, height"><![CDATA[
 			port.pushClip();
 			port.intersectClip(x + 6, y + 6, width - 12, height - 12);
 			port.drawImage(this.switchBackground, x - this.$offset, y, width + this.$size, height, 
@@ -138,18 +138,18 @@
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
 	<container id="MainContainer" left="0" right="0" top="0" bottom="0">
-        <port anchor="BODY" left="0" right="0" top="0" bottom="60" style="labelStyle">
+		<port anchor="BODY" left="0" right="0" top="0" bottom="60" style="labelStyle">
 			<behavior>
-		        <method id="onCreate" params="port, data"><![CDATA[
-		        	this.data = data;
+				<method id="onCreate" params="port, data"><![CDATA[
+					this.data = data;
 				]]></method>
-		        <method id="onDraw" params="port, x, y, width, height"><![CDATA[
-		        	port.fillColor( "black", x, y, width, height );
-		        	port.drawLabel( "off" == this.data.onOff ? "Off" : "On" , x, y, width, height );
+				<method id="onDraw" params="port, x, y, width, height"><![CDATA[
+					port.fillColor( "black", x, y, width, height );
+					port.drawLabel( "off" == this.data.onOff ? "Off" : "On" , x, y, width, height );
 				]]></method>
-	        </behavior>
-        </port>
-        <container anchor="FOOTER" left="0" right="0" bottom="0" height="60" skin="footerSkin">
+			</behavior>
+		</port>
+		<container anchor="FOOTER" left="0" right="0" bottom="0" height="60" skin="footerSkin">
 			<port width="toggleSwitchForegroundTexture.width" height="toggleSwitchForegroundTexture.height" active="true">
 				<behavior like="ToggleSwitchBehavior">
 					<method id="onCreate" params="port, data"><![CDATA[
@@ -162,15 +162,15 @@
 					]]></method>
 				</behavior>
 			</port>
-        </container>
+		</container>
 	</container>
-    
+
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!-- SCRIPTS -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 	
-    <script><![CDATA[
-		application.add( new MainContainer( { onOff: "off" } )); 
+	<script><![CDATA[
+		application.add( new MainContainer( { onOff: "off" } ));
 	]]></script>
-    
+
 </program>

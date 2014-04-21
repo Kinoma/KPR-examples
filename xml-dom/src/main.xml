@@ -124,12 +124,12 @@
 <!-- SCRIPTS -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 	
-    <script><![CDATA[
-    	var data = {
-    		location: "Del Mar",
-    		attribution: "openweathermap.org"
-    	};
-		application.add( new MainContainer( data ) ); 
+	<script><![CDATA[
+		var data = {
+			location: "Del Mar",
+			attribution: "openweathermap.org"
+		};
+		application.add( new MainContainer( data ) );
 	]]></script>
-    
+	
 </program>

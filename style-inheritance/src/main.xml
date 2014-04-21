@@ -49,7 +49,7 @@
   <label id="Sample" left="4" right="4" top="4" string="sample"/>
   <label id="Caption" style="captionStyle" left="4" right="4" bottom="4"/>
 
-	<container id="MainContainer" left="0" right="0" top="20" bottom="0" skin="level1Skin">
+  <container id="MainContainer" left="0" right="0" top="20" bottom="0" skin="level1Skin">
     <label like="Sample"/>
     <label like="Caption" string="'application style'"/>
 
@@ -90,8 +90,8 @@
         </container>
       </column>
     </container>
-	</container>
-    
+  </container>
+
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!-- SCRIPTS -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
@@ -103,8 +103,8 @@
 
           application.style = baseStyle;
 
-        	application.add( new MainContainer({applicationStyle: application.style})); 
+          application.add( new MainContainer({applicationStyle: application.style}));
         ]]>
     </script>
-    
+
 </program>
