@@ -9,11 +9,6 @@ body{
     line-height: 1.42857;
 }
 
-
-.container {
-	
-}
-
 #main_content {
     padding-top: 60px;
 }
@@ -198,6 +193,7 @@ h1, h2, h3, h4, h5, h6 {
     float: none; 
     width: auto;
     overflow: hidden;
+	font-size: 15px;
 }
 
 .btn-xs, .btn-group-xs > .btn {
@@ -238,3 +234,202 @@ h1, h2, h3, h4, h5, h6 {
     border-color: #ADADAD;
     color: #333333;
 }
+
+.navbar-inverse.kinomaGreen {
+    background-image: linear-gradient(to bottom, #9BE43C 0px, #507633 100%);
+}
+
+.colorWhite {
+    color:white;
+}
+
+.header-icon {
+    float: left;
+    height: 70px;
+    margin: 10px 12px 10px 10px;
+    width: 70px;
+}
+
+#forkme_banner {
+    background: url("images/blacktocat.png") no-repeat scroll 95% 50% #0090FF;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    color: #FFFFFF;
+    display: block;
+    float: right;
+    font-weight: 700;
+    padding: 10px 50px 10px 10px;
+    top: 0;
+    z-index: 10;
+}
+
+.navbar-header h2 {
+    font-weight: 300;
+	margin-top: -10px;
+	letter-spacing: -0.05px;
+	font-size: 22px;
+}
+
+.navbar-header {
+    float: none;
+}
+
+.mainContent {
+	margin-top: 120px;
+}
+
+.promoImg {
+	vertical-align: top;
+	margin-right: 10px;
+}
+
+.promoTitle {
+	font-weight: 700;
+	font-size: 24px;
+}
+
+.infoPane {
+	color: #666;
+}
+
+hr {
+	padding-bottom: 10px;
+	margin-top: 14px;
+}
+
+h1.headerTitle {
+	margin-top:12px;
+	background-position: no-repeat;
+}
+
+.reproTilte {
+	color: #1378b3;
+	font-weight:bold;
+}
+
+a.list-group-item {
+    line-height: 1.2em;
+}
+
+/* new */
+
+#downloads {
+  position: absolute;
+  width: 210px;
+  z-index: 10;
+  bottom: -33px;
+  right: 0;
+  height: 70px;
+  background: url('images/icon_download.png') no-repeat 0% 90%;
+}
+
+.zip_download_link {
+  display: block;
+  float: right;
+  width: 90px;
+  height:70px;
+  text-indent: -5000px;
+  overflow: hidden;
+  background: url('images/sprite_download.png') no-repeat bottom left;
+}
+
+.tar_download_link {
+  display: block;
+  float: right;
+  width: 90px;
+  height:70px;
+  text-indent: -5000px;
+  overflow: hidden;
+  background: url('images/sprite_download.png') no-repeat bottom right;
+  margin-left: 10px;
+}
+
+.zip_download_link:hover {
+  background: url('images/sprite_download.png') no-repeat top left;
+}
+
+.tar_download_link:hover {
+  background: url('images/sprite_download.png') no-repeat top right;
+}
+
+.navbar-header {
+    position: relative;
+}
+
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+dl dt {
+  font-weight: bold;
+}
+
+dl p {
+  padding-left: 20px;
+  font-style: italic;
+}
+
+
+
+dl dd {
+    padding-left: 0px;
+}
+
+
+
+/*******************************************************************************
+Small Device Styles
+*******************************************************************************/
+
+@media screen and (max-width: 480px) {
+  body {
+    font-size:14px;
+  }
+
+  #downloads {
+    display: none;
+  }
+
+  .inner {
+    min-width: 320px;
+    max-width: 480px;
+  }
+
+  #project_title {
+  font-size: 32px;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  h3 {
+    font-size: 21px;
+  }
+
+  h4 {
+    font-size: 18px;
+  }
+
+  h5 {
+    font-size: 14px;
+  }
+
+  h6 {
+    font-size: 12px;
+  }
+
+  code, pre {
+    min-width: 320px;
+    max-width: 480px;
+    font-size: 11px;
+  }
+
+}
+
