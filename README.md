@@ -288,4 +288,4 @@ This example demonstrates how to issue an HTTP request to the Open Weather Map s
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
-This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+These examples released under the <a href="http://www.apache.org/licenses/LICENSE-2.0.html" rel="license">Apache Foundation</a> license.
