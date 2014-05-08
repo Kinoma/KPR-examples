@@ -47,7 +47,7 @@
 	<handler path="/flickr/top100">
 		<behavior>
 			<method id="onInvoke" params="handler, message"><![CDATA[
-				var uri = "http://api.flickr.com/services/feeds/groups_pool.gne?" + serializeQuery( { id: "80641914@N00", format: "json", nojsoncallback: 1 } );
+				var uri = "https://api.flickr.com/services/feeds/groups_pool.gne?" + serializeQuery( { id: "80641914@N00", format: "json", nojsoncallback: 1 } );
 				handler.invoke( new Message( uri ), Message.JSON );
 			]]></method>	
 			<method id="onComplete" params="handler, message, json"><![CDATA[
