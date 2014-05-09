@@ -1,11 +1,11 @@
 <example 
-	id="com.marvell.kinoma.example.project3d”
-	title=“Project 3D”
-	project=“Project 3D”
+	id="com.marvell.kinoma.example.project3d"
+	title="Project 3D"
+	project="Project 3D"
 	resources="application.xml" 
 	tags=""
 	type="application" 
-	category="com.marvell.kinoma.examples.starter”>
+	category="com.marvell.kinoma.examples.starter">
 
 	<description><![CDATA[
 	This example demonstrates how to use the projectImage function of the port object.
