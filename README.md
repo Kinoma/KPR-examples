@@ -150,6 +150,14 @@ This example demonstrates how to use a mobile framework menu button. The menu bu
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### multitouch-picture
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/multitouch-picture"><img src="http://kinoma.github.io/KPR-examples/images/multitouch-picture-example.jpg" height="100" alt=""/></a>
+					
+This example demonstrates how to use features of the MultiTouch Library to create an interactive image viewer suitable for selecting a cropping area from an image. The image may be panned, zoomed, rotated, tossed, with some animated constraints applied. Interactive gestures include tapping, press and hold, drag, toss, and two finger pinching. The sample's comments discuss the framework used including the TouchStateMachine, and TouchBehavior.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### oauth
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/oauth"><img src="http://kinoma.github.io/KPR-examples/images/oauth-example.jpg" height="100" alt=""/></a>
 					
