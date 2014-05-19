@@ -94,6 +94,14 @@ This mobile framework example demonstrates how to build and apply a variety of e
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### file-explorer
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/file-explorer"><img src="http://kinoma.github.io/KPR-examples/images/file-explorer-example.jpg" height="100" alt=""/></a>
+
+This mobile framework example demonstrates how to use the global KPR Files object to iterate local files and directories. The application displays the results in a scrolling list view and provides for deep browsing into nested directories. In addition, previews are supported for image, audio and video files. This example is useful for understanding how to use the Files iterator to iterate over a directory, distinguish between file and directory results, command and screen handler behaviors and building scrolling list based views.
+
+<div style="clear:both; margin-bottom: 16px;"></div>
+***
+
 ### flickr-grid
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/flickr-grid"><img src="http://kinoma.github.io/KPR-examples/images/flickr-example.jpg" height="100" alt=""/></a>
 
