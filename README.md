@@ -281,6 +281,14 @@ This mobile framework example demonstrates how to use the ECMAScript API to get 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### tiled-skins
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/tiled-skins"><img src="http://kinoma.github.io/KPR-examples/images/tiled-skins-example.jpg" height="100" alt=""/></a>
+
+This example demonstrates how to use tiled skins to fill content. Examples of nine part and three part horizontal/vertical tiled skins are provided. The nine part container is a button that changes color (state) when tapped. Additionally this example shows how to use a layer to display rotated text.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### timers
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/timers"><img src="http://kinoma.github.io/KPR-examples/images/timers-example.jpg" height="100" alt=""/></a>
 
