@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2011-2014 Marvell Semiconductor, Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<program xmlns="http://www.kinoma.com/kpr/1">
+	<require path="themes/sample/theme" id="THEME"/>
+	<require path="mobile/control" id="CONTROL"/>
+	<require path="mobile/model" id="MODEL"/>
+	<require path="mobile/screen" id="SCREEN"/>
+	<require path="mobile/scroller" id="SCROLLER"/>
+	
+	<require path="./balls" id="BALLS"/>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- ASSETS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<skin id="whiteSkin" color="white"/>
+	<skin id="separatorSkin" color="silver"/>
+
+	<texture id="tabTexture" small="assets/tabs.png"/>
+	<variable id="tabSkin" value="new CONTROL.Skin(tabTexture, THEME.tabDisabledEffect, THEME.tabEnabledEffect, THEME.tabSelectedEffect)"/>
+	<texture id="ballsTexture" small="./assets/balls.png"/>
+	<skin id="ballsSkin" texture="ballsTexture" x="0" y="0" width="30" height="30">
+		<variants offset="30"/>
+	</skin>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- STYLES -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<style id="itemNameStyle" font="bold" lines="1"/>
+	<style id="headerTitleStyle" font="bold 24px" align="middle,center" lines="1"/>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- HANDLERS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<handler path="/main">
+		<behavior like="MODEL.ScreenBehavior"><![CDATA[
+			function hasSelection(data, delta) {
+				var tab = data.tabs[data.selection];
+				var selection = tab.selection + delta;
+				return (0 <= selection) && (selection < tab.items.length)
+			}
+			function getSelection(data, delta) {
+				var tab = data.tabs[data.selection];
+				var selection = tab.selection + delta;
+				return tab.items[selection];
+			}
+			function onDescribe(query, selection) {
+				return {
+					Screen: MainScreen,
+					selection: 0,
+					skin: tabSkin,
+					tabs: [
+						{
+							Header: Header,
+							Pane: ListPane,
+							items: [
+								{name: "Brian", variant: 0},
+								{name: "Debbie", variant: 1},
+								{name: "Colin", variant: 2},
+								{name: "Kaitlyn", variant: 3},
+							],
+							more: false,
+							scroll: {x: 0, y:0},
+							selection: -1,
+							variant: 2,
+							title: "List",
+						},
+						{
+							Header: Header,
+							Pane: GridPane,
+							items: null,
+							more: false,
+							scroll: {x: 0, y:0},
+							selection: -1,
+							variant: 0,
+							title: "Grid",
+						},
+						{
+							Header: Header,
+							Pane: BallsPane,
+							scroll: {x: 0, y:0},
+							selection: -1,
+							variant: 1,
+							title: "Balls",
+						},
+					],
+				};
+			}
+		]]></behavior>
+	</handler>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- LAYOUTS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   
+	<line id="Header" like="SCREEN.EmptyHeader">
+		<label anchor="TITLE" left="0" right="0" top="0" bottom="0" style="headerTitleStyle" string="$.title"/>
+	</line>
+	
+	<container id="Body" like="SCREEN.EmptyBody" skin="whiteSkin"/>
+
+	<line id="ListItemLine" left="0" right="0" active="true" skin="THEME.lineSkin">
+		<behavior like="SCREEN.ListItemBehavior"><![CDATA[
+			function onTouchEnded(line, id, x, y, ticks) {
+				this.onTouchCancelled(line, id, x, y, ticks);
+			}
+		]]></behavior>
+		<column left="0" right="0">
+			<line left="0" right="0" height="1" skin="separatorSkin"/>
+			<line left="2" right="2" height="52">
+				<content width="40" height="40" skin="ballsSkin" variant="$.variant"/>
+				<text left="4" right="0">
+					<block style="itemNameStyle" string="$.name"/>
+				</text>
+			</line>
+		</column>
+	</line>
+
+	<container id="ListPane" like="Body">
+		<scroller like="SCROLLER.VerticalScroller">
+			<column anchor="LIST" left="0" right="0" top="0">
+				<behavior like="SCREEN.ListBehavior"><![CDATA[
+					function addItemLine(list, item) {
+						list.add(new ListItemLine(item));
+					}
+				]]></behavior>
+			</column>
+			<content like="SCROLLER.VerticalScrollbar"/>
+			<content like="SCROLLER.TopScrollerShadow"/>
+			<content like="SCROLLER.BottomScrollerShadow"/>
+		</scroller>
+	</container>
+	
+	<container id="PhotoCell" left="0" width="$.width" top="0" height="$.height" active="true">
+		<thumbnail left="2" right="2" top="2" bottom="2" url="$.media.m"/>
+	</container>
+
+	<variable id="thumbnailWidth" value="100"/>
+	<variable id="thumbnailHeight" value="100"/>
+
+	<container id="GridPane" like="Body">
+		<scroller like="SCROLLER.VerticalScroller">
+			<layout anchor="LIST" left="0" right="0" top="0" active="true">
+				<behavior like="SCREEN.ListBehavior">
+					<method id="addLines" params="list, items, more"><![CDATA[
+						var c = Math.floor( application.width / thumbnailWidth );
+						var width = Math.floor( application.width / c );
+						if ( width & 1 ) width--;
+						var c = items.length;
+						for ( var i = 0; i < c; i++ ) {
+							var photo = items[ i ];
+							photo.width = width;
+							var height = width;
+							if ( height & 1 ) height--;
+							photo.height = height;
+							list.add( new PhotoCell( photo ) );
+						}
+						list.adjust();
+					]]></method>
+					<method id="createMessage" params="list, data"><![CDATA[
+						var url = "https://api.flickr.com/services/feeds/groups_pool.gne?" + serializeQuery( { id: "80641914@N00", format: "json", nojsoncallback: 1 } );
+						return new Message( url );
+					]]></method>
+					<method id="getItems" params="list, message, result"><![CDATA[
+						return ( result && ( "items" in result ) ) ? result.items : null;
+					]]></method>
+					<method id="onMeasureHorizontally" params="container"><![CDATA[
+						var total = application.width;
+						
+						var c = Math.floor( total / thumbnailWidth );
+						var width = Math.floor( total / c );
+						if ( width & 1 ) width--;
+						var dx = ( application.width - ( c * width ) ) >> 1;
+						var coordinates = { left:0, width: width, top:0, height: 0 };
+						var xs = new Array( c );
+						var ys = new Array( c );
+						for ( var i = 0; i < c; i++ ) {
+							xs[ i ] = dx + ( i * width );
+							ys[ i ] = dx;
+						}
+						var content = container.first;
+						var items = this.data.items;
+						if ( items ) {
+							var index = 0;
+							var count = items.length;
+							while ( content && ( index < count ) ) {
+								var photo = items[ index ];
+								var min = 0x7FFFFFFF;
+								var j = 0;
+								for ( var i = 0; i < c; i++ ) {
+									var y = ys[ i ];
+									if ( y < min ) {
+										min = y;
+										j = i;
+									}
+								}
+								coordinates.left = xs[ j ];
+								coordinates.top = min;
+								coordinates.height = thumbnailHeight;
+								if ( coordinates.height & 1 ) coordinates.height--;
+								content.coordinates = coordinates;
+								ys[ j ] = min + coordinates.height;
+								content = content.next;
+								index++;
+							}
+						}
+						var max = 0;
+						for ( var i = 0; i < c; i++ ) {
+							var y = ys[ i ];
+							if ( y > max )
+								max = y;
+						}
+						if ( content ) {
+							coordinates.left = 0;
+							coordinates.right = 0;
+							coordinates.top = max;
+							coordinates.height = 50;
+							content.coordinates = coordinates;
+							max += coordinates.height;
+						}
+						this.max = max;
+						return total;
+					]]></method>
+					<method id="onMeasureVertically" params="container"><![CDATA[
+						return this.max;
+					]]></method>
+				</behavior>
+			</layout>
+			<content like="SCROLLER.VerticalScrollbar"/>
+			<content like="SCROLLER.TopScrollerShadow"/>
+			<content like="SCROLLER.BottomScrollerShadow"/>
+		</scroller>
+	</container>
+	
+	<container id="BallsPane" like="Body">
+		<behavior><![CDATA[
+			function onCreate(container, data) {
+				BALLS.build(container);
+			}
+		]]></behavior>
+	</container>
+
+	<container id="MainScreen" like="SCREEN.EmptyScreen">
+		<container anchor="BODY" like="$.tabs[$.selection].Pane" with="$.tabs[$.selection]"/>
+		<line anchor="FOOTER" like="SCREEN.TabFooter"/>
+		<container anchor="HEADER" like="$.tabs[$.selection].Header" with="$.tabs[$.selection]"/>
+	</container>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- SCRIPTS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	
+	<script><![CDATA[
+		var model = application.behavior = new MODEL.ApplicationBehavior(application);
+	]]></script>
+    
+</program>
