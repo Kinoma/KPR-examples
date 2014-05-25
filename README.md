@@ -273,6 +273,14 @@ This example demonstrates how KPR cascades styles in the container hierarchy. A 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### tabs
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/tabs"><img src="http://kinoma.github.io/KPR-examples/images/tabs.jpg" height="100" alt=""/></a>
+					
+This mobile framework example demonstrates how to build a tabbed UI screen. Each tab opens a different style pane. The tabs are placed in the screen footer area and built using the mobile framework screen's TabFooter object and skinned using the default sample theme tab skins. The tab-to-tab transition is managed by the mobile framework TabListSwapTransition. You can customize the tab look and behaviors by replacing and/or overriding these objects. For example, you can use the mobile framework screen's TabLine object to implement a tab bar that can be placed anywhere on the screen and without icons.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### text
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/text"><img src="http://kinoma.github.io/KPR-examples/images/text-example.jpg" height="100" alt=""/></a>
 
