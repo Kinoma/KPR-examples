@@ -231,19 +231,19 @@
 		]]></behavior>
 	</container>
 
-	<container id="Header" like="SCREEN.EmptyHeader">
+	<container id="Header" like="SCREEN.EmptyHeader" skin="blackSkin">
 		<container like="TOOL.BackButton"/>
 		<scroller like="TOOL.HeaderTitle" style="THEME.plainHeaderTitleStyle"/>
 	</container>
 
-	<container id="Footer" like="SCREEN.EmptyFooter" active="true">
+	<container id="Footer" like="SCREEN.EmptyFooter" skin="blackSkin">
 		<line top="0" bottom="0">
 			<container like="TOOL.PreviousButton"/>
 			<container like="TOOL.NextButton"/>
 		</line>
 	</container>
 
-	<container id="DirectoryScreen" like="SCREEN.EmptyScreen" skin="blackSkin">
+	<container id="DirectoryScreen" like="SCREEN.EmptyScreen">
 		<container anchor="BODY" like="SCREEN.EmptyBody" skin="whiteSkin">
 			<scroller like="SCROLLER.VerticalScroller">
 				<column anchor="LIST" left="0" right="0" top="0" behavior="FileListBehavior"/>
@@ -278,7 +278,7 @@
 					container.remove(this.data.BUSY);
 				}
 				function matchExtension(extension) {
-					return this == extension;
+					return this.toLowerCase() == extension;
 				}
 			]]></behavior>
 			<content anchor="BUSY" skin="THEME.busySkin" behavior="CONTROL.BusyBehavior"/>
@@ -287,7 +287,7 @@
 		<container anchor="FOOTER" like="Footer"/>
 	</container>
 
-	<container id="MainScreen" like="SCREEN.EmptyScreen" skin="blackSkin">
+	<container id="MainScreen" like="SCREEN.EmptyScreen">
 		<container anchor="BODY" like="SCREEN.EmptyBody" skin="whiteSkin">
 			<scroller like="SCROLLER.VerticalScroller">
 				<column anchor="LIST" left="0" right="0" top="0" behavior="FileListBehavior"/>
