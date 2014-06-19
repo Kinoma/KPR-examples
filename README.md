@@ -150,6 +150,14 @@ Uses Canvas 2D to implement a virtual hypotrochoid device. Custom sliders contro
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### media-library
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/media-library"><img src="http://kinoma.github.io/KPR-examples/images/media-library-example.jpg" height="100" alt=""/></a>
+					
+This mobile framework application demonstrates how to access the core media library on iOS, Android and Mac OS platforms to display photos and play media files. The application uses a tabbed view to display photo/video thumbnails and songs. Tapping a media item opens a dedicated media viewer screen. KPR messages are used to request the media items. Note that media library support is not currently available for Kinoma Create or Windows.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### menu-button
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/menu-button"><img src="http://kinoma.github.io/KPR-examples/images/menu-button-example.jpg" height="100" alt=""/></a>
 					
