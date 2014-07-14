@@ -1,0 +1,14 @@
+<example 
+	id="com.marvell.kinoma.example.websocketserver"
+	title="WebSocket Server"
+	project="WebSocket Server"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+	This application demonstrates how to implement a web socket server in KPR. Coupled with the websocket-client example, this application implements a web socket based chat server. The client discovers and connects to the server using SSDP. Once the connection is established, the client exchanges text messages with the server. This application is useful for understanding how to build a web socket server and use KPR Text and Scroller objects to display a scrolling list of messages.
+	]]></description>
+
+</example>
