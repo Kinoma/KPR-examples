@@ -321,6 +321,22 @@ This example demonstrates how to use the Transitions library to configure and us
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### websocket-client
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/websocket-client"><img src="http://kinoma.github.io/KPR-examples/images/websocket-client-example.jpg" height="100" alt=""/></a>
+					
+This mobile framework application demonstrates how to implement a web socket client in KPR. Coupled with the websocket-server example, this application implements a web socket based chat client. The client discovers and connects to the server using SSDP and exchanges text messages with the server. This application is useful for understanding how to integrate web sockets, use SSDP to discover server devices, build UIs with editable text fields and transitions.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### websocket-server
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/websocket-server"><img src="http://kinoma.github.io/KPR-examples/images/websocket-server-example.jpg" height="100" alt=""/></a>
+					
+This application demonstrates how to implement a web socket server in KPR. Coupled with the websocket-client example, this application implements a web socket based chat server. The client discovers and connects to the server using SSDP. Once the connection is established, the client exchanges text messages with the server. This application is useful for understanding how to build a web socket server and use KPR Text and Scroller objects to display a scrolling list of messages.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### xml-dom
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/xml-dom"><img src="http://kinoma.github.io/KPR-examples/images/xml-dom-example.jpg" height="100" alt=""/></a>
 
