@@ -241,10 +241,7 @@ Photo images are fetched from a Flickr feed using a proxy handler which returns 
 ### slideshow
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/slideshow"><img src="http://kinoma.github.io/KPR-examples/images/slideshow-example.jpg" height="100" alt=""/></a>
 					
-Displays a slideshow of images animating picture scaling,
-panning and opacity settings to implement Ken Burns style
-transitions. This example demonstrates how to dynamically
-add picture containers into the container hierarchy, distribute events to container behaviors, use a content timer to drive animations, display a busy indicator and invoke a HTTP request to fetch a photo collection from a public Flickr feed. 
+Displays a slideshow of images animating picture scaling, panning and opacity settings to implement Ken Burns style transitions. This example demonstrates how to dynamically add picture containers into the container hierarchy, distribute events to container behaviors, use a content timer to drive animations, display a busy indicator and invoke a HTTP request to fetch a photo collection from a public Flickr feed. 
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
