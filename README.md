@@ -41,7 +41,7 @@ This example demonstrates how to implement an embedded web view container. The c
 ### camera
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/camera"><img src="http://kinoma.github.io/KPR-examples/images/camera-example.jpg" height="100" alt=""/></a>
 
-A simple camera app supporting live preview and capture. This example demonstrates how to integrate the camera media reader with a picture container, use the Files object to write the captured image to storage, implement screen transitions, detect the platform at runtime, adapt container layouts to device orientation changes, use canvas to implement a button and play one-shot sounds. Note - camera support is currently limited to Android phones, but this app includes a mockup implementation for the Kinoma Studio desktop simulator.
+A simple camera app supporting live preview and capture. This example demonstrates how to integrate the camera media reader with a picture container, use the Files object to write the captured image to storage, implement screen transitions, detect the platform at runtime, adapt container layouts to device orientation changes, use canvas to implement a button and play one-shot sounds. Note - camera support is currently not supported on Kinoma Create, but this app includes a mockup implementation for the Kinoma Studio desktop simulator.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
