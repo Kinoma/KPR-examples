@@ -51,7 +51,7 @@
 					Screen: MainScreen,
 					title: "Camera",
 					uri_preview: mergeURI( application.url, "assets/preview.yuv" ),
-					uri_capture: mergeURI( Files.picturesDirectory, application.di + ".photo.jpg")
+					uri_capture: mergeURI( Files.documentsDirectory, application.di + ".photo.jpg")
 				};
 				return data;
 			]]></method>
@@ -86,7 +86,7 @@
 		<method id="onCreate" params="container, data"><![CDATA[
 			this.data = data;
 			this.container = container;
-			this.use_camera = ( "android" == system.platform );
+			this.use_camera = ("linux" != system.platform);
 			this.video_track = null;
 			this.photo_track = null;
 			this.reader = null;
