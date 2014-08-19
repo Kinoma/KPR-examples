@@ -1,6 +1,8 @@
 ### balls
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/balls"><img src="http://kinoma.github.io/KPR-examples/images/balls-example.jpg" height="100" alt=""/></a>
 
+<x-info id="com.marvell.kinoma.example.balls" platform="mac,win,android,iphone,linux"></x-info>
+
 Bouncing ball animation example. Each ball is created as a content using different variants from an image skin. The balls travel by changing the content coordinates over time. This example is written using the KPR ECMAScript programming APIs and demonstrates how to use image skins and content timers.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
