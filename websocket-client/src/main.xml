@@ -52,10 +52,10 @@
     
 	<behavior id="ApplicationBehavior">
 		<method id="onLaunch" params="application"><![CDATA[
-			application.discover("com.marvell.kinoma.example.websocketserver");
+			application.discover("websocketserver.example.kinoma.marvell.com");
 		]]></method>
 		<method id="onQuit" params="application"><![CDATA[
-			application.forget("com.marvell.kinoma.example.websocketserver");
+			application.forget("websocketserver.example.kinoma.marvell.com");
 		]]></method>
 		<method id="onCreate" params="application, data"><![CDATA[
 			this.servers = [];

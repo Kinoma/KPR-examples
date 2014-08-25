@@ -25,6 +25,9 @@
 	<require id="TOOL" path="mobile/tool" />
 	<require id="MODEL" path="mobile/model" />
 	
+	<skin id="graySkin" color="gray"/>
+    <content id="Background" top="0" left="0" bottom="0" right="0" skin="graySkin"/>
+        
 	<container id="MyMenuButton" like="TOOL.MenuButton" top="0" left="0"/>
  
 	<script><![CDATA[   
@@ -39,6 +42,8 @@
 			],
 			selection: 0,
 		};
+		var background = new Background();
+		application.add( background );
 		var menuButton = new MyMenuButton( standardsMenuData );   
 		application.add( menuButton );
 	 ]]></script>

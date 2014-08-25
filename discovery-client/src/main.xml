@@ -39,10 +39,10 @@
     
 	<behavior id="ApplicationBehavior">
 		<method id="onLaunch" params="application"><![CDATA[
-			application.discover("com.marvell.kinoma.example.discoveryserver");
+			application.discover("discoveryserver.example.kinoma.marvell.com");
 		]]></method>
 		<method id="onQuit" params="application"><![CDATA[
-			application.forget("com.marvell.kinoma.example.discoveryserver");
+			application.forget("discoveryserver.example.kinoma.marvell.com");
 		]]></method>
 		<method id="onCreate" params="application, data"><![CDATA[
 			this.servers = [];

@@ -1,7 +1,7 @@
 <example 
-	id="com.marvell.kinoma.example.kinomagraph"
-	title="KinomaGraph"
-	project="KinomaGraph"
+	id="kinomagraph.example.kinoma.marvell.com"
+	title=“KinomaGraph”
+	project=“KinomaGraph”
 	resources="application.xml" 
 	tags=""
 	type="application" 

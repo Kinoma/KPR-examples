@@ -1,5 +1,5 @@
 <example 
-	id="com.marvell.kinoma.example.proxyhandler"
+	id="proxyhandler.example.kinoma.marvell.com"
 	title="Proxy Handler"
 	project="Proxy Handler"
 	resources="application.xml" 

@@ -208,7 +208,7 @@
 
 	<media id="AVContainer" left="0" right="0" top="0" bottom="0" url="$">
 		<behavior><![CDATA[
-			function onDisplayed(media) {
+			function onLoaded(media) {
 				media.start();
 				media.bubble("onItemLoaded");
 			}

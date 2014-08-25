@@ -1,5 +1,5 @@
 <example 
-	id="com.marvell.kinoma.example.layers"
+	id="layers.example.kinoma.marvell.com"
 	title="Layers"
 	project="Layers"
 	resources="application.xml" 

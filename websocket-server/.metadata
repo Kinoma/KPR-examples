@@ -1,5 +1,5 @@
 <example 
-	id="com.marvell.kinoma.example.websocketserver"
+	id="websocketserver.example.kinoma.marvell.com"
 	title="WebSocket Server"
 	project="WebSocket Server"
 	resources="application.xml" 

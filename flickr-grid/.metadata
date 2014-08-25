@@ -1,5 +1,5 @@
 <example 
-	id="com.marvell.kinoma.example.flickrgrid"
+	id="flickrgrid.example.kinoma.marvell.com"
 	title="Flickr Photo Grid"
 	project="Flickr Photo Grid"
 	resources="application.xml" 

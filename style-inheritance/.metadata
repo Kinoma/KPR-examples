@@ -1,5 +1,5 @@
 <example 
-	id="com.marvell.kinoma.example.styleInheritance"
+	id="styleInheritance.example.kinoma.marvell.com"
 	title="Style Inheritance"
 	project="styleInheritance"
 	resources="application.xml" 

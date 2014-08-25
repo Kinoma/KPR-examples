@@ -1,5 +1,5 @@
 <example 
-	id="com.marvell.kinoma.example.oauth"
+	id="oauth.example.kinoma.marvell.com"
 	title="OAuth"
 	project="oauth"
 	resources="application.xml" 

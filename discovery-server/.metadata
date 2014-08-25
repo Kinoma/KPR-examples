@@ -1,5 +1,5 @@
 <example 
-	id="com.marvell.kinoma.example.discoveryserver"
+	id="discoveryserver.example.kinoma.marvell.com"
 	title="Device Discovery Server"
 	project="Device Discovery Server"
 	resources="application.xml" 

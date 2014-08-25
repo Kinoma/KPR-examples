@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<application xmlns="http://www.kinoma.com/kpr/application/1" id="com.douzen.kangaroo.text" program="src/main" title="Kangaroo Text">
+<application xmlns="http://www.kinoma.com/kpr/application/1" id="kangaroo.text.example.douzen.com" program="src/main" title="Kangaroo Text">
 
 </application>

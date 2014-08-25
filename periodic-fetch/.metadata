@@ -1,5 +1,5 @@
 <example 
-	id="com.marvell.kinoma.example.periodic"
+	id="periodic.example.kinoma.marvell.com"
 	title="Periodic Update"
 	project="Periodic Update"
 	resources="application.xml" 

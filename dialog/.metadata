@@ -1,5 +1,5 @@
 <example 
-	id="com.marvell.kinoma.example.dialog"
+	id="dialog.example.kinoma.marvell.com"
 	title="Dialogs"
 	project="Dialogs"
 	resources="application.xml" 

@@ -1,5 +1,5 @@
 <example 
-	id="com.marvell.kinoma.example.platform"
+	id="platform.example.kinoma.marvell.com"
 	title="Platform Identification"
 	project="Platform Identification"
 	resources="application.xml" 

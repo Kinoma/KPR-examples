@@ -1,5 +1,5 @@
 <example 
-	id="com.marvell.kinoma.example.fileexplorer
+	id="fileexplorer.example.kinoma.marvell.com"
 	title="File Explorer Example"
 	project="File Explorer Example"
 	resources="application.xml" 

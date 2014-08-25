@@ -1,5 +1,5 @@
 <example 
-	id="com.marvell.kinoma.example.bing"
+	id="bing.example.kinoma.marvell.com"
 	title="Bing Image Search"
 	project="Bing Image Search"
 	resources="application.xml" 

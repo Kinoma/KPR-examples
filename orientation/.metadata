@@ -1,5 +1,5 @@
 <example 
-	id="com.marvell.kinoma.example.orientation"
+	id="orientation.example.kinoma.marvell.com"
 	title="Device Orientation"
 	project="Device Orientation"
 	resources="application.xml" 

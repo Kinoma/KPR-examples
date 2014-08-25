@@ -1,5 +1,5 @@
 <example 
-	id="com.marvell.kinoma.example.discoveryclient"
+	id="discoveryclient.example.kinoma.marvell.com"
 	title="Device Discovery Client"
 	project="Device Discovery Client"
 	resources="application.xml" 

@@ -1,5 +1,5 @@
 <example 
-	id="com.marvell.kinoma.example.menubutton"
+	id="menubutton.example.kinoma.marvell.com"
 	title="Menu Button"
 	project="Menu Button"
 	resources="application.xml" 
