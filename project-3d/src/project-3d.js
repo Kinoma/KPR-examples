@@ -218,10 +218,11 @@ Project3DBehavior.prototype = Object.create(MainScreenBehavior.prototype, {
 							title: "B Angle X",
 							getter: function() { return -this.context.data.billboard.eulerAngles.x },
 							setter: function(value) {															// UNITY parity : negating x
-										var billboard = this.context.data.billboard
-										var angles = billboard.eulerAngles
-										angles.x = -value
-										billboard.orientation = handler.behavior.panTiltRollToQuaternionWXYZ(angles.y, -value, angles.z)
+										var billboard = this.context.data.billboard;
+										var angles = billboard.eulerAngles;
+										angles.x = -value;
+										billboard.orientation = handler.behavior.panTiltRollToQuaternionWXYZ(angles.y, -value, angles.z);
+                                        this.context.data.PORT.invalidate();
 									},
 						},
 						{
@@ -233,10 +234,11 @@ Project3DBehavior.prototype = Object.create(MainScreenBehavior.prototype, {
 							title: "B Angle Y",
 							getter: function() { return this.context.data.billboard.eulerAngles.y },
 							setter: function(value) {
-										var billboard = this.context.data.billboard
-										var angles = billboard.eulerAngles
-										angles.y = value
-										billboard.orientation = handler.behavior.panTiltRollToQuaternionWXYZ(value, angles.x, angles.z)
+										var billboard = this.context.data.billboard;
+										var angles = billboard.eulerAngles;
+										angles.y = value;
+										billboard.orientation = handler.behavior.panTiltRollToQuaternionWXYZ(value, angles.x, angles.z);
+                                        this.context.data.PORT.invalidate();
 									},
 						},
 						{
@@ -248,10 +250,11 @@ Project3DBehavior.prototype = Object.create(MainScreenBehavior.prototype, {
 							title: "B Angle Z",
 							getter: function() { return this.context.data.billboard.eulerAngles.z },
 							setter: function(value) {
-										var billboard = this.context.data.billboard
-										var angles = billboard.eulerAngles
-										angles.z = value
-										billboard.orientation = handler.behavior.panTiltRollToQuaternionWXYZ(angles.y, angles.x, value)
+										var billboard = this.context.data.billboard;
+										var angles = billboard.eulerAngles;
+										angles.z = value;
+										billboard.orientation = handler.behavior.panTiltRollToQuaternionWXYZ(angles.y, angles.x, value);
+                                        this.context.data.PORT.invalidate();
 									},
 						},
 						{
@@ -293,10 +296,11 @@ Project3DBehavior.prototype = Object.create(MainScreenBehavior.prototype, {
 							title: "C Angle X",
 							getter: function() { return this.context.data.camera.eulerAngles.x },
 							setter: function(value) {
-										var camera = this.context.data.camera
-										var angles = camera.eulerAngles
-										angles.x = value
-										camera.orientation = handler.behavior.panTiltRollToQuaternionWXYZ(angles.y, value, angles.z)
+										var camera = this.context.data.camera;
+										var angles = camera.eulerAngles;
+										angles.x = value;
+										camera.orientation = handler.behavior.panTiltRollToQuaternionWXYZ(angles.y, value, angles.z);
+                                        this.context.data.PORT.invalidate();
 									},
 						},
 						{
@@ -308,10 +312,11 @@ Project3DBehavior.prototype = Object.create(MainScreenBehavior.prototype, {
 							title: "C Angle Y",
 							getter: function() { return this.context.data.camera.eulerAngles.y + 180 },
 							setter: function(value) {												// UNITY parity : subtract 180 degrees
-										var camera = this.context.data.camera
-										var angles = camera.eulerAngles
-										angles.y = value - 180
-										camera.orientation = handler.behavior.panTiltRollToQuaternionWXYZ(value - 180, angles.x, angles.z)
+										var camera = this.context.data.camera;
+										var angles = camera.eulerAngles;
+										angles.y = value - 180;
+										camera.orientation = handler.behavior.panTiltRollToQuaternionWXYZ(value - 180, angles.x, angles.z);
+                                        this.context.data.PORT.invalidate();
 									},
 						},
 						{
@@ -323,10 +328,11 @@ Project3DBehavior.prototype = Object.create(MainScreenBehavior.prototype, {
 							title: "C Angle Z",
 							getter: function() { return -this.context.data.camera.eulerAngles.z },
 							setter: function(value) {													// UNITY parity : negating z
-										var camera = this.context.data.camera
-										var angles = camera.eulerAngles
-										angles.z = -value
-										camera.orientation = handler.behavior.panTiltRollToQuaternionWXYZ(angles.x, angles.y, -value)
+										var camera = this.context.data.camera;
+										var angles = camera.eulerAngles;
+										angles.z = -value;
+										camera.orientation = handler.behavior.panTiltRollToQuaternionWXYZ(angles.x, angles.y, -value);
+                                        this.context.data.PORT.invalidate();
 									},
 						},
 						{
