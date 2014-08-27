@@ -104,19 +104,24 @@ SpriteContainerBehavior.prototype = Object.create( Object.prototype,
 
 			this.splashContent.opacity = (1+Math.sin(now/2))/5;
 
-			for(var sprite = container.first; sprite; sprite = sprite.next) {
-				var behavior = sprite.behavior;
-				var x = behavior.x01*(width-sprite.width);
-				var y = behavior.y01*(height-sprite.height);
+			for(var layer = container.first; layer; layer = layer.next) {
+				var behavior = layer.behavior;
+				var x = behavior.x01*(width-layer.width);
+				var y = behavior.y01*(height-layer.height);
 
 				var z01 = behavior.modeFunction(now);
 				var size = z01 * 48 - 24;
 
-				sprite.coordinates = {
-					top: y * z01 + ycenter * (1-z01),
-					left: x * z01 + xcenter * (1-z01),
-					width: size,
-					height: size
+				var scale = size / 64;
+
+				layer.translation = {
+					x: x * z01 + xcenter * (1 - z01),
+					y: y * z01 + ycenter * (1 - z01)
+				};
+
+				layer.scale = {
+					x: scale,
+					y: scale
 				};
 			}
 		}

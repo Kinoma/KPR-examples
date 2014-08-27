@@ -29,12 +29,12 @@
                 }});
             application.invoke(message);
 
-            message = new MessageWithObject("pins://greeter/ping", "Hello, world");
+			message = new MessageWithObject("pins:/greeter/ping", "Hello, world");
             application.invoke(message, Message.JSON);
 		]]></method>
 	
-		<method id="onComplete" params="response"><![CDATA[
-            trace("From BLL hello.js, application received: " + response.value + "\n");
+		<method id="onComplete" params="handler, message, json"><![CDATA[
+            trace("From BLL hello.js, application received: " + json.value + "\n");
 		]]></method>
 	</behavior>
     

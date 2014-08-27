@@ -23,10 +23,11 @@
 
 	<handler path="/countResult">
 		<behavior>
-			<method id="onInvoke" params="count"><![CDATA[
+			<method id="onInvoke" params="container, message"><![CDATA[
+				var count = message.requestObject;
 				trace("Count is: " + count + "\n" );
 				if (count >= 10)
-                    handler.invoke(new MessageWithObject(“pins:/count/increment?repeat=off"));
+                    container.invoke(new MessageWithObject("pins:/count/increment?repeat=off"));
 			]]></method>
 		</behavior>
 	</handler>    
@@ -44,8 +45,7 @@
                 }});
             application.invoke(message);
 
-            message = new MessageWithObject(“pins:/count/increment?repeat=on&
-						callback=/countResult&interval=1500");
+            message = new MessageWithObject("pins:/count/increment?repeat=on&callback=/countResult&interval=750");
             application.invoke(message);
 		]]></method>
 		</behavior>

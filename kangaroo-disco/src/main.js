@@ -43,17 +43,23 @@ var build = function( container )
 	var s=0;
 	var xcols=16;
 	var yrows=16;
+	var dxdydust = 64;
 	for(var x=0; x<xcols; x++)
 	{	for(var y=0; y<yrows; y++)
-		{	var sprite = new Content({left:rand(0,255), width: dxdydust, top:rand(0,255), height: dxdydust}, spriteSkin);
-			
+		{
+			var sprite = new Thumbnail({left: 0, width: dxdydust, top: 0, height: dxdydust});
+			sprite.aspect = "draw";
 			sprite.behavior = new SpriteBehavior(s, x/(xcols-1), y/(yrows-1));
-			sprite.variant = s%5; // variant 0 is the first image in the image strip
+			sprite.url = "disco.png";
+			
+			sprite.crop = {x: (s % 5) * dxdydust, y: 0, width: dxdydust, height: dxdydust};
+			sprite.subPixel = true;
 			c.add(sprite);
+
 			s++;
 		}
-	}
-	
+	}	
+
 	// add splash background
 	var splashContent = new Picture({left:0, right:0, top:0, bottom:0}, "splash.png");
 	c.behavior.splashContent = splashContent;
