@@ -353,7 +353,7 @@ This example demonstrates how KPR cascades styles in the container hierarchy. A 
 					
 <x-app-info id="styles.example.kinoma.marvell.com"></x-app-info>
 
-This example demonstrates how KPR cascades styles in the container hierarchy. A content inherits the characteristics of its container style when the characteristics are undefined in the content style. In this example, the applicationStyle defines a style for the root of the container hierarchy and nested containers build on the applicationStyle by overriding various style characteristics, including point size, alignment and color. Note: This example is best viewed on a tablet-sized screen or simulator.
+This example displays a vertical scrolling column of text formatted with a wide variety of styles. Usage of all the common text style attributes are demonstrated, including font, text style, point size, alignment, leading, color and margins.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
