@@ -26,9 +26,9 @@
 		<borders left="0" top="0" right="0" bottom="1" color="gray"/>
 	</skin>
 	
-	<style id="mainStyle" font="plain 24px Arial" color="black" align="left,middle"/>
+	<style id="mainStyle" font="24px" color="black" align="left,middle"/>
 	
-	<style id="titleStyle" font="plain 36px Arial" color="gray" align="center,middle"/>
+	<style id="titleStyle" font="36px" color="gray" align="center,middle"/>
 	
 	<skin id="subtitleSkin" color="#888"/>
 	<style id="subtitleStyle" font="bold 16px" color="white" align="left,middle"/>
@@ -37,8 +37,8 @@
 		<label style="subtitleStyle" left="4" right="4" top="4" bottom="4" string="$.string"/>
 	</container>
 
-	<label id="LabelSample" style="$.style" string="$.label" left="8" right="8" height="44"/>
-	<text id="TextSample" style="$.style" string="$.text" left="8" right="8" height="96"/>
+	<label id="LabelSample" style="$.style" string="$.label" left="8" right="8"/>
+	<text id="TextSample" style="$.style" string="$.text" left="8" right="8"/>
 
 	<container id="StyleSamplerContainer" top="0" right="0" bottom="0" left="0" style="mainStyle" skin="mainSkin">
 		<scroller like="SCROLLER.VerticalScroller">
