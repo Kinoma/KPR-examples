@@ -76,11 +76,7 @@ var doBlocks = function(slide) {
 	slide.empty();
 	var text = new Text({left: 0, right: 0, top:0}, null, mainStyle);
 	text.active = true;
-	text.format([
-		{ display: "block", spans: [
-			lorem.string
-		]}
-	]);
+	text.string = lorem.string;
 	text.behavior = null;
 	var scroller = new SCROLLER.VerticalScroller({});
 	scroller.add(text);
@@ -94,10 +90,10 @@ var doSpans = function(slide) {
 	var split = lorem.string.split(".");
 	var c = split.length;
 	for (var i = 0; i < c; i++) {
-		split[i] = { style: spansStyles[i % 3], spans: [ split[i], "." ] };
+		split[i] = { style: spansStyles[i % 3], string: split[i] + "." };
 	}
 	text.format([
-		{ display: "block", spans: split }
+		{ spans: split }
 	]);
 	text.behavior = null;
 	var scroller = new SCROLLER.VerticalScroller({});
@@ -112,10 +108,10 @@ var doLinks = function(slide) {
 	var split = lorem.string.split(".");
 	var c = split.length;
 	for (var i = 0; i < c; i++) {
-		split[i] = { style: behaviorsStyles[i % 2], behavior: new SpanBehavior(split[i]), spans: [ split[i], "." ] };
+		split[i] = { style: behaviorsStyles[i % 2], behavior: new SpanBehavior(split[i]), string: split[i] + "." };
 	}
 	text.format([
-		{ display: "block", spans: split }
+		{ spans: split }
 	]);
 	text.behavior = null;
 	var scroller = new SCROLLER.VerticalScroller({});
@@ -137,7 +133,7 @@ var doStep = function(text) {
 	}
 	spans.push(lorem.string.substring(former));
 	text.format([
-		{ display: "block", spans: spans }
+		{ spans: spans }
 	]);
 }
 

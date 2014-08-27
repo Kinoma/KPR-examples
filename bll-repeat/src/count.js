@@ -14,9 +14,10 @@
   limitations under the License.
 */
 
-if ( !( "Counter" in this ) ){
-	Counter = 0;
+exports.configure = function() {
+    this.value = 0;
 }
 
-result = new Object();
-result.count = ++Counter;
+exports.increment = function() {
+    return ++this.value;
+}

@@ -23,16 +23,10 @@
 
 	<handler path="/countResult">
 		<behavior>
-			<method id="onInvoke" params="handler, message"><![CDATA[
-				var count = JSON.parse( message.requestText ).count;
-				trace( "Count is: " + count + "\n" );
-				if ( count >= 10 ){
-					var query = new Object();
-					query.id = repeatID;
-	
-					var msg = new Message( "xkpr://shell/hardwarepins/stop?" + serializeQuery( query ) );
-					handler.invoke( msg );
-				}
+			<method id="onInvoke" params="count"><![CDATA[
+				trace("Count is: " + count + "\n" );
+				if (count >= 10)
+                    handler.invoke(new MessageWithObject(“pins:/count/increment?repeat=off"));
 			]]></method>
 		</behavior>
 	</handler>    
@@ -43,29 +37,24 @@
     
 	<behavior id="ApplicationBehavior">
 		<method id="onLaunch" params="content"><![CDATA[
-			var query = new Object();
-			query.scriptPath = mergeURI( application.url, "count.js" ).substring( 7 );
-			query.callback = "xkpr://" + application.id + "/countResult"
-			query.sendParamsOnce = true;
-			query.seconds = 1;
-			query.mseconds = 500;
-			query.skipFirst = true;            
-			
-			var msg = new Message( "xkpr://shell/hardwarepins/repeat?" + serializeQuery( query ) );
-			application.invoke( msg, Message.JSON );
+            var message = new MessageWithObject("pins:configure", {
+                count: {
+                    require: "count",
+                    pins: {}
+                }});
+            application.invoke(message);
+
+            message = new MessageWithObject(“pins:/count/increment?repeat=on&
+						callback=/countResult&interval=1500");
+            application.invoke(message);
 		]]></method>
-	
-		<method id="onComplete" params="application, message, data"><![CDATA[
-			repeatID = JSON.parse( message.responseText ).id;         	
-		]]></method>
-	</behavior>
+		</behavior>
     
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!-- SCRIPTS -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
     
 	<script><![CDATA[
-		var repeatID = 0;
 		application.behavior = new ApplicationBehavior();
 	]]></script>
 </program>

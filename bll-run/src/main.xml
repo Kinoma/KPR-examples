@@ -22,20 +22,19 @@
 
 	<behavior id="ApplicationBehavior">
 		<method id="onLaunch" params="content"><![CDATA[
-			var query = new Object();
-			query.scriptPath = mergeURI( application.url, "hello.js" ).substring( 7 );
-			
-			var msg = new Message( "xkpr://shell/hardwarepins/run?" + serializeQuery( query ) );
-			
-			var parameters = new Object();
-			parameters.text = "World";
-			msg.requestText = JSON.stringify( parameters );
-			
-			application.invoke( msg, Message.JSON ); 
+            var message = new MessageWithObject("pins:configure", {
+                greeter: {
+                    require: "hello",
+                    pins: {}
+                }});
+            application.invoke(message);
+
+            message = new MessageWithObject("pins://greeter/ping", "Hello, world");
+            application.invoke(message, Message.JSON);
 		]]></method>
 	
-		<method id="onComplete" params="application, message, data"><![CDATA[            	
-			trace( JSON.parse( message.responseText ).text );
+		<method id="onComplete" params="response"><![CDATA[
+            trace("From BLL hello.js, application received: " + response.value + "\n");
 		]]></method>
 	</behavior>
     
@@ -46,5 +45,4 @@
 	<script><![CDATA[
 		application.behavior = new ApplicationBehavior(); 
 	]]></script>
-    
 </program>

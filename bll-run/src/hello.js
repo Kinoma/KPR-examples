@@ -14,8 +14,7 @@
   limitations under the License.
 */
 
-trace( "Hello " );
-trace( parameters.text + "\n" );
-
-result = new Object();
-result.text = "Everything is working fine.\n";
+exports.ping = function(parameter) {
+    trace("From application, BLL hello.js received: " + parameter + "\n");
+    return {value: "Everything is working."};
+}
