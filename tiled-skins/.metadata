@@ -6,8 +6,8 @@
 	tags=""
 	type="application" 
 	category="com.marvell.kinoma.examples.starter">
-	This example demonstrates how to use tiled skins to fill content. Examples of nine part and three part horizontal/vertical tiled skins are provided. The nine part container is a button that changes color (state) when tapped. Additionally this example shows how to use a layer to display rotated text.
 	<description><![CDATA[
+	This example demonstrates how to use tiled skins to fill content. Examples of nine part and three part horizontal/vertical tiled skins are provided. The nine part container is a button that changes color (state) when tapped. Additionally this example shows how to use a layer to display rotated text.
 	]]></description>
 
 </example>
