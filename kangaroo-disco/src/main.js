@@ -53,7 +53,7 @@ var build = function( container )
 			sprite.url = "disco.png";
 			
 			sprite.crop = {x: (s % 5) * dxdydust, y: 0, width: dxdydust, height: dxdydust};
-			sprite.subPixel = true;
+			sprite.subPixel = false;
 			c.add(sprite);
 
 			s++;
