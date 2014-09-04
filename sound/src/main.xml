@@ -46,7 +46,7 @@
 			<behavior>
 				<method id="onCreate" params="container, data"><![CDATA[
 					this.data = data;
-					this.sound = new Sound( mergeURI( application.url, "assets/shutter-02.wav" ) );
+					this.sound = new Sound( mergeURI( application.url, "assets/Shutter-02.wav" ) );
 					Sound.volume = 1.0;
 				]]></method>	
 				<method id="onTouchBegan" params="container, id, x, y, ticks"><![CDATA[
