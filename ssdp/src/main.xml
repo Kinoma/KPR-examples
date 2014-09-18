@@ -1,0 +1,381 @@
+<program xmlns="http://www.kinoma.com/kpr/1">
+	<require path="themes/sample/theme" id="THEME"/>
+	<require path="mobile/control" id="CONTROL"/>
+	<require path="mobile/dialog" id="DIALOG"/>
+	<require path="mobile/model" id="MODEL"/>
+	<require path="mobile/scroller" id="SCROLLER"/>
+
+	<skin id="blackSkin" color="black"/>
+	<skin id="whiteSkin" color="white"/>
+	<skin id="headerSkin" color="#203a6f"/>
+	<style id="headerStyle" font="bold 24px Arial" align="left" color="white">
+	</style>
+	<style id="rightStyle" font="24px Arial" align="right" color="white">
+	</style>
+	<style id="nameStyle" font="bold 24px Arial" align="left" color="white">
+        <margins top="5"/>
+	</style>
+	<style id="hostStyle" font="18px Arial" align="left" color="white">
+	</style>
+	<style id="errorStyle" font="18px Arial" align="center,middle" color="white">
+	</style>
+
+	<texture id="backTexture" small="./assets/back.png"/>
+	<variable id="backSkin" value="new CONTROL.Skin(backTexture, THEME.tabDisabledEffect, THEME.tabEnabledEffect, THEME.tabSelectedEffect)"/>
+
+	<texture id="toggleSwitchForegroundTexture" small="./assets/switchForeground.png"/>
+	<texture id="toggleSwitchBackgroundTexture" small="./assets/switchBackground.png"/>
+
+	<behavior id="ApplicationBehavior" like="MODEL.ApplicationBehavior">
+		<method id="discoverAll"><![CDATA[
+			if (this.client)
+				this.client.stop();
+			data.servers = [];
+			this.client = new SSDP.Client();
+			this.client.behavior = this;
+			this.client.start();
+		]]></method>
+		<method id="discoverMediaRenderer"><![CDATA[
+			if (this.client)
+				this.client.stop();
+			data.servers = [];
+			this.client = new SSDP.Client("urn:schemas-upnp-org:device:MediaRenderer:1");
+			this.client.addService("urn:schemas-upnp-org:service:AVTransport:1");
+			this.client.addService("urn:schemas-upnp-org:service:ConnectionManager:1");
+			this.client.addService("urn:schemas-upnp-org:service:RenderingControl:1");
+			this.client.behavior = this;
+			this.client.start();
+		]]></method>
+		<method id="onLaunch" params="application"><![CDATA[
+			application.shared = true;
+			model.discoverAll();
+			this.server = new SSDP.Server("urn:schemas-upnp-org:device:MediaRenderer:1", application.serverPort, "/", 1800);
+			this.server.addService("urn:schemas-upnp-org:service:AVTransport:1");
+			this.server.addService("urn:schemas-upnp-org:service:ConnectionManager:1");
+			this.server.addService("urn:schemas-upnp-org:service:RenderingControl:1");
+			this.server.behavior = this;
+			this.server.start();
+			application.discover(application.id);
+			MODEL.ApplicationBehavior.prototype.onLaunch.call(this, application);
+		]]></method>
+		<method id="onQuit" params="application"><![CDATA[
+			application.forget(application.id);
+			this.server.stop();
+			this.server = undefined;
+			this.client.stop();
+			this.client = undefined;
+			application.shared = false;
+			MODEL.ApplicationBehavior.prototype.onQuit.call(this, application);
+		]]></method>
+		<method id="onSSDPServerCompare" params="a,b"><![CDATA[
+			return a.url.toLowerCase().compare(b.url.toLowerCase());
+		]]></method>
+		<method id="onSSDPServerDown" params="server"><![CDATA[
+			trace("onSSDPServerDown: " + JSON.stringify(server) + "\n");
+			var servers = data.servers;
+			for (var i = servers.length; i--;) {
+				if (servers[i].uuid == server.uuid) {
+					servers.splice(i, 1);
+					application.distribute("onBrowsersChanged");
+					break;
+				}
+			}
+		]]></method>
+		<method id="onSSDPServerRegistered" params="server"><![CDATA[
+			trace("onSSDPServerRegistered: " + JSON.stringify(server) + "\n");
+		]]></method>
+		<method id="onSSDPServerUnregistered" params="server"><![CDATA[
+			trace("onSSDPServerUnregistered: " + JSON.stringify(server) + "\n");
+		]]></method>
+		<method id="onSSDPServerUp" params="server"><![CDATA[
+			trace("onSSDPServerUp: " + JSON.stringify(server) + "\n");
+			var servers = data.servers;
+			for (var i = servers.length; i--;) {
+				if (servers[i].uuid == server.uuid) {
+					servers.splice(i, 1);
+					break;
+				}
+			}
+			data.servers.push(server);
+			data.servers.sort(this.onSSDPServerCompare);
+			application.distribute("onBrowsersChanged");
+		]]></method>
+	</behavior>
+
+	<behavior id="ToggleSwitchBehavior"><![CDATA[
+		function onCreate(port, data, onOff) {
+			this.onOff = onOff;
+			this.switchForeground = toggleSwitchForegroundTexture;
+			this.switchBackground = toggleSwitchBackgroundTexture;
+			
+			this.$size = this.switchBackground.width - this.switchForeground.width;
+			this.$offset = ("off" == onOff ? this.$size : 0);
+			this.$touched = false;
+			this.$capturing = false;
+			this.$touchMovedOffset = 15;
+		}
+		function onTouchBegan(port, id, x, y, ticks) {
+			if (port.running) {
+				port.stop();
+				port.time = port.duration;
+			}
+			this.$anchor = x;
+			this.$delta = this.$offset + x;
+			this.$touched = true;
+			port.invalidate();
+		}
+		function onTouchCancelled(port, id, x, y, ticks) {
+			this.$touched = false;
+		}
+		function onTouchMoved(port, id, x, y, ticks) {
+			if (this.$capturing)
+				this.$offset = this.constraint(port, this.$delta - x);
+			else if (Math.abs(x - this.$anchor) >= this.$touchMovedOffset) {
+				port.captureTouch(id, x, y, ticks);
+				this.$capturing = true;
+				this.$offset = this.constraint(port, this.$delta - x);
+			}
+			port.invalidate();
+		}
+		function onTouchEnded(port, id, x, y, ticks) {
+			var offset = this.$offset;
+			var size = this.$size;
+			var delta = size >> 1;
+			this.$anchor = offset;
+			if (this.$capturing) {
+				if (offset < delta)
+					delta = 0 - offset;
+				else 
+					delta = size - offset;
+			}
+			else {
+				if (offset == 0)
+					delta = size;
+				else
+					delta = 0 - size;
+			}
+			if (delta) {
+				this.$delta = delta;
+				port.duration = 250 * Math.abs(delta) / size;
+				port.time = 0;
+				port.start();
+			}
+			else
+				this.onFinished(port);
+			port.invalidate();
+		}
+		function onTimeChanged(port) {
+			var fraction = port.fraction;
+			this.$offset = this.$anchor + Math.round(this.$delta * fraction);
+			port.invalidate();
+		}
+		function onFinished(port) {
+			this.$touched = false;
+			this.$capturing = false;
+			
+			if (this.$offset == 0)
+				this.onOff = "on";
+			else
+				this.onOff = "off";
+				
+			this.onSwitchChanged(port, this.onOff);
+		}
+		function onSwitchChanged(port, onOff) {
+			debugger
+		}
+		function constraint(port, offset) {
+			if (offset < 0)
+				offset = 0;
+			else if (offset > this.$size)
+				offset = this.$size;
+			return offset;
+		}
+		function onDraw(port, x, y, width, height) {
+			port.pushClip();
+			port.intersectClip(x + 6, y + 6, width - 12, height - 12);
+			port.drawImage(this.switchBackground, x - this.$offset, y, width + this.$size, height, 
+					0, this.$touched ? 40 : 0, width + this.$size, height);
+			port.popClip();
+			port.drawImage(this.switchForeground, x, y, width, height);
+		}
+	]]></behavior>
+
+	<scroller id="BrowsersScroller" like="SCROLLER.VerticalScroller" left="0" right="0" top="40" bottom="0">
+		<column left="0" right="0" top="0">
+			<iterate on="$.servers">
+				<line left="0" right="0" active="true">
+					<behavior like="CONTROL.ButtonBehavior"><![CDATA[
+						function onTap(line) {
+							application.invoke(new Message("/browse?" + serializeQuery(this.data)));
+						}
+					]]></behavior>
+					<column left="0" right="0" top="0">
+						<label left="10" right="10" style="nameStyle" string="$.type"/>
+						<label left="20" right="10" style="hostStyle" string="$.uuid"/>
+						<label left="20" right="10" style="hostStyle" string="$.url"/>
+						<iterate on="$.services">
+							<label left="30" right="10" style="hostStyle" string="$"/>
+						</iterate>
+					</column>
+				</line>
+				<container left="0" right="0" top="0" height="1" skin="headerSkin"/>
+			</iterate>
+		</column>
+	</scroller>
+
+	<container id="BrowserScreen" left="0" right="0" top="0" bottom="0" skin="blackSkin">
+		<behavior><![CDATA[
+			function onBrowsersChanged(layout) {
+				if (this.data.servers.length == 0)
+					layout.replace(layout.first, new DIALOG.Spinner);
+				else
+					layout.replace(layout.first, new BrowsersScroller(this.data));
+			}
+			function onCreate(layout, data) {
+				this.data = data;
+			}	
+		]]></behavior>
+		<container like="DIALOG.Spinner"/>
+		<line left="0" right="0" top="0" height="40" skin="headerSkin">
+			<label left="10" style="headerStyle" string="$.title"/>
+			<label left="100" right="10" style="rightStyle" string="'All'"/>
+			<port width="toggleSwitchForegroundTexture.width" height="toggleSwitchForegroundTexture.height" active="true">
+				<behavior like="ToggleSwitchBehavior"><![CDATA[
+					function onCreate(port, data) {
+						this.data = data;
+						var onOff = data.state ? "on" : "off";
+						ToggleSwitchBehavior.prototype.onCreate.call(this, port, data, onOff);
+					}
+					function onSwitchChanged(port, onOff) {
+						var state = ("on" == onOff);
+						if (this.data.state != state) {
+							var client = model.client;
+							this.data.state = state;
+							if (state) {
+								model.discoverAll();
+							}
+							else {
+								model.discoverMediaRenderer();
+							}
+							application.distribute("onBrowsersChanged");
+						}
+					}
+				]]></behavior>
+			</port>
+		</line>
+	</container>
+
+	<container id="BrowserLine" left="0" right="0" top="0" height="40" skin="headerSkin">
+		<container left="0" width="40" top="0" height="40" active="true">
+			<behavior like="CONTROL.ButtonBehavior"><![CDATA[
+				function onTap(container) {
+					application.replace(application.first, new BrowserScreen(data));
+					application.distribute("onBrowsersChanged");
+				}
+			]]></behavior>
+			<content left="0" right="0" top="0" bottom="0" skin="backSkin"/>
+		</container>
+		<label left="40" right="10" top="0" height="40" style="headerStyle" string="$.uuid"/>
+	</container>
+
+	<container id="WebviewScreen" left="0" right="0" top="0" bottom="0" skin="blackSkin">
+		<behavior><![CDATA[
+			function onCreate(layout, data) {
+				this.data = data;
+				data.BROWSER.url = "http://" + data.ip + ":" + data.port;
+			}
+		]]></behavior>
+		<browser left="0" right="0" top="40" bottom="0" anchor="BROWSER"/>
+		<container like="BrowserLine"/>
+	</container>
+
+	<container id="ImageScreen" left="0" right="0" top="0" bottom="0" skin="blackSkin">
+		<behavior><![CDATA[
+			function onCreate(layout, data) {
+				this.data = data;
+				data.IMAGE.url = data.url;
+			}
+		]]></behavior>
+		<container left="0" right="0" top="40" bottom="0" skin="whiteSkin">
+			<picture left="10" right="10" top="10" bottom="10" anchor="IMAGE"/>
+		</container>
+		<container like="BrowserLine"/>
+	</container>
+
+	<container id="TextScreen" left="0" right="0" top="0" bottom="0" skin="blackSkin">
+		<behavior><![CDATA[
+			function onComplete(layout, message) {
+				this.data.TEXT.string = message.responseText;
+			}
+			function onCreate(layout, data) {
+				this.data = data;
+				var message = new Message(data.url);
+				layout.invoke(message, Message.TEXT);
+			}
+		]]></behavior>
+		<scroller like="SCROLLER.VerticalScroller" left="0" right="0" top="40" bottom="0">
+			<text left="10" right="10" style="hostStyle" anchor="TEXT"/>
+		</scroller>
+		<container like="BrowserLine"/>
+	</container>
+
+	<container id="ErrorScreen" left="0" right="0" top="0" bottom="0" skin="blackSkin">
+		<label left="10" right="10" top="40" bottom="0" style="errorStyle" string="data.error"/>
+		<container like="BrowserLine"/>
+	</container>
+
+	<handler path="/browse">
+		<behavior><![CDATA[
+			function onComplete(line, message) {
+				if (message.status == 200) {
+					var type = message.getResponseHeader("Content-Type");
+					if (type.indexOf("image/") == 0)
+						application.replace(application.first, new ImageScreen(this.data));
+					else if (type.indexOf("text/html") == 0) {
+						var platform = system.platform;
+						if (platform == "linux")
+							application.replace(application.first, new TextScreen(this.data));
+						else
+							application.replace(application.first, new WebviewScreen(this.data));
+					}
+					else if (type.indexOf("text/xml") == 0)
+						application.replace(application.first, new TextScreen(this.data));
+					else
+						application.replace(application.first, new ErrorScreen(this.data));
+				}
+				else
+					application.replace(application.first, new ErrorScreen(this.data));
+			}
+			function onInvoke(handler, message) {
+				var data = parseQuery(message.query);
+				var url = data.url;
+				this.data = data;
+				var message = new Message(url);
+				message.method = "GET";
+				handler.invoke(message, Message.TEXT);
+			}
+		]]></behavior>
+	</handler>
+
+	<handler path="/">
+		<behavior><![CDATA[
+			function onInvoke(handler, message) {
+				handler.redirect("http://www.kinoma.com/img/kinoma-logo.png");
+			}
+		]]></behavior>
+	</handler>
+
+	<script><![CDATA[
+		var data = {
+			"error": "Cannot display this page!",
+			"title": "Servers",
+			"servers": [],
+			"state": true
+		};
+
+		var model = application.behavior = new ApplicationBehavior(application);
+		application.add(new BrowserScreen(data));
+	]]></script>
+	
+	
+</program>
