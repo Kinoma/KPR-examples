@@ -328,6 +328,16 @@ Displays a spinning busy indicator by rotating a custom graphic using a periodic
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### ssdp
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/ssdp"><img src="http://kinoma.github.io/KPR-examples/images/ssdp-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="ssdp.example.kinoma.marvell.com"></x-app-info>
+
+A simple application that shows SSDP usage. The application starts a HTTP server on port 1234, registers it with the name service named "KPR Server". It also looks for available HTTP servers on the local network.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### states
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/states"><img src="http://kinoma.github.io/KPR-examples/images/states-example.jpg" height="100" alt=""/></a>
 					
