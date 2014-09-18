@@ -50,6 +50,46 @@
 <!-- BEHAVIORS -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
     
+	<handler path="/discover">
+		<behavior>
+			<method id="onComplete" params="container, message, json"><![CDATA[
+				var query = parseQuery(message.query);
+				var server = model.getServer(query.uuid);
+				server.update(json);
+				application.distribute("onDevicesChanged");
+			]]></method>
+			<method id="onInvoke" params="handler, message"><![CDATA[
+				var discovery = JSON.parse(message.requestText);
+				var servers = model.servers;
+				var serversTable = model.serversTable;
+				var uuid = discovery.uuid;
+				if (!(uuid in serversTable)) {
+					var server = new Server(discovery);
+					var message = server.createMessage("info", { uuid: server.uuid });
+					handler.invoke(message, Message.JSON);
+					serversTable[uuid] = servers.length;
+					servers.push(server);
+				}
+			]]></method>
+		</behavior>
+	</handler>
+
+	<handler path="/forget">
+		<behavior>
+			<method id="onInvoke" params="handler, message"><![CDATA[
+				var discovery = JSON.parse(message.requestText);
+				var servers = model.servers;
+				var serversTable = model.serversTable;
+				var uuid = discovery.uuid;
+				if (uuid in serversTable) {
+					servers.splice(serversTable[uuid], 1);
+					delete serversTable[uuid];
+					application.distribute("onDevicesChanged");
+				}
+			]]></method>
+		</behavior>
+	</handler>
+
 	<behavior id="ApplicationBehavior">
 		<method id="onLaunch" params="application"><![CDATA[
 			application.discover("websocketserver.example.kinoma.marvell.com");
@@ -60,42 +100,6 @@
 		<method id="onCreate" params="application, data"><![CDATA[
 			this.servers = [];
 			this.serversTable = {};
-		]]></method>
-		<method id="onDiscovered" params="discoveries"><![CDATA[
-			var changed = false;
-			var discoveriesTable = {};
-			var servers = this.servers;
-			var serversTable = this.serversTable;
-			
-			discoveries.forEach(function(item, index) {
-				discoveriesTable[item.uuid] = index;
-			});
-			
-			for (var uuid in serversTable) {
-				if (uuid in discoveriesTable)
-					delete discoveriesTable[uuid];
-				else {
-					changed = true;
-					servers.splice(serversTable[uuid], 1);
-					delete serversTable[uuid];
-				}
-			}
-			for (var uuid in discoveriesTable) {
-				var server = new Server(discoveries[discoveriesTable[uuid]]);
-				var message = server.createMessage("info", { uuid: server.uuid });
-				application.invoke(message, Message.JSON);
-			
-				serversTable[uuid] = servers.length;
-				servers.push(server);
-			}
-			if (changed)
-				application.distribute("onDevicesChanged");
-		]]></method>
-		<method id="onComplete" params="application, message, json"><![CDATA[
-			var query = parseQuery(message.query);
-			var server = this.getServer(query.uuid);
-			server.update(json);
-			application.distribute("onDevicesChanged");
 		]]></method>
 		<method id="getServer" params="uuid"><![CDATA[
 			return this.servers[this.serversTable[uuid]];
@@ -306,8 +310,8 @@
 
 	<script><![CDATA[
 		var Server = function(discovery) {
-			this.location = discovery.location;
-			this.type = discovery.type;
+			this.location = discovery.url;
+			this.type = discovery.id;
 			this.uuid = discovery.uuid;
 			this.name = "- Untitled -";
 			this.port = undefined;
