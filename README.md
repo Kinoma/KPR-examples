@@ -131,7 +131,7 @@ This mobile framework example demonstrates how to use the global KPR Files objec
 ### flickr-grid
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/flickr-grid"><img src="http://kinoma.github.io/KPR-examples/images/flickr-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="flickrgrid.example.kinoma.marvell.com" platform="mac,win,iphone,android"></x-app-info>
+<x-app-info id="flickrgrid.example.kinoma.marvell.com"></x-app-info>
 
 This sample code demonstrates how to implement an interactive scrolling photo thumbnail grid. Tapping the photo thumbnail opens the full size image using a zoom transition. The image thumbnails are retrieved from a Flickr public feed using a tag search. The resulting data set is delivered in JSON format. This is a good example of how to display images, adapt the layout to device orientation changes, use tool buttons or swipe to navigate between photos, invoke a message to fetch data from a REST API and mobile framework screen open/close transitions.
 
