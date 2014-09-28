@@ -144,6 +144,7 @@
 						]]></method>
 						<method id="load" params="list, more"><![CDATA[
 							if ( this.data.what ) {
+								KEYBOARD.hide();
 								SCREEN.ListBehavior.prototype.load.call( this, list, more );
 								list.adjust();
 							}
