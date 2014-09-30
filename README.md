@@ -8,7 +8,7 @@ Bouncing ball animation example. Each ball is created as a content using differe
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### bing-images				
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/bing-images">bing-images</a>				
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/bing-images"><img src="http://kinoma.github.io/KPR-examples/images/bing-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="bing.example.kinoma.marvell.com" platform="mac,win,android,iphone"></x-app-info>
@@ -18,7 +18,7 @@ Phone application which implements a Bing Image search. Image thumbnail search r
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### bll-repeat
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/bll-repeat">bll-repeat</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/bll-repeat"><img src="http://kinoma.github.io/KPR-examples/images/bbl-repeat-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="bllrepeat.example.kinoma.marvell.com"></x-app-info>
@@ -28,7 +28,7 @@ A sample that demonstrates how to repeatedly run a Kinoma Blinking Light Library
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### bll-run
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/bll-run">bll-run</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/bll-run"><img src="http://kinoma.github.io/KPR-examples/images/bbl-run-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="bllrun.example.kinoma.marvell.com"></x-app-info>
@@ -38,7 +38,7 @@ A sample that demonstrates how to run a Kinoma Blinking Light Library (BLL) once
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### browser
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/browser">browser</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/browser"><img src="http://kinoma.github.io/KPR-examples/images/browser-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="browser.example.kinoma.marvell.com" platform="mac,win,iphone,android"></x-app-info>
@@ -48,7 +48,7 @@ This example demonstrates how to implement an embedded web view container. The c
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### camera
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/camera">camera</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/camera"><img src="http://kinoma.github.io/KPR-examples/images/camera-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="camera.example.kinoma.marvell.com" platform="mac,win,iphone,android"></x-app-info>
@@ -58,7 +58,7 @@ A simple camera app supporting live preview and capture. This example demonstrat
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### canvas
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/canvas">canvas</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/canvas"><img src="http://kinoma.github.io/KPR-examples/images/canvas-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="canvas.example.kinoma.marvell.com"></x-app-info>
@@ -68,7 +68,7 @@ This mobile framework example demonstrates how to use the HTML 2D Canvas API. Ta
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### controls-buttons
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/controls-buttons">controls-buttons</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/controls-buttons"><img src="http://kinoma.github.io/KPR-examples/images/controls-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="controls.example.kinoma.marvell.com"></x-app-info>
@@ -78,7 +78,7 @@ This example demonstrates how to integrate mobile framework buttons and behavior
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### dialog
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/dialog">dialog</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/dialog"><img src="http://kinoma.github.io/KPR-examples/images/dialogs-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="dialog.example.kinoma.marvell.com"></x-app-info>
@@ -88,7 +88,7 @@ This example demonstrates how to setup and display mobile framework dialogs. Var
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### discovery-client
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/discovery-client">discovery-client</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/discovery-client"><img src="http://kinoma.github.io/KPR-examples/images/discoveryclient-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="discoveryclient.example.kinoma.marvell.com"></x-app-info>
@@ -98,7 +98,7 @@ This client app is intended to be run simultaneously with the "Device Discovery 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### discovery-server
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/discovery-server">discovery-server</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/discovery-server"><img src="http://kinoma.github.io/KPR-examples/images/discoveryserver-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="discoveryserver.example.kinoma.marvell.com"></x-app-info>
@@ -108,7 +108,7 @@ This server app is intended to be run simultaneously with the "Device Discovery 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### effects
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/effects">effects</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/effects"><img src="http://kinoma.github.io/KPR-examples/images/effects-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="effects.example.kinoma.marvell.com"></x-app-info>
@@ -118,7 +118,7 @@ This mobile framework example demonstrates how to build and apply a variety of e
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### file-explorer
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/file-explorer">file-explorer</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/file-explorer"><img src="http://kinoma.github.io/KPR-examples/images/file-explorer-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="fileexplorer.example.kinoma.marvell.com"></x-app-info>
@@ -128,7 +128,7 @@ This mobile framework example demonstrates how to use the global KPR Files objec
 <div style="clear:both; margin-bottom: 16px;"></div>
 ***
 
-### flickr-grid
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/flickr-grid">flickr-grid</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/flickr-grid"><img src="http://kinoma.github.io/KPR-examples/images/flickr-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="flickrgrid.example.kinoma.marvell.com"></x-app-info>
@@ -138,7 +138,7 @@ This sample code demonstrates how to implement an interactive scrolling photo th
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### hello
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/hello">hello</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/hello"><img src="http://kinoma.github.io/KPR-examples/images/hello-kpr-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="hello.example.kinoma.marvell.com"></x-app-info>
@@ -148,7 +148,7 @@ A minimal application that creates a full-screen container and displays the text
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### kangaroo-disco
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/kangaroo-disco">kangaroo-disco</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/kangaroo-disco"><img src="http://kinoma.github.io/KPR-examples/images/kangaroo-disco-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="kangaroo.disco.example.douzen.com"></x-app-info>
@@ -158,7 +158,7 @@ This ECMAScript API example displays a synchronized animation built with 256 bal
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### kangaroo-text
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/kangaroo-text">kangaroo-text</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/kangaroo-text"><img src="http://kinoma.github.io/KPR-examples/images/kangaroo-text-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="kangaroo.text.example.douzen.com"></x-app-info>
@@ -168,7 +168,7 @@ This ECMAScript API example displays a synchronized vortex animation built with 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### kinoma-graph
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/kinoma-graph">kinoma-graph</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/kinoma-graph"><img src="http://kinoma.github.io/KPR-examples/images/spirograph-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="kinomagraph.example.kinoma.marvell.com"></x-app-info>
@@ -178,7 +178,7 @@ Uses Canvas 2D to implement a virtual hypotrochoid device. Custom sliders contro
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### layers
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/layers">layers</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/layers"><img src="http://kinoma.github.io/KPR-examples/images/layers-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="layers.example.kinoma.marvell.com"></x-app-info>
@@ -188,7 +188,7 @@ Uses Canvas 2D to implement a virtual hypotrochoid device. Custom sliders contro
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### media-library
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/media-library">media-library</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/media-library"><img src="http://kinoma.github.io/KPR-examples/images/media-library-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="medialibrary.example.kinoma.marvell.com" platform="mac,iphone,android"></x-app-info>
@@ -198,7 +198,7 @@ This mobile framework application demonstrates how to access the core media libr
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### menu-button
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/menu-button">menu-button</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/menu-button"><img src="http://kinoma.github.io/KPR-examples/images/menu-button-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="menubutton.example.kinoma.marvell.com"></x-app-info>
@@ -208,7 +208,7 @@ This example demonstrates how to use a mobile framework menu button. The menu bu
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### multitouch-picture
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/multitouch-picture">multitouch-picture</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/multitouch-picture"><img src="http://kinoma.github.io/KPR-examples/images/multitouch-picture-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="multitouchpicture.example.kinoma.marvell.com" platform="mac,iphone,android,linux"></x-app-info>
@@ -218,7 +218,7 @@ This example demonstrates how to use features of the MultiTouch Library to creat
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### oauth
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/oauth">oauth</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/oauth"><img src="http://kinoma.github.io/KPR-examples/images/oauth-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="oauth.example.kinoma.marvell.com" platform="mac,iphone,android"></x-app-info>
@@ -228,7 +228,7 @@ This example demonstrates how to implement OAuth 1.0a (Twitter) and OAuth 2.0 (G
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### orientation
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/orientation">orientation</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/orientation"><img src="http://kinoma.github.io/KPR-examples/images/screen-orientation-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="orientation.example.kinoma.marvell.com"></x-app-info>
@@ -238,7 +238,7 @@ This example uses a layout container to demonstrate how to adapt layouts to devi
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### periodic-fetch
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/periodic-fetch">periodic-fetch</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/periodic-fetch"><img src="http://kinoma.github.io/KPR-examples/images/periodic-update-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="periodic.example.kinoma.marvell.com"></x-app-info>
@@ -248,7 +248,7 @@ Basic digital clock driven by a periodic update implemented by a pair of handler
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### platform-identifier
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/platform-identifier">platform-identifier</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/platform-identifier"><img src="http://kinoma.github.io/KPR-examples/images/platform-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="platform.example.kinoma.marvell.com"></x-app-info>
@@ -258,7 +258,7 @@ A minimal application that reads and displays the host platform string read from
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### port
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/port">port</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/port"><img src="http://kinoma.github.io/KPR-examples/images/port-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="port.example.kinoma.marvell.com"></x-app-info>
@@ -268,7 +268,7 @@ This application demonstrates how to use a KPR port object to implement a simple
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### preferences
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/preferences">preferences</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/preferences"><img src="http://kinoma.github.io/KPR-examples/images/preferences-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="preferences.example.kinoma.marvell.com"></x-app-info>
@@ -278,7 +278,7 @@ This sample demonstrates how to implement preferences that persist across applic
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### project-3d
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/project-3d">project-3d</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/project-3d"><img src="http://kinoma.github.io/KPR-examples/images/project-3d-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="project3d.example.kinoma.marvell.com"></x-app-info>
@@ -288,7 +288,7 @@ This example demonstrates how to use the projectImage function of the port objec
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### proxy-handler
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/proxy-handler">proxy-handler</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/proxy-handler"><img src="http://kinoma.github.io/KPR-examples/images/proxy-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="proxyhandler.example.kinoma.marvell.com"></x-app-info>
@@ -298,7 +298,7 @@ Photo images are fetched from a Flickr feed using a proxy handler which returns 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### slideshow
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/slideshow">slideshow</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/slideshow"><img src="http://kinoma.github.io/KPR-examples/images/slideshow-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="slideshow.example.kinoma.marvell.com"></x-app-info>
@@ -308,7 +308,7 @@ Displays a slideshow of images animating picture scaling, panning and opacity se
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### sound
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/sound">sound</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/sound"><img src="http://kinoma.github.io/KPR-examples/images/sound-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="sound.example.kinoma.marvell.com"></x-app-info>
@@ -318,7 +318,7 @@ Displays a mockup camera preview with shutter button. Tapping the button plays a
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### spinner
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/spinner">spinner</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/spinner"><img src="http://kinoma.github.io/KPR-examples/images/spinner-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="spinner.example.kinoma.marvell.com"></x-app-info>
@@ -328,7 +328,7 @@ Displays a spinning busy indicator by rotating a custom graphic using a periodic
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### ssdp
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/ssdp">ssdp</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/ssdp"><img src="http://kinoma.github.io/KPR-examples/images/ssdp-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="ssdp.example.kinoma.marvell.com"></x-app-info>
@@ -338,7 +338,7 @@ A simple application that shows SSDP usage. The application starts a HTTP server
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### states
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/states">states</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/states"><img src="http://kinoma.github.io/KPR-examples/images/states-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="states.example.kinoma.marvell.com"></x-app-info>
@@ -348,7 +348,7 @@ This example demonstrates how to use content states to change a button's backgro
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### style-inheritance
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/style-inheritance">style-inheritance</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/style-inheritance"><img src="http://kinoma.github.io/KPR-examples/images/style-inheritance-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="styleInheritance.example.kinoma.marvell.com"></x-app-info>
@@ -358,7 +358,7 @@ This example demonstrates how KPR cascades styles in the container hierarchy. A 
 <div style="clear:both; margin-bottom: 16px;"></div>
 ***
 
-### styles
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/styles">styles</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/styles"><img src="http://kinoma.github.io/KPR-examples/images/styles-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="styles.example.kinoma.marvell.com"></x-app-info>
@@ -368,7 +368,7 @@ This example displays a vertical scrolling column of text formatted with a wide 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### tabs
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/tabs">tabs</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/tabs"><img src="http://kinoma.github.io/KPR-examples/images/tabs-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="tabs.example.kinoma.marvell.com"></x-app-info>
@@ -378,7 +378,7 @@ This mobile framework example demonstrates how to build a tabbed UI screen. Each
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### text
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/text">text</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/text"><img src="http://kinoma.github.io/KPR-examples/images/text-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="text.example.kinoma.marvell.com"></x-app-info>
@@ -388,7 +388,7 @@ This mobile framework example demonstrates how to use the ECMAScript API to get 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### tiled-skins
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/tiled-skins">tiled-skins</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/tiled-skins"><img src="http://kinoma.github.io/KPR-examples/images/tiled-skins-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="tiledskins.example.kinoma.marvell.com"></x-app-info>
@@ -398,7 +398,7 @@ This example demonstrates how to use tiled skins to fill content. Examples of ni
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### timers
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/timers">timers</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/timers"><img src="http://kinoma.github.io/KPR-examples/images/timers-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="timers.example.kinoma.marvell.com"></x-app-info>
@@ -408,7 +408,7 @@ This example demonstrates how to use different timer techniques: One-shot, inter
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### transitions
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/transitions">transitions</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/transitions"><img src="http://kinoma.github.io/KPR-examples/images/transistion-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="transitions.example.kinoma.marvell.com"></x-app-info>
@@ -418,7 +418,7 @@ This example demonstrates how to use the Transitions library to configure and us
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### websocket-client
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/websocket-client">websocket-client</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/websocket-client"><img src="http://kinoma.github.io/KPR-examples/images/websocket-client-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="websocketclient.example.kinoma.marvell.com"></x-app-info>
@@ -428,7 +428,7 @@ This mobile framework application demonstrates how to implement a web socket cli
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### websocket-server
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/websocket-server">websocket-server</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/websocket-server"><img src="http://kinoma.github.io/KPR-examples/images/websocket-server-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="websocketserver.example.kinoma.marvell.com"></x-app-info>
@@ -438,7 +438,7 @@ This application demonstrates how to implement a web socket server in KPR. Coupl
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### xml-dom
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/xml-dom">xml-dom</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/xml-dom"><img src="http://kinoma.github.io/KPR-examples/images/xml-dom-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="xmldom.example.kinoma.marvell.com"></x-app-info>
