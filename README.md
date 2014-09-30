@@ -1,4 +1,4 @@
-### balls
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/balls">balls</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/balls"><img src="http://kinoma.github.io/KPR-examples/images/balls-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="balls.example.kinoma.marvell.com"></x-app-info>
