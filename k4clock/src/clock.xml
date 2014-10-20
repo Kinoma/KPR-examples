@@ -1,0 +1,196 @@
+<program xmlns="http://www.kinoma.com/kpr/1">
+
+	<container id="Clock" left="0" right="0" top="0" bottom="0" skin="$.clock.theme.skin" style="$.clock.theme.style">
+		<select on="$.clock.analog">
+			<canvas width="320" height="240" active="true">
+				<behavior>
+					<method id="draw" params="canvas"><![CDATA[
+						var ctx = canvas.getContext("2d");
+						ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+						var clock = this.data.clock;
+						var x = canvas.width >> 1;
+						var y = canvas.height >> 1;
+						var r = canvas.height >> 1;
+						var date = new Date();
+						var hours = date.getHours();
+						var minutes = date.getMinutes();
+						var seconds = date.getSeconds();
+						var am = hours < 12;
+						if (hours > 12)
+							hours -= 12;
+						
+						ctx.lineCap = "round";
+						ctx.lineWidth = 4;
+						var from = r - 10;
+						var to = r - 20;
+						var angle = 0;
+						var step = Math.PI / 30;
+						for (var i = 0; i < 12; i++) {
+							ctx.strokeStyle = clock.theme.foregroundColor;
+							ctx.beginPath();
+							ctx.moveTo(x + from * Math.cos(angle), y + from * Math.sin(angle));
+							ctx.lineTo(x + to * Math.cos(angle), y + to * Math.sin(angle));
+							ctx.stroke();
+							angle += step;
+							ctx.strokeStyle = clock.theme.hiliteColor;
+							for (var j = 0; j < 4; j++) {
+								ctx.beginPath();
+								ctx.moveTo(x + from * Math.cos(angle), y + from * Math.sin(angle));
+								ctx.lineTo(x + to * Math.cos(angle), y + to * Math.sin(angle));
+								ctx.stroke();
+								angle += step;
+							}
+						}
+						
+						ctx.lineCap = "round";
+						ctx.lineWidth = 10;
+						ctx.strokeStyle = clock.theme.foregroundColor;
+						
+						angle = (Math.PI/6*(hours+(minutes/60)+(seconds/3600)))-(Math.PI/2);
+						length = r - 50;
+						ctx.beginPath();
+						ctx.moveTo(x, y);
+						ctx.lineTo(x + length * Math.cos(angle), y + length * Math.sin(angle));
+						ctx.stroke();
+						
+						angle = (Math.PI/30*(minutes+(seconds/60)))-(Math.PI/2);
+						length = r - 30;
+						ctx.beginPath();
+						ctx.moveTo(x, y);
+						ctx.lineTo(x + length * Math.cos(angle), y + length * Math.sin(angle));
+						ctx.stroke();
+	
+						ctx.fillStyle = clock.theme.foregroundColor;
+						ctx.beginPath();
+						ctx.arc(x, y, 10, 0, 2 * Math.PI);
+						ctx.closePath();
+						ctx.fill();
+						/*
+						ctx.textAlign = "right"
+						ctx.textBaseline = "middle"
+						ctx.font = "24px Fira Sans"
+						ctx.fillStyle = clock.theme.foregroundColor;
+						if (am)
+							ctx.fillText("am", canvas.width - 10, canvas.height - 20);
+						else
+							ctx.fillText("pm", canvas.width - 10, 20);
+						*/
+						var alarm = this.data.alarm;
+						if (alarm.running) {
+							hours = alarm.hours;
+							am = hours < 12;
+							if (hours > 12)
+								hours -= 12;
+							minutes = alarm.minutes;
+							angle = (Math.PI/6*(hours+(minutes/60)))-(Math.PI/2);
+							length = r - 50;
+							ctx.beginPath();
+							ctx.moveTo(x, y);
+							ctx.lineTo(x + length * Math.cos(angle), y + length * Math.sin(angle));
+							ctx.lineCap = "round";
+							ctx.lineWidth = 4;
+							ctx.strokeStyle = alarm.theme.foregroundColor;
+							ctx.stroke();
+							ctx.fillStyle = alarm.theme.foregroundColor;
+							ctx.beginPath();
+							ctx.arc(x, y, 4, 0, 2 * Math.PI);
+							ctx.closePath();
+							ctx.fill();
+							ctx.textAlign = "left"
+							ctx.textBaseline = "middle"
+							ctx.font = "24px Fira Sans"
+							ctx.fillStyle = alarm.theme.foregroundColor;
+							if (am)
+								ctx.fillText("am", 10, canvas.height - 20);
+							else
+								ctx.fillText("pm", 10, 20);
+						}
+					]]></method>
+					<method id="onCreate" params="canvas, $"><![CDATA[
+						this.data = $;
+						this.draw(canvas);
+					]]></method>
+					<method id="onDisplaying" params="canvas"><![CDATA[
+						canvas.interval = 1000 * 30;
+						canvas.start();
+					]]></method>
+					<method id="onTimeChanged" params="canvas"><![CDATA[
+						this.draw(canvas);
+					]]></method>
+					<method id="onTouchEnded" params="canvas"><![CDATA[
+						this.data.clock.analog = false;
+						model.savePreferences();
+						application.run(new FlipLeftTransition, application.first, model.createScreen());
+					]]></method>
+				</behavior>
+			</canvas>
+		</select>
+		<select on="!$.clock.analog">
+			<container like="DigitalClockPane"/>
+			<label left="0" right="0" height="40" bottom="0" style="clockAlarmStyle" string="$.alarm.string" visible="$.alarm.running"/>
+			<container left="0" right="0" top="0" bottom="0" active="true">
+				<behavior>
+					<method id="onCreate" params="container, $"><![CDATA[
+						this.data = $.clock;
+						this.onClockChanged(container);
+					]]></method>
+					<method id="onClockChanged" params="container"><![CDATA[
+						var $ = this.data;
+						var date = new Date();
+						var label = container.first;
+						label.string = LOCALE.getDayName(date.getDay()).toUpperCase();
+						label = label.next;
+						label.string = LOCALE.getMonthName(1 + date.getMonth()).toUpperCase() + " " + date.getDate();
+					]]></method>
+					<method id="onTouchEnded" params="container"><![CDATA[
+						this.data.analog = true;
+						model.savePreferences();
+						application.run(new FlipRightTransition, application.first, model.createScreen());
+					]]></method>
+				</behavior>
+				<label left="0" right="0" top="0" height="40" style="clockLeftTitleStyle">
+				</label>
+				<label left="0" right="0" top="0" height="40" style="clockRightTitleStyle">
+				</label>
+			</container>
+		</select>
+	</container>
+	<container id="DigitalClockPane" left="0" right="0" top="0" bottom="0">
+		<behavior>
+			<method id="onCreate" params="container, $"><![CDATA[
+				this.onClockChanged(container);
+			]]></method>
+			<method id="onClockChanged" params="container"><![CDATA[
+				var line = container.first;
+				var hoursLabel = line.first;
+				var minutesLabel = hoursLabel.next.next;
+				var ampmContainer = minutesLabel.next;
+				var date = new Date();
+				var hours = date.getHours();
+				var minutes = date.getMinutes();
+				var am = hours < 12;
+				if (hours > 12)
+					hours -= 12;
+				else if (hours == 0)
+					hours = 12;
+				if (minutes < 10)
+					minutes = '0' + minutes;
+				hoursLabel.string = hours;
+				minutesLabel.string = minutes;
+				ampmContainer.first.visible = am;
+				ampmContainer.last.visible = !am;
+			]]></method>
+		</behavior>
+		<line>
+			<label style="clockDigitsStyle"/>
+			<label style="clockDigitsStyle" string="':'"/>
+			<label style="clockDigitsStyle"/>
+			<container top="24" bottom="22">
+				<label bottom="0" style="clockAMStyle" string="'am'"/>
+				<label top="0" style="clockPMStyle" string="'pm'"/>
+			</container>
+		</line>
+	</container>
+	
+</program>

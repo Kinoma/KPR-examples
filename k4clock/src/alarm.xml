@@ -1,0 +1,419 @@
+<program xmlns="http://www.kinoma.com/kpr/1">
+
+	<function id="alarmTouch" params="which, behavior, container, id, x, y, ticks"><![CDATA[
+		if (touchRotation) {
+			var ax = application.x;
+			var ay = application.y;
+			which.call(behavior, container, id, 240 - (y - ay) + ax + 40, x - ax + ay + 40, ticks);
+		}
+		else
+			which.call(behavior, container, id, x, y, ticks);
+	]]></function>
+	<variable id="cellHeight" value="48"/>
+	<line id="PickerLine" left="0" right="0" height="cellHeight"/>
+	<scroller id="PickerScroller" top="0" bottom="0" active="true" clip="true">
+		<behavior like="SCROLLER.VerticalScrollerBehavior" >
+			<method id="onScrolled" params="scroller"><![CDATA[
+				if (!scroller.tracking)
+					scroller.bubble("onChanged");
+			]]></method>
+			<method id="onTouchCancelled" params="scroller, id, x, y, ticks"><![CDATA[
+				alarmTouch(SCROLLER.VerticalScrollerBehavior.prototype.onTouchCancelled, this, scroller, id, x, y, ticks);
+			]]></method>
+			<method id="onTouchBegan" params="scroller, id, x, y, ticks"><![CDATA[
+				alarmTouch(SCROLLER.VerticalScrollerBehavior.prototype.onTouchBegan, this, scroller, id, x, y, ticks);
+			]]></method>
+			<method id="onTouchEnded" params="scroller, id, x, y, ticks"><![CDATA[
+				alarmTouch(SCROLLER.VerticalScrollerBehavior.prototype.onTouchEnded, this, scroller, id, x, y, ticks);
+			]]></method>
+			<method id="onTouchMoved" params="scroller, id, x, y, ticks"><![CDATA[
+				alarmTouch(SCROLLER.VerticalScrollerBehavior.prototype.onTouchMoved, this, scroller, id, x, y, ticks);
+			]]></method>
+			<method id="peek" params="id"><![CDATA[
+				var points = touches.peek(id);
+				if (touchRotation) {
+					var ax = application.x;
+					var ay = application.y;
+					var c = points.length;
+					for (var i = 0; i < c; i++) {
+						var point = points[i];
+						var x = point.x;
+						var y = point.y;
+						point.x = 240 - (y - ay) + ax + 40;
+						point.y = x - ax + ay + 40;
+					}
+				}
+				return points;
+			]]></method>
+			<method id="snap" params="scroller, position, direction"><![CDATA[
+				if (direction < 0)
+					position = cellHeight * Math.ceil(position / cellHeight);
+				else if (direction > 0)
+					position = cellHeight * Math.floor(position / cellHeight);
+				else
+					position = cellHeight * Math.round(position / cellHeight);
+				return position;
+			]]></method>
+		</behavior>
+	</scroller>
+	<container id="PickerShadow" left="0" right="0" top="0" bottom="0">
+		<content left="0" right="0" top="35" height="100" skin="shadowsSkin" state="$.theme.state" variant="0"/>
+		<content left="0" right="0" bottom="35" height="100" skin="shadowsSkin" state="$.theme.state" variant="1"/>
+		<content left="0" right="0" top="135" height="1" skin="$.theme.separatorSkin"/>
+		<content left="0" right="0" bottom="135" height="1" skin="$.theme.separatorSkin"/>
+	</container>
+	<container id="Alarm" left="0" right="0" top="0" bottom="0" skin="$.alarm.theme.skin" style="$.alarm.theme.style">
+		<behavior>
+			<method id="onCreate" params="container, $"><![CDATA[
+				$ = $.alarm;
+				if ($.setting) 
+					container.add(new AlarmSettings($));
+				else
+					container.add(new AlarmPane($));
+			]]></method>
+		</behavior>
+	</container>
+	<container id="AlarmPane" left="0" right="0" top="0" bottom="0">
+		<container left="0" right="0" height="5 * cellHeight">
+			<behavior>
+				<method id="onChanged" params="line"><![CDATA[
+					var alarm = this.data;
+					var scroller = line.first;
+					var hours = ((scroller.constraint.y / cellHeight) + 2) % 12;
+					scroller = scroller.next;
+					var minutes = 5 * (((scroller.constraint.y / cellHeight) + 2) % 12);
+					scroller = scroller.next;
+					if (scroller.constraint.y)
+						hours += 12;
+					alarm.hours = hours;
+					alarm.minutes = minutes;
+					alarm.string = getAlarmString(hours, minutes);
+					alarm.when = getAlarmWhen(hours, minutes);
+					model.savePreferences();
+				]]></method>
+				<method id="onCreate" params="line, $"><![CDATA[
+					this.data = $;
+					var time = new Date();
+					var hours = this.data.hours;
+					var minutes = this.data.minutes;
+					var scroller = line.first;
+					scroller.scroll = { x: 0, y: cellHeight * (hours - 2) };
+					scroller.next.scroll =  { x: 0, y: cellHeight * (Math.floor(minutes / 5) - 2) };
+					scroller.next.next.scroll =  { x: 0, y: cellHeight * ((hours < 12) ? 0 : 1) };
+				]]></method>
+			</behavior>
+			<scroller like="PickerScroller" left="0" width="80" loop="true">
+				<column left="0" right="0" top="0">
+					<iterate on="['12','1','2','3','4','5','6','7','8','9','10','11']">
+						<line like="PickerLine">
+							<label left="0" right="0" top="0" bottom="0" style="alarmHourStyle" string="$"/>
+						</line>
+					</iterate>
+				</column>
+			</scroller>
+			<scroller like="PickerScroller" left="80" width="80" loop="true">
+				<column left="0" right="0" top="0">
+					<iterate on="['00','05','10','15','20','25','30','35','40','45','50','55']">
+						<line like="PickerLine">
+							<label left="0" right="0" top="0" bottom="0" style="alarmMinuteStyle" string="$"/>
+						</line>
+					</iterate>
+				</column>
+			</scroller>
+			<scroller like="PickerScroller" left="160" width="80" >
+				<column left="0" right="0" top="0">
+					<iterate on="[' ',' ','am','pm',' ',' ']">
+						<line like="PickerLine">
+							<label left="0" right="0" top="0" bottom="0" style="alarmAMPMStyle" string="$"/>
+						</line>
+					</iterate>
+				</column>
+			</scroller>
+		</container>
+		<container like="PickerShadow"/>
+		<container left="0" width="240" top="0" height="70" active="true">
+			<behavior like="CONTROL.ButtonBehavior">
+				<method id="changeState" params="container, state"><![CDATA[
+					container.first.state = state - 1;
+				]]></method>
+				<method id="onTap" params="container"><![CDATA[
+					this.data.setting = true;
+					application.run(new FlipLeftTransition, application.first, model.createScreen());
+				]]></method>
+			</behavior>
+			<content right="0" top="0" skin="settingsSkin" variant="model.ambient"/>
+		</container>
+		<!--
+		<canvas left="0" width="240" top="0" height="70" active="true">
+			<behavior like="CanvasButtonBehavior">
+				<method id="draw" params="canvas"><![CDATA[
+					var data = this.data;
+					var ctx = canvas.getContext("2d");
+					ctx.clearRect(0, 0, canvas.width, canvas.height);
+					settingsTexture.effect = canvas.state > 1 ? data.theme.hiliteEffect : data.theme.foregroundEffect;
+					ctx.drawImage(settingsTexture, 200, 0);
+				]]></method>
+				<method id="onTap" params="canvas"><![CDATA[
+					this.data.setting = true;
+					application.run(new FlipLeftTransition, application.first, model.createScreen());
+				]]></method>
+			</behavior>
+		</canvas>
+		-->
+		<label left="0" right="0" top="0" height="40" style="alarmTitleStyle" string="$.title"/>
+		<canvas left="0" width="240" height="70" bottom="0" active="true">
+			<behavior>
+				<method id="draw" params="canvas"><![CDATA[
+					var data = this.data;
+					var theme = data.theme;
+					var x = canvas.width >> 1;
+					var y = canvas.height >> 1;
+					
+					var ctx = canvas.getContext("2d");
+					ctx.clearRect(0, 0, canvas.width, canvas.height);
+					ctx.lineWidth = 1;
+					ctx.roundRect(x - 80, y - 20, 160, 40, 20);
+					var value = this.offset / this.size;
+					var color = blendColors(value, theme.hiliteColor, theme.foregroundColor);
+					ctx.fillStyle = color;
+					ctx.fill();
+					ctx.strokeStyle = color;
+					ctx.stroke();
+				
+					ctx.textAlign = "center"
+					ctx.textBaseline = "middle"
+					ctx.font = "24px Fira Sans"
+					ctx.fillStyle = theme.backgroundColor;
+					ctx.fillText("ON", x - 40, y + 2);
+					ctx.font = "24px Fira Sans Light"
+					ctx.fillStyle = theme.foregroundColor;
+					ctx.fillText("OFF", x + 40, y + 2);
+				
+					ctx.roundRect(x - 80 + this.offset, y - 20, 90, 40, 20);
+					ctx.fillStyle = theme.backgroundColor;
+					ctx.fill();
+					ctx.strokeStyle = theme.foregroundColor;
+					ctx.stroke();
+				
+				]]></method>
+				<method id="changeState" params="canvas, state"><![CDATA[
+					canvas.state = state;
+					this.draw(canvas);
+				]]></method>
+				<method id="onCreate" params="canvas, $"><![CDATA[
+					this.data = $;
+					this.offset = this.data.running ? 70 : 0;
+					this.size = 70;
+					this.draw(canvas);
+				]]></method>
+				<method id="changeOffset" params="canvas, offset"><![CDATA[
+					var size = this.size;
+					if (offset < 0)
+						offset = 0;
+					else if (offset > size)
+						offset = size;
+					this.offset = offset;
+					this.draw(canvas);
+				]]></method>
+				<method id="onDisplaying" params="canvas"><![CDATA[
+				]]></method>
+				<method id="onFinished" params="canvas"><![CDATA[
+					this.data.running = this.offset > 0;
+					model.savePreferences();
+				]]></method>
+				<method id="onTimeChanged" params="canvas"><![CDATA[
+					this.changeOffset(canvas, this.anchor + Math.round(this.delta * canvas.fraction));
+				]]></method>
+				<method id="onTouchBegan" params="canvas, id, x, y, ticks"><![CDATA[
+					alarmTouch(this.onTouchBegan2, this, canvas, id, x, y, ticks);
+				]]></method>
+				<method id="onTouchBegan2" params="canvas, id, x, y, ticks"><![CDATA[
+					if (canvas.running) {
+						canvas.stop();
+						canvas.time = canvas.duration;
+					}
+					this.anchor = x;
+					this.capturing = false;
+					this.delta = this.offset - x;
+					this.changeState(canvas, 1);
+				]]></method>
+				<method id="onTouchCancelled" params="canvas, id, x, y, ticks"><![CDATA[
+					this.changeState(canvas, 0);
+				]]></method>
+				<method id="onTouchEnded" params="canvas, id, x, y, ticks"><![CDATA[
+					alarmTouch(this.onTouchEnded2, this, canvas, id, x, y, ticks);
+				]]></method>
+				<method id="onTouchEnded2" params="canvas, id, x, y, ticks"><![CDATA[
+					var offset = this.offset;
+					var size =  this.size;
+					var delta = size >> 1;
+					if (this.capturing) {
+						if (offset < delta)
+							delta = 0 - offset;
+						else 
+							delta = size - offset;
+					}
+					else {
+						if (offset == 0)
+							delta = size;
+						else if (offset == size)
+							delta = 0 - size;
+						else if (x < this.half)
+							delta = 0 - offset;
+						else
+							delta = size - offset;
+					}
+					if (delta) {
+						this.anchor = offset;
+						this.delta = delta;
+						canvas.duration = 250 * Math.abs(delta) / size;
+						canvas.time = 0;
+						canvas.start();
+					}
+					this.changeState(canvas, 0);
+				]]></method>
+				<method id="onTouchMoved" params="canvas, id, x, y, ticks"><![CDATA[
+					alarmTouch(this.onTouchMoved2, this, canvas, id, x, y, ticks);
+				]]></method>
+				<method id="onTouchMoved2" params="canvas, id, x, y, ticks"><![CDATA[
+					if (this.capturing) {
+						this.changeOffset(canvas, this.delta + x);
+					}
+					else if (Math.abs(x - this.anchor) >= 10) {
+						this.capturing = true;
+						canvas.captureTouch(id, x, y, ticks);
+						this.changeOffset(canvas, this.delta + x);
+					}
+				]]></method>
+			</behavior>
+		</canvas>	
+	</container>
+	<container id="AlarmSettings" left="0" right="0" top="0" bottom="0">
+		<behavior>
+			<method id="onBeep" params="container"><![CDATA[
+				var data = this.data;
+				var index = data.soundIndex;
+				if (index) {
+					var sound = model.sounds[index - 1].sound;
+					Sound.volume = data.volume;
+					sound.play();
+				}
+			]]></method>
+			<method id="onCreate" params="container, $"><![CDATA[
+				this.data = $;
+				this.flag = $.soundIndex != 0;
+			]]></method>
+			<method id="onSync" params="container"><![CDATA[
+				var flag = this.data.soundIndex != 0;
+				if (this.flag != flag) {
+					this.flag = flag;
+					var label = container.last;
+					var slider = label.previous;
+					if (flag)
+						container.run(new AlarmSettingsTransition, label, slider)
+					else
+						container.run(new AlarmSettingsTransition, slider, label);
+				}
+			]]></method>
+		</behavior>
+		<container left="0" right="0" height="5 * cellHeight" style="alarmSettingsStyle">
+			<behavior>
+				<method id="onChanged" params="line"><![CDATA[
+					var data = this.data;
+					var scroller = line.first;
+					var index = Math.round((((scroller.constraint.y / cellHeight))));
+					if (data.soundIndex != index) {
+						data.soundIndex = index;
+						model.savePreferences();
+						line.bubble("onBeep");
+						line.bubble("onSync");
+					}
+				]]></method>
+				<method id="onCreate" params="line, $"><![CDATA[
+					this.data = $;
+					var scroller = line.first;
+					scroller.scroll = { x: 0, y: cellHeight * $.soundIndex };
+				]]></method>
+			</behavior>
+			<scroller like="PickerScroller" left="0" right="0">
+				<column left="0" right="0" top="0">
+					<line like="PickerLine"/>
+					<line like="PickerLine"/>
+					<line like="PickerLine">
+						<label left="0" right="0" top="0" bottom="0" style="model.data.radio.theme.style" string="'Radio'"/>
+					</line>
+					<iterate on="model.sounds">
+						<line like="PickerLine">
+							<label left="0" right="0" top="0" bottom="0" string="$.name"/>
+						</line>
+					</iterate>
+					<line like="PickerLine"/>
+					<line like="PickerLine"/>
+				</column>
+			</scroller>
+		</container>
+		<container like="PickerShadow"/>
+		<canvas left="0" width="240" top="0" height="70" active="true">
+			<behavior like="CanvasButtonBehavior">
+				<method id="draw" params="canvas"><![CDATA[
+					var data = this.data;
+					var theme = data.theme;
+					var x = canvas.width >> 1;
+					var y = canvas.height >> 1;
+					var ctx = canvas.getContext("2d");
+					ctx.clearRect(0, 0, canvas.width, canvas.height);
+					ctx.lineCap = "round";
+					ctx.lineJoin = "round";
+					ctx.lineWidth = 3;
+					ctx.beginPath();
+					ctx.moveTo(20, 10);
+					ctx.lineTo(10, 20);
+					ctx.lineTo(20, 30);
+					ctx.strokeStyle = canvas.state > 1 ? theme.hiliteColor : theme.foregroundColor;
+					ctx.stroke();
+				]]></method>
+				<method id="onTap" params="canvas"><![CDATA[
+					this.data.setting = false;
+					application.run(new FlipRightTransition, application.first, model.createScreen());
+				]]></method>
+			</behavior>
+		</canvas>	
+		<label left="0" right="0" top="0" height="40" style="alarmTitleStyle" string="$.title"/>
+		<canvas left="0" width="240" height="70" bottom="0" active="$.soundIndex != 0" visible="$.soundIndex != 0" >
+			<behavior like="CanvasSliderBehavior">
+				<method id="onTouchEnded" params="canvas, id, x, y, ticks"><![CDATA[
+					CanvasSliderBehavior.prototype.onTouchEnded.call(this, canvas, id, x, y, ticks);
+					canvas.bubble("onBeep");
+				]]></method>
+				<method id="onTouchMoved" params="canvas, id, x, y, ticks"><![CDATA[
+					alarmTouch(CanvasSliderBehavior.prototype.onTouchMoved, this, canvas, id, x, y, ticks);
+				]]></method>
+			</behavior>
+		</canvas>
+		<container left="0" right="0" height="70" bottom="0" active="$.soundIndex == 0" visible="$.soundIndex == 0" style="model.data.radio.theme.style">
+			<label left="0" right="0" height="40" bottom="15" style="radioTitleStyle" string="channels[model.data.radio.index].title"/>
+		</container>
+	</container>
+	<transition id="AlarmSettingsTransition" duration="250">
+		<method id="onBegin" params="container, formerScreen, currentScreen"><![CDATA[
+			formerScreen.active = false;
+			currentScreen.visible = true;
+			var formerLayer = this.formerLayer = new Layer(null, false, true);
+			formerLayer.attach(formerScreen);
+			var currentLayer = this.currentLayer = new Layer(null, false, true);
+			currentLayer.attach(currentScreen);
+		]]></method>
+		<method id="onEnd" params="container, formerScreen, currentScreen"><![CDATA[
+			this.currentLayer.detach();
+			this.formerLayer.detach();
+			formerScreen.visible = false;
+			currentScreen.active = true;
+		]]></method>
+		<method id="onStep" params="fraction"><![CDATA[
+			this.formerLayer.translation = { y: 70 * (fraction) };
+			this.currentLayer.translation = { y: 70 * (1 - fraction) };
+		]]></method>
+	</transition>
+	
+</program>
+	

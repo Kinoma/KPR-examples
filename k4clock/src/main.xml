@@ -1,0 +1,941 @@
+<program xmlns="http://www.kinoma.com/kpr/1">	
+	<require id="CONTROL" path="mobile/control"/>
+   	<require id="LOCALE" path="locale"/>
+    <require id="SCROLLER" path="mobile/scroller"/>
+    
+	<style id="applicationStyle" font="18px Fira Sans" color="black" align="left,middle"/>
+	<script>
+		application.style = applicationStyle;
+	</script>
+	
+	<skin id="blackSkin" color="black"/>
+	<skin id="whiteSkin" color="white"/>
+	<effect id="whiteEffect">
+		<colorize color="white"/>
+	</effect>
+	
+	<texture id="settingsTexture" small="./assets/settings.png"/>
+	<skin id="settingsSkin" texture="settingsTexture" x="0" y="0" width="40" height="40">
+		<states offset="40"/>
+		<variants offset="40"/>
+	</skin>
+	
+	<skin id="clockDaySkin" color="white"/>
+	<style id="clockDayStyle" color="#555555">
+	</style>
+	<skin id="clockNightSkin" color="black"/>
+	<style id="clockNightStyle" color="#CCCCCC">
+	</style>
+	
+	<style id="clockLeftTitleStyle" font="32px Fira Sans Light" align="left,middle">
+		<margins left="10"/>
+	</style>
+	<style id="clockRightTitleStyle" font="32px Fira Sans Light" align="right,middle">
+		<margins right="10"/>
+	</style>
+	<style id="clockDigitsStyle" font="144px" align="left,middle"/>
+	<style id="clockAMStyle" font="bold 36px" align="left,bottom"/>
+	<style id="clockPMStyle" font="bold 36px" align="left,top"/>
+	<style id="clockAlarmStyle" font="36px" align="left,middle" color="#f24b2c">
+		<margins left="10"/>
+	</style>
+	
+	<texture id="shadowsTexture" small="./assets/shadows.png"/>
+	<skin id="shadowsSkin" texture="shadowsTexture" x="0" y="0" width="100" height="100">
+		<states offset="100"/>
+		<tiles left="0" right="0"/>
+		<variants offset="100"/>
+	</skin>
+	<style id="alarmTitleStyle" font="32px Fira Sans Light" align="center,middle">
+	</style>
+	<style id="alarmHourStyle" font="48px" align="right,middle">
+		<margins right="10"/>
+	</style>
+	<style id="alarmMinuteStyle" font="48px" align="center,middle">
+	</style>
+	<style id="alarmAMPMStyle" font="48px" align="left,middle">
+		<margins left="10"/>
+	</style>
+	<style id="alarmSettingsStyle" font="48px" align="center,middle">
+	</style>
+	<skin id="alarmDialogSkin" color="#f24b2c"/>
+	<style id="alarmDialogDisplayStyle" font="80px" align="center,middle" color="white">
+	</style>
+	<style id="alarmDigitsStyle" font="96px" align="left,middle" color="white"/>
+	<style id="alarmAMStyle" font="bold 32px" align="left,bottom" color="white"/>
+	<style id="alarmPMStyle" font="bold 32px" align="left,top" color="white"/>
+
+	<style id="radioTitleStyle" font="32px Fira Sans Light" align="center,middle">
+	</style>
+	<style id="radioChannelStyle" font="36px Fira Sans" align="center,middle">
+		<margins left="15" right="15"/>
+	</style>
+
+	<texture id="weatherTexture" small="./assets/weather.png"/>
+	<skin id="weatherSkin" texture="weatherTexture" x="0" y="0" width="180" height="170">
+		<states offset="170"/>
+		<variants offset="180"/>
+	</skin>
+	<texture id="homeTexture" small="./assets/home.png"/>
+	<skin id="homeSkin" texture="homeTexture" x="0" y="0" width="170" height="150">
+		<states offset="150"/>
+	</skin>
+	<skin id="highSkin">
+		<states colors="#80FFFFFF,#802ea7cb"/>
+	</skin>
+	<style id="highStyle" font="80px" align="center,middle">
+		<states colors="#2ea7cb,black"/>
+	</style>
+	<skin id="lowSkin">
+		<states colors="#802ea7cb,#402ea7cb"/>
+	</skin>
+	<style id="lowStyle" font="80px" align="center,middle">
+		<states colors="white,#2ea7cb"/>
+	</style>
+	<skin id="temperatureSkin">
+		<states colors="#2ea7cb,transparent"/>
+	</skin>
+	<style id="temperatureStyle" font="80px" align="center,middle">
+		<states colors="#2ea7cb,#2ea7cb"/>
+	</style>
+	<style id="celsiusStyle" font="32px Fira Sans Light" align="left,middle">
+		<margins left="10"/>
+		<states colors="white,#2ea7cb"/>
+	</style>
+	<style id="fahrenheitStyle" font="32px Fira Sans Light" align="right,middle">
+		<margins right="10"/>
+		<states colors="white,#2ea7cb"/>
+	</style>
+	<variable id="touchRotation" value="1"/>
+
+	<script><![CDATA[
+		var value = getEnvironmentVariable("touchRotation");
+		if (value !== undefined)
+			touchRotation = parseInt(value);
+		KPR.canvasRenderingContext2D.roundRect = function(x, y, width, height, radius) {
+			this.beginPath();
+			this.moveTo(x+radius,y);
+			this.arcTo(x+width,y,x+width,y+radius,radius);
+			this.arcTo(x+width,y+height,x+width-radius,y+height,radius); 
+			this.arcTo(x,y+height,x,y+height-radius,radius);
+			this.arcTo(x,y,x+radius,y,radius);
+			this.closePath();
+		}
+	]]></script>
+	
+	<function id="getAlarmString" params="hours, minutes"><![CDATA[
+		var suffix = hours < 12 ? " am" : " pm";
+		if (hours > 12)
+			hours -= 12;
+		else if (hours == 0)
+			hours = 12;
+		var string = hours + ":";
+		if (minutes < 10)
+			string += '0';
+		string += minutes + suffix;
+		return string;
+	]]></function>
+	<function id="getAlarmWhen" params="hours, minutes"><![CDATA[
+		var when = LOCALE.today() + ((((hours * 60) + minutes) * 60) * 1000);
+		if (when < Date.now())
+			when += 24 * 60 * 60 * 1000;
+		return when;
+	]]></function>
+	<function id="getAlarmVolume"><![CDATA[
+		return Sound.volume;
+	]]></function>
+	<function id="getRadioVolume"><![CDATA[
+		return this.media.volume;
+	]]></function>
+	<function id="setAlarmVolume" params="volume"><![CDATA[
+		Sound.volume = volume;
+	]]></function>
+	<function id="setRadioVolume" params="volume"><![CDATA[
+		if (!this.running)
+			this.media.volume = volume;
+	]]></function>
+	
+	<handler path="/light">
+		<behavior>
+			<method id="onInvoke" params="handler, message"><![CDATA[
+				var value = message.requestObject;
+				if (model.ambient != value)
+					application.delegate("onLightChanged", value);
+			]]></method>
+		</behavior>
+	</handler>
+	<handler path="/orientation">
+		<behavior>
+			<method id="onInvoke" params="handler, message"><![CDATA[
+				var orientation = message.requestObject;
+				if ((-1 != orientation) && (model.current != orientation))
+					application.delegate("onOrientationChanged", orientation);
+			]]></method>
+		</behavior>
+	</handler>
+	<handler path="/temperature">
+		<behavior>
+			<method id="onInvoke" params="handler, message"><![CDATA[
+				var result = message.requestObject;
+				var weather = model.data.weather;
+				if (weather.temperature != result.fahrenheit) {
+					weather.temperature = result.fahrenheit;
+					application.distribute("onTemperatureChanged");
+				}
+			]]></method>
+		</behavior>
+	</handler>
+	<handler path="/wait">
+		<behavior>
+			<method id="onComplete" params="handler, message"><![CDATA[
+				if (model.current < 0) {
+					model.current = 0;
+					application.replace(application.first, model.createScreen());
+				}
+			]]></method>
+			<method id="onInvoke" params="handler, message"><![CDATA[
+				handler.wait(500);
+			]]></method>
+		</behavior>
+	</handler>
+	
+	<behavior id="ApplicationBehavior">
+		<method id="createScreen"><![CDATA[
+			if (this.dialog) {
+				application.first.remove(this.dialog);
+			}
+			var container = new (this.constructors[this.current])(this.data);
+			var layer = container;
+			switch(this.current) {
+			case 0:
+				layer = new Layer({width: 320, height: 240, alpha:false});
+				layer.add(container);
+				layer.origin = { x:160, y:120 };
+				layer.rotation = touchRotation ? 180 : 0;
+				break;
+			case 1:
+				layer = new Layer({width: 240, height: 320, alpha:false});
+				layer.add(container);
+				layer.origin = { x:120, y:160 };
+				layer.rotation = touchRotation ? 90 : 0;
+				break;
+			case 2:
+				layer = new Layer({width: 320, height: 240, alpha:false});
+				layer.add(container);
+				layer.origin = { x:160, y:120 };
+				layer.rotation = 0;
+				break;
+			case 3:
+				layer = new Layer({width: 240, height: 320, alpha:false});
+				layer.add(container);
+				layer.origin = { x:120, y:160 };
+				layer.rotation = touchRotation ? 270 : 0;
+				break;
+			}
+			if (this.dialog) {
+				layer.add(this.dialog);
+			}
+			return layer;
+		]]></method>
+		<method id="createSounds"><![CDATA[
+			var url = mergeURI(application.url, "./assets/sounds/");
+			var iterator = new Files.Iterator(url), info;
+			var references = [];
+			while (info = iterator.getNext()) {
+				if (info.type == Files.fileType) {
+					references.push({
+						name: info.path.slice(0, info.path.lastIndexOf(".")),
+						sound: new Sound(mergeURI(url, info.path))
+					});
+				}
+			}
+			this.sounds = references;
+		]]></method>
+		<method id="onComplete" params="application, message"><![CDATA[
+			if (message.status == 200) {
+				var message = new Message("pins:/light/getColor?repeat=on&callback=/light&interval=1000");
+				message.setRequestHeader("referrer", "xkpr://" + application.id);
+				application.invoke(message);
+				var message = new Message("pins:/orientation/get?repeat=on&callback=/orientation&interval=1000");
+				message.setRequestHeader("referrer", "xkpr://" + application.id);
+				application.invoke(message);
+				var message = new Message("pins:/temperature/get?repeat=on&callback=/temperature&interval=1000");
+				message.setRequestHeader("referrer", "xkpr://" + application.id);
+				application.invoke(message);
+			}
+			else {
+				application.invoke(new Message("/wait"));
+			}
+		]]></method>
+		<method id="onLaunch" params="application"><![CDATA[
+			var message = new MessageWithObject("pins:configure", {
+				temperature: {
+					require: "LM35",
+					pins: {
+						c: { type: "A2D", pin: 38 },
+					}
+				},
+				orientation: {
+					require: "ADXL335",
+					pins: {
+						x: { type: "A2D", pin: 39 },
+						y: { type: "A2D", pin: 40 },
+						z: { type: "A2D", pin: 37 },
+					}
+				},
+				light :  {
+					require: "TCS34725",
+					pins: {
+						rgb: { type: "I2C", sda: 27, clock: 29, gain: 1 },
+						led: { type: "Digital", direction: "output", pin: 21, value: 0 }
+					}
+				},
+			});
+			message.setRequestHeader("referrer", "xkpr://" + application.id);
+			application.invoke(message, Message.TEXT);
+		
+			var preferences = this.preferences = this.readPreferences(application, "preferences", {
+				alarm: {
+					hours: 0,
+					minutes: 0,
+					running: false,
+					sound: 0,
+					volume: 0.5,
+				},
+				radio: {
+					index: 0,
+					volume: 0.5,
+				},
+			});
+			if (!("clock" in preferences)) {
+				preferences.clock =  {
+					analog: false,
+				};
+			}
+			if (!("weather" in preferences)) {
+				preferences.weather =  {
+					celsius: false,
+				};
+			}
+			this.ambient = 0;
+			this.constructors = [
+				Clock,
+				Weather,
+				Radio,
+				Alarm,
+			];	
+			this.current = -1;
+			var data = this.data = {
+				alarm: {
+					setting: false,
+					themes: [
+						{
+							backgroundColor: "black",
+							foregroundColor: "#f24b2c",
+							state: 1,
+						},
+						{
+							backgroundColor: "white",
+							foregroundColor: "#f24b2c",
+							state: 0,
+						},
+					],
+					
+					hours: preferences.alarm.hours,
+					minutes: preferences.alarm.minutes,
+					running: preferences.alarm.running,
+					soundIndex: preferences.alarm.sound,
+					string: getAlarmString(preferences.alarm.hours, preferences.alarm.minutes),
+					title: "ALARM",
+					volume: preferences.alarm.volume,
+					when: getAlarmWhen(preferences.alarm.hours, preferences.alarm.minutes),
+					
+					getVolume: getAlarmVolume,
+					setVolume: setAlarmVolume,
+				},
+				clock: {
+					themes: [
+						{
+							backgroundColor: "black",
+							foregroundColor: "#CCCCCC",
+							skin: clockNightSkin,
+							style: clockNightStyle,
+							state: 1,
+						},
+						{
+							backgroundColor: "white",
+							foregroundColor: "#555555",
+							skin: clockDaySkin,
+							style: clockDayStyle,
+							state: 0,
+						},
+					],
+					analog: preferences.clock.analog,
+				},
+				radio: {
+					themes: [
+						{
+							backgroundColor: "black",
+							foregroundColor: "#77b648",
+							collageStyle: clockNightStyle,
+							state: 1,
+						},
+						{
+							backgroundColor: "white",
+							foregroundColor: "#77b648",
+							collageStyle: clockDayStyle,
+							state: 0,
+						},
+					],
+					artist: "",
+					busy: true,
+					index: preferences.radio.index,
+					running: false,
+					title: "",
+					volume: preferences.radio.volume,
+					
+					getVolume: getRadioVolume,
+					setVolume: setRadioVolume,
+				},
+				weather: {
+					themes: [
+						{
+							backgroundColor: "black",
+							foregroundColor: "#2ea7cb",
+							state: 1,
+						},
+						{
+							backgroundColor: "white",
+							foregroundColor: "#2ea7cb",
+							state: 0,
+						},
+					],
+					celsius: preferences.weather.celsius,
+					high: NaN,
+					low: NaN,
+					temperature: NaN,
+					variant: -1,
+				},
+			};
+			this.dialog = null;
+			this.dialogData = {
+				alarm: {
+					color: "white",
+					hilite: "#f24b2c",
+				},
+			};
+
+			var theme, effects;
+			
+			theme = data.clock.themes[0];
+			theme.hiliteColor = blendColors(0.50, theme.foregroundColor, "black");
+		
+			theme = data.clock.themes[1];
+			theme.hiliteColor = blendColors(0.75, theme.foregroundColor, "white");
+		
+			theme = data.alarm.themes[0];
+			theme.foregroundEffect = new Effect;
+			theme.foregroundEffect.colorize(theme.foregroundColor);
+			theme.hiliteColor = blendColors(0.50, theme.foregroundColor, "black");
+			theme.hiliteEffect = new Effect;
+			theme.hiliteEffect.colorize(theme.hiliteColor);
+			theme.separatorSkin = new Skin(theme.foregroundColor);
+			theme.skin = new Skin(theme.backgroundColor);
+			theme.style = new Style(undefined, theme.foregroundColor);
+			
+			theme = data.alarm.themes[1];
+			theme.foregroundEffect = new Effect;
+			theme.foregroundEffect.colorize(theme.foregroundColor);
+			theme.hiliteColor = blendColors(0.75, theme.foregroundColor, "white"); 
+			theme.hiliteEffect = new Effect;
+			theme.hiliteEffect.colorize(theme.hiliteColor);
+			theme.separatorSkin = new Skin(theme.foregroundColor);
+			theme.skin = new Skin(theme.backgroundColor);
+			theme.style = new Style(undefined, theme.foregroundColor);
+		
+			theme = data.radio.themes[0];
+			theme.customEffects = [ new Effect, new Effect, new Effect ];
+			theme.customEffects[0].gray("black", blendColors(0.3, data.alarm.themes[1].foregroundColor, "black"));
+			theme.customEffects[1].gray("black", blendColors(0.3, theme.foregroundColor, "black"));
+			theme.customEffects[2].gray("black", blendColors(0.3, data.weather.themes[1].foregroundColor, "black"));
+			theme.hiliteColor = blendColors(0.50, theme.foregroundColor, "black");
+			theme.skin = new Skin(theme.backgroundColor);
+			theme.style = new Style(undefined, theme.foregroundColor);
+			
+			theme = data.radio.themes[1];
+			theme.customEffects = [ new Effect, new Effect, new Effect ];
+			theme.customEffects[0].gray(blendColors(0.5, data.alarm.themes[0].foregroundColor, "white"), "white");
+			theme.customEffects[1].gray(blendColors(0.5, theme.foregroundColor, "white"), "white");
+			theme.customEffects[2].gray(blendColors(0.5, data.weather.themes[0].foregroundColor, "white"), "white");
+			theme.hiliteColor = blendColors(0.75, theme.foregroundColor, "white"); 
+			theme.skin = new Skin(theme.backgroundColor);
+			theme.style = new Style(undefined, theme.foregroundColor);
+			
+			theme = data.weather.themes[0];
+			theme.skin = new Skin(theme.backgroundColor);
+			theme.style = new Style(undefined, theme.foregroundColor);
+			
+			theme = data.weather.themes[1];
+			theme.skin = new Skin(theme.backgroundColor);
+			theme.style = new Style(undefined, theme.foregroundColor);
+		
+			data.alarm.theme = data.alarm.themes[this.ambient];
+			data.clock.theme = data.clock.themes[this.ambient];
+			data.radio.theme = data.radio.themes[this.ambient];
+			data.weather.theme = data.weather.themes[this.ambient];
+			application.skin = data.weather.theme.skin;
+			
+			data.radio.media = new RadioMedia(data.radio);
+			this.createSounds();
+			
+			application.add(new Container);
+			
+			data.weather.expiration = Date.now() + refreshInterval;
+			application.invoke(new Message("/weather"));
+			
+			application.interval = 500;
+			application.start();
+		]]></method>
+		<method id="onLightChanged" params="application, value"><![CDATA[
+			var data = this.data;
+			this.ambient = value;
+			application.skin = data.clock.themes[value].skin;
+			data.alarm.theme = data.alarm.themes[value];
+			data.clock.theme = data.clock.themes[value];
+			data.radio.theme = data.radio.themes[value];
+			data.weather.theme = data.weather.themes[value];
+			application.skin = data.weather.theme.skin;
+			if (this.current >= 0) {
+				application.first.distribute("onScreenEnding");
+				application.replace(application.first, this.createScreen());
+				//application.run(new CrossFadeTransition, application.first, this.createScreen());
+			}
+		]]></method>
+		<method id="onOrientationChanged" params="application, value"><![CDATA[
+			this.current = value;
+			application.first.distribute("onScreenEnding");
+			application.replace(application.first, this.createScreen());
+			application.purge();
+		]]></method>
+		<method id="onQuit" params="application"><![CDATA[
+			application.invoke(new MessageWithObject("pins:close"));
+		]]></method>
+		<method id="onTimeChanged" params="application"><![CDATA[
+			var now = Date.now();
+			application.distribute("onClockChanged", now);
+			var alarm = this.data.alarm;
+			if (alarm.running) {
+				var time = alarm.when - now;
+				if (time <= 0) {
+					alarm.when += 24 * 60 * 60 * 1000;
+					if (!this.dialog) {
+						this.dialog = new AlarmDialog(this.dialogData.alarm);
+						application.first.add(this.dialog);
+					}
+				}
+			}
+			var weather = this.data.weather;
+			if (weather.expiration <= now) {
+				weather.expiration = now + refreshInterval;
+				application.invoke(new Message("/weather"));
+			}
+		]]></method>
+		<method id="onTransitionEnded" params="application"><![CDATA[
+			application.purge();
+		]]></method>
+		<method id="readPreferences" params="application, name, preferences"><![CDATA[
+			try {
+				var url = mergeURI(Files.preferencesDirectory, application.di + "." + name + ".json");
+				if (Files.exists(url))
+					return JSON.parse(Files.readText(url));
+			}
+			catch(e) {
+			}
+			return preferences;
+		]]></method>
+		<method id="savePreferences"><![CDATA[
+			var data = this.data;
+			var preferences = this.preferences;
+			preferences.clock.analog = data.clock.analog;
+			preferences.alarm.hours = data.alarm.hours;
+			preferences.alarm.minutes = data.alarm.minutes;
+			preferences.alarm.running = data.alarm.running;
+			preferences.alarm.sound = data.alarm.soundIndex;
+			preferences.alarm.volume = data.alarm.volume;
+			preferences.radio.index = data.radio.index;
+			preferences.radio.volume = data.radio.volume;
+			preferences.weather.celsius = data.weather.celsius;
+			this.writePreferences(application, "preferences", preferences);
+		]]></method>
+		<method id="writePreferences" params="application, name, preferences"><![CDATA[
+			try {
+				var url = mergeURI(Files.preferencesDirectory, application.di + "." + name + ".json");
+				Files.writeText(url, JSON.stringify(preferences));
+			}
+			catch(e) {
+			}
+		]]></method>
+	</behavior>
+
+	<behavior id="CanvasButtonBehavior" like="CONTROL.ButtonBehavior">
+		<method id="draw" params="canvas"><![CDATA[
+			debugger
+		]]></method>
+		<method id="changeState" params="canvas, state"><![CDATA[
+			canvas.state = state;
+			this.draw(canvas);
+		]]></method>
+		<method id="onDisplaying" params="canvas"><![CDATA[
+			CONTROL.ButtonBehavior.prototype.onDisplaying.call(this, canvas);
+			this.draw(canvas);
+		]]></method>
+	</behavior>
+	<behavior id="CanvasSliderBehavior" like="CONTROL.SliderBehavior">
+		<method id="changeState" params="canvas, state"><![CDATA[
+			canvas.state = state;
+			this.draw(canvas);
+		]]></method>
+		<method id="draw" params="canvas"><![CDATA[
+			var data = this.data;
+			var theme = data.theme;
+			var ctx = canvas.getContext("2d");
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			ctx.roundRect(25, 25, 190, 20, 10);
+			ctx.fillStyle = theme.hiliteColor;
+			ctx.fill();
+			ctx.lineWidth = 2;
+			ctx.beginPath();
+			ctx.arc(35 + this.getOffset(canvas, 170), 35, 20, 0, 2 * Math.PI);
+			ctx.closePath();
+			ctx.fillStyle = canvas.state > 0 ? theme.foregroundColor : theme.backgroundColor;
+			ctx.fill();
+			ctx.strokeStyle = theme.foregroundColor;
+			ctx.stroke();
+		]]></method>
+		<method id="getMax" params="canvas"><![CDATA[
+			return 1;
+		]]></method>
+		<method id="getMin" params="canvas"><![CDATA[
+			return 0;
+		]]></method>
+		<method id="getValue" params="canvas"><![CDATA[
+			return this.data.volume;
+		]]></method>
+		<method id="onTouchEnded" params="canvas, id, x, y, ticks"><![CDATA[
+			CONTROL.SliderBehavior.prototype.onTouchEnded.call(this, canvas, id, x, y, ticks);
+			model.savePreferences();
+		]]></method>
+		<method id="onTouchMoved" params="canvas, id, x, y, ticks"><![CDATA[
+			this.setOffset(canvas, 170, x - canvas.x - 35);
+			this.onValueChanged(canvas);
+		]]></method>
+		<method id="onValueChanged" params="canvas"><![CDATA[
+			this.draw(canvas);
+		]]></method>
+		<method id="setValue" params="canvas, value"><![CDATA[
+			this.data.volume = value;
+		]]></method>
+	</behavior>
+
+	<container id="AlarmDialog" left="0" right="0" top="0" bottom="0" skin="alarmDialogSkin">
+		<behavior>
+			<method id="onClose" params="container"><![CDATA[
+				application.run(new AlarmDialogCloseTransition, application.first, model.dialog, this.target);
+			]]></method>
+			<method id="onCreate" params="container, $"><![CDATA[
+				var data = model.data;
+				var alarm = data.alarm;
+				var radio = data.radio;
+				this.target = alarm.soundIndex ? alarm : radio;
+				this.target.setVolume(0);
+				
+				var effect = new Effect;
+				effect.gaussianBlur(4, 4);
+				//container.insert(new Effecter({left:0, right:0, top:0, bottom:0}, null, null, effect), container.first);
+			]]></method>
+			<method id="onDisplaying" params="container"><![CDATA[
+				this.onPlay(container);
+			]]></method>
+			<method id="onPause" params="container"><![CDATA[
+				this.from = this.target.getVolume();
+				this.to = 0;
+				container.duration = 2500;
+				container.time = 0;
+				container.start();
+			]]></method>
+			<method id="onPlay" params="container"><![CDATA[
+				this.from = this.target.getVolume();
+				this.to = this.target.volume;
+				container.duration = 5000;
+				container.time = 0;
+				container.start();
+			]]></method>
+			<method id="onTimeChanged" params="container"><![CDATA[
+				this.target.setVolume(this.from + ((this.to - this.from) * Math.quadEaseIn(container.fraction)));
+			]]></method>
+		</behavior>
+		<container left="0" right="0" top="0" bottom="0">
+			<behavior>
+				<method id="onCreate" params="container, $"><![CDATA[
+					var alarm = model.data.alarm;
+					var line = container.first;
+					var hoursLabel = line.first;
+					var minutesLabel = hoursLabel.next.next;
+					var ampmContainer = minutesLabel.next;
+					var hours = alarm.hours;
+					var minutes = alarm.minutes;
+					var am = hours < 12;
+					if (hours > 12)
+						hours -= 12;
+					else if (hours == 0)
+						hours = 12;
+					if (minutes < 10)
+						minutes = '0' + minutes;
+					hoursLabel.string = hours;
+					minutesLabel.string = minutes;
+					ampmContainer.first.visible = am;
+					ampmContainer.last.visible = !am;
+					var index = alarm.soundIndex;
+					this.sound = index ? model.sounds[index - 1].sound : null;
+				]]></method>
+				<method id="onDisplaying" params="container"><![CDATA[
+					container.interval = 500;
+					container.start();
+				]]></method>
+				<method id="onTimeChanged" params="container"><![CDATA[
+					var line = container.first;
+					line.visible = !line.visible;
+					if (this.sound)
+						this.sound.play();
+				]]></method>
+			</behavior>
+			<line>
+				<label style="alarmDigitsStyle"/>
+				<label style="alarmDigitsStyle" string="':'"/>
+				<label style="alarmDigitsStyle"/>
+				<container top="12" bottom="15">
+					<label bottom="0" style="alarmAMStyle" string="'am'"/>
+					<label top="0" style="alarmPMStyle" string="'pm'"/>
+				</container>
+			</line>
+		</container>
+		<canvas left="0" right="0" top="0" height="70" active="true">
+			<behavior like="CanvasButtonBehavior">
+				<method id="draw" params="canvas"><![CDATA[
+					var color = this.data.color;
+					var hilite = this.data.hilite;
+					var x = canvas.width >> 1;
+					var y = canvas.height >> 1;
+					var ctx = canvas.getContext("2d");
+					ctx.clearRect(0, 0, canvas.width, canvas.height);
+					ctx.lineWidth = 1;
+					ctx.beginPath();
+					ctx.arc(x, y, 25, 0, 2 * Math.PI);
+					ctx.closePath();
+					if (canvas.state > 1) {
+						ctx.fillStyle = color;
+						ctx.fill();
+					}
+					ctx.strokeStyle = color;
+					ctx.stroke();
+					ctx.lineCap = "round";
+					ctx.lineWidth = 6;
+					ctx.strokeStyle = canvas.state > 1 ? hilite : color;
+					ctx.beginPath();
+					ctx.moveTo(x - 10, y - 10);
+					ctx.lineTo(x + 10, y + 10);
+					ctx.stroke();
+					ctx.beginPath();
+					ctx.moveTo(x + 10, y - 10);
+					ctx.lineTo(x - 10, y + 10);
+					ctx.stroke();
+				]]></method>
+				<method id="onTap" params="canvas"><![CDATA[
+					canvas.bubble("onClose");
+				]]></method>
+			</behavior>
+		</canvas>	
+		<canvas left="0" right="0" height="70" bottom="0" active="true">
+			<behavior like="CanvasButtonBehavior">
+				<method id="draw" params="canvas"><![CDATA[
+					var color = this.data.color;
+					var hilite = this.data.hilite;
+					var x = canvas.width >> 1;
+					var y = canvas.height >> 1;
+					var ctx = canvas.getContext("2d");
+					ctx.clearRect(0, 0, canvas.width, canvas.height);
+					ctx.lineWidth = 1;
+					ctx.roundRect(x - 80, y - 20, 160, 40, 20);
+					if (canvas.state > 1) {
+						ctx.fillStyle = color;
+						ctx.fill();
+					}
+					ctx.strokeStyle = color;
+					ctx.stroke();
+					ctx.font = "24px Fira Sans"
+					ctx.textAlign = "center"
+					ctx.textBaseline = "middle"
+					ctx.fillStyle = canvas.state > 1 ? hilite : color
+					ctx.fillText("SNOOZE", x, y + 2);
+				]]></method>
+				<method id="onFinished" params="canvas"><![CDATA[
+					canvas.bubble("onPlay");
+				]]></method>
+				<method id="onTap" params="canvas"><![CDATA[
+					canvas.bubble("onPause");
+					canvas.duration = 5 * 60 * 1000;
+					canvas.time = 0;
+					canvas.start();
+				]]></method>
+			</behavior>
+		</canvas>	
+	</container>
+	<transition id="AlarmDialogCloseTransition" duration="500">
+		<method id="onBegin" params="container, screen, dialog, target"><![CDATA[
+			var screenLayer = this.screenLayer = screen;
+			var dialogLayer = this.dialogLayer = new Layer;
+			dialogLayer.attach(dialog);
+			this.target = target;
+			this.volume = target.getVolume();
+		]]></method>
+		<method id="onEnd" params="container, screen, dialog, target"><![CDATA[
+			this.dialogLayer.detach();
+			screen.remove(dialog);
+			model.dialog = null;
+		]]></method>
+		<method id="onStep" params="fraction"><![CDATA[
+			this.dialogLayer.opacity = 1 - fraction;
+			this.target.setVolume(this.volume * (1 - fraction));
+		]]></method>
+	</transition>
+
+	<transition id="CrossFadeTransition" duration="500">
+		<method id="onBegin" params="container, formerScreen, currentScreen"><![CDATA[
+			container.add(currentScreen);
+			this.currentLayer = currentScreen;
+		]]></method>
+		<method id="onEnd" params="container, formerScreen, currentScreen"><![CDATA[
+			container.remove(formerScreen);
+		]]></method>
+		<method id="onStep" params="fraction"><![CDATA[
+			this.currentLayer.opacity = Math.quadEaseOut(fraction);
+		]]></method>
+	</transition>
+	
+	<transition id="FlipTransition" duration="500">
+		<method id="onBegin" params="container, formerScreen, currentScreen"><![CDATA[
+			container.add(currentScreen);
+			var formerLayer = this.formerLayer = formerScreen;
+			var currentLayer = this.currentLayer = currentScreen;
+			var rotation = formerScreen.rotation;
+			this.formerStarts = [
+				{ x: 0, y: 0 },
+				{ x: 1, y: 0 },
+				{ x: 1, y: 1 },
+				{ x: 0, y: 1 },
+			];
+			this.formerSteps = [
+				{ x: 0, y: 0 },
+				{ x: 1, y: 0 },
+				{ x: 1, y: 1 },
+				{ x: 0, y: 1 },
+			];
+			this.currentStops = [
+				{ x: 0, y: 0 },
+				{ x: 1, y: 0 },
+				{ x: 1, y: 1 },
+				{ x: 0, y: 1 },
+			];
+			this.currentSteps = [
+				{ x: 0, y: 0 },
+				{ x: 1, y: 0 },
+				{ x: 1, y: 1 },
+				{ x: 0, y: 1 },
+			];
+		]]></method>
+		<method id="onEnd" params="container, formerScreen, currentScreen"><![CDATA[
+			container.remove(formerScreen);
+		]]></method>
+		<method id="onStep" params="fraction"><![CDATA[
+			fraction = Math.quadEaseOut(fraction);
+			if (fraction <= 0.5) {
+				fraction *= 2;
+				var layer = this.formerLayer;
+				var starts = this.formerStarts;
+				var stops = this.formerStops;
+				var steps = this.formerSteps;
+				for (var i = 0; i < 4; i++) {
+					var start = starts[i];
+					var stop = stops[i];
+					var step = steps[i];
+					step.x = (start.x * (1 - fraction)) + (stop.x * fraction);
+					step.y = (start.y * (1 - fraction)) + (stop.y * fraction);
+				}
+				layer.opacity = 1;
+				layer.corners = steps;
+				this.currentLayer.opacity = 0;
+			}
+			else {
+				fraction = 2 * (fraction - 0.5);
+				var layer = this.currentLayer;
+				var starts = this.currentStarts;
+				var stops = this.currentStops;
+				var steps = this.currentSteps;
+				for (var i = 0; i < 4; i++) {
+					var start = starts[i];
+					var stop = stops[i];
+					var step = steps[i];
+					step.x = (start.x * (1 - fraction)) + (stop.x * fraction);
+					step.y = (start.y * (1 - fraction)) + (stop.y * fraction);
+				}
+				layer.opacity = 1;
+				layer.corners = steps;
+				this.formerLayer.opacity = 0;
+			}
+		]]></method>
+	</transition>
+	<transition id="FlipLeftTransition" like="FlipTransition">
+		<method id="onBegin" params="container, formerScreen, currentScreen"><![CDATA[
+			FlipTransition.prototype.onBegin.call(this, container, formerScreen, currentScreen);
+			this.formerStops = [
+				{ x: 0.49, y: -0.1 },
+				{ x: 0.51, y: 0.1 },
+				{ x: 0.51, y: 0.9 },
+				{ x: 0.49, y: 1.1 },
+			];
+			this.currentStarts = [
+				{ x: 0.49, y: 0.1 },
+				{ x: 0.51, y: -0.1 },
+				{ x: 0.51, y: 1.1 },
+				{ x: 0.49, y: 0.9 },
+			];
+		]]></method>
+	</transition>
+	<transition id="FlipRightTransition" like="FlipTransition">
+		<method id="onBegin" params="container, formerScreen, currentScreen"><![CDATA[
+			FlipTransition.prototype.onBegin.call(this, container, formerScreen, currentScreen);
+			var rotation = formerScreen.rotation;
+			this.formerStops = [
+				{ x: 0.49, y: 0.1 },
+				{ x: 0.51, y: -0.1 },
+				{ x: 0.51, y: 1.1 },
+				{ x: 0.49, y: 0.9 },
+			];
+			this.currentStarts = [
+				{ x: 0.49, y: -0.1 },
+				{ x: 0.51, y: 0.1 },
+				{ x: 0.51, y: 0.9 },
+				{ x: 0.49, y: 1.1 },
+			];
+		]]></method>
+	</transition>
+
+	<include path="./clock"/>
+	<include path="./alarm"/>
+	<include path="./radio"/>
+	<include path="./weather"/>
+	
+	<script><![CDATA[
+		var model = application.behavior = new ApplicationBehavior(application);
+	]]></script>
+</program>
