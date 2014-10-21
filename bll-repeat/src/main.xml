@@ -18,6 +18,18 @@
 <program xmlns="http://www.kinoma.com/kpr/1">
 
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- ASSETS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<skin id="whiteSkin" color="white"/>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- STYLES -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<style id="messageStyle" font="22px" align="left"/>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!-- HANDLERS -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
@@ -25,7 +37,7 @@
 		<behavior>
 			<method id="onInvoke" params="container, message"><![CDATA[
 				var count = message.requestObject;
-				trace("Count is: " + count + "\n" );
+				application.distribute("onCountResult", count);
 				if (count >= 10)
                     container.invoke(new MessageWithObject("pins:/count/increment?repeat=off"));
 			]]></method>
@@ -33,28 +45,37 @@
 	</handler>    
     
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!-- BEHAVIORS -->
+<!-- LAYOUTS -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-    
-	<behavior id="ApplicationBehavior">
-		<method id="onLaunch" params="content"><![CDATA[
-            var message = new MessageWithObject("pins:configure", {
-                count: {
-                    require: "count",
-                    pins: {}
-                }});
-            application.invoke(message);
 
-            message = new MessageWithObject("pins:/count/increment?repeat=on&callback=/countResult&interval=750");
-            application.invoke(message);
-		]]></method>
-		</behavior>
-    
+	<container id="MainContainer" left="0" right="0" top="0" bottom="0" skin="whiteSkin">
+		<text left="5" right="5" top="5" bottom="5" style="messageStyle">
+			<behavior>
+				<method id="onCountResult" params="text, count"><![CDATA[
+					var string = "Count is: " + count + "\n";
+					text.string += string;
+					trace( string );
+				]]></method>	
+				<method id="onDisplayed" params="text"><![CDATA[
+		            var message = new MessageWithObject("pins:configure", {
+		                count: {
+		                    require: "count",
+		                    pins: {}
+		                }});
+		            application.invoke(message);
+		
+		            message = new MessageWithObject("pins:/count/increment?repeat=on&callback=/countResult&interval=750");
+		            application.invoke(message);
+				]]></method>	
+			</behavior>
+		</text>
+	</container>
+
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!-- SCRIPTS -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
     
 	<script><![CDATA[
-		application.behavior = new ApplicationBehavior();
+		application.add(new MainContainer({}));
 	]]></script>
 </program>

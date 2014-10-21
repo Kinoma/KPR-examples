@@ -17,32 +17,49 @@
 <program xmlns="http://www.kinoma.com/kpr/1">
     
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!-- BEHAVIORS -->
+<!-- ASSETS -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
-	<behavior id="ApplicationBehavior">
-		<method id="onLaunch" params="content"><![CDATA[
-            var message = new MessageWithObject("pins:configure", {
-                greeter: {
-                    require: "hello",
-                    pins: {}
-                }});
-            application.invoke(message);
+	<skin id="whiteSkin" color="white"/>
 
-			message = new MessageWithObject("pins:/greeter/ping", "Hello, world");
-            application.invoke(message, Message.JSON);
-		]]></method>
-	
-		<method id="onComplete" params="handler, message, json"><![CDATA[
-            trace("From BLL hello.js, application received: " + json.value + "\n");
-		]]></method>
-	</behavior>
-    
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- STYLES -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<style id="messageStyle" font="22px" align="left"/>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- LAYOUTS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<container id="MainContainer" left="0" right="0" top="0" bottom="0" skin="whiteSkin">
+		<text left="5" right="5" top="5" bottom="5" style="messageStyle">
+			<behavior>
+				<method id="onComplete" params="text, message, json"><![CDATA[
+					var string = "From BLL hello.js, application received: " + json.value + "\n";
+					text.string = string;
+		            trace( string );
+				]]></method>
+				<method id="onDisplayed" params="text"><![CDATA[
+		            var message = new MessageWithObject("pins:configure", {
+		                greeter: {
+		                    require: "hello",
+		                    pins: {}
+		                }});
+		            text.invoke(message);
+		
+					message = new MessageWithObject("pins:/greeter/ping", "Hello, world");
+		            text.invoke(message, Message.JSON);
+				]]></method>	
+			</behavior>
+		</text>
+	</container>
+
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!-- SCRIPTS -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 	
 	<script><![CDATA[
-		application.behavior = new ApplicationBehavior(); 
+		application.add(new MainContainer({}));
 	]]></script>
 </program>
