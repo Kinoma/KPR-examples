@@ -448,6 +448,7 @@ This example demonstrates how to issue an HTTP request to the Open Weather Map s
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+<<<<<<< HEAD
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/k4clock">k4clock</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/k4clock"><img src="http://kinoma.github.io/KPR-examples/images/k4clock-example.jpg" height="100" alt=""/></a>
 
@@ -458,6 +459,8 @@ Clock demo.
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+=======
+>>>>>>> remove clock
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/sketchat">sketchat</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/sketchat"><img src="http://kinoma.github.io/KPR-examples/images/sketchat-example.jpg" height="100" alt=""/></a>
 
