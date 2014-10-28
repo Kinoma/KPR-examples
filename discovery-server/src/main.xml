@@ -42,7 +42,8 @@
 				var blue = Math.floor( Math.random() * 255 ).toString( 16 );
 				if ( 1 == blue.length ) blue = '0' + blue;
 				var color = '#' + red + green + blue;
-				message.responseText = JSON.stringify( { color: color } );            
+				message.responseText = JSON.stringify( { color: color } );
+				message.status = 200;
 			]]></method>
 		</behavior>
 	</handler>

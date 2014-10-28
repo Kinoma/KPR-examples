@@ -79,14 +79,14 @@
 
 	<behavior id="ApplicationBehavior">
 		<method id="onLaunch" params="application"><![CDATA[
+			this.servers = [];
+			this.serversTable = {};
+		]]></method>
+		<method id="onDisplayed" params="application"><![CDATA[
 			application.discover("discoveryserver.example.kinoma.marvell.com");
 		]]></method>
 		<method id="onQuit" params="application"><![CDATA[
 			application.forget("discoveryserver.example.kinoma.marvell.com");
-		]]></method>
-		<method id="onCreate" params="application, data"><![CDATA[
-			this.servers = [];
-			this.serversTable = {};
 		]]></method>
 		<method id="getServer" params="uuid"><![CDATA[
 			return this.servers[this.serversTable[uuid]];
@@ -120,7 +120,7 @@
 					]]></method>	
 					<method id="build" params="column"><![CDATA[
 						var servers = model.servers;
-						if ( 0 == servers.length )
+						if ( !servers || ( 0 == servers.length ) )
 							column.add( new NoServersLine );
 						else {
 							for ( var i = 0; i < servers.length; ++i )
@@ -140,12 +140,14 @@
 		var Server = function(discovery) {
 			this.url = discovery.url;
 			this.id = discovery.id;
+			this.protocol = discovery.protocol;
 			this.uuid = discovery.uuid;
 			this.color = "";
 		};
 		Server.prototype = Object.create(Object.prototype, {
 			url: { value: undefined, enumerable: true, writable: true },
 			id: { value: undefined, enumerable: true, writable: true },
+			protocol: { value: undefined, enumerable: true, writable: true },
 			uuid: { value: undefined, enumerable: true, writable: true },
 			createMessage: { value:
 				function(name, query) {
