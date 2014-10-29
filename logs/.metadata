@@ -1,0 +1,14 @@
+<example 
+	id="logs.example.kinoma.marvell.com"
+	title="Logs"
+	project="Logs"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+	This example deminstrates how to use the Kinoma Create built-in logging support to capture trace output into a log file. Log files can be viewed and/or removed using the built-in Logs app.
+	]]></description>
+
+</example>

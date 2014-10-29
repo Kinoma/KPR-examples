@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2011-2014 Marvell Semiconductor, Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<program xmlns="http://www.kinoma.com/kpr/1">
+	<require path="themes/sample/theme" id="THEME"/>
+	<require path="mobile/control" id="CONTROL"/>
+	<require path="mobile/model" id="MODEL"/>
+	<require path="mobile/screen" id="SCREEN"/>
+	<require path="mobile/scroller" id="SCROLLER"/>
+	<require path="mobile/tool" id="TOOL"/>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- ASSETS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<skin id="videoHeaderFooterSkin" color="#9a000000"/>
+	<skin id="videoBackgroundSkin" color="black"/>
+	<skin id="videoControllerViewedSkin" color="white"/>
+	<skin id="videoControllerUnviewedSkin" color="#9affffff"/>
+
+	<texture id="videoControlsTexture" large="./assets/media-transport-controls.png"/>
+	<skin id="videoControlsSkin" texture="videoControlsTexture" x="0" y="0" width="36" height="40">
+		<variants offset="36"/>
+		<states offset="40"/>
+	</skin>
+
+	<texture id="videoErrorTexture" large="./assets/video-error.png"/>
+	<skin id="videoErrorSkin" texture="videoErrorTexture" x="0" y="0" width="80" height="80"/>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- STYLES -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<style id="videoTimeStyle" font="18px" color="white" align="center,middle"/>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- BEHAVIORS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<behavior id="Slider" like="CONTROL.ButtonBehavior"><![CDATA[
+		function compute(container, min, max, x) {
+			var button = container.last;
+			var bar = button.previous;
+			var background = bar.previous;
+			var value = (max - min) * (x - background.x) / background.width;
+			if (value < min) value = min;
+			else if (value > max) value = max;
+			return value;
+		}
+		function onTouchBegan(container, id, x, y, ticks) {
+			var button = container.last;
+			button.state = 2;
+			this.onTouchMoved(container, id, x, y, ticks);
+			CONTROL.ButtonBehavior.prototype.onTouchBegan.call(this, container, id, x, y, ticks);
+			this.data.CONTROLS.delegate("onTrackingBegan");
+		}
+		function onTouchEnded(container, id, x, y, ticks) {
+			CONTROL.ButtonBehavior.prototype.onTouchEnded.call(this, container, id, x, y, ticks);
+			this.data.CONTROLS.delegate("onTrackingEnded");
+			var button = container.last;
+			button.state = 1;
+		}
+		function onTouchCancelled(container, id, x, y, ticks) {
+			CONTROL.ButtonBehavior.prototype.onTouchCancelled.call(this, container, id, x, y, ticks);
+			this.data.CONTROLS.delegate("onTrackingEnded");
+		}
+		function update(container, value) {
+			var button = container.last;
+			var bar = button.previous;
+			var background = bar.previous;
+			var backgroundCoordinates = background.coordinates;
+			var barCoordinates = bar.coordinates;
+			var buttonCoordinates = button.coordinates;
+			barCoordinates.width = Math.round(value * (container.width - backgroundCoordinates.left - backgroundCoordinates.right));
+			buttonCoordinates.left = barCoordinates.left + barCoordinates.width - (button.width >> 1);
+			bar.coordinates = barCoordinates;
+			button.coordinates = buttonCoordinates;
+		}
+	]]></behavior>
+
+	<behavior id="MediaBehavior"><![CDATA[
+		function onCreate(media, data) {
+			this.data = data;
+			media.url = data.url;
+		}
+		function onLoaded(media) {
+			media.volume = 0.8;
+			media.start();
+		}
+		function onStateChanged(media) {
+			media.container.distribute("onMediaStateChanged", media);
+		}
+		function onTimeChanged(media) {
+			media.container.distribute("onMediaTimeChanged", media);
+		}
+		function onFinished(media) {
+			media.stop();
+		}
+	]]></behavior>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- HANDLERS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<handler path="/main">
+		<behavior like="MODEL.ScreenBehavior">
+			<method id="hasSelection" params="data, delta"><![CDATA[
+				var tab = data.tabs[data.selection];
+				var selection = tab.selection + delta;
+				return (0 <= selection) && (selection < tab.items.length)
+			]]></method>
+			<method id="getSelection" params="data, delta"><![CDATA[
+				var tab = data.tabs[data.selection];
+				var selection = tab.selection + delta;
+				return tab.items[selection];
+			]]></method>
+			<method id="onDescribe" params="query, selection"><![CDATA[
+				return {
+					Screen: MediaPlayerScreen,
+					url: "http://cvs.kinoma.com/~brian/KinomaCreateWidescreen.mp4",
+					scroll: {
+						x: 0,
+						y: 0
+					},
+					selection: -1,
+				};
+			]]></method>
+		</behavior>
+	</handler>
+	
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- LAYOUTS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<container id="MediaPlayerHeader" left="0" right="0" top="0" height="40" active="true" skin="videoHeaderFooterSkin">
+		<line left="0" right="0" top="0" bottom="0">
+			<layout anchor="SEEKER" left="0" right="0" top="0" bottom="0" active="true">
+				<behavior like="Slider"><![CDATA[
+					function onCreate(container, data) {
+						this.data = data;
+					}
+					function onMeasureVertically(container, height) {
+						var media = this.data.MEDIA;
+						if (media) {
+							var value = media.ready ? media.time / media.duration : 0;
+							this.update(container, value);
+						}
+						return height;
+					}
+					function onMediaTimeChanged(container, media) {
+						var duration = media.duration;
+						var time = media.time;
+						var left = container.first;
+						var right = left.next;
+						left.string = this.toTimeCode(time);
+						right.string = this.toTimeCode(duration);
+						this.update(container, time / duration);
+					}
+					function onTouchBegan(container, id, x, y, ticks) {
+						var media = this.data.MEDIA;
+						this.playing = media.state == Media.PLAYING;
+						if (this.playing)
+							media.stop();
+						media.seeking = true;
+						Slider.prototype.onTouchBegan.call(this, container, id, x, y, ticks);
+					}
+					function onTouchEnded(container, id, x, y, ticks) {
+						var media = this.data.MEDIA;
+						media.seeking = false;
+						if (this.playing)
+							media.start();
+						Slider.prototype.onTouchEnded.call(this, container, id, x, y, ticks);
+					}
+					function onTouchMoved(container, id, x, y, ticks) {
+						var media = this.data.MEDIA;
+						media.time = this.compute(container, 0, media.duration, x);
+					}
+					function toTimeCode(timeInMS) {
+						var seconds = timeInMS / 1000;
+						result = "";
+						seconds = Math.floor(seconds);
+						var hours = Math.floor(seconds / 3600);
+						seconds = seconds % 3600;
+						var minutes = Math.floor(seconds / 60);
+						seconds = Math.round(seconds % 60);
+						if (hours)
+							result += hours + ":";
+						if (minutes < 10)
+							result += "0";
+						result += minutes;
+						result += ":";
+						if (seconds < 10)
+							result += "0";
+						result += seconds;
+						return result;
+					}
+				]]></behavior>
+				<label left="0" top="0" bottom="0" width="60" style="videoTimeStyle"/>
+				<label right="0" top="0" bottom="0" width="60" style="videoTimeStyle"/>
+				<content left="60" right="60" height="4" skin="videoControllerUnviewedSkin"/>
+				<content left="60" height="4" width="0" skin="videoControllerViewedSkin"/>
+				<content left="60" top="0" bottom="0" skin="videoControlsSkin" variant="4" state="1"/>
+			</layout>
+		</line>
+	</container>
+
+	<container id="MediaPlayerFooter" left="0" right="0" bottom="0" height="40" active="true" skin="videoHeaderFooterSkin">
+		<line anchor="TRANSPORT" top="0" bottom="0" width="120">
+			<container anchor="PLAY" left="0" right="0" top="3" active="false">
+				<behavior like="CONTROL.ButtonBehavior"><![CDATA[
+					function onMediaStateChanged(container, media) {
+						var button = container.first;
+						switch (media.state) {
+							case Media.FAILED:
+								container.active = false;
+								button.visible = false;
+								break;
+							case Media.PAUSED:
+								container.active = true;
+								button.visible = true;
+								button.variant = 1;
+								break;
+							case Media.PLAYING:
+								container.active = true;
+								button.visible = true;
+								button.variant = 0;
+								break;
+							case Media.WAITING:
+								container.active = false;
+								break;
+						}
+					}
+					function onTap(button) {
+						var media = this.data.MEDIA;
+						if (media) {
+							if (media.state == Media.PAUSED) {
+								if (media.time >= media.duration)
+									media.time = 0;
+								media.start();
+							}
+							else if (media.state == Media.PLAYING)
+								media.stop();
+						}
+					}
+				]]></behavior>
+				<content skin="videoControlsSkin" variant="1"/>
+			</container>
+		</line>
+	</container>
+
+	<container id="MediaPlayerScreen" left="0" right="0" top="0" bottom="0" skin="videoBackgroundSkin">
+		<media anchor="MEDIA" behavior="MediaBehavior" left="0" right="0" top="0" bottom="0"/>
+		<container anchor="CONTROLS" left="0" top="0" right="0" bottom="0" active="true">
+			<behavior><![CDATA[
+				function onCreate(container, data) {
+					this.data = data;
+					this.container = container;
+					container.duration = 5000;
+				}
+				function onDisplaying(container) {
+					var media = this.data.MEDIA;
+					if (media)
+						this.onMediaStateChanged(container, media);
+				}
+				function onMediaStateChanged(container, media) {
+					if (!media.url) return;
+					switch (media.state) {
+						case Media.FAILED:
+							this.data.ERROR.visible = true;
+							this.data.FOOTER.visible = false;
+							this.data.SEEKER.visible = false;
+							this.data.WAIT.delegate("stop");
+							break;
+						case Media.WAITING:
+							container.stop();
+							this.data.HEADER.visible = true;
+							this.data.FOOTER.visible = true;
+							this.data.WAIT.delegate("start");
+							break;
+						case Media.PLAYING:
+							this.data.WAIT.delegate("stop");
+							container.time = 0;
+							container.start();
+							break;
+						case Media.PAUSED:
+							this.data.HEADER.visible = true;
+							this.data.FOOTER.visible = true;
+							this.data.WAIT.delegate("stop");
+							container.stop();
+							break;
+					}
+				}
+				function onTrackingBegan(container) {
+					container.stop();
+				}
+				function onTrackingEnded(container) {
+					var media = this.data.MEDIA;
+					if (Media.PLAYING == media.state) {
+						container.time = 0;
+						container.start();
+					}
+				}
+				function onFinished(container) {
+					this.hideShowHeaderFooter(container, false);
+				}
+				function hideShowHeaderFooter(container, show) {
+					container.run(new MediaPlayerHeaderFooterShowHideTransition, this.data.HEADER, this.data.FOOTER, show);
+				}
+				function onTransitionEnded(container) {
+					if (this.data.HEADER.visible) {
+						container.time = 0;
+						container.start();
+					}
+				}
+				function onTouchBegan(container, id, x, y, ticks) {
+					if (this.data.HEADER.visible || container.transitioning) return;
+					
+					container.stop();
+					this.hideShowHeaderFooter(container, true);
+				}
+			]]></behavior>
+			<container anchor="HEADER" like="MediaPlayerHeader"/>
+			<container anchor="FOOTER" like="MediaPlayerFooter"/>
+			<container anchor="WAIT" left="0" right="0" top="40" bottom="40" skin="videoHeaderFooterSkin" visible="false">
+				<behavior><![CDATA[
+					function onCreate(container, data) {
+						this.container = container;
+					}
+					function start() {
+						this.container.visible = true;
+						this.container.first.start();
+					}
+					function stop() {
+						this.container.visible = false;
+						this.container.first.stop();
+					}
+				]]></behavior>
+				<picture width="200" height="200" url="'./assets/streak-spinner-white.png'">
+					<behavior><![CDATA[
+						function onCreate(picture) {
+							picture.origin = {x: 100, y: 100};
+							picture.scale = {x: 0.4, y: 0.4};
+						}
+						function onTimeChanged(picture) {
+							var rotation = picture.rotation;
+							rotation += 6;
+							if (rotation == 360)
+								rotation = 0;
+							picture.rotation = rotation;
+						}
+					]]></behavior>
+				</picture>
+			</container>
+			<content anchor="ERROR" width="80" height="80" skin="videoErrorSkin" visible="false"/>
+		</container>
+	</container>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- TRANSITIONS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<transition id="MediaPlayerHeaderFooterShowHideTransition" duration="250"><![CDATA[
+		function onBegin(application, header, footer, flag) {
+			this.flag = flag;
+			this.layer0 = new Layer;
+			this.layer1 = new Layer;
+			if (flag) {
+				header.visible = true;
+				footer.visible = true;
+			}
+			this.layer0.attach(header);
+			this.layer1.attach(footer);
+		}
+		function onEnd(application, header, footer, flag) {
+			this.layer0.detach();
+			this.layer1.detach();
+			if (!flag) {
+				header.visible = false;
+				footer.visible = false;
+			}
+		}
+		function onStep(fraction) {
+			var flag = this.flag;
+			var header = this.layer0;
+			var footer = this.layer1;
+			header.translation = { y: (0 - header.height) * (flag ? (1 - fraction) : fraction ) };
+			footer.translation = { y: footer.height * (flag ? (1 - fraction) : fraction ) };
+		}
+	]]></transition>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- SCRIPTS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	
+	<script><![CDATA[
+		application.behavior = new MODEL.ApplicationBehavior(application);
+	]]></script>
+    
+</program>
