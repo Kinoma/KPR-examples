@@ -188,12 +188,32 @@ Uses Canvas 2D to implement a virtual hypotrochoid device. Custom sliders contro
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/logs">logs</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/logs"><img src="http://kinoma.github.io/KPR-examples/images/logs-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="logs.example.kinoma.marvell.com"></x-app-info>
+
+This example deminstrates how to use the Kinoma Create built-in logging support to capture trace output into a log file. Log files can be viewed and/or removed using the built-in Logs app.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/media-library">media-library</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/media-library"><img src="http://kinoma.github.io/KPR-examples/images/media-library-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="medialibrary.example.kinoma.marvell.com" platform="mac,iphone,android"></x-app-info>
 
 This mobile framework application demonstrates how to access the core media library on iOS, Android and Mac OS platforms to display photos and play media files. The application uses a tabbed view to display photo/video thumbnails and songs. Tapping a media item opens a dedicated media viewer screen. KPR messages are used to request the media items. Note that media library support is not currently available for Kinoma Create or Windows.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/media-player">media-player</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/media-player"><img src="http://kinoma.github.io/KPR-examples/images/media-player-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="mediaplayer.example.kinoma.marvell.com"></x-app-info>
+
+This mobile framework application shows how to build a media player using the KPR Media object. Media transport controls are provided to start, stop and seek the media. The controls are displayed over the video and automatically hide/show when needed. Tapping the screen displays the controls. The current play time and duration are displayed and updated. This example demonstrates how to integrate KPR media playback, content timers, implement skin-based buttons and transitions.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
