@@ -328,6 +328,16 @@ Displays a slideshow of images animating picture scaling, panning and opacity se
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/somafm">somafm</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/somafm"><img src="http://kinoma.github.io/KPR-examples/images/somafm-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="somafm.example.kinoma.marvell.com"></x-app-info>
+
+This mobile framework example streams live radio from the SomaFM service. Channels are selected using a touch controlled scrolling tuner. A music artist image collage is displayed and updated on track changes. This example demonstrates how to use KPR media to play HTTP streams, build custom UI elements with canvas, use a proxy handler to fetch data from a web service, and use KPR effects and layers to implement an animated image collage.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/sound">sound</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/sound"><img src="http://kinoma.github.io/KPR-examples/images/sound-example.jpg" height="100" alt=""/></a>
 					
