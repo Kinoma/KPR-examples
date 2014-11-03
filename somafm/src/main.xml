@@ -101,6 +101,9 @@
 	<skin id="channelBarSkin" color="white"/>
 
 	<behavior id="ApplicationBehavior">
+		<method id="onCreate" params="application"><![CDATA[
+			application.focus();
+		]]></method>
 		<method id="onLaunch" params="application"><![CDATA[
 			var preferences = this.preferences = this.readPreferences(application, "preferences", {
 				radio: {
