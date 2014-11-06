@@ -328,12 +328,22 @@ Displays a slideshow of images animating picture scaling, panning and opacity se
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### <a href="https://github.com/Kinoma/KPR-examples/tree/master/somafm">somafm</a>
-<a href="https://github.com/Kinoma/KPR-examples/tree/master/somafm"><img src="http://kinoma.github.io/KPR-examples/images/somafm-example.jpg" height="100" alt=""/></a>
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/somafm-player">somafm-player</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/somafm-player"><img src="http://kinoma.github.io/KPR-examples/images/somafm-player-example.jpg" height="100" alt=""/></a>
 					
-<x-app-info id="somafm.example.kinoma.marvell.com"></x-app-info>
+<x-app-info id="somafmplayer.example.kinoma.marvell.com"></x-app-info>
 
-This mobile framework example streams live radio from the SomaFM service. Channels are selected using a touch controlled scrolling tuner. A music artist image collage is displayed and updated on track changes. This example demonstrates how to use KPR media to play HTTP streams, build custom UI elements with canvas, use a proxy handler to fetch data from a web service, and use KPR effects and layers to implement an animated image collage.
+This mobile framework Kinoma Create example streams live radio from the SomaFM service. Channels are selected using a touch controlled scrolling tuner. A music artist image collage is displayed and updated on track changes. This example demonstrates how to use KPR media to play HTTP streams, build custom UI elements with canvas, use a proxy handler to fetch data from a web service, and use KPR effects and layers to implement an animated image collage. The SomaFM player also supports KPR DIAL and can be controlled remotely by the SomaFM remote phone application.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/somafm-remote">somafm-remote</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/somafm-remote"><img src="http://kinoma.github.io/KPR-examples/images/somafm-remote-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="somafmremote.example.kinoma.marvell.com"></x-app-info>
+
+This mobile framework phone application streams live radio from the SomaFM service and can be used to remotely control the SomaFM player application. Using KPR DIAL, this example discovers the SomaFM player application running on Kinoma Create and can change channels and the volume level remotely. Channels are selected using a touch controlled scrolling tuner. A music artist image collage is displayed and updated on track changes. This example demonstrates how to use KPR media to play HTTP streams, build custom UI elements with canvas, use a proxy handler to fetch data from a web service, and use KPR effects and layers to implement an animated image collage.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
