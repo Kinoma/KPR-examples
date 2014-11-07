@@ -305,7 +305,7 @@
 	
 	<script><![CDATA[
 		var model = application.behavior = new MODEL.ApplicationBehavior(application);
-		model.root = Files.picturesDirectory;
+		model.root = ("linux" == system.platform) ? "file:///" : Files.picturesDirectory;
 		//model.root = Files.temporaryDirectory;
 		//model.root = "/Users/brianfriedkin/Documents/Kinoma Media/";
 		//model.root = "file://c:/"
