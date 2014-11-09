@@ -1,3 +1,4 @@
+//@program
 /*
   Copyright 2014 DouZen, Inc.
 
@@ -151,3 +152,4 @@ SpriteContainerBehavior.prototype = Object.create( Object.prototype,
 		}
 	}
 });
+

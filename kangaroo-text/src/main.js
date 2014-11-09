@@ -1,3 +1,4 @@
+//@program
 /*
   Copyright 2014 DouZen, Inc.
 
@@ -13,8 +14,8 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-include("color.js"); 
-include("sprite.js"); 
+include("color"); 
+include("sprite"); 
 
 var state_capitols = [
  "Alabama - Montgomery","Alaska - Juneau"
