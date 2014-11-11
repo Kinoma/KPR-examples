@@ -318,6 +318,16 @@ Photo images are fetched from a Flickr feed using a proxy handler which returns 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/sketchat">sketchat</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/sketchat"><img src="http://kinoma.github.io/KPR-examples/images/sketchat-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="sketchat.create.kinoma.marvell.com"></x-app-info>
+
+Sketchat is the contraction of sketch and chat. Sketchat allows to share a drawing surface between different Creates. The application demonstrates how to  discover other Sketchat and how they can easily exchange information. When something is drawn on one Sketchat, it appears on all others. The color senor allows to select the color of the pen. The accelerometer allows to erase what has been drawn by shaking Create. When the application is stopped, its drawing dissapears from other Sketchat.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/slideshow">slideshow</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/slideshow"><img src="http://kinoma.github.io/KPR-examples/images/slideshow-example.jpg" height="100" alt=""/></a>
 					
@@ -488,13 +498,4 @@ This example demonstrates how to issue an HTTP request to the Open Weather Map s
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### <a href="https://github.com/Kinoma/KPR-examples/tree/master/sketchat">sketchat</a>
-<a href="https://github.com/Kinoma/KPR-examples/tree/master/sketchat"><img src="http://kinoma.github.io/KPR-examples/images/sketchat-example.jpg" height="100" alt=""/></a>
-
-<x-app-info id="sketchat.create.kinoma.marvell.com"></x-app-info>
-
-Sketchat demo.
-
-<div style="clear:both; margin-bottom: 16px;"></div>			
-***
 These examples released under the <a href="http://www.apache.org/licenses/LICENSE-2.0.html" rel="license">Apache Foundation</a> license.
