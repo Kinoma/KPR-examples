@@ -128,6 +128,16 @@ This mobile framework example demonstrates how to use the global KPR Files objec
 <div style="clear:both; margin-bottom: 16px;"></div>
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/file-explorer">files-chunks</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/files-chunks"><img src="http://kinoma.github.io/KPR-examples/images/files-chunks-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="fileschunks.example.kinoma.marvell.com"></x-app-info>
+
+This application demonstrates how to use the global KPR Files object. KPR Files provides APIs for reading and writing text, binary, JSON and XML files, and manipulating/iterating directories. In addition, KPR Chunk is introduced. Chunk is an object that wraps a memory block.
+
+<div style="clear:both; margin-bottom: 16px;"></div>
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/flickr-grid">flickr-grid</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/flickr-grid"><img src="http://kinoma.github.io/KPR-examples/images/flickr-example.jpg" height="100" alt=""/></a>
 
