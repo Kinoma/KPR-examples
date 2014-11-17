@@ -478,6 +478,16 @@ This example demonstrates how to use the Transitions library to configure and us
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/web-server">web-server</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/web-server"><img src="http://kinoma.github.io/KPR-examples/images/web-server-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="webserver.example.kinoma.marvell.com"></x-app-info>
+
+This sample application demonstrates how to build a simple web server with KPR. Setting the application 'shared' property to 'true' shares the application as a service on the local network and enables the HTTP server. The sample shows how to support GET and POST requests and how to serve static and dynamic web pages with images. Transactions are displayed in a scrolling log view.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/websocket-client">websocket-client</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/websocket-client"><img src="http://kinoma.github.io/KPR-examples/images/websocket-client-example.jpg" height="100" alt=""/></a>
 					

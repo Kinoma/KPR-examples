@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2011-2014 Marvell Semiconductor, Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<program xmlns="http://www.kinoma.com/kpr/1">
+    <require path="themes/sample/theme" id="THEME"/>
+    <require path="mobile/scroller" id="SCROLLER"/>
+    <require path="mobile/control" id="CONTROL"/>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- ASSETS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<skin id="serverLogSkin" color="#6cb535"/>
+	<texture id="toolsTexture" small="./assets/tools.png"/>
+	<skin id="toolsSkin" texture="toolsTexture" x="0" y="0" width="32" height="32">
+		<states offset="32"/>
+	</skin>
+	<skin id="whiteSkin" color="white"/>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- STYLES -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<style id="serverLogLineStyle" font="20px" color="black" align="left"/>
+	<style id="serverInfoStyle" font="bold 24px" color="black" align="center,middle">
+		<margins top="1" bottom="1"/>
+	</style>
+	<style id="serverLogHeaderStyle" font="20px" color="white" align="left,middle" lines="1">
+		<margins left="10"/>
+	</style>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- BEHAVIORS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<behavior id="ApplicationBehavior">
+		<method id="onInvoke" params="application, message"><![CDATA[
+			var path = message.path;
+			var scheme = message.scheme.toLowerCase();
+			var method = message.method.toLowerCase();
+			
+			var action;
+			if (scheme in this.sitemap) {
+				var schemeHandlers = this.sitemap[scheme];
+				if (method in schemeHandlers) {
+					var methodHandlers = schemeHandlers[method];
+					if (path in methodHandlers.item) {
+						action = methodHandlers.item[path].action;
+					}
+				}
+			}
+			if (!action)
+				action = "doDefaultAction";
+			application.delegate(action, message);
+			log(message.method.toUpperCase() + " " + path + " " + message.status);
+		]]></method>
+		<method id="doIndexAction" params="application, message"><![CDATA[
+            message.status = 200;
+            message.responseText = Files.readText(mergeURI(application.url, this.root + "/index.html")).replace("[SERVER]", this.server);
+            message.setResponseHeader("Content-Type", "text/html");
+ 		]]></method>
+		<method id="doConfigureAction" params="application, message"><![CDATA[
+            message.status = 200;
+            message.responseText = Files.readText(mergeURI(application.url, this.root + "/configure.html")).replace("[URL]", this.server + "log");
+            message.setResponseHeader("Content-Type", "text/html");
+		]]></method>
+		<method id="doCustomAction" params="application, message"><![CDATA[
+            message.status = 200;
+            message.responseText = Files.readText(mergeURI(application.url, this.root + "/custom.html")).replace("[URL]", this.server + "create");
+            message.setResponseHeader("Content-Type", "text/html");
+		]]></method>
+		<method id="doCreateAction" params="application, message"><![CDATA[
+            message.status = 200;
+			var query = parseQuery(message.query);
+            var html = Files.readText(mergeURI(application.url, this.root + "/create.html")).replace("[NAME]", query.name);
+            message.responseText = html;
+            message.setResponseHeader("Content-Type", "text/html");
+		]]></method>
+		<method id="doLogAction" params="application, message"><![CDATA[
+            message.status = 200;
+            var query = parseQuery(message.requestText);
+            application.distribute("onLogTextColorChange", query.color);
+		]]></method>
+		<method id="doDefaultAction" params="application, message"><![CDATA[
+			var path = message.path;
+			var uri = mergeURI(application.url, this.root + path);
+			if (Files.exists(uri)) {
+                message.status = 200;
+                var mime = this.pathToMIME(path);
+				message.setResponseHeader("Content-Type", mime);
+                if (0 == mime.indexOf("text/"))
+					message.responseText = Files.readText(uri);
+				else {
+					message.responseChunk = Files.readChunk(uri);
+            		message.setResponseHeader("Content-Length", message.responseChunk.length);
+				}
+			}
+			else {
+                message.status = 404;
+                var html = Files.readText(mergeURI(application.url, this.root + "/error.html")).replace("[SERVER]", this.server);
+                message.responseText = html;
+                message.setResponseHeader("Content-Type", "text/html");
+			}
+		]]></method>
+		<method id="getExtension" params="path"><![CDATA[
+			var extension = "";
+			try {
+				var dot = path.lastIndexOf(".");
+				if (dot > 0)
+					extension = path.slice(dot + 1).toLowerCase();
+			}
+			catch(e) {
+			}
+			return extension;
+		]]></method>
+		<method id="pathToMIME" params="path"><![CDATA[
+			var extension = this.getExtension(path);
+			switch(extension) {
+				case 'htm':
+				case 'html':
+					return "text/html";
+				case 'png':
+					return "image/png";
+				case 'jpg':
+				case 'jpeg':
+					return "image/jpeg";
+				default:
+					return "application/octet-stream";
+			}
+		]]></method>
+	</behavior>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- LAYOUTS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<column id="ServerLogHeader" left="0" right="0" top="0" style="serverInfoStyle">
+		<label left="0" right="0" string="'KPR HTTP Server:'"/>                
+		<label left="0" right="0" string="'(IP address unknown)'">
+			<behavior>
+				<method id="onComplete" params="container, message, json"><![CDATA[
+					if (json && ("ip_address" in json)) {
+						container.string = model.server = 'http://' + json.ip_address + ':' + application.serverPort + '/';
+						log("Server started");
+					}
+				]]></method>
+				<method id="onDisplaying" params="container"><![CDATA[
+					container.invoke(new Message("xkpr://wifi/status"), Message.JSON);
+				]]></method>
+			</behavior>
+		</label>                
+		<content height="2"/>
+		<label left="0" right="0" height="24" skin="serverLogSkin" style="serverLogHeaderStyle" string="'Log'"/>
+		<content height="2"/>
+	</column>
+	
+	<label id="ServerLogLine" left="0" height="20" string="$"/>
+
+	<container id="ExitButton" left="0" top="0" active="true">
+		<behavior like="CONTROL.ButtonBehavior">
+			<method id="onTap" params="container"><![CDATA[
+				application.invoke(new Message("xkpr://shell/close?id=" + application.id));
+			]]></method>	
+		</behavior>
+		<content skin="toolsSkin"/>
+	</container>
+
+	<container id="MainContainer" left="0" right="0" top="0" bottom="0" skin="whiteSkin">
+		<column like="ServerLogHeader" height="80"/>
+		<scroller left="4" right="4" top="80" bottom="0" clip="true" like="SCROLLER.VerticalScroller">
+			<scroller left="0" right="0" top="0" bottom="undefined" like="SCROLLER.HorizontalScroller">
+				<column left="0" top="0" style="serverLogLineStyle">
+					<behavior>
+						<method id="onLogText" params="column, string"><![CDATA[
+							var line = new ServerLogLine(string);
+							column.add(line);
+							column.container.container.scrollTo(0, 0x7FFFF);
+						]]></method>	
+						<method id="onLogTextColorChange" params="column, color"><![CDATA[
+							column.style = new Style({font: column.style.font, align: column.style.horizontalAlignment, color: color});
+						]]></method>	
+					</behavior>
+				</column>
+				<content like="SCROLLER.HorizontalScrollbar">
+					<behavior like="SCROLLER.HorizontalScrollbarBehavior">
+						<method id="onScrolled" params="scrollbar"><![CDATA[
+							SCROLLER.HorizontalScrollbarBehavior.prototype.onScrolled.call(this, scrollbar);
+							var container = scrollbar.container.container;
+							scrollbar.y = container.y + container.height - scrollbar.height;
+						]]></method>	
+					</behavior>
+				</content>
+			</scroller>
+			<content like="SCROLLER.VerticalScrollbar"/>
+		</scroller>
+		<container like="ExitButton"/>
+	</container>
+    
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- SCRIPTS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	
+	<script><![CDATA[
+		var model = application.behavior = new ApplicationBehavior();
+		model.root = "httpdocs";
+		model.server = "";
+		
+		application.shared = true;	// enable server
+		
+		var data = {};
+	    application.add(new MainContainer(data));
+	    
+		model.sitemap = {
+			http: {
+				get: {
+					item: {
+						"/":							{ action: "doIndexAction" },
+						"/configure":					{ action: "doConfigureAction" },
+						"/custom":						{ action: "doCustomAction" },
+						"/create":						{ action: "doCreateAction" },
+					},
+				},
+				post: {
+					item: {
+						"/log":							{ action: "doLogAction" },
+					},
+				}
+			}
+		};
+		
+	    var log = function(string) {
+            var d = new Date();
+            var line = '[' + d.toLocaleDateString() + ' ' + d.toLocaleTimeString() + '] ' + string;
+	    	application.distribute("onLogText", line);
+	    }
+
+	]]></script>
+    
+</program>
