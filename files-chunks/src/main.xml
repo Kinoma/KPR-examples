@@ -261,7 +261,7 @@
 				}
     		}
 	    }
-	    var log = function(string, state) {
+	    var log = function(string) {
 	    	application.distribute("onLog", string);
 	    }
 	]]></script>

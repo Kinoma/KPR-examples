@@ -289,7 +289,7 @@
 		<behavior>
 			<method id="onComplete" params="handler, message, document"><![CDATA[
 				var device = parseQuery(handler.message.query);
-				device.applicationURL = message.getResponseHeader("Application-URL") + "somafm.example.kinoma.marvell.com";
+				device.applicationURL = message.getResponseHeader("Application-URL") + "somafmplayer.example.kinoma.marvell.com";
 				device.friendlyName = document.getElementsByTagName("friendlyName").item(0).firstChild.value;
 				var element = document.getElementsByTagName("icon").item(0);
 				if (element)

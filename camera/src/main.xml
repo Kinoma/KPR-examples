@@ -51,7 +51,7 @@
 					Screen: MainScreen,
 					title: "Camera",
 					uri_preview: mergeURI( application.url, "assets/preview.yuv" ),
-					uri_capture: mergeURI( Files.documentsDirectory, application.di + ".photo.jpg")
+					uri_capture: mergeURI( Files.picturesDirectory, application.di + ".photo.jpg")
 				};
 				return data;
 			]]></method>
@@ -63,8 +63,8 @@
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
 	<behavior id="ApplicationBehavior" like="MODEL.ApplicationBehavior">
-		<method id="onCreate" params="application, data, context"><![CDATA[
-			MODEL.ApplicationBehavior.prototype.onCreate.call( this, application, data, context );
+		<method id="onCreate" params="application, data"><![CDATA[
+			MODEL.ApplicationBehavior.prototype.onCreate.call( this, application, data );
 		]]></method>
 		<method id="onLaunch" params="application"><![CDATA[
 			this.width = application.width;
@@ -198,7 +198,7 @@
 				if ( this.photo_track == data.track ) {
 					this.photo_track.set( FskMediaProperty.enabled, false );
 					container.bubble( "onPhotoCaptured", data.chunk );
-					data.chunk.free();
+					//data.chunk.free();
 					continue;
 				}
 		
@@ -236,7 +236,17 @@
 				container.container.run( new TRANSITIONS.Flip(), container, new PreviewContainer( this.data ), { direction : "down", easeType : "sineEaseOut", duration : 500 } );
 			]]></method>
 		</behavior>
-		<picture left="0" right="0" top="0" bottom="0" url="$.uri_capture"/>
+		<picture left="0" right="0" top="0" bottom="0">
+			<behavior>
+				<method id="onCreate" params="picture, data"><![CDATA[
+					this.data = data;
+					picture.load(data.chunk);
+				]]></method>
+				<method id="onLoaded" params="picture"><![CDATA[
+					this.data.chunk.free();
+				]]></method>
+			</behavior>
+		</picture>
 		<container bottom="10" width="80" height="30" active="true" skin="buttonSkin">
 			<behavior like="CONTROL.ButtonBehavior">
 				<method id="onTap" params="button"><![CDATA[
@@ -253,9 +263,19 @@
 				this.data = data;
 			]]></method>
 			<method id="onPhotoCaptured" params="container, chunk"><![CDATA[
-				Files.deleteFile( this.data.uri_capture );
-				Files.writeChunk( this.data.uri_capture, chunk );
-				container.wait( 100 );	// let the transition complete
+				this.data.chunk = chunk;
+				
+				if (system.platform == "iphone" || system.platform == "android" || system.platform == "mac") {
+					var message = new Message("xkpr://library/pictures/save");
+					message.requestChunk = chunk;	// the JPEG photo chunk corresponding to the captured image
+					message.method = "POST"
+					container.invoke(message, Message.CHUNK);
+				}
+				else {
+					Files.deleteFile( this.data.uri_capture );
+					Files.writeChunk( this.data.uri_capture, chunk );
+					container.wait( 100 );	// let the transition complete
+				}				
 			]]></method>
 			<method id="onComplete" params="container"><![CDATA[
 				container.container.run( new TRANSITIONS.Flip(), container, new PhotoContainer( this.data ), { direction : "up", easeType : "sineEaseOut", duration : 500 } );

@@ -70,7 +70,7 @@
 			<content width="40" height="40" right="4" skin="THEME.busySkin" visible="false" anchor="BUSY" behavior="CONTROL.BusyBehavior"/>
 		</line>
 
-		<browser left="0" right="0" top="40" bottom="40" url="$.url" anchor="BROWSER">
+		<browser left="0" right="0" top="50" bottom="40" url="$.url" anchor="BROWSER">
 			<behavior>
 				<method id="onCreate" params="browser,data"><![CDATA[
 					this.data = data;

@@ -393,6 +393,7 @@
 	
 	<script><![CDATA[
 		application.behavior = new MODEL.ApplicationBehavior(application);
+		application.invoke(new Message("xkpr://library/scan"));
 	]]></script>
     
 </program>
