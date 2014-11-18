@@ -537,7 +537,7 @@
 			function onCancel(container) {
 				this.former.focus();
 				model.dialog = null;
-				application.run(new THEME.MenuCloseTransition, container, this.data.button);
+				application.run(new MenuCloseTransition, container, this.data.button);
 			}
 			function onCreate(container, data) {
 				this.data = data;
@@ -566,7 +566,7 @@
 							label: "Volume",
 						};
 						model.dialog = new PlayerVolumeDialogBox(data);
-						application.run(new THEME.MenuOpenTransition, model.dialog, container);
+						application.run(new MenuOpenTransition, model.dialog, container);
 					}
 					function onVolumeChanged(container, $) {
 						container.active = model.canSetVolume();
@@ -580,12 +580,12 @@
 	<container id="PlayerVolumeDialogBox" left="0" right="0" top="0" bottom="0" active="true" skin="THEME.cancellerSkin">
 		<behavior like="RoundDialogBoxBehavior"><![CDATA[
 		]]></behavior>
-		<container left="0" right="0" height="80">
-			<label left="0" right="0" top="-15" style="sliderLabelStyle" string="'Volume'"/>
-			<label left="0" right="0" top="0" style="sliderLeftStyle" string="'Low'"/>
-			<label left="0" right="0" top="0" style="sliderRightStyle" string="'High'"/>
+		<container left="0" right="0" height="95">
+			<label left="0" right="0" top="0" style="sliderLabelStyle" string="'Volume'"/>
+			<label left="0" right="0" top="15" style="sliderLeftStyle" string="'Low'"/>
+			<label left="0" right="0" top="15" style="sliderRightStyle" string="'High'"/>
 			<label left="0" right="0" bottom="5" style="sliderValueStyle"/>
-			<canvas left="0" right="0" top="0" bottom="0" active="true">
+			<canvas left="0" right="0" top="15" bottom="0" active="true">
 				<behavior like="RoundSliderBehavior"><![CDATA[
 					function getMax(container) {
 						return model.data.radio.volumeMaximum;
@@ -629,6 +629,54 @@
 		</container>
 	</container>
 	
+	<transition id="MenuOpenTransition" duration="250"><![CDATA[
+		function onBegin(container, content, button) {
+			container.add(content);
+			this.canceller = content;
+			var layer = this.layer = new Layer({alpha: true});
+			layer.attach(content.first);
+			if (!button)
+				button = container;
+			this.translation = { 
+				x: button.x + (button.width / 2) - layer.x, 
+				y: button.y + (button.height / 2) - layer.y, 
+			}; 
+		}
+		function onEnd(container, content) {
+			this.layer.detach();
+		}
+		function onStep(fraction) {
+			this.layer.scale = { x: fraction, y: fraction };
+			this.layer.translation = { x: this.translation.x * (1 - fraction), y: this.translation.y * (1 - Math.quadEaseIn(fraction)) };
+			this.canceller.state = fraction;
+		}
+	]]></transition>
+	
+	<transition id="MenuCloseTransition" duration="250"><![CDATA[
+		function onBegin(container, content, button) {
+			this.canceller = content;
+			var layer = this.layer = new Layer({alpha: true});
+			layer.attach(content.first);
+			layer.opacity = 1;
+			if (!button)
+				button = container;
+			this.translation = { 
+				x: button.x + (button.width / 2) - layer.x, 
+				y: button.y + (button.height / 2) - layer.y, 
+			}; 
+		}
+		function onEnd(container, content) {
+			this.layer.detach();
+			container.remove(content);
+		}
+		function onStep(fraction) {
+			fraction = Math.quadEaseOut(fraction);
+			this.layer.scale = { x: 1 - fraction, y: 1 - fraction };
+			this.layer.translation = { x: this.translation.x * fraction, y: this.translation.y * fraction };
+			this.canceller.state = 1 - fraction;
+		}
+	]]></transition>
+
 	<include path="./radio"/>
 	
 	<script><![CDATA[
