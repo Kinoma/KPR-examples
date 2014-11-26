@@ -59,7 +59,7 @@
 		</behavior>
 	</container>                              
 	
-	<container id="MyLabeledCheckbox" left="10" top="60" width="90" height="30" like="BUTTONS.LabeledCheckbox">
+	<container id="MyLabeledCheckbox" left="10" top="50" width="90" height="30" like="BUTTONS.LabeledCheckbox">
 		<behavior like="BUTTONS.LabeledCheckboxBehavior">
 			<method id="onSelected"><![CDATA[
 				trace("LabeledCheckbox was selected \n");               
@@ -70,7 +70,7 @@
 		</behavior>
 	</container>                              
 	
-	<container id="MyLabeledRadio" right="10" top="60" like="BUTTONS.LabeledRadio">
+	<container id="MyLabeledRadio" left="8" top="80" like="BUTTONS.LabeledRadio">
 		<behavior like="BUTTONS.LabeledRadioBehavior">
 			<method id="onSelected"><![CDATA[
 				trace("LabeledRadio was selected \n");               
@@ -81,7 +81,7 @@
 		</behavior>
 	</container>                              
 	
-	<container id="MyRadioGroup" top="110" width="120" like="BUTTONS.RadioGroup">
+	<container id="MyRadioGroup" top="50" width="120" right="20" like="BUTTONS.RadioGroup">
 		<behavior like="BUTTONS.RadioGroupBehavior">
 			<method id="onRadioButtonSelected" params="buttonName"><![CDATA[
 				trace("Radio button named " + buttonName + " was selected \n");               
