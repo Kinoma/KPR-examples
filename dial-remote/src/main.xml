@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2011-2014 Marvell Semiconductor, Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<program xmlns="http://www.kinoma.com/kpr/1">
+	<require path="themes/flat/theme" id="FTHEME"/>
+	<require path="themes/sample/theme" id="THEME"/>
+	<require path="mobile/control" id="CONTROL"/>
+	<require path="mobile/model" id="MODEL"/>
+	<require path="mobile/dialog" id="DIALOG"/>
+	<require path="controls/buttons" id="BUTTONS"/>
+    <require path="mobile/keyboard" id="KEYBOARD"/>
+	
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- ASSETS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<skin id="backgroundSkin" color="#a2ffff"/>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- STYLES -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<effect id="enabledEffect">
+		<colorize color="#5ab021"/>
+	</effect>
+	<effect id="selectedEffect">
+		<colorize color="#333333"/>
+	</effect>
+	<variable id="greenButtonSkin" value="new FTHEME.DynamicSkin( FTHEME.buttonTexture, FTHEME.disabledEffect, enabledEffect, selectedEffect, undefined,
+														{ left : 10, top : 10, right : 10, bottom : 10 })"/>	
+	<style id="greenButtonStyle" font="bold 24px" color="white" align="middle,left" lines="1"/>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- BEHAVIORS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<behavior id="ApplicationBehavior" like="MODEL.ApplicationBehavior">
+		<method id="onLaunch" params="application"><![CDATA[
+			var data = {};
+			application.add(new MainScreen(data));
+			
+			this.dialClientApplicationID = "dialclient.example.kinoma.marvell.com";
+			this.ballCount = 4;
+			
+			this.localDevice = this.currentDevice = new LocalDevice();
+			this.devices = [ this.currentDevice ];
+			this.ssdpClient = new SSDP.Client();
+			this.ssdpClient.addService("urn:dial-multiscreen-org:service:dial:1");
+			this.ssdpClient.behavior = this;
+			this.ssdpClient.start();
+		]]></method>
+		<method id="onQuit" params="application"><![CDATA[
+			this.ssdpClient.stop();
+			this.ssdpClient = undefined;
+		]]></method>
+		<method id="onSSDPServerUp" params="server"><![CDATA[
+			trace("DIAL Server up: " + server.url + "\n");
+			application.invoke(new Message("/dial?" + serializeQuery(server)));
+		]]></method>	
+		<method id="onSSDPServerDown" params="server"><![CDATA[
+			trace("DIAL Server down: " + server.url + "\n");
+			this.devices.some(function(item, index, array) {
+				if (("url" in item) && (item.url == server.url)) {
+					array.splice(index, 1);
+					if (this.currentDevice == item) {
+						application.distribute("onDIALClientLost", this.currentDevice);
+						this.selectDevice(this.localDevice.uuid);
+					}
+					return true;
+				}
+			}, this);
+		]]></method>	
+	</behavior>
+
+	<behavior id="DialClientButtonBehavior" like="BUTTONS.ButtonBehavior">
+		<method id="onDIALClientFound" params="button, device"><![CDATA[
+			if (model.devices.length > 1) {
+				button.active = true;
+				this.onStateChanged(button);
+			}
+		]]></method>			
+		<method id="onDIALClientLost" params="button, device"><![CDATA[
+			button.active = false;
+		]]></method>			
+	</behavior>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- HANDLERS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+    <handler path="/configure">
+        <behavior like="MODEL.DialogBehavior">
+            <method id="onDescribe" params="query">
+                return {
+                    Dialog: DIALOG.Box,
+                    title: "Set ball count",
+                    items: [
+                        {
+                            Item: DIALOG.Slider,
+                            label: "Balls",
+                            id: "ballCount",
+                            min: 1,
+                            max: 10,
+                            value: query.count,
+                            toString: function(val) { return Math.floor(val); }, 
+                        },
+                    ],
+                    url: query.url,
+                    ok: "OK",
+                    cancel: "Cancel",
+                    action: "/dial/app/configure",
+                };
+            </method>
+        </behavior>
+    </handler>
+
+	<!-- Retrieve DIAL device server info -->
+	
+    <handler path="/dial">
+		<behavior>
+			<method id="onComplete" params="handler, message, document"><![CDATA[
+				var device = parseQuery(handler.message.query);
+				device.applicationURL = message.getResponseHeader("Application-URL") + model.dialClientApplicationID;
+				device.friendlyName = document.getElementsByTagName("friendlyName").item(0).firstChild.value;
+				var element = document.getElementsByTagName("icon").item(0);
+				if (element)
+					device.iconURL = mergeURI(device.url, element.getElement("url"));
+				application.invoke(new Message("/dial/app?" + serializeQuery(device)));
+			]]></method>	
+			<method id="onInvoke" params="handler, message"><![CDATA[
+				var server = parseQuery(message.query);
+				var message = new Message(server.url)
+				handler.invoke(message, Message.DOM);
+			]]></method>	
+		</behavior>
+    </handler>
+    
+	<!-- Confirm remote device supports the DIAL sample client application -->
+
+    <handler path="/dial/app">
+		<behavior>
+			<method id="onComplete" params="handler, message, document"><![CDATA[
+				var device = parseQuery(handler.message.query);
+				if (message.status == 200) { // check if device supports DIAL client application
+					model.devices.push(device);
+					application.distribute("onDIALClientFound", device);
+				}
+			]]></method>	
+			<method id="onInvoke" params="handler, message"><![CDATA[
+				var device = parseQuery(message.query);
+				var message = new Message(device.applicationURL);
+				handler.invoke(message, Message.DOM);
+			]]></method>	
+		</behavior>
+    </handler>
+
+	<!-- Launch and/or configure the DIAL sample client application. The body of the request contains the app parameters. -->
+
+    <handler path="/dial/app/configure">
+		<behavior>
+			<method id="onComplete" params="handler, message"><![CDATA[
+				if (201 == message.status)
+					application.distribute("onDIALClientAppConfigured");	// configure
+				else if (200 == message.status)
+					application.distribute("onDIALClientAppConfigured");	// already configured
+			]]></method>	
+			<method id="onInvoke" params="handler, message"><![CDATA[
+				var query = parseQuery(message.query);
+				model.ballCount = parseInt(query.ballCount);
+				var message = new Message(query.url);
+				message.method = "POST";
+				message.requestText = "count=" + model.ballCount;
+				message.setRequestHeader("Content-Length", message.requestText.length);
+				message.setRequestHeader("Content-Type", "text/plain");
+				handler.invoke(message, Message.TEXT);
+			]]></method>	
+		</behavior>
+    </handler>
+
+	<!-- Launch the DIAL sample client application -->
+
+    <handler path="/dial/app/launch">
+		<behavior>
+			<method id="onComplete" params="handler, message"><![CDATA[
+				if (201 == message.status)
+					application.distribute("onDIALClientAppLaunched");	// launched
+				else if (200 == message.status)
+					application.distribute("onDIALClientAppLaunched");	// already launched
+			]]></method>	
+			<method id="onInvoke" params="handler, message"><![CDATA[
+				var query = parseQuery(message.query);
+				var message = new Message(query.url);
+				message.method = "POST";
+				handler.invoke(message, Message.TEXT);
+			]]></method>	
+		</behavior>
+    </handler>
+
+	<!-- Quit the DIAL sample client application -->
+
+    <handler path="/dial/app/quit">
+		<behavior>
+			<method id="onComplete" params="handler, message"><![CDATA[
+				if (201 == message.status)
+					application.distribute("onDIALClientAppQuit");
+			]]></method>	
+			<method id="onInvoke" params="handler, message"><![CDATA[
+				var query = parseQuery(message.query);
+				var message = new Message(query.url + "/run");
+				handler.invoke(message, Message.TEXT);
+			]]></method>	
+		</behavior>
+    </handler>
+
+	<!-- Check DIAL sample client application status -->
+
+    <handler path="/dial/app/status">
+		<behavior>
+			<method id="onComplete" params="handler, message, document"><![CDATA[
+				if (200 == message.status) {
+					items = document.getElementsByTagName("state");
+					if (items.length > 0) {
+						handler.message.responseText = items.item(0).firstChild.nodeValue;
+					}
+				}
+				else {
+					handler.message.responseText = "not found";
+				}
+			]]></method>	
+			<method id="onInvoke" params="handler, message"><![CDATA[
+				var query = parseQuery(message.query);
+				var message = new Message(query.url);
+				handler.invoke(message, Message.DOM);
+			]]></method>	
+		</behavior>
+    </handler>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- LAYOUTS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<container id="MainScreen" left="0" right="0" top="0" bottom="0" skin="backgroundSkin">
+		<container top="50" left="20" right="20" height="50" like="BUTTONS.Button" skin="greenButtonSkin" active="false">
+			<behavior like="DialClientButtonBehavior">
+				<method id="onComplete" params="button, message, text"><![CDATA[
+					if ("running" == text)
+						button.delegate("onDIALClientAppLaunched");
+					else if ("stopped" == text)
+						button.delegate("onDIALClientAppQuit");
+				]]></method>			
+				<method id="onCreate" params="button, data"><![CDATA[
+					DialClientButtonBehavior.prototype.onCreate.call(this, button, data);
+					this.appLaunched = false;
+				]]></method>			
+				<method id="onTap" params="button"><![CDATA[
+					var device = model.devices[1];
+					var applicationURL = device.applicationURL;
+					var message;
+					if (this.appLaunched)
+						message = new Message("/dial/app/quit?" + serializeQuery({url: applicationURL}));
+					else
+						message = new Message("/dial/app/launch?" + serializeQuery({url: applicationURL}));
+					button.invoke(message);
+				]]></method>			
+				<method id="onDIALClientFound" params="button, device"><![CDATA[
+					DialClientButtonBehavior.prototype.onDIALClientFound.call(this, button, device);
+					if (button.active) {
+						var device = model.devices[1];
+						var applicationURL = device.applicationURL;
+						button.invoke(new Message("/dial/app/status?" + serializeQuery({url: applicationURL})), Message.TEXT);
+					}
+				]]></method>			
+				<method id="onDIALClientAppConfigured" params="button"><![CDATA[
+					button.delegate("onDIALClientAppLaunched");
+				]]></method>			
+				<method id="onDIALClientAppLaunched" params="button"><![CDATA[
+					this.appLaunched = true;
+					button.first.string = "Quit DIAL client";
+				]]></method>			
+				<method id="onDIALClientAppQuit" params="button"><![CDATA[
+					this.appLaunched = false;
+					button.first.string = "Launch DIAL client";
+				]]></method>			
+			</behavior>
+			<label top="0" bottom="0" string="'Launch DIAL client'" style="greenButtonStyle"/>
+		</container>
+		<container bottom="50" left="20" right="20" height="50" like="BUTTONS.Button" skin="greenButtonSkin" active="false">
+			<behavior like="DialClientButtonBehavior">
+				<method id="onTap" params="button"><![CDATA[
+					var device = model.devices[1];
+					var applicationURL = device.applicationURL;
+					var message = new Message("/dial/app/configure?" + serializeQuery({url: applicationURL}));
+					button.invoke(new Message("/configure?" + serializeQuery({count: model.ballCount, url: applicationURL})));
+				]]></method>			
+			</behavior>
+			<label top="0" bottom="0" string="'Configure DIAL client'" style="greenButtonStyle"/>
+		</container>
+	</container>
+	
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- MODEL -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<script><![CDATA[
+		var LocalDevice = function() {
+			this.iconURL = mergeURI(application.url, "./assets/local.png");
+			this.friendlyName = "My Phone";
+			this.uuid = application.uuid;
+		};
+		LocalDevice.prototype = Object.create(Object.prototype, {
+		});
+
+		var model = application.behavior = new ApplicationBehavior(application);
+	]]></script>
+</program>

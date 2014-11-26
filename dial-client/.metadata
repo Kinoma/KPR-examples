@@ -1,0 +1,14 @@
+<example 
+	id="dialclient.example.kinoma.marvell.com"
+	title="DIAL Client"
+	project="DIAL Client"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+This Kinoma Create application is the remote DIAL client for the dial-remote example application. The application can be launched, quit and configured by the dial-remote app. DIAL client applications can receive launch configuration parameters by supplying a /dial handler. The parameters are delivered is the handler's message query property. The number of balls displayed can be configured by the dial-remote app.
+	]]></description>
+
+</example>
