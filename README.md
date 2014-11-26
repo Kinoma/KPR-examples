@@ -78,6 +78,26 @@ This example demonstrates how to integrate mobile framework buttons and behavior
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/dial-client">dial-client</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/dial-client"><img src="http://kinoma.github.io/KPR-examples/images/dial-client-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="dialclient.example.kinoma.marvell.com"></x-app-info>
+
+This Kinoma Create application is the remote DIAL client for the dial-remote example application. The application can be launched, quit and configured by the dial-remote app. DIAL client applications can receive launch configuration parameters by supplying a /dial handler. The parameters are delivered is the handler's message query property. The number of balls displayed can be configured by the dial-remote app.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/dial-remote">dial-remote</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/dial-remote"><img src="http://kinoma.github.io/KPR-examples/images/dial-remote-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="dialremote.example.kinoma.marvell.com"></x-app-info>
+
+This mobile framework application demonstrates how to use KPR DIAL to remotely launch, configure and quit the dial-client application installed on Kinoma Create. The dial-client application must be installed on Kinoma Create. KPR DIAL uses SSDP to discover DIAL servers and DIAL requests are issued to the remote DIAL server. The target DIAL application name is the KPR application id. DIAL uses a HTTP POST to launch applications. The body of the request contains the parameters passed to the app.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/dialog">dialog</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/dialog"><img src="http://kinoma.github.io/KPR-examples/images/dialogs-example.jpg" height="100" alt=""/></a>
 
