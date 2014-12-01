@@ -1,0 +1,258 @@
+<program xmlns="http://www.kinoma.com/kpr/1">
+	<require path="themes/sample/theme" id="THEME"/>
+	<require path="mobile/control" id="CONTROL"/>
+	<require path="mobile/dialog" id="DIALOG"/>
+	<require path="mobile/model" id="MODEL"/>
+	<require path="mobile/scroller" id="SCROLLER"/>
+	<require path="mobile/tool" id="TOOL"/>
+
+	<skin id="blackSkin" color="black"/>
+	<skin id="whiteSkin" color="white"/>
+	<skin id="headerSkin" color="#203a6f"/>
+	<style id="headerStyle" font="bold 24px Arial" align="left" color="white">
+	</style>
+	<style id="nameStyle" font="bold 24px Arial" align="left" color="white">
+        <margins top="5"/>
+	</style>
+	<style id="hostStyle" font="18px Arial" align="left" color="white">
+	</style>
+	<style id="errorStyle" font="18px Arial" align="center,middle" color="white">
+	</style>
+
+	<texture id="backTexture" small="./assets/back.png"/>
+	<variable id="backSkin" value="new CONTROL.Skin(backTexture, THEME.tabDisabledEffect, THEME.tabEnabledEffect, THEME.tabSelectedEffect)"/>
+
+	<behavior id="ApplicationBehavior" like="MODEL.ApplicationBehavior">
+		<method id="onLaunch" params="application"><![CDATA[
+			application.shared = true;
+			this.servers = [];
+			this.browser = new Zeroconf.Browser("_http._tcp.");
+			this.browser.behavior = this;
+			this.browser.start();
+			this.advertisement = new Zeroconf.Advertisement("_http._tcp.", "Sample Server", application.serverPort);
+			this.advertisement.behavior = this;
+			this.advertisement.start();
+			MODEL.ApplicationBehavior.prototype.onLaunch.call(this, application);
+		]]></method>
+		<method id="onQuit" params="application"><![CDATA[
+			this.advertisement.stop();
+			this.advertisement = undefined;
+			this.browser.stop();
+			this.browser = undefined;
+			application.shared = false;
+			MODEL.ApplicationBehavior.prototype.onQuit.call(this, application);
+		]]></method>
+		<method id="onZeroconfServiceCompare" params="a,b"><![CDATA[
+			return a.name.toLowerCase().compare(b.name.toLowerCase());
+		]]></method>
+		<method id="onZeroconfServiceDown" params="service"><![CDATA[
+			trace("onZeroconfServiceDown: " + JSON.stringify(service) + "\n");
+			var servers = data.servers;
+			for (var i = servers.length; i--;) {
+				if ((servers[i].name == service.name) && servers[i].type == service.type){
+					servers.splice(i, 1);
+					application.distribute("onServersChanged");
+					break;
+				}
+			}
+		]]></method>
+		<method id="onZeroconfServiceRegistered" params="service"><![CDATA[
+			trace("onZeroconfServiceRegistered: " + service.serviceName + "\n");
+		]]></method>
+		<method id="onZeroconfServiceUnregistered" params="service"><![CDATA[
+			trace("onZeroconfServiceUnregistered: " + service.serviceName + "\n");
+		]]></method>
+		<method id="onZeroconfServiceUp" params="service"><![CDATA[
+			trace("onZeroconfServiceUp: " + JSON.stringify(service) + "\n");
+			var servers = data.servers;
+			for (var i = servers.length; i--;) {
+				if ((servers[i].name == service.name) && servers[i].type == service.type){
+					servers.splice(i, 1);
+					break;
+				}
+			}
+			data.servers.push(service);
+			data.servers.sort(this.onZeroconfServiceCompare);
+			application.distribute("onServersChanged");
+		]]></method>
+	</behavior>
+
+	<scroller id="ServersScroller" like="SCROLLER.VerticalScroller" left="0" right="0" top="40" bottom="0">
+		<column left="0" right="0" top="0">
+			<iterate on="$.servers">
+				<line left="0" right="0" active="true">
+					<behavior like="CONTROL.ButtonBehavior"><![CDATA[
+						function onTap(line) {
+							application.invoke(new Message("/browse?" + serializeQuery(this.data)));
+						}
+					]]></behavior>
+					<column left="0" right="0" top="0">
+						<label left="10" right="10" style="nameStyle" string="$.name"/>
+						<label left="10" right="10" style="hostStyle" string="$.ip + ':' + $.port"/>
+					</column>
+				</line>
+				<container left="0" right="0" top="0" height="1" skin="headerSkin"/>
+			</iterate>
+		</column>
+	</scroller>
+
+	<container id="ZeroconfMenuButton" like="TOOL.MenuButton" top="5" left="0"/>
+
+	<container id="BrowserScreen" left="0" right="0" top="0" bottom="0" skin="blackSkin">
+		<behavior><![CDATA[
+			function onServersChanged(layout) {
+				if (this.data.servers.length == 0)
+					layout.replace(layout.first, new DIALOG.Spinner);
+				else
+					layout.replace(layout.first, new ServersScroller(this.data));
+			}
+			function onCreate(layout, data) {
+				this.data = data;
+			}	
+		]]></behavior>
+		<container like="DIALOG.Spinner"/>
+		<line left="0" right="0" top="0" height="40" skin="headerSkin">
+			<behavior><![CDATA[
+				function onCreate(layout, data) {
+					var menuButton = new ZeroconfMenuButton(menuData);
+					menuButton.style = headerStyle;
+					layout.add(menuButton);
+				}	
+			]]></behavior>
+		</line>
+	</container>
+
+	<container id="BrowserLine" left="0" right="0" top="0" height="40" skin="headerSkin">
+		<container left="0" width="40" top="0" height="40" active="true">
+			<behavior like="CONTROL.ButtonBehavior"><![CDATA[
+				function onTap(container) {
+					application.replace(application.first, new BrowserScreen(data));
+					application.distribute("onServersChanged");
+				}
+			]]></behavior>
+			<content left="0" right="0" top="0" bottom="0" skin="backSkin"/>
+		</container>
+		<label left="40" right="10" top="0" height="40" style="headerStyle" string="$.name"/>
+	</container>
+
+	<container id="ImageScreen" left="0" right="0" top="0" bottom="0" skin="blackSkin">
+		<behavior><![CDATA[
+			function onCreate(layout, data) {
+				this.data = data;
+				data.IMAGE.url = "http://" + data.ip + ":" + data.port;
+			}
+		]]></behavior>
+		<container left="0" right="0" top="40" bottom="0" skin="whiteSkin">
+			<picture left="10" right="10" top="10" bottom="10" anchor="IMAGE"/>
+		</container>
+		<container like="BrowserLine"/>
+	</container>
+
+	<container id="TextScreen" left="0" right="0" top="0" bottom="0" skin="blackSkin">
+		<behavior><![CDATA[
+			function onComplete(layout, message) {
+				this.data.TEXT.string = message.responseText;
+			}
+			function onCreate(layout, data) {
+				this.data = data;
+				var message = new Message("http://" + data.ip + ":" + data.port);
+				layout.invoke(message, Message.TEXT);
+			}
+		]]></behavior>
+		<scroller like="SCROLLER.VerticalScroller" left="0" right="0" top="40" bottom="0">
+			<text left="10" right="10" style="hostStyle" anchor="TEXT"/>
+		</scroller>
+		<container like="BrowserLine"/>
+	</container>
+
+	<container id="ErrorScreen" left="0" right="0" top="0" bottom="0" skin="blackSkin">
+		<label left="10" right="10" top="40" bottom="0" style="errorStyle" string="data.error"/>
+		<container like="BrowserLine"/>
+	</container>
+
+	<container id="UnsupportedScreen" left="0" right="0" top="0" bottom="0" skin="blackSkin">
+		<text left="0" right="0" style="errorStyle" string="'This example is not currently supported on Windows.'"/>
+	</container>
+
+	<handler path="/browse">
+		<behavior><![CDATA[
+			function onComplete(line, message) {
+				var type = message.getResponseHeader("Content-Type");
+				if (!type)
+					return;
+				else if (type.indexOf("image/") == 0)
+					application.replace(application.first, new ImageScreen(this.data));
+				else if (type.indexOf("text/") == 0)
+					application.replace(application.first, new TextScreen(this.data));
+				else
+					application.replace(application.first, new ErrorScreen(this.data));
+			}
+			function onInvoke(handler, message) {
+				var data = parseQuery(message.query);
+				var url = "http://" + data.ip + ":" + data.port;
+				this.data = data;
+				var message = new Message(url);
+				message.method = "HEAD";
+				handler.invoke(message, Message.TEXT);
+			}
+		]]></behavior>
+	</handler>
+
+	<handler path="/">
+		<behavior><![CDATA[
+			function onInvoke(handler, message) {
+				var uri = mergeURI(application.url, "assets/kinoma-create-face-right.jpg");
+				if (Files.exists(uri)) {
+	                message.status = 200;
+					message.setResponseHeader("Content-Type", "image/jpeg");
+					message.responseChunk = Files.readChunk(uri);
+	            	message.setResponseHeader("Content-Length", message.responseChunk.length);
+	            }
+			}
+		]]></behavior>
+	</handler>
+
+	<handler path="/select">
+		<behavior><![CDATA[
+			function onInvoke(handler, message) {
+				var query = parseQuery(message.query);
+				if ("type" in query) {
+					data.servers = [];
+					model.browser.stop();
+					model.browser = new Zeroconf.Browser(query.type);
+					model.browser.behavior = model;
+					model.browser.start();
+					application.distribute("onServersChanged");
+				}
+			}
+		]]></behavior>
+	</handler>
+
+	<script><![CDATA[
+		var data = {
+			error: "Cannot display this page!",
+			servers: [],
+			state: true
+		};
+		var menuData = {
+			action: "/select?type=",
+			items: [
+				{ title: "HTTP Servers", value: "_http._tcp." },
+				{ title: "Airport Base Stations", value: "_airport._tcp." },
+				{ title: "Home Sharing", value: "_home-sharing._tcp." },
+				{ title: "Samba", value: "_smb._tcp." },
+				{ title: "Workstation Manager", value: "_workstation._tcp." },
+				{ title: "All", value: "" }
+			],
+			selection: 0
+		};
+
+		var model = application.behavior = new ApplicationBehavior(application);
+		if ("win" != system.platform)
+			application.add(new BrowserScreen(data));
+		else
+			application.add(new UnsupportedScreen);
+	]]></script>
+	
+	
+</program>

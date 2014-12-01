@@ -1,0 +1,14 @@
+<example 
+	id="zeroconf.example.kinoma.marvell.com"
+	title="Zeroconf"
+	project="Zeroconf"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+		A simple application that shows Zeroconf usage. The application starts a HTTP server on port 1234, registers it with the name service named "KPR Server". It also looks for available HTTP servers on the local network. Note: Zeroconf is not yet supported on Windows.
+	]]></description>
+
+</example>

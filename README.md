@@ -548,4 +548,14 @@ This example demonstrates how to issue an HTTP request to the Open Weather Map s
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/zeroconf">zeroconf</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/zeroconf"><img src="http://kinoma.github.io/KPR-examples/images/zeroconf-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="zeroconf.example.kinoma.marvell.com" platform="mac,iphone,android,linux"></x-app-info>
+
+A simple application that shows Zeroconf usage. The application starts a HTTP server on port 1234, registers it with the name service named "KPR Server". It also looks for available HTTP servers on the local network. Note: Zeroconf is not yet supported on Windows.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 These examples released under the <a href="http://www.apache.org/licenses/LICENSE-2.0.html" rel="license">Apache Foundation</a> license.
