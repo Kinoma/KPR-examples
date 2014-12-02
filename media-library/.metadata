@@ -1,7 +1,7 @@
 <example 
 	id="medialibrary.example.kinoma.marvell.com"
-	title="Media Library Example"
-	project="Media Library Example"
+	title="Media Library"
+	project="Media Library"
 	resources="application.xml" 
 	tags=""
 	type="application" 
