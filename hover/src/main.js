@@ -3,6 +3,7 @@
 var touchSkin = new Skin({ fill: ["#00FFFFFF", "white" ] } );
 var arrowsTexture = new Texture("./arrows.png");
 var arrowsSkin = new Skin({ texture: arrowsTexture, x:0, y:0, width:200, height:200, variants:200, states:200 } );
+var errorStyle = new Style({ font:"bold 40px", color:"white", horizontal:"center", vertical:"middle" });
 
 var fadeBehavior = Object.create(Behavior.prototype, {
 	onCreate: { value: function(content, data) {
@@ -28,6 +29,13 @@ var Screen = Container.template(function($) { return {
 	]
 }});
 
+var ErrorScreen = Container.template(function($) { return {
+	left:0, right:0, top:0, bottom:0, skin: new Skin({ fill: "#f78e0f" }),
+	contents: [
+		Label($, { left:0, right:0, top:0, bottom:0, style: errorStyle, string:"Error " + $.error })
+	]
+}});
+
 Handler.bind("/hoverData", {
 	onInvoke: function(handler, message) {
 		var data = model.data;
@@ -40,7 +48,13 @@ Handler.bind("/hoverData", {
 });
 
 var model = application.behavior = Object.create(Object.prototype, {
-	onLaunch: { value: function(content) {
+	onComplete: { value: function(application, message, text) {
+		if (0 != message.error)
+			application.replace(application.first, new ErrorScreen(message));
+        else
+            application.invoke(new MessageWithObject("pins:/hover/read?repeat=on&callback=/hoverData&interval=16"));
+	}},
+	onLaunch: { value: function(application) {
         var message = new MessageWithObject("pins:configure", {
             hover: {
                 require: "hover",
@@ -50,10 +64,7 @@ var model = application.behavior = Object.create(Object.prototype, {
                     data: {sda: 27, clock: 29}
                 }
             }});
-        application.invoke(message);
-
-        message = new MessageWithObject("pins:/hover/read?repeat=on&callback=/hoverData&interval=16");
-        application.invoke(message);
+        application.invoke(message, Message.TEXT);
 
 		this.data = { };
  		application.add(new Screen(this.data));

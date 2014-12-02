@@ -16,6 +16,8 @@ exports.configure = function(configuration) {
     this.reset.direction = "input";
 
     sensorUtils.delay(1);
+
+    this.data.readBlockDataSMB(0, 1, "Array");        // read to verify device present
 }
 
 exports.close = function() {
