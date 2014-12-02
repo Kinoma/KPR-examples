@@ -1,7 +1,7 @@
 <example 
 	id="tabs.example.kinoma.marvell.com"
-	title="Tabs Example"
-	project="Tabs Example"
+	title="Tabs"
+	project="Tabs"
 	resources="application.xml" 
 	tags=""
 	type="application" 
