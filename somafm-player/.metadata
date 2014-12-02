@@ -1,7 +1,7 @@
 <example 
 	id="somafmplayer.example.kinoma.marvell.com"
-	title="SomaFM"
-	project="SomaFM"
+	title="SomaFM Player"
+	project="SomaFM Player"
 	resources="application.xml" 
 	tags=""
 	type="application" 
