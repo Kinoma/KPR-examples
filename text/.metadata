@@ -1,7 +1,7 @@
 <example 
 	id="text.example.kinoma.marvell.com"
-	title="text"
-	project="text"
+	title="Text"
+	project="Text"
 	resources="application.xml" 
 	tags=""
 	type="application" 
