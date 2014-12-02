@@ -1,7 +1,7 @@
 <example 
 	id="oauth.example.kinoma.marvell.com"
 	title="OAuth"
-	project="oauth"
+	project="OAuth"
 	resources="application.xml" 
 	tags=""
 	type="application" 
