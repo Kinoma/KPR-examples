@@ -1,7 +1,7 @@
 <example 
 	id="somafmremote.example.kinoma.marvell.com"
-	title="SomaFM"
-	project="SomaFM"
+	title="SomaFM Remote"
+	project="SomaFM Remote"
 	resources="application.xml" 
 	tags=""
 	type="application" 
