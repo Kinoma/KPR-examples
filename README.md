@@ -291,7 +291,7 @@ This example demonstrates how to implement OAuth 1.0a (Twitter) and OAuth 2.0 (G
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/orientation">orientation</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/orientation"><img src="http://kinoma.github.io/KPR-examples/images/screen-orientation-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="orientation.example.kinoma.marvell.com"></x-app-info>
+<x-app-info id="orientation.example.kinoma.marvell.com" platform="mac,win,iphone,android"></x-app-info>
 
 This example uses a layout container to demonstrate how to adapt layouts to device orientation changes. KPR calls the onMeasureVertically and onMeasureHorizontally methods in layout containers when the device orientation changes. The example dynamically changes the container contents based on the current orientation.
 
