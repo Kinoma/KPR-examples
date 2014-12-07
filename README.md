@@ -158,7 +158,7 @@ This example demonstrates how to setup and display mobile framework dialogs. Var
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-camera>digital-camera</a>
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-camera">digital-camera</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-camera"><img src="http://kinoma.github.io/KPR-examples/images/digital-camera-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="digitalcamera.example.kinoma.marvell.com"></x-app-info>
@@ -168,7 +168,7 @@ A sample that captures and displays photographs on the screen when a button is p
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-color-sensor>digital-color-sensor</a>
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-color-sensor">digital-color-sensor</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-color-sensor"><img src="http://kinoma.github.io/KPR-examples/images/digital-color-sensor-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="digitalcolorsensor.example.kinoma.marvell.com"></x-app-info>
@@ -178,7 +178,7 @@ This application changes the MainContainer's skin to the color sensed by an RGB 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-in-hello-world>digital-in-hello-world</a>
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-in-hello-world">digital-in-hello-world</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-in-hello-world"><img src="http://kinoma.github.io/KPR-examples/images/digital-in-hello-world-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="digitalinhelloworld.example.kinoma.marvell.com"></x-app-info>
@@ -188,7 +188,7 @@ Uses a digital pin to read input from a physical button. When pressed, it trigge
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-out-led>digital-out-led</a>
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-out-led">digital-out-led</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-out-led"><img src="http://kinoma.github.io/KPR-examples/images/digital-out-led-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="digitaloutled.example.kinoma.marvell.com"></x-app-info>
@@ -468,7 +468,7 @@ Rotates a 360˚ continuous servo using a PWM pin. Demonstrates the set up and in
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### <a href="https://github.com/Kinoma/KPR-examples/tree/master/pwm-tri-color-led>pwm-tri-color-led/a>
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/pwm-tri-color-led">pwm-tri-color-led/a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/pwm-tri-color-led"><img src="http://kinoma.github.io/KPR-examples/images/pwm-tri-color-led-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="pwmtricolorled.example.kinoma.marvell.com"></x-app-info>
