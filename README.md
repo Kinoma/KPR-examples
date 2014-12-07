@@ -468,7 +468,7 @@ Rotates a 360˚ continuous servo using a PWM pin. Demonstrates the set up and in
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### <a href="https://github.com/Kinoma/KPR-examples/tree/master/pwm-tri-color-led">pwm-tri-color-led/a>
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/pwm-tri-color-led">pwm-tri-color-led</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/pwm-tri-color-led"><img src="http://kinoma.github.io/KPR-examples/images/pwm-tri-color-led-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="pwmtricolorled.example.kinoma.marvell.com"></x-app-info>
