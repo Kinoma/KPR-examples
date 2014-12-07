@@ -459,7 +459,7 @@ Photo images are fetched from a Flickr feed using a proxy handler which returns 
 ***
 
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/pwm-continuous-servo">pwm-continuous-servo</a>
-<a href="https://github.com/Kinoma/KPR-examples/tree/master/pwm-continuous-servo"><img src="http://kinoma.github.io/KPR-examples/images/pwn-continuous-servo-example.jpg" height="100" alt=""/></a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/pwm-continuous-servo"><img src="http://kinoma.github.io/KPR-examples/images/pwm-continuous-servo-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="pwmcontinuousservo.example.kinoma.marvell.com"></x-app-info>
 
