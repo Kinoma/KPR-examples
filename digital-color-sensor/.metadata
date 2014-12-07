@@ -1,0 +1,14 @@
+<example 
+	id="digitalcolorsensor.example.kinoma.marvell.com"
+	title="Digital Color Sensor"
+	project="Digital Color Sensor"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+This application changes the MainContainer's skin to the color sensed by an RGB color sensor. R, G, and B readings are sent from the BLL to the main thread, in which they are converted to hex.
+	]]></description>
+
+</example>

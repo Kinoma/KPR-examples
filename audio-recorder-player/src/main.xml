@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2011-2014 Marvell Semiconductor, Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<program xmlns="http://www.kinoma.com/kpr/1">
+
+	<require id="BUTTONS" path="buttons"/>
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- BEHAVIORS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	
+	<behavior id="ApplicationBehavior">
+	    <method id="onLaunch" params="content"><![CDATA[
+			var message = new MessageWithObject("pins:configure", {
+	    		sounds: {
+	        		require: "audioBLL",
+	        		pins: {
+	        			microphone: { sampleRate: 8000, channels: 1 },
+	        			speaker: { sampleRate: 8000, channels: 1 }
+	        		}
+	    		}});
+			application.invoke( message, Message.JSON);  
+		]]></method>
+		<method id="onComplete" params="content, message, p"><![CDATA[
+			//initialize layout once hardware initialized
+			application.add( new MainLine() );
+		]]></method>
+	</behavior>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- ASSETS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<skin id="recordSkin" color="red"/>
+	<skin id="playSkin" color="blue"/>
+	<skin id="backgroundSkin" color="white"/>
+	<style id="buttonLabelStyle" font="bold 50px Helvetica, sans-serif"
+		color="black" align="center, middle" />
+	
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- LAYOUTS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+
+	<line id="MainLine" top="10" left="10" bottom="10" right="10" skin="backgroundSkin">
+		<canvas left="10" right="10" top="10" bottom="10" like= "BUTTONS.RecordButton" active = "true" >
+			<behavior like= "BUTTONS.RecordButtonBehavior">
+                <method id="onButtonTouchBegan" params="canvas"><![CDATA[
+					canvas.invoke( new MessageWithObject( "pins:/sounds/startRecording" ) ); 	
+				]]></method>
+				<method id="onButtonTouchEnded" params="canvas"><![CDATA[		
+					canvas.invoke( new MessageWithObject( "pins:/sounds/stopRecording" ), Message.JSON );
+				]]></method>
+            </behavior>
+         </canvas>
+	   	<canvas left="10" right="10" top="10" bottom="10" like= "BUTTONS.PlayButton" active = "true" >
+			<behavior like= "BUTTONS.PlayButtonBehavior">
+                <method id="onButtonTouchBegan" params="canvas"><![CDATA[
+                	canvas.invoke( new MessageWithObject( "pins:/sounds/stopPlay" ) );
+					canvas.invoke( new MessageWithObject( "pins:/sounds/playRecording" ) );
+				]]></method>
+            </behavior>
+	   	</canvas>	    
+	</line>
+
+	
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- SCRIPTS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+    <script><![CDATA[
+		application.behavior = new ApplicationBehavior(); 		
+	]]></script>
+	
+</program>

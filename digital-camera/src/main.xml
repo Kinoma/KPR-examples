@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2011-2014 Marvell Semiconductor, Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<program xmlns="http://www.kinoma.com/kpr/1">
+
+	<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	<!-- BEHAVIORS -->
+	<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    
+	<behavior id="ApplicationBehavior">
+		<method id="onLaunch" params="content"><![CDATA[
+	        var layer = new Layer( { width: 320, height: 240 } );
+			layer.origin = { x: 160, y: 120 };
+        	var mainContainer = new MainContainer();
+        	layer.add( mainContainer ); 
+        	if( flipImage ){
+        		layer.rotation = 180;
+        	}
+        	else{
+        		layer.rotation = 0; 
+        	}
+            application.add( layer ); 
+            	        
+	        //configure the camera and button
+			application.invoke( new MessageWithObject ( "pins:configure", {
+				camera: {
+					require: "VC0706",
+					pins: {
+						serial: { rx: 33, tx: 31 }
+					}
+				},	
+				button: {
+                    require: "button",
+                    pins: {
+                        button: { pin: 53 }
+                    }
+				}
+			}), Message.JSON );
+			
+			//set camera compression to value between 0 and 100 
+			application.invoke( new MessageWithObject( "pins:/camera/setCompression", 100 ), Message.JSON );
+
+			//set image size to small
+			application.invoke( new MessageWithObject( "pins:/camera/setImageSize", { w:320, h:140 } ), Message.JSON );
+			
+			//poll button every 70ms 
+			application.invoke( new MessageWithObject( "pins:/button/read?repeat=on&callback=/gotButton&interval=70" ) );
+		]]></method>
+		<method id="onComplete" params="content, message, data"><![CDATA[
+			if ( data == false ){
+				application.distribute( "onHardwareFailure" );
+			}
+			else if ( ++completedMessages == 3 ){
+				application.distribute( "onHardwareReady" );
+			}
+		]]></method>
+	</behavior>
+
+	<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	<!-- HANDLERS -->
+	<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<handler path="/gotButton">
+		<behavior>
+			<method id="onInvoke" params="container, message"><![CDATA[
+				var buttonState = message.requestObject;
+				if ( !prevButtonState && buttonState ) {
+					application.distribute( "onButtonTouchBegan" ); 
+				}
+				else if ( prevButtonState && !buttonState ) {
+					application.distribute( "onButtonTouchEnded" ); 
+				}
+				prevButtonState = buttonState; 
+			]]></method>
+		</behavior>
+	</handler>
+							
+	<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	<!-- ASSETS -->
+	<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    
+    <skin id="flashSkin" color="white" />
+	<skin id="defaultSkin" color="green" />
+	<skin id="failureSkin" color="red" />
+	
+	<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	<!-- LAYOUTS -->
+	<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+    <container id="MainContainer" top="0" left="0" bottom="0" right="0" active = "true">
+        <behavior>
+        	<method id="onHardwareReady" params="content"><![CDATA[
+				content.skin = defaultSkin;
+			]]></method>
+ 			<method id="onHardwareFailure" params="content"><![CDATA[
+				content.skin = failureSkin;
+				defaultSkin = failureSkin;
+			]]></method>
+	        <method id="onButtonTouchBegan" params="content, message, chunk"><![CDATA[          
+     			//hide the previous image and display flash 	
+     			content.image.visible = false;
+     			content.skin = flashSkin;	 
+			]]></method>
+			<method id="onButtonTouchEnded" params="content, message, chunk"><![CDATA[       
+     			//ask for a new image to come back as a chunk
+     			content.invoke( new MessageWithObject( "pins:/camera/capture" ), Message.CHUNK );
+     			content.skin = defaultSkin; 
+			]]></method>
+			<method id="onComplete" params="content, message, chunk"><![CDATA[
+     			//display the image
+     			if ( chunk == false ){
+     				content.distribute( "onHardwareFailure" );
+     			}
+     			content.image.visible = true;        	
+     			content.image.load( chunk );
+			]]></method>
+        </behavior>
+        <picture name="image" top="0" left="0" bottom="0" right="0"/>
+    </container>
+
+
+	<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	<!-- SCRIPTS -->
+	<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	
+    <script><![CDATA[    
+    	var completedMessages = 0;
+    	var flipImage = true; //we put the camera upside down so we should flip the image 180 degrees 
+		var prevButtonState = false;
+		application.behavior = new ApplicationBehavior();
+	]]></script>
+	
+</program>

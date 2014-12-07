@@ -1,0 +1,14 @@
+<example 
+	id="digitalinhelloworld.example.kinoma.marvell.com"
+	title="Digital Input Hello World"
+	project="Digital Input Hello World"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+Uses a digital pin to read input from a physical button. When pressed, it triggers an event in the application which removes a letter from the string 'Hello World!' on the Kinoma Create's screen. Demonstrates the set up and integration of a digital input pin BLL in KinomaJS.
+	]]></description>
+
+</example>

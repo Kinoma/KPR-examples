@@ -1,0 +1,14 @@
+<example 
+	id="analogkinomaxively.example.kinoma.marvell.com"
+	title="Analog Kinoma Xively"
+	project="Analog Kinoma Xively"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+This sample sends HTTP requests to the Xively API to upload sensor data to a stream. The values are read from an analog sensor. Before running the app, sign up for a free Xively account and replace the dummy text in the code with your API Key, Feed ID and Sensor ID.
+	]]></description>
+
+</example>

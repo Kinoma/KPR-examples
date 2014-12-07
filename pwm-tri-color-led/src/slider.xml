@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2011-2014 Marvell Semiconductor, Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<module xmlns="http://www.kinoma.com/kpr/1">
+
+	<behavior id="CircleSliderBehavior"><![CDATA[
+		
+		function getMax( canvas ) {
+			return this.data.max;
+		}
+		
+		function getMin( canvas ) {
+			return this.data.min;
+		}
+		
+		function getOffset( canvas, size ) {
+			var min = this.getMin( canvas );
+			var max = this.getMax( canvas );
+			var value = this.getValue( canvas );
+			return Math.round( ( ( value - min ) * size ) / 
+				( max - min ) );
+		}
+		
+		function getValue( canvas ) {
+			return this.data.value;
+		}
+		
+		function onCreate( canvas, data ) {
+			this.data = data;
+			this.tracking = false;
+		}
+		
+		function onDisplaying( canvas ) {
+			this.onValueChanged( canvas );
+		}
+		
+		function onTouchBegan( canvas, id, x, y, ticks ) {
+			canvas.captureTouch( id, x, y, ticks );
+			this.tracking = true;
+			this.onTouchMoved( canvas, id, x, y, ticks );
+		}
+		
+		function onTouchEnded( canvas, id, x, y, ticks ) {
+			this.tracking = false;
+		}
+		
+		function onTouchMoved( canvas, id, x, y, ticks ) {
+			var size = ( canvas.width - canvas.height );
+			var offset = ( x - ( canvas.height >> 1 ) - canvas.x );
+			this.setOffset( canvas, size, offset );
+			this.onValueChanged( canvas );
+		}
+	
+		function onValueChanged( canvas ) {
+			var ctx = canvas.getContext( "2d" );
+			var width = canvas.width - 2;
+			var height = canvas.height;
+			var size = ( width - ( this.data.radius * 2 ) );
+			var x = this.data.radius;
+			var y = height >> 1;
+			var delta = height / 3;
+			
+			ctx.lineWidth = this.data.strokeWidth;		
+			ctx.clearRect( 0, 0, width + 2, height );
+			ctx.beginPath();
+			ctx.moveTo( x, y );
+			ctx.lineTo( width - x, y );
+			ctx.strokeStyle = this.data.strokeColor;
+			ctx.stroke();
+			x = x + this.getOffset( canvas, size );
+			
+			ctx.beginPath();
+			ctx.arc( x, y, this.data.radius, 0, 360 );
+			ctx.fillStyle = this.data.circleColor;
+			ctx.fill();
+		}
+	
+		function setOffset( canvas, size, offset ) {
+			var min = this.getMin( canvas );
+			var max = this.getMax( canvas );
+			var value = min + ( ( offset * (max - min) ) / size );
+			if ( value < min ) {
+				value = min;
+			}
+			else if ( value > max ) {
+				value = max;
+			}
+			this.setValue( canvas, value );
+		}
+		
+		function setValue( canvas, value ) {
+			this.data.value = value;
+			canvas.container.distribute( "onChanged", this.getValue(), 
+				this.data.label );
+		}
+	]]></behavior>
+
+	<canvas id = "CircleSlider" behavior = "CircleSliderBehavior" 
+		active = "true" /> 
+		
+</module>
+
+

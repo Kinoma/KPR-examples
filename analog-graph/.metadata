@@ -1,0 +1,14 @@
+<example 
+	id="analoggraph.example.kinoma.marvell.com"
+	title="Analog Graph"
+	project="Analog Graph"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+This sample uses a BLL to poll values from an analog sensor. It graphs these values using a KPR Canvas object.
+	]]></description>
+
+</example>

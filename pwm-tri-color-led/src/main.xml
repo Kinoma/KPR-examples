@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2011-2014 Marvell Semiconductor, Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<program xmlns="http://www.kinoma.com/kpr/1">
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- ASSETS -->
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    
+	<require id="CIRCLE_SLIDER" path="slider"/>    
+	
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- STYLES -->
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    
+	<skin id="backgroundSkin" color="#F0F0F0"/>
+	
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- LAYOUTS -->
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    
+	<canvas id = "CircleSlider" left="margin" right="margin" top="margin" 
+		bottom="margin" like= "CIRCLE_SLIDER.CircleSlider"/>
+
+	<column id = "MainContainer" left="10" right="10" top="10" bottom="10" 
+		skin = "backgroundSkin">
+		<behavior>
+            <method id = "onChanged" params = "canvas, value, color">
+				application.invoke( new MessageWithObject( "pins:/led/write", 
+					{ color: color, value: value } ) );
+            </method>
+        </behavior>
+	</column>
+	
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- SCRIPTS -->
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    
+    <script><![CDATA[       
+		var circleRadius = 25; 
+		var margin = 10; 
+		
+		var redSliderData = {
+			label:"red",
+			min:0, 
+			max:1, 
+			value:0, 
+			circleColor: "red", 
+			strokeColor: "#8E9595", 
+			strokeWidth: 10,  
+			radius: circleRadius 
+		};
+		
+		var greenSliderData = {
+			label:"green",
+			min:0, 
+			max:1, 
+			value:0, 
+			circleColor: "green", 
+			strokeColor: "#8E9595", 
+			strokeWidth: 10,  
+			radius: circleRadius 
+		};
+		
+		var blueSliderData = {
+			label: "blue",
+			min:0, 
+			max:1, 
+			value:0, 
+			circleColor: "blue", 
+			strokeColor: "#8E9595", 
+			strokeWidth: 10,  
+			radius: circleRadius 
+		};
+		
+		var mainContainer = new MainContainer();
+		mainContainer.add( new CircleSlider( redSliderData ) );
+		mainContainer.add( new CircleSlider( greenSliderData ) );
+		mainContainer.add( new CircleSlider( blueSliderData ) );
+		application.add( mainContainer );
+		application.invoke( new MessageWithObject( "pins:configure", {
+			led: {
+	            require: "led",
+	            pins: {
+	                red: { pin: 28 },
+	                green: { pin: 30 },
+	                blue: { pin: 34 }, 
+	                anode: { pin: 24 }
+	            }
+			}
+		}));
+    ]]></script>
+</program>
