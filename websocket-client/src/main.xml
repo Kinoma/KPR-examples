@@ -98,8 +98,6 @@
 			application.forget("websocketserver.example.kinoma.marvell.com");
 		]]></method>
 		<method id="onCreate" params="application, data"><![CDATA[
-			this.servers = [];
-			this.serversTable = {};
 		]]></method>
 		<method id="getServer" params="uuid"><![CDATA[
 			return this.servers[this.serversTable[uuid]];
@@ -143,7 +141,8 @@
 						this.build( column );
 					]]></method>	
 					<method id="build" params="column"><![CDATA[
-						if ( 0 == model.servers.length )
+						var servers = model.servers;
+						if ( !servers || ( 0 == servers.length ) )
 							column.add( new NoServersLine );
 						else {
 							for ( var i = 0; i < model.servers.length; ++i )
