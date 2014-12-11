@@ -163,7 +163,7 @@ This example demonstrates how to setup and display mobile framework dialogs. Var
 
 <x-app-info id="digitalcamera.example.kinoma.marvell.com"></x-app-info>
 
-A sample that captures and displays photographs on the screen when a button is pressed. At startup, the main thread waits for three affirmative Messages back from the camera BLL (one after initialization, one after setting the compresion and one after setting the image size). If all goes well, the skin of the MainContainer's skin turns green and the user can take a photo by pressing the button.
+An example that captures from a serial digital camera (VC0706) and displays photographs on the screen when a button (connected to pin 53) is pressed. At startup, the main thread waits for three affirmative Messages back from the camera BLL (one after initialization, one after setting the compresion and one after setting the image size). If all goes well, the MainContainer's skin turns green and the user can take a photo by pressing the button.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
