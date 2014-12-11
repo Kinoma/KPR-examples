@@ -31,7 +31,7 @@
 <!-- STYLES -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
-	<style id="hugeLabelStyle" font="bold 150px" color="black" align="middle,center"/>
+	<style id="hugeLabelStyle" font="bold 125px" color="black" align="middle,center"/>
 	<style id="buttonStyle" font="bold 18px" color="black" align="middle,center"/>
 
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
@@ -101,11 +101,11 @@
 	</container>
 	
 	<container id="ScreenA" left="0" top="0" right="0" bottom="40" skin="blueSkin">
-		<label top="0" left="0" bottom="0" right="0" string="'A'" style="hugeLabelStyle"/>
+		<label left="0" right="0" string="'A'" style="hugeLabelStyle"/>
 	</container>
 	
 	<container id="ScreenB" left="0" top="0" right="0" bottom="40" skin="yellowSkin">
-		<label top="0" left="0" bottom="0" right="0" string="'B'" style="hugeLabelStyle"/>
+		<label left="0" right="0" string="'B'" style="hugeLabelStyle"/>
 	</container>
 
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
