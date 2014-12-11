@@ -1,7 +1,7 @@
 <example 
-	id="digitalcamera.example.kinoma.marvell.com"
-	title="Digital Camera"
-	project="Digital Camera"
+	id="serialcamera.example.kinoma.marvell.com"
+	title="Serial Camera"
+	project="Serial Camera"
 	resources="application.xml" 
 	tags=""
 	type="application" 

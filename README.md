@@ -158,16 +158,6 @@ This example demonstrates how to setup and display mobile framework dialogs. Var
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-camera">digital-camera</a>
-<a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-camera"><img src="http://kinoma.github.io/KPR-examples/images/digital-camera-example.jpg" height="100" alt=""/></a>
-
-<x-app-info id="digitalcamera.example.kinoma.marvell.com"></x-app-info>
-
-An example that captures from a serial digital camera (VC0706) and displays photographs on the screen when a button (connected to pin 53) is pressed. At startup, the main thread waits for three affirmative Messages back from the camera BLL (one after initialization, one after setting the compresion and one after setting the image size). If all goes well, the MainContainer's skin turns green and the user can take a photo by pressing the button.
-
-<div style="clear:both; margin-bottom: 16px;"></div>			
-***
-
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-color-sensor">digital-color-sensor</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-color-sensor"><img src="http://kinoma.github.io/KPR-examples/images/digital-color-sensor-example.jpg" height="100" alt=""/></a>
 
@@ -474,6 +464,16 @@ Rotates a 360˚ continuous servo using a PWM pin. Demonstrates the set up and in
 <x-app-info id="pwmtricolorled.example.kinoma.marvell.com"></x-app-info>
 
 This sample uses red/green/blue sliders to control the color of an RGB LED. The LED is controlled by PWM pins. Each slider is a KPR Canvas object that triggers an onChanged event when you move it to a new position.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/serial-camera">serial-camera</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/serial-camera"><img src="http://kinoma.github.io/KPR-examples/images/serial-camera-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="serialcamera.example.kinoma.marvell.com"></x-app-info>
+
+An example that captures from a serial digital camera (VC0706) and displays photographs on the screen when a button (connected to pin 53) is pressed. At startup, the main thread waits for three affirmative Messages back from the camera BLL (one after initialization, one after setting the compresion and one after setting the image size). If all goes well, the MainContainer's skin turns green and the user can take a photo by pressing the button.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
