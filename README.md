@@ -158,16 +158,6 @@ This example demonstrates how to setup and display mobile framework dialogs. Var
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-color-sensor">digital-color-sensor</a>
-<a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-color-sensor"><img src="http://kinoma.github.io/KPR-examples/images/digital-color-sensor-example.jpg" height="100" alt=""/></a>
-
-<x-app-info id="digitalcolorsensor.example.kinoma.marvell.com"></x-app-info>
-
-This application changes the MainContainer's skin to the color sensed by an RGB color sensor. R, G, and B readings are sent from the BLL to the main thread, in which they are converted to hex.
-
-<div style="clear:both; margin-bottom: 16px;"></div>			
-***
-
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-in-hello-world">digital-in-hello-world</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-in-hello-world"><img src="http://kinoma.github.io/KPR-examples/images/digital-in-hello-world-example.jpg" height="100" alt=""/></a>
 
@@ -254,6 +244,16 @@ This sample code demonstrates how to implement an interactive scrolling photo th
 <x-app-info id="hello.example.kinoma.marvell.com"></x-app-info>
 
 A minimal application that creates a full-screen container and displays the text "Hello, KPR". Tapping the container changes the background color. Useful for understanding how to build a basic KPR application.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-color-sensor">i2c-color-sensor</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-color-sensor"><img src="http://kinoma.github.io/KPR-examples/images/i2c-color-sensor-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="i2ccolorsensor.example.kinoma.marvell.com"></x-app-info>
+
+This application changes the MainContainer's skin to the color sensed by an RGB color sensor. R, G, and B readings are sent from the BLL to the main thread, in which they are converted to hex.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
