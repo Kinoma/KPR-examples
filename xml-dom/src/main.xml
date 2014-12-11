@@ -30,7 +30,7 @@
 	<style id="locationStyle" font="bold 36px" color="white" align="center,middle">
 		<margins top="5" bottom="5"/>
 	</style>
-	<style id="temperatureStyle" font="bold 144px" color="#555" align="center,middle"/>
+	<style id="temperatureStyle" font="bold 125px" color="#555" align="center,middle"/>
 	<style id="attributionLinkStyle" font="24px">
 		<margins bottom="5"/>
 		<states colors="blue,#40007f"/>
