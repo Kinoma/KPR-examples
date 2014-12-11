@@ -29,24 +29,49 @@
 		<states colors="white,#edbc3c"/>
 	</skin>
     
+    <style id="feedbackStyle" font="bold 26px" color="white" align="middle,center"/>
+    
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!-- LAYOUTS -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 	
+	<container id="FeedbackContainer" left="0" right="0" top="0" bottom="0">
+		<behavior>
+			<method id="onCreate" params="container, data"><![CDATA[
+				this.data = data;
+				container.duration = 2500;
+			]]></method>
+			<method id="onDisplaying" params="container, data"><![CDATA[
+				var label = new Label({left: 0, right: 0, string: "Saving preferences: " + this.data.color, style: feedbackStyle});
+				var layer = this.layer = new Layer({width: container.width, height: container.height});
+				layer.add(label);
+				container.add(layer);
+				container.start();
+			]]></method>
+			<method id="onTimeChanged" params="container"><![CDATA[
+				this.layer.opacity = 1 - Math.quadEaseOut(container.fraction);
+			]]></method>
+			<method id="onFinished" params="container"><![CDATA[
+				container.container.remove(container);
+			]]></method>
+		</behavior>
+	</container>   
+	                           
 	<container id="ColorSwatchContainer" left="0" right="0" top="0" bottom="0" skin="selectionSkin" active="true">
 		<behavior>
 			<method id="onCreate" params="container, data"><![CDATA[
 				this.data = data;
-				this.onSelectionChanged( container, model.preferences.color );
+				container.state = ( model.preferences.color == this.data.color ? 1 : 0 );
 			]]></method>
 			<method id="onTouchBegan" params="container, id, x, y, ticks"><![CDATA[
 				model.preferences.color = this.data.color;
-				trace( "Saving preferences: " + model.preferences.color + "\n" );
 				model.writePreferences( application, "swatches", model.preferences );
 				application.distribute( "onSelectionChanged", model.preferences.color );
 			]]></method>	
 			<method id="onSelectionChanged" params="container, color"><![CDATA[
 				container.state = ( color == this.data.color ? 1 : 0 );
+				if (color == this.data.color)
+					container.add(new FeedbackContainer(this.data));
 			]]></method>
 		</behavior>
 		<container left="4" right="4" top="4" bottom="4" skin="$.skin"/>
