@@ -48,22 +48,23 @@
 		var API_KEY = "YOUR API KEY";
 		var CHANNEL_ID = "YOUR CHANNEL ID"	//add a channel with this ID
 		
-		
-        //initialize the pin to read from 
-        application.invoke( new MessageWithObject( "pins:configure", {
-            potentiometer: {
-                require: "a2d",
-                pins: {
-                    a2d: { pin: 52 }
-                }
-            }
-        }));
-
 		if ("YOUR FEED ID" == FEED_ID || "YOUR API KEY" == API_KEY || "YOUR CHANNEL ID" == CHANNEL_ID) {
 			var errorStyle = new Style( { font: "24px", color: "white", align: "middle,center" } );
 			application.add( new Text( { string: "This application requires an Xively account. You can sign up for a free account at https://xively.com/signup/", left: 0, right: 0, style: errorStyle } ) );
 		}
-        else
+        else {
+	        //initialize the pin to read from 
+	        application.invoke( new MessageWithObject( "pins:configure", {
+	            potentiometer: {
+	                require: "a2d",
+	                pins: {
+	                    a2d: { pin: 52 }
+	                }
+	            }
+	        }));
+
         	application.invoke( new MessageWithObject( "pins:/potentiometer/read?repeat=on&callback=/gotPotentiometer&interval=70" ) );        
+		}
+
 	]]></script>
 </program>
