@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   Copyright 2011-2014 Marvell Semiconductor, Inc.
-
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
-
       http://www.apache.org/licenses/LICENSE-2.0
-
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,7 +17,6 @@
 	<canvas id = "PlayButton" behavior = "PlayButtonBehavior" active = "true" /> 
 	
 	<behavior id="RecordButtonBehavior"><![CDATA[	
-
 		function onDisplayed( canvas ) {
 			canvas.interval = 100;
 			canvas.start();
@@ -37,22 +33,31 @@
 		}
 		
 		function onTimeChanged( canvas ){
-			if ( this.isRecording ){
+			if ( this.isRecording && this.startTime ){
 				if (  Date.now() - this.startTime > this.TIMEOUT ){
 					this.isRecording = false;
 					this.draw( canvas, false );
-					this.sendEvent( "onButtonTouchEnded" );					
+					this.sendEvent( "onButtonTouchEnded" );		
+							
 				}
 			}
 		}
 		
 		function onTouchBegan( canvas ){
-			this.isRecording = !this.isRecording;
-			if ( this.isRecording ){			
-				this.draw( canvas, true );
-			}
-			else {
-				this.draw( canvas, false );
+			if ( ! canvas.container[1].behavior.playCompleteTime ){
+				this.isRecording = !this.isRecording;
+				if ( this.isRecording ){	
+					/*	
+						Reset start time to false to cover the period in which the touch is 
+						still occuring. The recording (and the timer) begin when the touch 
+						ends. 
+					*/
+					this.startTime = false; 		
+					this.draw( canvas, true );
+				}
+				else {
+					this.draw( canvas, false );
+				}
 			}
 		}
 		
@@ -98,7 +103,6 @@
 		function sendEvent( event ){
  			this.eventRoot.behavior[ event ]( this.eventRoot, this.container );
  		}
-
 	]]></behavior>
 	
 	<behavior id="PlayButtonBehavior"><![CDATA[	
@@ -122,13 +126,14 @@
 		}
 		
 		function onTouchBegan( canvas ){	
-			if( this.runTime ){ 
-				this.draw( canvas, true );
-				this.playCompleteTime = Date.now() + this.runTime;
-				this.sendEvent( "onButtonTouchBegan" );
+			if ( ! canvas.container[0].behavior.isRecording ){
+				if( this.runTime ){ 
+					this.draw( canvas, true );
+					this.playCompleteTime = Date.now() + this.runTime;
+					this.sendEvent( "onButtonTouchBegan" );
+				}
 			}
 		}
-
 		function setRunTime( canvas, runTime ){
 			this.runTime = runTime * 1000; //convert to millis
 		}
@@ -169,8 +174,8 @@
 	<function id="getColorWithTransparency" params="color, percentage"><![CDATA[
 		var alpha = Math.floor( 255 * percentage / 100 );
 		alpha = alpha.toString( 16 );
-		return "#" + alpha + color
-		trace("returning color " + "#" + alpha + color + "\n");
+		return "#" + alpha + color;
+		
 	]]></function>
 	
 	<script><![CDATA[
@@ -180,6 +185,3 @@
 	]]></script>
 	
 </module>
-
-
-
