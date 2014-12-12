@@ -92,12 +92,14 @@
 
 	<behavior id="ApplicationBehavior">
 		<method id="onLaunch" params="application"><![CDATA[
+			this.servers = [];
+			this.serversTable = {};
+		]]></method>
+		<method id="onDisplayed" params="application"><![CDATA[
 			application.discover("websocketserver.example.kinoma.marvell.com");
 		]]></method>
 		<method id="onQuit" params="application"><![CDATA[
 			application.forget("websocketserver.example.kinoma.marvell.com");
-		]]></method>
-		<method id="onCreate" params="application, data"><![CDATA[
 		]]></method>
 		<method id="getServer" params="uuid"><![CDATA[
 			return this.servers[this.serversTable[uuid]];
