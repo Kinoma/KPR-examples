@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2011-2014 Marvell Semiconductor, Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<program xmlns="http://www.kinoma.com/kpr/1">
+
+<!--
+  This is the client side for Digital-Light-Websockets, a remote light switch for the server.
+  Intended for use as a phone or desktop companion app with the Kinoma Create.  
+-->
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- ASSETS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<skin id= "offSkin" color="#00FFFFFF"/>
+	<skin id= "pressedSkin" color="#B0FFFFFF"/>
+	<skin id= "onSkin" color="#D9FFFFFF" /> 	
+	<texture id="ledOffTexture" small="./assets/led_off.png"/>
+	<texture id="ledOnTexture" small="./assets/led_on.png"/>
+	<skin id="ledOffSkin" texture="ledOffTexture" y = "0" x = "0" height = "177" width = "84"/>
+	<skin id="ledOnSkin" texture="ledOnTexture" y = "0" x = "0" height = "177" width = "84"/>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- HANDLERS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    	
+	<handler path="/discover">
+		<behavior>
+			<method id="onComplete" params="container, message, json"><![CDATA[
+				//Recieves and stores server info and changes light switch to match server's state. 
+				var query = parseQuery( message.query );
+				var server = model.getServer( query.uuid );
+				server.update( json );
+				server.conn = model.doConnect( server.url );
+				application.distribute( json.lightState );
+			]]></method>
+			<method id="onInvoke" params="handler, message"><![CDATA[
+				//Uses SSDP to find and connect to available servers.
+				//Then opens a Websocket with each server.
+				var discovery = JSON.parse( message.requestText );
+				var serversTable = model.getServersTable();
+				var uuid = discovery.uuid;
+				if ( !( uuid in serversTable ) ) {
+					var server = new Server( discovery );
+					var message = server.createMessage( "info", { uuid: server.uuid } );
+					handler.invoke( message, Message.JSON );
+					serversTable[ server.uuid ] = server;
+				}
+			]]></method>
+		</behavior>
+	</handler>
+
+	<handler path="/forget">
+		<behavior>
+			<method id="onInvoke" params="handler, message"><![CDATA[
+				//Removes a disconnected server from the serversTable.
+				var discovery = JSON.parse( message.requestText );
+				var serversTable = model.getServersTable();
+				var uuid = discovery.uuid;
+				if ( uuid in serversTable ) {
+					delete serversTable[ uuid ];
+				}
+			]]></method>
+		</behavior>
+	</handler>
+
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- BEHAVIORS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    
+	<behavior id="ApplicationBehavior">
+		<method id="onLaunch" params="application"><![CDATA[
+			application.discover( "digitallightwebsocketsserver.example.kinoma.marvell.com" );
+			application.shared = true;
+			this.serversTable = {};
+		]]></method>
+		<method id="onQuit" params="application"><![CDATA[
+			var serversTable = this.serversTable;
+			for ( var uuid in serversTable ) {
+				var server = serversTable[ uuid ];
+				server.conn.close();
+			}		
+			application.forget( "digitallightwebsocketsserver.example.kinoma.marvell.com" );
+			application.shared = false;
+		]]></method>
+		<method id="doConnect" params="url"><![CDATA[
+			var conn = new WebSocket( url );
+
+			conn.onopen = function() {
+			};
+
+			conn.onmessage = function( e ) {
+				//e.data == name of method to call
+				application.distribute( e.data );
+			};
+
+			conn.onclose = function() {
+			};
+
+			conn.onerror = function( e ) {
+			};
+			
+			return conn;			        
+        ]]></method> 
+        <method id="clicked" params="content, lightState"><![CDATA[
+			var serversTable = this.serversTable;
+			for ( var uuid in serversTable ) {
+				var server = serversTable[ uuid ];
+				server.conn.send( lightState );
+			}				
+		]]></method>
+		<method id="getServer" params="uuid"><![CDATA[
+			return this.serversTable[ uuid ];
+		]]></method>
+		<method id="getServersTable" params=""><![CDATA[
+			return this.serversTable;
+		]]></method>
+	</behavior>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- LAYOUTS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	
+	<column id="MainContainer" left="10" right="10" top="10" bottom="10">
+		<container left="10" right="10" top="10" bottom = "10" skin = "onSkin" active = "true">
+			<behavior>  
+				<method id="onTouchEnded" params="container, id, x, y, ticks"><![CDATA[
+                    application.distribute( "clicked", "OFF" );   
+                ]]></method>       
+	            <method id="lightIsOn" params="container"><![CDATA[
+	                container.skin = offSkin;
+	            ]]></method>
+	            <method id="lightIsOff" params="container"><![CDATA[
+	                container.skin = onSkin;
+	            ]]></method>         
+        	</behavior>		
+			<content top="10" left="10" bottom="10" right="10" skin = "ledOffSkin" />
+		</container>
+		<container left="10" right="10" bottom="10" top = "10" active = "true">
+			<behavior>  
+  				<method id="onTouchEnded" params="container, id, x, y, ticks"><![CDATA[
+	                    application.distribute( "clicked", "ON" );
+	            ]]></method>                    
+	            <method id="lightIsOn" params="container"><![CDATA[
+	                 	container.skin = onSkin;
+	            ]]></method>
+	            <method id="lightIsOff" params="container"><![CDATA[
+	                   container.skin = offSkin;
+	            ]]></method>	            
+			</behavior>
+			<content top="10" left="10" bottom="10" right="10" skin = "ledOnSkin"/>
+		</container>
+	</column>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- MODEL -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<script><![CDATA[
+		var lightState = false;
+		
+	    var model = application.behavior = new ApplicationBehavior();
+		application.add( new MainContainer( {} ) );
+		 
+		var Server = function( discovery ) {
+			this.location = discovery.url;
+			this.type = discovery.id;
+			this.uuid = discovery.uuid;
+			this.name = "- Untitled -";
+			this.port = undefined;
+		};
+		Server.prototype = Object.create( Object.prototype, {
+			location: { value: undefined, enumerable: true, writable: true },
+			type: { value: undefined, enumerable: true, writable: true },
+			uuid: { value: undefined, enumerable: true, writable: true },
+			name: { value: undefined, enumerable: true, writable: true },
+			port: { value: undefined, enumerable: true, writable: true },
+			url: { value: undefined, enumerable: true, writable: true },
+			conn: { value: undefined, enumerable: true, writable: true },
+			createMessage: { value:
+				function( name, query ) {
+					var url = this.location + name;
+					if ( query )
+						url += "?" + serializeQuery( query );
+					return new Message( url );
+				}
+			},
+			update: { value:
+				function( json ) {
+					this.name = json.name;
+					this.port = json.port;
+					
+					this.url = 'ws:' + this.location.split( ':' )[ 1 ] + ':' + this.port;
+				}
+			}
+		});
+	]]></script>
+</program>
