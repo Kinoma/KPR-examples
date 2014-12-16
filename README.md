@@ -173,7 +173,7 @@ Uses a digital pin to read input from a physical button. When pressed, it trigge
 
 <x-app-info id="digitallightwebsocketsclient.example.kinoma.marvell.com"></x-app-info>
 
-This sample uses WebSockets to communicate between a client-side app that acts as a remote light switch and a server side that switches on and off the light as commanded.
+This client app runs with the "Digital-Light-Websockets-Server" sample. It acts as a companion app that can switch on and off an LED hooked up to the server-side Kinoma Create. This example shows how to discover servers using the built-in SSDP support, create and invoke messages to the server using websockets, and how to keep the UI of multiple client apps in sync with the server.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -183,7 +183,7 @@ This sample uses WebSockets to communicate between a client-side app that acts a
 
 <x-app-info id="digitallightwebsocketsserver.example.kinoma.marvell.com"></x-app-info>
 
-This sample uses WebSockets to communicate between a client-side app that acts as a remote light switch and a server side that switches on and off the light as commanded.
+This server app runs with the "Digital-Light-Websockets-Client" sample. This example shows how to connect to one or more clients using the built-in SSDP support and implement a BLL to turn on and off an LED in response to client commands sent via websockets. The server keeps all the clients synced with the state of the LED.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
