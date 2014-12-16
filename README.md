@@ -169,7 +169,7 @@ Uses a digital pin to read input from a physical button. When pressed, it trigge
 ***
 
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-light-websockets-client">digital-light-websockets-client</a>
-<a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-light-websockets-client"><img src="http://kinoma.github.io/KPR-examples/images/digital-light-websockets-client.jpg" height="100" alt=""/></a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-light-websockets-client"><img src="http://kinoma.github.io/KPR-examples/images/digital-light-websockets-client-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="digitallightwebsocketsclient.example.kinoma.marvell.com"></x-app-info>
 
@@ -179,7 +179,7 @@ This sample uses WebSockets to communicate between a client-side app that acts a
 ***
 
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-light-websockets-server">digital-light-websockets-server</a>
-<a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-light-websockets-server"><img src="http://kinoma.github.io/KPR-examples/images/digital-light-websockets-server.jpg" height="100" alt=""/></a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-light-websockets-server"><img src="http://kinoma.github.io/KPR-examples/images/digital-light-websockets-server-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="digitallightwebsocketsserver.example.kinoma.marvell.com"></x-app-info>
 
