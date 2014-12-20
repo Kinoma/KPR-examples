@@ -81,7 +81,7 @@ Phone application which implements a Bing Image search. Image thumbnail search r
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/bll-repeat">bll-repeat</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/bll-repeat"><img src="http://kinoma.github.io/KPR-examples/images/bbl-repeat-example.jpg" height="100" alt=""/></a>
 					
-<x-app-info id="bllrepeat.example.kinoma.marvell.com"></x-app-info>
+<x-app-info id="bllrepeat.example.kinoma.marvell.com"><span class="createExample"</span></x-app-info>
 
 A sample that demonstrates how to repeatedly run a Kinoma Blinking Light Library (BLL). This is useful when, for instance, polling a sensor. The example calls a BLL that traces to the console 10 times and the stops the repetition.
 
@@ -91,7 +91,7 @@ A sample that demonstrates how to repeatedly run a Kinoma Blinking Light Library
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/bll-run">bll-run</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/bll-run"><img src="http://kinoma.github.io/KPR-examples/images/bbl-run-example.jpg" height="100" alt=""/></a>
 					
-<x-app-info id="bllrun.example.kinoma.marvell.com"></x-app-info>
+<x-app-info id="bllrun.example.kinoma.marvell.com"><span class="createExample"</span></x-app-info>
 
 A sample that demonstrates how to run a Kinoma Blinking Light Library (BLL) once. This sample shows how to pass parameters to a BLL, receive them in the BLL, and get results back from a BLL.
 
@@ -351,7 +351,7 @@ Uses Canvas 2D to implement a virtual hypotrochoid device. Custom sliders contro
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/logs">logs</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/logs"><img src="http://kinoma.github.io/KPR-examples/images/logs-example.jpg" height="100" alt=""/></a>
 					
-<x-app-info id="logs.example.kinoma.marvell.com"></x-app-info>
+<x-app-info id="logs.example.kinoma.marvell.com"><span class="createExample"</span></x-app-info>
 
 This example deminstrates how to use the Kinoma Create built-in logging support to capture trace output into a log file. Log files can be viewed and/or removed using the built-in Logs app.
 
@@ -501,7 +501,7 @@ This sample uses red/green/blue sliders to control the color of an RGB LED. The 
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/serial-camera">serial-camera</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/serial-camera"><img src="http://kinoma.github.io/KPR-examples/images/serial-camera-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="serialcamera.example.kinoma.marvell.com"></x-app-info>
+<x-app-info id="serialcamera.example.kinoma.marvell.com"><span class="createExample"</span></x-app-info>
 
 An example that captures from a serial digital camera (VC0706) and displays photographs on the screen when a button (connected to pin 53) is pressed. At startup, the main thread waits for three affirmative Messages back from the camera BLL (one after initialization, one after setting the compresion and one after setting the image size). If all goes well, the MainContainer's skin turns green and the user can take a photo by pressing the button.
 
