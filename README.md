@@ -201,7 +201,7 @@ This server app runs with the "Digital-Light-Websockets-Client" sample. This exa
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-out-led">digital-out-led</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-out-led"><img src="http://kinoma.github.io/KPR-examples/images/digital-out-led-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="digitaloutled.example.kinoma.marvell.com"><span class="createExample"</span></x-app-info>
+<x-app-info id="digitaloutled.example.kinoma.marvell.com"><span class="createExample samplePage"</span></x-app-info>
 
 Uses a digital pin to turn on and off an LED when a button is pressed on screen. Demonstrates the set up and integration of a digital output pin BLL in KinomaJS.
 
