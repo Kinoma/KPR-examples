@@ -171,7 +171,7 @@ This example demonstrates how to setup and display mobile framework dialogs. Var
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-in-hello-world">digital-in-hello-world</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-in-hello-world"><img src="http://kinoma.github.io/KPR-examples/images/digital-in-hello-world-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="digitalinhelloworld.example.kinoma.marvell.com"><span class="createExample"</span></x-app-info>
+<x-app-info id="digitalinhelloworld.example.kinoma.marvell.com"><span class="createExample samplePage"</span></x-app-info>
 
 Uses a digital pin to read input from a physical button. When pressed, it triggers an event in the application which removes a letter from the string 'Hello World!' on the Kinoma Create's screen. Demonstrates the set up and integration of a digital input pin BLL in KinomaJS.
 
