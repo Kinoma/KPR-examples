@@ -11,7 +11,7 @@ This sample uses two different BLLs. One BLL communicates with two potentiometer
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-graph">analog-graph</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-graph"><img src="http://kinoma.github.io/KPR-examples/images/analog-graph-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="analoggraph.example.kinoma.marvell.com"><span class="createExample"</span></x-app-info>
+<x-app-info id="analoggraph.example.kinoma.marvell.com"><span class="createExample samplePage"</span></x-app-info>
 
 This sample uses a BLL to poll values from an analog sensor. It graphs these values using a KPR Canvas object.
 
