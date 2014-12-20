@@ -1,5 +1,5 @@
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-drawing-toy" class="createExampleLink" >analog-drawing-toy</a>
-<a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-drawing-toy" class="createExampleLink"><img src="http://kinoma.github.io/KPR-examples/images/analog-drawing-toy-example.jpg" height="100" alt=""/></a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-drawing-toy"><img src="http://kinoma.github.io/KPR-examples/images/analog-drawing-toy-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="analogdrawingtoy.example.kinoma.marvell.com"><span class="createExample"</span></x-app-info>
 
