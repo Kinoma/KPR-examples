@@ -181,7 +181,7 @@ Uses a digital pin to read input from a physical button. When pressed, it trigge
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-light-websockets-client">digital-light-websockets-client</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-light-websockets-client"><img src="http://kinoma.github.io/KPR-examples/images/digital-light-websockets-client-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="digitallightwebsocketsclient.example.kinoma.marvell.com"><span class="createExample"</span></x-app-info>
+<x-app-info id="digitallightwebsocketsclient.example.kinoma.marvell.com"><span class="createExample samplePage"</span></x-app-info>
 
 This client app runs with the "Digital-Light-Websockets-Server" sample. It acts as a companion app that can switch on and off an LED hooked up to the server-side Kinoma Create. This example shows how to discover servers using the built-in SSDP support, create and invoke messages to the server using websockets, and how to keep the UI of multiple client apps in sync with the server.
 
