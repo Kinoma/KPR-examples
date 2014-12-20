@@ -291,7 +291,7 @@ This application changes the MainContainer's skin to the color sensed by an RGB 
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-hover">i2c-hover</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-hover"><img src="http://kinoma.github.io/KPR-examples/images/i2c-hover-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="i2chover.example.kinoma.marvell.com"><span class="createExample samplePage"</span></x-app-info>
+<x-app-info id="i2chover.example.kinoma.marvell.com"><span class="createExample"</span></x-app-info>
 
 BLL and sample application for the Hover board touchless gesture sensor from http://hoverlabs.co. Includes a BLL simulator for use in Kinoma Studio and device BLL for use on Kinoma Create. Demonstrates how to write a BLL that uses both I2C and Digital pins, and that changes the direction of Digital pins at runtime.
 
