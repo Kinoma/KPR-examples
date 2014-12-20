@@ -481,7 +481,7 @@ Photo images are fetched from a Flickr feed using a proxy handler which returns 
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/pwm-continuous-servo">pwm-continuous-servo</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/pwm-continuous-servo"><img src="http://kinoma.github.io/KPR-examples/images/pwm-continuous-servo-example.jpg" height="100" alt=""/></a>
 					
-<x-app-info id="pwmcontinuousservo.example.kinoma.marvell.com"><span class="createExample"</span></x-app-info>
+<x-app-info id="pwmcontinuousservo.example.kinoma.marvell.com"><span class="createExample samplePage"</span></x-app-info>
 
 Rotates a 360˚ continuous servo using a PWM pin. Demonstrates the set up and integration of a PWM BLL in KinomaJS.
 
@@ -491,7 +491,7 @@ Rotates a 360˚ continuous servo using a PWM pin. Demonstrates the set up and in
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/pwm-tri-color-led">pwm-tri-color-led</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/pwm-tri-color-led"><img src="http://kinoma.github.io/KPR-examples/images/pwm-tri-color-led-example.jpg" height="100" alt=""/></a>
 					
-<x-app-info id="pwmtricolorled.example.kinoma.marvell.com"><span class="createExample"</span></x-app-info>
+<x-app-info id="pwmtricolorled.example.kinoma.marvell.com"><span class="createExample samplePage"</span></x-app-info>
 
 This sample uses red/green/blue sliders to control the color of an RGB LED. The LED is controlled by PWM pins. Each slider is a KPR Canvas object that triggers an onChanged event when you move it to a new position.
 
