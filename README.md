@@ -281,7 +281,7 @@ A minimal application that creates a full-screen container and displays the text
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-color-sensor">i2c-color-sensor</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-color-sensor"><img src="http://kinoma.github.io/KPR-examples/images/i2c-color-sensor-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="i2ccolorsensor.example.kinoma.marvell.com"><span class="createExample"</span></x-app-info>
+<x-app-info id="i2ccolorsensor.example.kinoma.marvell.com"><span class="createExample samplePage"</span></x-app-info>
 
 This application changes the MainContainer's skin to the color sensed by an RGB color sensor. R, G, and B readings are sent from the BLL to the main thread, in which they are converted to hex.
 
@@ -291,7 +291,7 @@ This application changes the MainContainer's skin to the color sensed by an RGB 
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-hover">i2c-hover</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-hover"><img src="http://kinoma.github.io/KPR-examples/images/i2c-hover-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="i2chover.example.kinoma.marvell.com"><span class="createExample"</span></x-app-info>
+<x-app-info id="i2chover.example.kinoma.marvell.com"><span class="createExample samplePage"</span></x-app-info>
 
 BLL and sample application for the Hover board touchless gesture sensor from http://hoverlabs.co. Includes a BLL simulator for use in Kinoma Studio and device BLL for use on Kinoma Create. Demonstrates how to write a BLL that uses both I2C and Digital pins, and that changes the direction of Digital pins at runtime.
 
@@ -301,7 +301,7 @@ BLL and sample application for the Hover board touchless gesture sensor from htt
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-temperature">i2c-temperature</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-temperature"><img src="http://kinoma.github.io/KPR-examples/images/i2c-temperature-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="i2ctemperature.example.kinoma.marvell.com"><span class="createExample"</span></x-app-info>
+<x-app-info id="i2ctemperature.example.kinoma.marvell.com"><span class="createExample samplePage"</span></x-app-info>
 
 Obtains the current temperature from an I2C temperature sensor and displays it on the Kinoma Create's screen. Demonstrates the set up and integration of an I2C BLL in KinomaJS.
 
