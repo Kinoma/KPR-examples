@@ -128,6 +128,16 @@ This mobile framework example demonstrates how to use the HTML 2D Canvas API. Ta
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/console">console</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/console"><img src="http://kinoma.github.io/KPR-examples/images/console-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="console.example.kinoma.marvell.com"></x-app-info>
+
+This sample application demonstrates how to display a simple console for logging debugging messages on Kinoma Create. New messages are added to the end of the console log and auto-scrolled into view. The console log can also be viewed in a web browser. Refer to the source code for details.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/controls-buttons">controls-buttons</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/controls-buttons"><img src="http://kinoma.github.io/KPR-examples/images/controls-example.jpg" height="100" alt=""/></a>
 
