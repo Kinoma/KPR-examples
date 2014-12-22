@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2011-2014 Marvell Semiconductor, Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!--
+  This sample application demonstrates how to display a simple console for logging debugging messages on Kinoma Create.
+  New messages are added to the end of the console log and auto-scrolled into view.
+  To add a message to the console log, simply call the console function, passing the string to be logged, e.g.:
+  
+  console("callback invoked, x=" + this.x);
+  
+  The console can also be driven remotely by invoking a HTTP /console request to the built-in server.
+  The server IP address and port are displayed in the footer. To send a debugging message remotely, invoke the /console message from your app:
+  
+  application.invoke(new Message("http://<ip address:port>/console?message=" + "Hello console!"));
+  
+  Lastly, the full console log can be displayed in a web browser:
+  
+  http://<ip address:port>/console
+-->
+
+<program xmlns="http://www.kinoma.com/kpr/1">
+	<require path="themes/sample/theme" id="THEME"/>
+	<require path="mobile/scroller" id="SCROLLER"/>
+    
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- ASSETS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<skin id="whiteSkin" color="white"/>
+	<skin id="graySkin" color="gray"/>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- STYLES -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<style id="applicationStyle" font="16px Fira Sans"/>
+	<style id="consoleStyle" font="18px Fira Mono" color="black" align="left" lines="all">
+		<margins left="5" right="5" top="5"/>
+	</style>
+	<style id="headerButtonStyle" font="bold 24px" align="right,middle" lines="1">
+		<states colors="white,#5ab021"/>
+	</style>
+    <style id="headerTitleStyle" font="bold 25px" color="black" align="middle,center" lines="1"/>
+    <style id="serverStyle" font="bold 25px" color="white" align="middle,center" lines="1"/>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- HANDLERS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<handler path="/console">
+		<behavior>
+			<method id="onInvoke" params="handler, message"><![CDATA[
+				var query = parseQuery(message.query);
+                if ("message" in query)
+                    application.distribute("onConsoleLog", query.message);
+                else if (consoleURL) {
+                    var CONSOLE = application.first.behavior.data.CONSOLE;
+                    var result = new Array(CONSOLE.length + 1)
+                    for (var i = 0, item = CONSOLE.first; item; i++, item = item.next)
+                        result[i] = item.string;
+                    
+                    result[i] = "\n\n\n(Use " + consoleURL + "?message=hello to append to console)\n";
+                    message.responseText = result.join("\n");
+                }
+			]]></method>	
+		</behavior>
+	</handler>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- LAYOUTS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<label id="ConsoleLogLabel" left="0" height="consoleStyle.size" string="$"/>
+
+	<container id="ConsoleContainer" left="0" right="0" top="0" bottom="0" active="true" skin="whiteSkin">
+		<behavior>
+			<method id="onConsoleClear" params="container, data"><![CDATA[
+				this.data.CONSOLE.empty();
+			]]></method>
+			<method id="onConsoleLog" params="container, message"><![CDATA[
+				this.data.CONSOLE.add(new ConsoleLogLabel(message));
+				this.data.SCROLLER.scrollTo(0, 0x7FFFF);
+				
+			]]></method>
+			<method id="onCreate" params="container, data"><![CDATA[
+				this.data = data;
+			]]></method>
+			<method id="onDisplayed" params="container, data"><![CDATA[
+				this.onConsoleLog(container, new Date().toTimeString() + ' Console started');
+			]]></method>
+		</behavior>                
+		<container anchor="BODY" left="0" right="0" top="32" bottom="32">
+			<scroller anchor="SCROLLER" left="0" right="0" top="0" bottom="0" like="SCROLLER.VerticalScroller">
+				<scroller left="0" right="0" top="0" bottom="undefined" like="SCROLLER.HorizontalScroller">
+					<column anchor="CONSOLE" left="0" top="0" style="consoleStyle"/>
+					<content like="SCROLLER.HorizontalScrollbar">
+						<behavior like="SCROLLER.HorizontalScrollbarBehavior">
+							<method id="onScrolled" params="scrollbar"><![CDATA[
+								SCROLLER.HorizontalScrollbarBehavior.prototype.onScrolled.call(this, scrollbar);
+								var container = scrollbar.container.container;
+								scrollbar.y = container.y + container.height - scrollbar.height;
+							]]></method>	
+						</behavior>
+					</content>
+				</scroller>
+				<content like="SCROLLER.VerticalScrollbar"/>
+			</scroller>
+		</container>
+		<container anchor="HEADER" left="0" right="0" top="0" height="32" skin="new Skin('#c2c2c2')">
+			<label right="16" active="true" style="headerButtonStyle" string="'Clear'">
+				<behavior>
+					<method id="onTouchBegan" params="label, id, x, y, ticks"><![CDATA[
+						label.state = 1;
+					]]></method>
+					<method id="onTouchEnded" params="label, id, x, y, ticks"><![CDATA[
+						label.state = 0;
+						label.bubble("onConsoleClear");
+					]]></method>
+				</behavior>
+			</label>
+	 		<label top="0" left="0" bottom="0" right="0" style="headerTitleStyle" string="'Console'"/>
+		</container>
+		<container anchor="FOOTER" left="0" right="0" bottom="0" height="32" skin="graySkin">
+			<behavior>
+				<method id="onComplete" params="container, message, json"><![CDATA[
+					if (json && ("ip_address" in json)) {
+						container.first.string = consoleURL = 'http://' + json.ip_address + ':' + application.serverPort + '/console';
+					}
+				]]></method>
+				<method id="onDisplaying" params="container"><![CDATA[
+					container.invoke(new Message("xkpr://wifi/status"), Message.JSON);
+				]]></method>
+			</behavior>
+			<label left="0" right="0" style="serverStyle"/>
+		</container>
+	</container>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- SCRIPTS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	
+    <script><![CDATA[
+    	application.style = applicationStyle;
+    	application.shared = true;
+    	
+    	var console = function(message) {
+    		application.distribute("onConsoleLog", message);
+    	}
+    	var consoleURL = null;
+    	
+		application.add(new ConsoleContainer({}));
+	]]></script>
+    
+</program>
