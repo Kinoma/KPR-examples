@@ -1,7 +1,7 @@
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-drawing-toy" class="createExampleLink" >analog-drawing-toy</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-drawing-toy"><img src="http://kinoma.github.io/KPR-examples/images/analog-drawing-toy-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="analogdrawingtoy.example.kinoma.marvell.com"><span class="createExample samplePage"</span></x-app-info>
+<x-app-info id="analogdrawingtoy.example.kinoma.marvell.com"><span class="createExample samplePage"></span></x-app-info>
 
 This sample uses two different BLLs. One BLL communicates with two potentiometers and sends their readings to the main thread, where they are interpreted as XY coordinates. Lines are drawn between the coordinates to make pictures. A second BLL gets readings from an accelerometer, and when these readings exceed a threshold, the drawing is erased.
 
