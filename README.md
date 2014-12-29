@@ -661,7 +661,7 @@ This example demonstrates how to use different timer techniques: One-shot, inter
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/transitions">transitions</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/transitions"><img src="http://kinoma.github.io/KPR-examples/images/transistion-example.jpg" height="100" alt=""/></a>
 					
-<x-app-info id="transitions.example.kinoma.marvell.com"></x-app-info>
+<x-app-info id="transitions.example.kinoma.marvell.com"><span class="createExample samplePage"></span></x-app-info>
 
 This example demonstrates how to use the Transitions library to configure and use a variety of transitions. The host application can further customize each transition by overriding the duration, easing function used for pacing time and specifying whether or not the former content should be removed once the transition completes.
 
