@@ -571,7 +571,7 @@ Displays a mockup camera preview with shutter button. Tapping the button plays a
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/spinner">spinner</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/spinner"><img src="http://kinoma.github.io/KPR-examples/images/spinner-example.jpg" height="100" alt=""/></a>
 					
-<x-app-info id="spinner.example.kinoma.marvell.com"><span class="ui"></span></x-app-info>
+<x-app-info id="spinner.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
 
 Displays a spinning busy indicator by rotating a custom graphic using a periodic timer. The indicator is displayed half size by setting the graphic's picture scale and origin properties.
 
@@ -591,7 +591,7 @@ A simple application that shows SSDP usage. The application starts a HTTP server
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/states">states</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/states"><img src="http://kinoma.github.io/KPR-examples/images/states-example.jpg" height="100" alt=""/></a>
 					
-<x-app-info id="states.example.kinoma.marvell.com"><span class="ui"></span></x-app-info>
+<x-app-info id="states.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
 
 This example demonstrates how to use content states to change a button's background and text colors when tapped. The text color is defined by the text style states. The button background color is defined by the skin states.
 
@@ -601,7 +601,7 @@ This example demonstrates how to use content states to change a button's backgro
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/style-inheritance">style-inheritance</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/style-inheritance"><img src="http://kinoma.github.io/KPR-examples/images/style-inheritance-example.jpg" height="100" alt=""/></a>
 					
-<x-app-info id="styleInheritance.example.kinoma.marvell.com"><span class="ui"></span></x-app-info>
+<x-app-info id="styleInheritance.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
 
 This example demonstrates how KPR cascades styles in the container hierarchy. A content inherits the characteristics of its container style when the characteristics are undefined in the content style. In this example, the applicationStyle defines a style for the root of the container hierarchy and nested containers build on the applicationStyle by overriding various style characteristics, including point size, alignment and color. Note: This example is best viewed on a tablet-sized screen or simulator.
 
@@ -611,7 +611,7 @@ This example demonstrates how KPR cascades styles in the container hierarchy. A 
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/styles">styles</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/styles"><img src="http://kinoma.github.io/KPR-examples/images/styles-example.jpg" height="100" alt=""/></a>
 					
-<x-app-info id="styles.example.kinoma.marvell.com"><span class="ui"></span></x-app-info>
+<x-app-info id="styles.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
 
 This example displays a vertical scrolling column of text formatted with a wide variety of styles. Usage of all the common text style attributes are demonstrated, including font, text style, point size, alignment, leading, color and margins.
 
@@ -621,7 +621,7 @@ This example displays a vertical scrolling column of text formatted with a wide 
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/tabs">tabs</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/tabs"><img src="http://kinoma.github.io/KPR-examples/images/tabs-example.jpg" height="100" alt=""/></a>
 					
-<x-app-info id="tabs.example.kinoma.marvell.com"><span class="ui"></span></x-app-info>
+<x-app-info id="tabs.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
 
 This mobile framework example demonstrates how to build a tabbed UI screen. Each tab opens a different style pane. The tabs are placed in the screen footer area and built using the mobile framework screen's TabFooter object and skinned using the default sample theme tab skins. The tab-to-tab transition is managed by the mobile framework TabListSwapTransition. You can customize the tab look and behaviors by replacing and/or overriding these objects. For example, you can use the mobile framework screen's TabLine object to implement a tab bar that can be placed anywhere on the screen and without icons.
 
@@ -631,7 +631,7 @@ This mobile framework example demonstrates how to build a tabbed UI screen. Each
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/text">text</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/text"><img src="http://kinoma.github.io/KPR-examples/images/text-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="text.example.kinoma.marvell.com"><span class="ui"></span></x-app-info>
+<x-app-info id="text.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
 
 This mobile framework example demonstrates how to use the ECMAScript API to get and set various KPR Text and Style properties, including font, point size, style, alignment, indentation and margins. The example also shows how to implement tappable text links and use text spans to display multi-styled text blocks. Tap the settings button to choose from a scrolling menu of text and style options.
 
@@ -641,7 +641,7 @@ This mobile framework example demonstrates how to use the ECMAScript API to get 
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/tiled-skins">tiled-skins</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/tiled-skins"><img src="http://kinoma.github.io/KPR-examples/images/tiled-skins-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="tiledskins.example.kinoma.marvell.com"><span class="ui"></span></x-app-info>
+<x-app-info id="tiledskins.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
 
 This example demonstrates how to use tiled skins to fill content. Examples of nine part and three part horizontal/vertical tiled skins are provided. The nine part container is a button that changes color (state) when tapped. Additionally this example shows how to use a layer to display rotated text.
 
