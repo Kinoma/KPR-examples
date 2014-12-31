@@ -361,7 +361,7 @@ Uses Canvas 2D to implement a virtual hypotrochoid device. Custom sliders contro
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/logs">logs</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/logs"><img src="http://kinoma.github.io/KPR-examples/images/logs-example.jpg" height="100" alt=""/></a>
 					
-<x-app-info id="logs.example.kinoma.marvell.com"><span class="createSample"></span></x-app-info>
+<x-app-info id="logs.example.kinoma.marvell.com"><span class="createSample filesSample"></span></x-app-info>
 
 This example deminstrates how to use the Kinoma Create built-in logging support to capture trace output into a log file. Log files can be viewed and/or removed using the built-in Logs app.
 
