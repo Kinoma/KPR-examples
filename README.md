@@ -181,7 +181,7 @@ This example demonstrates how to setup and display mobile framework dialogs. Var
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-in-hello-world">digital-in-hello-world</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-in-hello-world"><img src="http://kinoma.github.io/KPR-examples/images/digital-in-hello-world-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="digitalinhelloworld.example.kinoma.marvell.com"><span class="createExample pinsSample samplePage"></span></x-app-info>
+<x-app-info id="digitalinhelloworld.example.kinoma.marvell.com"><span class="createSample pinsSample samplePage"></span></x-app-info>
 
 Uses a digital pin to read input from a physical button. When pressed, it triggers an event in the application which removes a letter from the string 'Hello World!' on the Kinoma Create's screen. Demonstrates the set up and integration of a digital input pin BLL in KinomaJS.
 
@@ -491,7 +491,7 @@ Photo images are fetched from a Flickr feed using a proxy handler which returns 
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/pwm-continuous-servo">pwm-continuous-servo</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/pwm-continuous-servo"><img src="http://kinoma.github.io/KPR-examples/images/pwm-continuous-servo-example.jpg" height="100" alt=""/></a>
 					
-<x-app-info id="pwmcontinuousservo.example.kinoma.marvell.com"><span class="createExample pinsSample samplePage"></span></x-app-info>
+<x-app-info id="pwmcontinuousservo.example.kinoma.marvell.com"><span class="createSample pinsSample samplePage"></span></x-app-info>
 
 Rotates a 360˚ continuous servo using a PWM pin. Demonstrates the set up and integration of a PWM BLL in KinomaJS.
 
