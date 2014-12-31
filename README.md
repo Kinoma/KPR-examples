@@ -51,7 +51,7 @@ This sample shows how to implement a BLL to read from an analog temperature sens
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/audio-recorder-player">audio-recorder-player</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/audio-recorder-player"><img src="http://kinoma.github.io/KPR-examples/images/audio-recorder-player-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="audiorecorderplayer.example.kinoma.marvell.com"><span class="createSample pinsSample samplePage"></span></x-app-info>
+<x-app-info id="audiorecorderplayer.example.kinoma.marvell.com"><span class="createSample pinsSample mediaSample samplePage"></span></x-app-info>
 
 Demonstrates how to record and play up to 30 seconds of audio with Kinoma Create’s built-in microphone and speaker.
 
