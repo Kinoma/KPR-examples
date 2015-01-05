@@ -671,7 +671,7 @@ This example demonstrates how to use different timer techniques: One-shot, inter
 ***
 
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/transitions">transitions</a>
-<a href="https://github.com/Kinoma/KPR-examples/tree/master/transitions"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/transistions-example.jpg" height="100" alt=""/></a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/transitions"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/transitions-example.jpg" height="100" alt=""/></a>
 					
 <x-app-info id="transitions.example.kinoma.marvell.com"><span class="createSample samplePage uiSample"></span></x-app-info>
 
