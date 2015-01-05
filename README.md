@@ -360,6 +360,16 @@ Uses Canvas 2D to implement a virtual hypotrochoid device. Custom sliders contro
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/list">list</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/list"><img src="http://kinoma.github.io/KPR-examples/images/list-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="list.example.kinoma.marvell.com"><span class="uiSample mobileSample"></span></x-app-info>
+
+This mobile framework application demonstrates how to build a scrolling list view in KPR. An HTTP request is issued to a web service that returns a JSON array of items. The items are loaded and displayed in the list. Tapping a list item opens a detailed item view. The application also demonstrates how to use a KPR layout to adapt the screen layout on device orientation changes.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/logs">logs</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/logs"><img src="http://kinoma.github.io/KPR-examples/images/logs-example.jpg" height="100" alt=""/></a>
 					
