@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2011-2014 Marvell Semiconductor, Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  The web service at http://www.douzencloud.com/JSON_data/tuna_data.json is operated by the DouZen team for making content catalog prototypes.
+  It is not for commercial or large scale use. It may be modified or discontinued without notice.
+-->
+<program xmlns="http://www.kinoma.com/kpr/1">
+	<require path="themes/sample/theme" id="THEME"/>
+	<require path="mobile/model" id="MODEL"/>
+	<require path="mobile/screen" id="SCREEN"/>
+	<require path="mobile/scroller" id="SCROLLER"/>
+	<require path="mobile/tool" id="TOOL"/>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- ASSETS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<texture id="applicationIconTexture" small="assets/icon.png"/>
+	<skin id="applicationIconSkin" texture="applicationIconTexture" x="0" y="0" width="80" height="80" aspect="fit"/>
+	<skin id="blackSkin" color="black"/>
+	<skin id="whiteSkin" color="white"/>
+	<skin id="separatorSkin" color="silver"/>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- STYLES -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<style id="productNameStyle" font="bold 22px" align="left,middle" lines="1"/>
+	<style id="productDescriptionStyle" font="18px" align="justify" lines="all">
+		<margins left="5" right="5" top="5" bottom="5"/>
+	</style>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- HANDLERS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<handler path="/main">
+		<behavior like="MODEL.ScreenBehavior"><![CDATA[
+			function hasSelection(data, delta) {
+				var selection = data.selection + delta;
+				return (0 <= selection) && (selection < data.items.length)
+			}
+			function getSelection(data, delta) {
+				data.selection += delta;
+				return data.items[data.selection];
+			}
+			function onDescribe(query, selection) {
+				return {
+					Screen: MainScreen,
+					title: "Sushi",
+					items: null,
+					more: false,
+					scroll: {
+						x: 0,
+						y: 0
+					},
+					selection: -1,
+				}
+			}
+		]]></behavior>
+	</handler>
+
+	<handler path="/details">
+		<behavior like="MODEL.ScreenBehavior"><![CDATA[
+			function hasSelection(data, delta) {
+				var selection = data.selection + delta;
+				return (0 <= selection) && (selection < data.items.length)
+			}
+			function getSelection(data, delta) {
+				data.selection += delta;
+				return data.items[data.selection];
+			}
+			function onDescribe(query, selection) {
+				return {
+					Screen: DetailsScreen,
+					title: selection.product_name_english,
+					description: selection.product_description_english,
+					image: selection.image_large_url
+				}
+			}
+		]]></behavior>
+	</handler>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- LAYOUTS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<line id="SushiLine" left="0" right="0" active="true" behavior="SCREEN.ListItemBehavior" skin="THEME.lineSkin">
+		<column left="0" right="0">
+			<line left="4" right="4" height="52">
+				<thumbnail width="40" height="40" aspect="fit" url="$.image_small_url"/>
+				<label left="8" right="0" style="productNameStyle" string="$.product_name_english"/>
+			</line>
+			<line left="0" right="0" height="1" skin="separatorSkin"/>
+		</column>
+	</line>
+
+	<container id="Header" like="SCREEN.EmptyHeader" skin="blackSkin">
+		<container like="TOOL.BackButton"/>
+		<scroller like="TOOL.HeaderTitle" style="THEME.plainHeaderTitleStyle"/>
+	</container>
+
+	<container id="DetailsScreen" like="SCREEN.EmptyScreen">
+		<container anchor="BODY" like="SCREEN.EmptyBody" skin="whiteSkin">
+			<layout left="0" right="0" top="0" bottom="0">
+				<behavior>
+					<method id="onCreate" params="layout, data"><![CDATA[
+						this.data = data;
+						this.width = -1;
+					]]></method>	
+					<method id="onMeasureVertically" params="container, height"><![CDATA[
+						if ( this.width != application.width ) {
+							this.width = application.width;
+							if ( application.width > application.height ) {
+								this.data.PICTURE.coordinates = {left:4, top: 4, width:application.width/2 - 8, bottom: 4};
+								this.data.BORDER.coordinates = {left:application.width/2 - 4, top:4, bottom:4, width:2};
+								this.data.DESCRIPTION.coordinates = {left:application.width/2, right:0, top:0, bottom:0};
+							}
+							else {
+								this.data.PICTURE.coordinates = {top:4, width:application.width - 8, height:application.height/2 - 8};
+								this.data.BORDER.coordinates = {left:4, right:4, top:application.height/2 - 4, height:2};
+								this.data.DESCRIPTION.coordinates = {left:0, right:0, top:application.height/2, bottom:0};
+							}
+						}
+						return height;
+					]]></method>	
+				</behavior>
+			</layout>
+			<container anchor="PICTURE" top="4" width="application.width - 8" height="application.height/2 - 8">
+				<picture left="0" right="0" top="0" bottom="0" aspect="'fit'" url="$.image"/>
+			</container>
+			<content anchor="BORDER" left="4" right="4" top="application.height/2 - 4" height="2" skin="separatorSkin"/>
+			<container anchor="DESCRIPTION" left="0" right="0" top="application.height/2" bottom="0" clip="true">
+				<scroller like="SCROLLER.VerticalScroller">
+					<text left="0" right="0" top="0" style="productDescriptionStyle" string="$.description"/>
+					<content like="SCROLLER.VerticalScrollbar"/>
+					<content like="SCROLLER.BottomScrollerShadow"/>
+				</scroller>
+			</container>
+		</container>
+		<container anchor="HEADER" like="Header"/>
+	</container>
+
+	<container id="MainScreen" like="SCREEN.EmptyScreen">
+		<container anchor="BODY" like="SCREEN.EmptyBody" skin="whiteSkin">
+			<scroller like="SCROLLER.VerticalScroller">
+				<column anchor="LIST" left="0" right="0" top="0">
+					<behavior like="SCREEN.ListBehavior">
+						<method id="addItemLine" params="list, item"><![CDATA[
+							item.action = "/details";
+							list.add(new SushiLine(item));
+						]]></method>	
+						<method id="createMessage" params="list, data"><![CDATA[
+							return new Message("http://www.douzencloud.com/JSON_data/tuna_data.json");
+						]]></method>	
+						<method id="getItems" params="list, message, items"><![CDATA[
+							if (items) {
+								items.sort(this.sortNames);
+								return items;
+							}
+						]]></method>	
+						<method id="sortNames" params="a, b"><![CDATA[
+							return a.product_name_english.toLowerCase().compare(b.product_name_english.toLowerCase());
+						]]></method>	
+					</behavior>
+				</column>
+				<content like="SCROLLER.VerticalScrollbar"/>
+			</scroller>
+		</container>
+		<container anchor="HEADER" like="Header"/>
+	</container>
+   
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- SCRIPTS -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	
+	<script><![CDATA[
+		var model = application.behavior = new MODEL.ApplicationBehavior(application);
+	]]></script>
+    
+</program>
