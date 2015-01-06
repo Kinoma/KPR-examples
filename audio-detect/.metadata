@@ -1,0 +1,14 @@
+<example 
+	id="audiodetect.example.kinoma.marvell.com"
+	title="Audio Detect Example"
+	project="Audio Detect Example"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+This sample monitors the audio level using the microphone. The audioin BLL records audio samples, which it uses the calculate the peak and average sample levels, as well as the power level (RMS). The results are displayed in realtime by the application, which also adjusts the screen color in real time: black for quiet, white for loud, and grays in-between.
+	]]></description>
+
+</example>
