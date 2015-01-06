@@ -50,6 +50,16 @@ This sample shows how to implement a BLL to read from an analog temperature sens
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/audio-detect">audio-detect</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/audio-detect"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/audio-detect-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="audiodetect.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
+
+This sample monitors the audio level using the microphone. The audioin BLL records audio samples, which it uses the calculate the peak and average sample levels, as well as the power level (RMS). The results are displayed in realtime by the application, which also adjusts the screen color in real time: black for quiet, white for loud, and grays in-between.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/audio-recorder-player">audio-recorder-player</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/audio-recorder-player"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/audio-recorder-player-example.jpg" height="100" alt=""/></a>
 
