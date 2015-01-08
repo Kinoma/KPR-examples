@@ -1,0 +1,14 @@
+<example 
+	id="pubnub.example.kinoma.marvell.com"
+	title="PubNub Example"
+	project="PubNub Example"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+This application sends and receives JSON messages using the PubNub messaging service. It provides a good starting point to learn how to add device-to-device and device-to-web communication to your application. PubNub provides low latency delivery of messages through the cloud. This application includes a full KinomaJS version of PubNub's JavaScript API.
+	]]></description>
+
+</example>
