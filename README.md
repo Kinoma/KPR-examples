@@ -510,6 +510,16 @@ Photo images are fetched from a Flickr feed using a proxy handler which returns 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/pubnub">pubnub</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/pubnub"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/pubnub-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="pubnum.example.kinoma.marvell.com"><span class="networkSample"></span></x-app-info>
+
+This application sends and receives JSON messages using the PubNub messaging service. It provides a good starting point to learn how to add device-to-device and device-to-web communication to your application. PubNub provides low latency delivery of messages through the cloud. This application includes a full KinomaJS version of PubNub's JavaScript API.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/pwm-continuous-servo">pwm-continuous-servo</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/pwm-continuous-servo"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/pwm-continuous-servo-example.jpg" height="100" alt=""/></a>
 					
