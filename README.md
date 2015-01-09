@@ -385,7 +385,7 @@ This mobile framework application demonstrates how to build a scrolling list vie
 					
 <x-app-info id="logs.example.kinoma.marvell.com"><span class="createSample filesSample"></span></x-app-info>
 
-This example deminstrates how to use the Kinoma Create built-in logging support to capture trace output into a log file. Log files can be viewed and/or removed using the built-in Logs app.
+This example demonstrates how to use the Kinoma Create built-in logging support to capture trace output into a log file. Log files can be viewed and/or removed using the built-in Logs app.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
