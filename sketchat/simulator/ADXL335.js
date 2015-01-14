@@ -1,18 +1,18 @@
 //@module
 
-var PartSimulators = require ("kdt/simulator/PartSimulators");
+var PinsSimulators = require ("PinsSimulators");
 
 exports.configure = function(configuration) {
 	this.container = shell.delegate("addSimulatorPart", {
 		id : 'ADXL335',
-		behavior: PartSimulators.PartColumnBehavior,
+		behavior: PinsSimulators.PartColumnBehavior,
 		header : { 
 			label : this.id, 
 			name : "ADXL335 - Accelerometer", 
-			iconVariant : PartSimulators.SENSOR_KNOB 
+			iconVariant : PinsSimulators.SENSOR_KNOB 
 		},
 		axes : [
-			new PartSimulators.FloatAxisDescription(
+			new PinsSimulators.FloatAxisDescription(
 				{
 					ioType : "input",
 					dataType : "float",
@@ -24,7 +24,7 @@ exports.configure = function(configuration) {
 					speed : 5
 				}
 			),
-			new PartSimulators.FloatAxisDescription(
+			new PinsSimulators.FloatAxisDescription(
 				{
 					ioType : "input",
 					dataType : "float",
@@ -36,7 +36,7 @@ exports.configure = function(configuration) {
 					speed : 5
 				}
 			),
-			new PartSimulators.FloatAxisDescription(
+			new PinsSimulators.FloatAxisDescription(
 				{
 					ioType : "input",
 					dataType : "float",

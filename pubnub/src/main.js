@@ -1,7 +1,7 @@
 //@program
 /*
   Copyright 2011-2014 Marvell Semiconductor, Inc.
-
+ 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -15,11 +15,22 @@
   limitations under the License.
 */
 
+/*
+    This is the PubNub JavaScript library ported to KinomaJS.
+    You can learn more about the PubNub JavaScript API at http://www.pubnub.com/docs/javascript/javascript-sdk.html.
+
+    A large number of warnings are generated when it loads. These are safe.
+
+*/
 include("pubnub");
 
 var THEME = require("themes/flat/theme");
 var BUTTONS = require("controls/buttons");
 
+/*
+    Put your own PubNub publish and subscribe keys here.
+    You can sign up for your own PubNub account at http://www.pubnub.com
+*/
 var PUBNUB_PUBLISH_KEY = "pub-c-49c9d18f-08fe-412c-9f98-f288d5fad0d0";
 var PUBNUB_SUBSCRIBE_KEY = "sub-c-438e4caa-85ad-11e4-9b92-02ee2ddab7fe";
 var PUBNUB_CHANNEL = "hello_kinoma";
@@ -28,6 +39,11 @@ var MyLabeledButton = BUTTONS.LabeledButton.template(function($) { return {
 	width:130, height:35,
 	behavior: Object.create(BUTTONS.LabeledButtonBehavior.prototype, {
 		onTap: { value: function(container) {
+            /*
+                Publish the name of the button tapped to our PUBNUB_CHANNEL.
+                You can monitor these messages on the PubNub developer console at http://pubnub.com/console
+                You can also use the PubNub developer console to send messages to this app.
+            */
 			pubnub.publish({channel: PUBNUB_CHANNEL,
                             message: {name: this.name, when: (new Date).toString()},
                             });
@@ -51,6 +67,9 @@ ApplicationBehavior.prototype = Object.create(PubNubBehavior.prototype, {
                 model.receivedLabel.string = "Last received message (" + ++model.receivedCount + "):";
 			},
 			connect: function pub() {
+                /*
+                    We're connected! Send a message.
+                */
 				pubnub.publish({                                     
 					channel : PUBNUB_CHANNEL,
 					message : "Hello from PubNub Kinoma sample!"
