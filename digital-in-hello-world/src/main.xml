@@ -41,7 +41,7 @@
             	   method defined in the bll (button.js). Use the return
             	   message's requestObject to access the read result. */             
                  var readResult = message.requestObject;            
-                 if ( readResult == 1 ) {               
+                 if ( readResult == true ) {               
                     application.distribute( "clicked" );
                  } 
             ]]></method>
@@ -87,7 +87,7 @@
     	
     	/* Use the initialized button object and repeatedly 
     	   call its read method with a given interval.  */
-    	application.invoke( new MessageWithObject( "pins:/button/read?" + 
+    	application.invoke( new MessageWithObject( "pins:/button/wasPressed?" + 
             serializeQuery( {       
 				repeat: "on",
 				interval: 20,

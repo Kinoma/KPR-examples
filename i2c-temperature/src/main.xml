@@ -34,7 +34,7 @@
            <style font="bold 46px Fira Sans" color="black"/>
            <behavior>
                <method id="onTemperatureChanged" params="content, temp"><![CDATA[
-                  content.string = temp + " ˚C";
+                  content.string = temp.toFixed(2) + " ˚C";
                ]]></method>
            </behavior>
         </label>

@@ -2,7 +2,7 @@
 
 var THEME = require ("themes/flat/theme");
 var CONTROL = require ("mobile/control");
-var PartSimulators = require ("kdt/simulator/PartSimulators");
+var PinsSimulators = require ("PinsSimulators");
 var buttonStyle = new Style({ font:"bold 20px", color:["white","white","black"], horizontal:"center" });
 var OrientationBehavior = function(column, data) {
 	Behavior.call(this, column, data);
@@ -67,7 +67,7 @@ exports.configure = function(configuration) {
 		header : { 
 			label : this.id, 
 			name : "HOVER", 
-			iconVariant : PartSimulators.SENSOR_KNOB 
+			iconVariant : PinsSimulators.SENSOR_KNOB 
 		},
 		value: undefined
 	};

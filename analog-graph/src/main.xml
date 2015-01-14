@@ -55,7 +55,7 @@
         		strokeStyle: "red",
 				lineWidth: 4,
 				string: "x",
-				complement: true
+				complement: false
 			};
 			
 			graph.add( new GraphCanvas( plotterParams ) );
