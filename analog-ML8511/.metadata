@@ -1,0 +1,14 @@
+<example 
+	id="ML8511.example.kinoma.marvell.com"
+	title="Analog ML8511 Example"
+	project="Analog ML8511 Example"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+TBD
+	]]></description>
+
+</example>

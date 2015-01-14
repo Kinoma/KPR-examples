@@ -1,0 +1,14 @@
+<example 
+	id="i2tslclimate.example.kinoma.marvell.com"
+	title="I2C Tessel Climate Example"
+	project="I2C Tessel Climate Example"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+This sample uses the Tessel Climate Module to retrieve the humidity and temperature values from a Silicon Labs Si7020 sensor. The BLL performs performs necessary calculations to transform the raw sensor data to values convenient for the application to display. The application can easily be adapted for use with other humidity and temperature sensors.
+	]]></description>
+
+</example>

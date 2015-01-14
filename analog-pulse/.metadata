@@ -1,0 +1,14 @@
+<example 
+	id="pulse.example.kinoma.marvell.com"
+	title="Pulse Example"
+	project="Pulse Example"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+TBD
+	]]></description>
+
+</example>

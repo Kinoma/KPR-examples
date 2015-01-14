@@ -1,0 +1,14 @@
+<example 
+	id="i2cnfc.example.kinoma.marvell.com"
+	title="I2C NFC Example"
+	project="I2C NFC Example"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+This sample shows how to use the Adafruit PN532 NFC/RFID Controller Shield for Arduino with Kinoma Create. The BLL can discover RFID sensors, as well as read and write the data area on MiFare Classic cards. The BLL communicates over I2C, and can be easily adapted to work with other NFC devices based on the Philips PN532 NFC Controller. The sample applications shows how to display the ID of the discovered RFID.
+	]]></description>
+
+</example>

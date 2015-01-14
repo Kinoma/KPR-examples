@@ -1,0 +1,16 @@
+<example 
+	id="hello.example.kinoma.marvell.com"
+	title="Hello KPR"
+	project="Hello KPR"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+		A minimal application that creates a full-screen container and displays 
+		the text "Hello, KPR". Tapping the container changes the background color. 
+		Useful for understanding how to build a basic KPR application.
+	]]></description>
+
+</example>

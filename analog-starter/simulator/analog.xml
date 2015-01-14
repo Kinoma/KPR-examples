@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module xmlns="http://www.kinoma.com/kpr/1">
+
+	<require path="PinsSimulators" id="PinsSimulators"/>
+
+	<function id="configure" params="configuration"><![CDATA[
+		this.pinsSimulator = shell.delegate("addSimulatorPart", {
+			header : { 
+				label : "Analog", 
+				name : "Analog Input", 
+				iconVariant : PinsSimulators.SENSOR_KNOB 
+			},
+			axes : [
+				new PinsSimulators.AnalogInputAxisDescription(
+					{
+						valueLabel : "Value",
+						valueID : "analogValue",
+						speed : 0.5
+					}
+				),
+			]
+		});
+	]]></function>
+
+	<function id="close"><![CDATA[
+		shell.delegate("removeSimulatorPart", this.pinsSimulator);
+	]]></function>
+
+	<function id="read"><![CDATA[
+		var axes = this.pinsSimulator.delegate("getValue");
+		return axes.analogValue;				
+	]]></function>
+
+	<script><![CDATA[
+		exports.pins = {
+			analog: { type: "A2D" }
+		};
+	]]></script>
+
+</module>

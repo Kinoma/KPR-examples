@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module xmlns="http://www.kinoma.com/kpr/1">
+
+	<require path="PinsSimulators" id="PinsSimulators"/>
+
+	<function id="configure" params="configuration"><![CDATA[
+		this.pinsSimulator = shell.delegate("addSimulatorPart", {
+			header : { 
+				label : "Temperature Sensor", 
+				name : "TMP102", 
+				iconVariant : PinsSimulators.SENSOR_MODULE
+			},
+			axes : [
+				new PinsSimulators.AnalogInputAxisDescription(
+					{
+						valueLabel : "Celcius",
+						valueID : "temperatureValue",
+						defaultControl : PinsSimulators.SLIDER,
+						minValue : -30,
+						maxValue : 100,
+						value : 0
+					}
+				),
+			]
+		});
+	]]></function>
+
+	<function id="close"><![CDATA[
+		shell.delegate("removeSimulatorPart", this.pinsSimulator);
+	]]></function>
+
+	<function id="read"><![CDATA[
+		var axes = this.pinsSimulator.delegate("getValue");
+		return axes.temperatureValue;				
+	]]></function>
+
+	<script><![CDATA[
+		exports.pins = {
+			temperature: {type: "I2C", address: 0x48}
+		};
+	]]></script>
+
+</module>

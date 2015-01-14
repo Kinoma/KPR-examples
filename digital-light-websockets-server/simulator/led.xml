@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module xmlns="http://www.kinoma.com/kpr/1">
+
+	<require path="PinsSimulators" id="PinsSimulators"/>
+
+	<function id="configure" params="configuration"><![CDATA[
+		this.pinsSimulator = shell.delegate("addSimulatorPart", {
+			header : { 
+				label : "Digital Light Websockets Server", 
+				name : "Digital Output", 
+				iconVariant : PinsSimulators.SENSOR_LED 
+			},
+			axes : [
+				new PinsSimulators.DigitalOutputAxisDescription(
+					{
+						valueLabel : "LED",
+						valueID : "ledValue"
+					}
+				),
+			]
+		});
+	]]></function>
+
+	<function id="close"><![CDATA[
+		shell.delegate("removeSimulatorPart", this.pinsSimulator);
+	]]></function>
+
+	<function id="turnOn"><![CDATA[
+		this.setValue(1);				
+	]]></function>
+
+	<function id="turnOff"><![CDATA[
+		this.setValue(0);				
+	]]></function>
+
+	<function id="setValue" params="value"><![CDATA[
+		this.pinsSimulator.delegate("setValue", "ledValue", value);
+	]]></function>
+
+	<script><![CDATA[
+		exports.pins = {
+			led: { type: "Digital", direction: "output" }
+		};
+	]]></script>
+
+</module>

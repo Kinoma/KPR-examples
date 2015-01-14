@@ -1,0 +1,14 @@
+<example 
+	id="i2tslaccel.example.kinoma.marvell.com"
+	title="I2C Tessel Accelerometer Example"
+	project="I2C Tessel Accelerometer Example"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+This sample shows how to read the Tessel Accelerometer Module which uses the Freescale MMA8452Q 3-Axis Accelerometer. The example displays the values of the sensor in real-time and animates a ball based on the X and Y values of the accelerometer. The application and BLL can be easily adapted to other accelerometers.
+	]]></description>
+
+</example>
