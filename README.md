@@ -30,6 +30,26 @@ This sample sends HTTP requests to the Xively API to upload sensor data to a str
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-ML8511">analog-ML8511</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-ML8511"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/analog-ML8511-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="ML8511.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
+
+This description needs to be written.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-pulse">analog-pulse</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-pulse"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/analog-pulse-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="pulse.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
+
+This description needs to be written.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-starter">analog-starter</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-starter"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/analog-starter-example.jpg" height="100" alt=""/></a>
 
@@ -320,12 +340,62 @@ BLL and sample application for the Hover board touchless gesture sensor from htt
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-nfc">i2c-nfc</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-nfc"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/i2c-nfc-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="i2cnfc.example.kinoma.marvell.com"><span class="pinsSample createSample"></span></x-app-info>
+
+This sample shows how to use the Adafruit PN532 NFC/RFID Controller Shield for Arduino with Kinoma Create. The BLL can discover RFID sensors, as well as read and write the data area on MiFare Classic cards. The BLL communicates over I2C, and can be easily adapted to work with other NFC devices based on the Philips PN532 NFC Controller. The sample applications shows how to display the ID of the discovered RFID.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-temperature">i2c-temperature</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-temperature"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/i2c-temperature-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="i2ctemperature.example.kinoma.marvell.com"><span class="createSample pinsSample samplePage"></span></x-app-info>
 
 Obtains the current temperature from an I2C temperature sensor and displays it on the Kinoma Create's screen. Demonstrates the set up and integration of an I2C BLL in KinomaJS.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-tessel-accelerometer">i2c-tessel-accelerometer</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-tessel-accelerometer"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/i2c-tessel-accelerometer-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="i2tslaccel.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
+
+This sample shows how to read the Tessel Accelerometer Module which uses the Freescale MMA8452Q 3-Axis Accelerometer. The example displays the values of the sensor in real-time and animates a ball based on the X and Y values of the accelerometer. The application and BLL can be easily adapted to other accelerometers.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-tessel-climate">i2c-tessel-climate</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-tessel-climate"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/i2c-tessel-climate-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="i2tslclimate.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
+
+This sample uses the Tessel Climate Module to retrieve the humidity and temperature values from a Silicon Labs Si7020 sensor. The BLL performs performs necessary calculations to transform the raw sensor data to values convenient for the application to display. The application can easily be adapted for use with other humidity and temperature sensors.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-touchshield">i2c-touchshield</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-touchshield"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/i2c-touchshield-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="touchshield.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
+
+This sample shows how to integrate the Sparkfun Touch Shield for Adruino with Kinoma Create. The touch shield uses a Freescale MPR121 sensor controller to communicate multi-touch over I2C. The application displays the mulit-touch results in realtime on the Kinoma Create screen.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-VCNL4000">i2c-VCNL4000</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-VCNL4000"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/i2c-VCNL4000-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="VCNL4000.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
+
+This sample integrates the Sparkfun Infrared Proximity Breakout board with Kinoma Create. The Vishay VCNL4000 part integrates a proximity sensor, ambient light sensor, and infrared emitter. The sensor communicates over I2C, and the sample application displays both proximity and the ambient light levels.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
