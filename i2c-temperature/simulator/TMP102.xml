@@ -13,7 +13,7 @@
 			axes : [
 				new PinsSimulators.AnalogInputAxisDescription(
 					{
-						valueLabel : "Celcius",
+						valueLabel : "Celsius",
 						valueID : "temperatureValue",
 						defaultControl : PinsSimulators.SLIDER,
 						minValue : -30,
