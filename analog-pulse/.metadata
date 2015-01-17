@@ -8,7 +8,7 @@
 	category="com.marvell.kinoma.examples.starter">
 
 	<description><![CDATA[
-TBD
+The sample makes your heart beat visible on the screen of Kinoma Create. Using the Pulse Sensor from pulsesensor.com available as Sparkfun SEN-11574, the BLL monitors the analog signal to detect beats. The BLL is based on the sample Arduino code from pulsesensor.com, converted to JavaScript and modified for optimal use with KinomaJS.
 	]]></description>
 
 </example>
