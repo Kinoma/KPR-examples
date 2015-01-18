@@ -35,7 +35,7 @@ This sample sends HTTP requests to the Xively API to upload sensor data to a str
 
 <x-app-info id="ML8511.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
 
-This description needs to be written.
+This sample shows how to use the SparkFun UV Sensor Breakout with Kinoma Create. The ML8511 UV Sensor from LAPIS Semiconductor provides a UV intensity reading through its analog output. The sample application displays the current sensor intensity value and the UV Index derived from it. The UV Index calculation may require calibration for your part of the world.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -45,7 +45,7 @@ This description needs to be written.
 
 <x-app-info id="pulse.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
 
-This description needs to be written.
+The sample makes your heart beat visible on the screen of Kinoma Create. Using the Pulse Sensor from pulsesensor.com available as Sparkfun SEN-11574, the BLL monitors the analog signal to detect beats. The BLL is based on the sample Arduino code from pulsesensor.com, converted to JavaScript and modified for optimal use with KinomaJS.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
