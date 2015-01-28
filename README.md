@@ -290,7 +290,7 @@ This mobile framework example demonstrates how to use the global KPR Files objec
 <div style="clear:both; margin-bottom: 16px;"></div>
 ***
 
-### <a href="https://github.com/Kinoma/KPR-examples/tree/master/file-chunks">files-chunks</a>
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/files-chunks">files-chunks</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/files-chunks"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/files-chunks-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="fileschunks.example.kinoma.marvell.com"><span class="filesSample"></span></x-app-info>
