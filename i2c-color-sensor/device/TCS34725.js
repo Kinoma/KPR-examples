@@ -84,7 +84,7 @@ exports.setGain = function( gain ) {
 }
 
 exports.setIntegrationTime = function( time ) {
-    if ( ( time < 0 ) || ( time > 614.4 ) )
+    if ( ( time < 2.4 ) || ( time > 614.4 ) )
         throw "Invalid integrationIime " + time;
 
     var value = Math.round( 256 - ( time / 2.4 ) );
