@@ -1,6 +1,6 @@
 //@module
 /*
-  Copyright 2011-2014 Marvell Semiconductor, Inc.
+  Copyright 2011-2015 Marvell Semiconductor, Inc.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -15,15 +15,25 @@
   limitations under the License.
 */
 
+// This BLL requires Kinoma Software version 6.1.337.1 or later.
+// Use the Settings app on Kinoma Create to update.
+
 exports.pins = {
     ts: {type: "Digital", direction: "input"},
     reset: {type: "Digital", direction: "output"},
     data: {type: "I2C", address: 0x42},
 }
 
+// default mapping of values to directions
+var tb = 1, tl = 2, tt = 4, tr = 8, tc = 16, sr = 2, sl = 3, su = 4, sd = 5;
+
 exports.configure = function(configuration) {
     this.tsPin = configuration.pins.ts.pin;
-
+    // assume front-panel connections means board is upside down, so invert direction mapping
+    if(this.tsPin ==59 | this.tsPin ==60) {
+		tb = 4, tl = 8, tt = 1, tr = 2, tc = 16, sr = 3, sl = 2, su = 5, sd = 4;
+	}
+		
     this.ts.init();
     this.reset.init();
     this.data.init();
@@ -54,27 +64,29 @@ exports.read = function() {
 
         var busData = this.data.readBlockDataSMB(0, 18, "Array");
 
-        var gestureEvent = busData[10];
+        var gestureEvent = busData[9];
         if (gestureEvent > 1) {
             switch (gestureEvent) {
-                case  2: result = "swipe to right"; break;
-                case  3: result = "swipe to left"; break;
-                case  4: result = "swipe up"; break;
-                case  5: result = "swipe down"; break;
+                case  sr: result = "swipe to right"; break;
+                case  sl: result = "swipe to left"; break;
+                case  su: result = "swipe up"; break;
+                case  sd: result = "swipe down"; break;
                 default: result = "mystery swipe 0x" + gestureEvent.toString(16); break;
             }
+            trace(result + "\n");
         }
 
-        var touchEvent = ((busData[14] & 0xE0) >>> 5) | ((busData[15] & 0x03) << 3);
+        var touchEvent = ((busData[13] & 0xE0) >>> 5) | ((busData[14] & 0x03) << 3);
         if (touchEvent > 0) {
             switch (touchEvent) {
-                case  1: result = "touch bottom"; break;
-                case  2: result = "touch left"; break;
-                case  4: result = "touch top"; break;
-                case  8: result = "touch right"; break;
-                case 16: result = "touch center"; break;
-                default: result = "mystery touch 0x" + busData[14].toString(16) + ", 0x" + busData[15].toString(16); break;
+                case tb: result = "touch bottom"; break;
+                case tl: result = "touch left"; break;
+                case tt: result = "touch top"; break;
+                case tr: result = "touch right"; break;
+                case tc: result = "touch center"; break;
+                default: result = "mystery touch 0x" + busData[13].toString(16) + ", 0x" + busData[14].toString(16); break;
             }
+            trace(result + "\n");
         }
     }
     catch (e) {
