@@ -12,7 +12,7 @@
 		The code embeds the web view with a browser container. This example demonstrates 
 		how to display a web page in the browser, support browser forward/backwards navigation, 
 		implement callbacks when the web page is loading/loaded, display a busy indicator using 
-		the mobile framework and use anchor references to containers. Note that the browser 
+		the MobileFramework and use anchor references to containers. Note that the browser 
 		container is not available on Windows or Kinoma Create.
 	]]></description>
 
