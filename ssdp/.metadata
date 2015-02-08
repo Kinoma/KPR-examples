@@ -8,7 +8,7 @@
 	category="com.marvell.kinoma.examples.starter">
 
 	<description><![CDATA[
-		A simple application that shows SSDP usage. The application starts a HTTP server on port 1234, registers it with the name service named "KPR Server". It also looks for available HTTP servers on the local network.
+		A simple application that shows SSDP usage. The application starts an HTTP server on port 1234, registers a service named "KPR Server". It also looks for available HTTP servers on the local network.
 	]]></description>
 
 </example>
