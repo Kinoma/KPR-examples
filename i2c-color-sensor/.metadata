@@ -8,7 +8,7 @@
 	category="com.marvell.kinoma.examples.starter">
 
 	<description><![CDATA[
-This application changes the MainContainer's skin to the color sensed by a TLS43725 RGB color sensor. R, G, and B readings are sent from the BLL to the main thread, in which they are converted to hex notation.
+This application changes the MainContainer's skin to the color sensed by a TCS34725 RGB color sensor. R, G, and B readings are sent from the BLL to the main thread, in which they are converted to hex notation.
 	]]></description>
 
 </example>
