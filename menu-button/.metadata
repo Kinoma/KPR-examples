@@ -8,9 +8,9 @@
 	category="com.marvell.kinoma.examples.starter">
 
 	<description><![CDATA[
-		This example demonstrates how to use a mobile framework menu 
-		button. The menu button displays the currently selected item 
-		in an active label. When tapped a modal menu of choices is 
+		This example demonstrates how to use a MobileFramework menu 
+		button. The menu button displays the currently-selected item 
+		in an active label. When tapped, a modal menu of choices is 
 		displayed. The newly selected item is returned to the caller 
 		using a handler.
 	]]></description>

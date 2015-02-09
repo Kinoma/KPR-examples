@@ -8,7 +8,7 @@
 	category="com.marvell.kinoma.examples.starter">
 
 	<description><![CDATA[
-Sketchat is the contraction of sketch and chat. Sketchat allows to share a drawing surface between different Creates. The application demonstrates how to  discover other Sketchat and how they can easily exchange information. When something is drawn on one Sketchat, it appears on all others. The color senor allows to select the color of the pen. The accelerometer allows to erase what has been drawn by shaking Create. When the application is stopped, its drawing dissapears from other Sketchat.
+Sketchat, a contraction of "sketch" and "chat", is a "shared whiteboard" application; when something is drawn on one Sketchat, it appears on all others. The application demonstrates how to discover other Sketchats on the network and how they can easily exchange information.  The pen color can be chosen using a TCS34725 color sensor. An accelerometer is used so that shaking a Create will clear the canvas. When the application is stopped, its drawing dissapears from other Sketchats.
 	]]></description>
 
 </example>

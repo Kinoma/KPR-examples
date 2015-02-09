@@ -10,7 +10,7 @@
 	<description><![CDATA[
 		Displays an auto-scrolling horizontal view of photos. 
 		Photo images are fetched from a Flickr feed using a proxy 
-		handler which returns array of photo objects. A proxy 
+		handler which returns an array of photo objects. A proxy 
 		handler is often used to filter data returned from a web 
 		service into a simplified format for use by the host application.
 	]]></description>

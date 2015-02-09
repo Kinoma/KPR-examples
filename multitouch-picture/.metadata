@@ -18,7 +18,7 @@
 		Interactive gestures include tapping, press and hold, drag, toss,
 		and two finger pinching.
 		
-		The sample's comments discuss the framework used including the TouchStateMachine,
+		The sample's comments discuss the framework used, including the TouchStateMachine
 		and TouchBehavior.
 	]]></description>
 

@@ -8,7 +8,7 @@
 	category="com.marvell.kinoma.examples.starter">
 
 	<description><![CDATA[
-This sample shows how to integrate the Sparkfun Touch Shield for Adruino with Kinoma Create. The touch shield uses a Freescale MPR121 sensor controller to communicate multi-touch over I2C. The application displays the mulit-touch results in realtime on the Kinoma Create screen.
+This sample shows how to integrate the Sparkfun Touch Shield for Arduino with Kinoma Create. The Touch Shield uses a Freescale MPR121 sensor controller to communicate multi-touch over I2C. The application displays the multi-touch results in realtime on the Kinoma Create screen.
 	]]></description>
 
 </example>

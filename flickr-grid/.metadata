@@ -16,7 +16,7 @@
           This is a good example of how to display images, adapt the layout 
           to device orientation changes, use tool buttons or swipe to navigate 
           between photos, invoke a message to fetch data from a REST API and 
-          mobile framework screen open/close transitions.
+          MobileFramework screen open/close transitions.
 	]]></description>
 
 </example>
