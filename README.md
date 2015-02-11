@@ -45,7 +45,7 @@ This sample shows how to use the SparkFun UV Sensor Breakout with Kinoma Create.
 
 <x-app-info id="pulse.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
 
-The sample makes your heart beat visible on the screen of Kinoma Create. Using the Pulse Sensor from pulsesensor.com available as Sparkfun SEN-11574, the BLL monitors the analog signal to detect beats. The BLL is based on the sample Arduino code from pulsesensor.com, converted to JavaScript and modified for optimal use with KinomaJS.
+The sample makes your heartbeat visible on the screen of Kinoma Create. Using the Pulse Sensor from pulsesensor.com (available as Sparkfun SEN-11574), the BLL monitors the analog signal to detect beats. The BLL is based on the sample Arduino code from pulsesensor.com, converted to JavaScript and modified for optimal use with KinomaJS.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -55,7 +55,7 @@ The sample makes your heart beat visible on the screen of Kinoma Create. Using t
 
 <x-app-info id="analogstarter.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
 
-Stripped down app that prints a value from an analog input pin onto the Kinoma Create's screen. Demonstrates how to implement an analog pin BLL in KinomaJS.
+Stripped-down app that prints a value from an analog input pin onto the Kinoma Create's screen. Demonstrates how to implement an analog pin BLL in KinomaJS.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -115,7 +115,7 @@ Phone application which implements a Bing Image search. Image thumbnail search r
 					
 <x-app-info id="bllrepeat.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
 
-A sample that demonstrates how to repeatedly run a Kinoma Blinking Light Library (BLL). This is useful when, for instance, polling a sensor. The example calls a BLL that traces to the console 10 times and the stops the repetition.
+A sample that demonstrates how to repeatedly run a Kinoma Blinking Light Library (BLL).  This is useful when, for instance, polling a sensor.  The example calls a BLL that traces to the console 10 times and then stops the repetition.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -135,7 +135,7 @@ A sample that demonstrates how to run a Kinoma Blinking Light Library (BLL) once
 
 <x-app-info id="browser.example.kinoma.marvell.com" platform="mac,win,iphone,android"><span class="uiSample mobileSample"></span></x-app-info>
 
-This example demonstrates how to implement an embedded web view container. The code embeds the web view with a browser container. This example demonstrates how to display a web page in the browser, support browser forward/backwards navigation, implement callbacks when the web page is loading/loaded, display a busy indicator using the mobile framework and use anchor references to containers. Note that the browser container is not available on Windows or Kinoma Create.
+This example demonstrates how to implement an embedded web view container. The code embeds the web view with a browser container. This example demonstrates how to display a web page in the browser, support browser forward/backwards navigation, implement callbacks when the web page is loading/loaded, display a busy indicator using the MobileFramework and use anchor references to containers. Note that the browser container is not available on Windows or Kinoma Create.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -155,7 +155,7 @@ A simple camera app supporting live preview and capture. This example demonstrat
 					
 <x-app-info id="canvas.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
 
-This mobile framework example demonstrates how to use the HTML 2D Canvas API. Tap the settings icon to select the drawing color and line thickness. The main container provides a 2D canvas to draw on. Select the 'Play' option from the settings menu to replay your drawing. This example shows how to use the Kinoma ECMAScript API to build and draw on a HTML Canvas 2D Context.
+This mobile framework example demonstrates how to use the HTML 2D Canvas API. Tap the settings icon to select the drawing color and line thickness. The main container provides a 2D canvas to draw on. Select the ‘Play’ option from the settings menu to replay your drawing. This example shows how to use the Kinoma ECMAScript API to build and draw on a HTML Canvas 2D Context.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -175,7 +175,7 @@ This sample application demonstrates how to display a simple console for logging
 
 <x-app-info id="controls.example.kinoma.marvell.com"><span class="uiSample mobileSample"></span></x-app-info>
 
-This example demonstrates how to integrate mobile framework buttons and behaviors into your application. Button types include push, checkbox, radio and radio group.
+This example demonstrates how to integrate MobileFramework buttons and behaviors into your application. Button types include push, checkbox, radio and radio group.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -195,7 +195,7 @@ This Kinoma Create application is the remote DIAL client for the dial-remote exa
 
 <x-app-info id="dialremote.example.kinoma.marvell.com"><span class="createSample networkSample mobileSample"></span></x-app-info>
 
-This mobile framework application demonstrates how to use KPR DIAL to remotely launch, configure and quit the dial-client application installed on Kinoma Create. The dial-client application must be installed on Kinoma Create. KPR DIAL uses SSDP to discover DIAL servers and DIAL requests are issued to the remote DIAL server. The target DIAL application name is the KPR application id. DIAL uses a HTTP POST to launch applications. The body of the request contains the parameters passed to the app.
+This MobileFramework application demonstrates how to use KPR DIAL to remotely launch, configure and quit the dial-client application installed on Kinoma Create. The dial-client application must be installed on Kinoma Create. KPR DIAL uses SSDP to discover DIAL servers and DIAL requests are issued to the remote DIAL server. The target DIAL application name is the KPR application id. DIAL uses a HTTP POST to launch applications. The body of the request contains the parameters passed to the app.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -205,7 +205,7 @@ This mobile framework application demonstrates how to use KPR DIAL to remotely l
 
 <x-app-info id="dialog.example.kinoma.marvell.com"><span class="uiSample mobileSample"></span></x-app-info>
 
-This example demonstrates how to setup and display mobile framework dialogs. Various common controls are integrated into the dialog samples and selected values are output when the dialogs are dismissed. Dialogs are built from a list of items returned by the onDescribe() dialog behavior handler function.
+This example demonstrates how to setup and display MobileFramework dialogs. Various common controls are integrated into the dialog samples and selected values are output when the dialogs are dismissed. Dialogs are built from a list of items returned by the onDescribe() dialog behavior handler function.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -225,7 +225,7 @@ Uses a digital pin to read input from a physical button. When pressed, it trigge
 
 <x-app-info id="digitallightwebsocketsclient.example.kinoma.marvell.com"><span class="createSample mobileSample networkSample uiSample samplePage"></span></x-app-info>
 
-This client app runs with the "Digital-Light-Websockets-Server" sample. It acts as a companion app that can switch on and off an LED hooked up to the server-side Kinoma Create. This example shows how to discover servers using the built-in SSDP support, create and invoke messages to the server using websockets, and how to keep the UI of multiple client apps in sync with the server.
+This client app runs with the "digital-light-websockets-server" example. It acts as a companion app that can switch on and off an LED hooked up to the server-side Kinoma Create. This example shows how to discover servers using the built-in SSDP support, create and invoke messages to the server using WebSockets, and how to keep the UI of multiple client apps in sync with the server.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -235,7 +235,7 @@ This client app runs with the "Digital-Light-Websockets-Server" sample. It acts 
 
 <x-app-info id="digitallightwebsocketsserver.example.kinoma.marvell.com"><span class="createSample pinsSample networkSample"></span></x-app-info>
 
-This server app runs with the "Digital-Light-Websockets-Client" sample. This example shows how to connect to one or more clients using the built-in SSDP support and implement a BLL to turn on and off an LED in response to client commands sent via websockets. The server keeps all the clients synced with the state of the LED.
+This server app runs with the "digital-light-websockets-client" example. This example shows how to connect to one or more clients using the built-in SSDP support and implement a BLL to turn on and off an LED in response to client commands sent via WebSockets. The server keeps all the clients synced with the state of the LED.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -255,7 +255,7 @@ Uses a digital pin to turn on and off an LED when a button is pressed on screen.
 
 <x-app-info id="discoveryclient.example.kinoma.marvell.com"><span class="networkSample mobileSample uiSample"></span></x-app-info>
 
-This client app is intended to be run simultaneously with the "Device Discovery Server" example and demonstrates how to build a companion app that discovers and interacts with a device. The client discovers all "com.marvell.kinoma.example.discoveryserver" servers on the same network. For each server discovered, the client displays a color swatch in a vertically scrolling container. The color is requested from the server by invoking the server's /color handler. The list is updated on-the-fly as servers are discovered and lost. KPR provides device discovery via built-in SSDP support. This example shows how to discover servers using the built-in SSDP support, create and invoke a cross-application message, and how to dynamically build a scrolling container of items.
+This client app is intended to be run simultaneously with the "device-discovery-server" example and demonstrates how to build a companion app that discovers and interacts with a device. The client discovers all "com.marvell.kinoma.example.discoveryserver" servers on the same network. For each server discovered, the client displays a color swatch in a vertically scrolling container. The color is requested from the server by invoking the server's /color handler. The list is updated on-the-fly as servers are discovered and lost. KPR provides device discovery via built-in SSDP support. This example shows how to discover servers using the built-in SSDP support, create and invoke a cross-application message, and how to dynamically build a scrolling container of items.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -265,7 +265,7 @@ This client app is intended to be run simultaneously with the "Device Discovery 
 
 <x-app-info id="discoveryserver.example.kinoma.marvell.com"><span class="networkSample"></span></x-app-info>
 
-This server app is intended to be run simultaneously with the "Device Discovery Client" example and demonstrates how to implement a discoverable device. The app/device is made discoverable by setting the "shared" application property to true. The "color" handler is called remotely by the client and returns a JSON object containing a CSS color string.
+This server app is intended to be run simultaneously with the "device-discovery-client" example and demonstrates how to implement a discoverable device. The app/device is made discoverable by setting the "shared" application property to true. The "color" handler is called remotely by the client and returns a JSON object containing a CSS color string.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -275,7 +275,7 @@ This server app is intended to be run simultaneously with the "Device Discovery 
 
 <x-app-info id="effects.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
 
-This mobile framework example demonstrates how to build and apply a variety of effects to KPR layers and pictures. Tap the settings icon to display and select from a scrolling menu of effect types. The effect is applied to the ‘Effect’ layer. Tap the ‘Play’ button at the bottom of the menu to apply the selected effect to a bouncing balls animation. This example shows how to build and apply KPR effects using the Kinoma ECMAScript API.
+This MobileFramework example demonstrates how to build and apply a variety of effects to KPR layers and pictures. Tap the settings icon to display and select from a scrolling menu of effect types. The effect is applied to the ‘Effect’ layer. Tap the ‘Play’ button at the bottom of the menu to apply the selected effect to a bouncing balls animation. This example shows how to build and apply KPR effects using the Kinoma ECMAScript API.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -285,7 +285,7 @@ This mobile framework example demonstrates how to build and apply a variety of e
 
 <x-app-info id="fileexplorer.example.kinoma.marvell.com"><span class="uiSample filesSample mediaSample"></span></x-app-info>
 
-This mobile framework example demonstrates how to use the global KPR Files object to iterate local files and directories. The application displays the results in a scrolling list view and provides for deep browsing into nested directories. In addition, previews are supported for image, audio and video files. This example is useful for understanding how to use the Files iterator to iterate over a directory, distinguish between file and directory results, command and screen handler behaviors and building scrolling list based views.
+This MobileFramework example demonstrates how to use the global KPR Files object to iterate local files and directories. The application displays the results in a scrolling list view and provides for deep browsing into nested directories. In addition, previews are supported for image, audio and video files. This example is useful for understanding how to use the Files iterator to iterate over a directory, distinguish between file and directory results, command and screen handler behaviors and building scrolling list-based views.
 
 <div style="clear:both; margin-bottom: 16px;"></div>
 ***
@@ -305,7 +305,7 @@ This application demonstrates how to use the global KPR Files object. KPR Files 
 
 <x-app-info id="flickrgrid.example.kinoma.marvell.com"><span class="uiSample mediaSample mobileSample"></span></x-app-info>
 
-This sample code demonstrates how to implement an interactive scrolling photo thumbnail grid. Tapping the photo thumbnail opens the full size image using a zoom transition. The image thumbnails are retrieved from a Flickr public feed using a tag search. The resulting data set is delivered in JSON format. This is a good example of how to display images, adapt the layout to device orientation changes, use tool buttons or swipe to navigate between photos, invoke a message to fetch data from a REST API and mobile framework screen open/close transitions.
+This sample code demonstrates how to implement an interactive scrolling photo thumbnail grid. Tapping the photo thumbnail opens the full size image using a zoom transition. The image thumbnails are retrieved from a Flickr public feed using a tag search. The resulting data set is delivered in JSON format. This is a good example of how to display images, adapt the layout to device orientation changes, use tool buttons or swipe to navigate between photos, invoke a message to fetch data from a REST API and MobileFramework screen open/close transitions.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -325,7 +325,7 @@ A minimal application that creates a full-screen container and displays the text
 
 <x-app-info id="i2ccolorsensor.example.kinoma.marvell.com"><span class="createSample pinsSample samplePage"></span></x-app-info>
 
-This application changes the MainContainer's skin to the color sensed by an RGB color sensor. R, G, and B readings are sent from the BLL to the main thread, in which they are converted to hex.
+This application changes the MainContainer's skin to the color sensed by a TCS34725 RGB color sensor. R, G, and B readings are sent from the BLL to the main thread, in which they are converted to hex notation.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -385,7 +385,7 @@ This sample uses the Tessel Climate Module to retrieve the humidity and temperat
 
 <x-app-info id="touchshield.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
 
-This sample shows how to integrate the Sparkfun Touch Shield for Adruino with Kinoma Create. The touch shield uses a Freescale MPR121 sensor controller to communicate multi-touch over I2C. The application displays the mulit-touch results in realtime on the Kinoma Create screen.
+This sample shows how to integrate the Sparkfun Touch Shield for Arduino with Kinoma Create. The Touch Shield uses a Freescale MPR121 sensor controller to communicate multi-touch over I2C. The application displays the multi-touch results in realtime on the Kinoma Create screen.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -435,7 +435,7 @@ Uses Canvas 2D to implement a virtual hypotrochoid device. Custom sliders contro
 					
 <x-app-info id="layers.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
 
-Uses Canvas 2D to implement a virtual hypotrochoid device. Custom sliders control the radius and steps. This application demonstrates how to use canvas containers to render 2D drawing contexts, delegate and notify behaviors using container.distribute, and implement a basic touch slider control.
+This MobileFramework example demonstrates how to manipulate KPR layers using KinomaJS. Tap the settings icon to display and select from a scrolling menu of layer settings. Use the slider controls to adjust the layer’s origin, scale, skew, translation, opacity and other properties. Tap the ‘Play’ button at the bottom of the menu to display a bouncing ball animation within the layer.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -445,7 +445,7 @@ Uses Canvas 2D to implement a virtual hypotrochoid device. Custom sliders contro
 					
 <x-app-info id="list.example.kinoma.marvell.com"><span class="uiSample mobileSample"></span></x-app-info>
 
-This mobile framework application demonstrates how to build a scrolling list view in KPR. An HTTP request is issued to a web service that returns a JSON array of items. The items are loaded and displayed in the list. Tapping a list item opens a detailed item view. The application also demonstrates how to use a KPR layout to adapt the screen layout on device orientation changes.
+This MobileFramework application demonstrates how to build a scrolling list view in KPR. An HTTP request is issued to a web service that returns a JSON array of items. The items are loaded and displayed in the list. Tapping a list item opens a detailed item view. The application also demonstrates how to use a KPR layout to adapt the screen layout on device orientation changes.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -465,7 +465,7 @@ This example demonstrates how to use the Kinoma Create built-in logging support 
 					
 <x-app-info id="medialibrary.example.kinoma.marvell.com" platform="mac,iphone,android"><span class="uiSample mediaSample mobileSample"></span></x-app-info>
 
-This mobile framework application demonstrates how to access the core media library on iOS, Android and Mac OS platforms to display photos and play media files. The application uses a tabbed view to display photo/video thumbnails and songs. Tapping a media item opens a dedicated media viewer screen. KPR messages are used to request the media items. Note that media library support is not currently available for Kinoma Create or Windows.
+This MobileFramework application demonstrates how to access the core media library on iOS, Android and Mac OS platforms to display photos and play media files. The application uses a tabbed view to display photo/video thumbnails and songs. Tapping a media item opens a dedicated media viewer screen. KPR messages are used to request the media items. Note that media library support is not currently available for Kinoma Create or Windows.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -475,7 +475,7 @@ This mobile framework application demonstrates how to access the core media libr
 					
 <x-app-info id="mediaplayer.example.kinoma.marvell.com"><span class="uiSample mediaSample mobileSample"></span></x-app-info>
 
-This mobile framework application shows how to build a media player using the KPR Media object. Media transport controls are provided to start, stop and seek the media. The controls are displayed over the video and automatically hide/show when needed. Tapping the screen displays the controls. The current play time and duration are displayed and updated. This example demonstrates how to integrate KPR media playback, content timers, implement skin-based buttons and transitions.
+This MobileFramework application shows how to build a media player using the KPR Media object. Media transport controls are provided to start, stop and seek the media. The controls are displayed over the video and automatically hide/show when needed. Tapping the screen displays the controls. The current play time and duration are displayed and updated. This example demonstrates how to integrate KPR media playback, content timers, and implement skin-based buttons and transitions.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -485,7 +485,7 @@ This mobile framework application shows how to build a media player using the KP
 					
 <x-app-info id="menubutton.example.kinoma.marvell.com"><span class="uiSample mobileSample"></span></x-app-info>
 
-This example demonstrates how to use a mobile framework menu button. The menu button displays the currently selected item in an active label. When tapped a modal menu of choices is displayed. The newly selected item is returned to the caller using a handler.
+This example demonstrates how to use a MobileFramework menu button. The menu button displays the currently-selected item in an active label. When tapped, a modal menu of choices is displayed. The newly selected item is returned to the caller using a handler.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -495,7 +495,7 @@ This example demonstrates how to use a mobile framework menu button. The menu bu
 					
 <x-app-info id="multitouchpicture.example.kinoma.marvell.com" platform="mac,iphone,android,linux"><span class="uiSample mobileSample"></span></x-app-info>
 
-This example demonstrates how to use features of the MultiTouch Library to create an interactive image viewer suitable for selecting a cropping area from an image. The image may be panned, zoomed, rotated, tossed, with some animated constraints applied. Interactive gestures include tapping, press and hold, drag, toss, and two finger pinching. The sample's comments discuss the framework used including the TouchStateMachine, and TouchBehavior.
+This example demonstrates how to use features of the MultiTouch Library to create an interactive image viewer suitable for selecting a cropping area from an image. The image may be panned, zoomed, rotated, tossed, with some animated constraints applied. Interactive gestures include tapping, press and hold, drag, toss, and two finger pinching. The sample's comments discuss the framework used, including the TouchStateMachine and TouchBehavior.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -505,7 +505,7 @@ This example demonstrates how to use features of the MultiTouch Library to creat
 					
 <x-app-info id="oauth.example.kinoma.marvell.com" platform="mac,iphone,android"><span class="uiSample mobileSample"></span></x-app-info>
 
-This example demonstrates how to implement OAuth 1.0a (Twitter) and OAuth 2.0 (Google) browser-based login and authentication. The browser is embedded in a web view container. The sample code is useful for understanding how to use a browser container, mobile framework buttons, handlers to invoke HTTP requests and parse responses and how to implement pure ECMAScript modules with exported methods. Note that the browser container is not available on Windows or Kinoma Create.
+This example demonstrates how to implement OAuth 1.0a (Twitter) and OAuth 2.0 (Google) browser-based login and authentication. The browser is embedded in a web view container. The sample code is useful for understanding how to use a browser container, MobileFramework buttons, handlers to invoke HTTP requests and parse responses and how to implement pure ECMAScript modules with exported methods. Note that the browser container is not available on Windows or Kinoma Create.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -545,7 +545,7 @@ A minimal application that reads and displays the host platform string read from
 					
 <x-app-info id="port.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
 
-This application demonstrates how to use a KPR port object to implement a simple toggle switch. Tap the switch to toggle between the on and off states. The toggle state is displayed as text by another KPR port object. Various KPR port APIs are covered by this example, including drawImage, drawLabel, fillColor and invalidate.
+This application demonstrates how to use a KPR Port object to implement a simple toggle switch. Tap the switch to toggle between the on and off states. The toggle state is displayed as text by another KPR Port object. Various KPR port APIs are covered by this example, including drawImage, drawLabel, fillColor and invalidate.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -555,7 +555,7 @@ This application demonstrates how to use a KPR port object to implement a simple
 
 <x-app-info id="preferences.example.kinoma.marvell.com"><span class="uiSample filesSample mobileSample"></span></x-app-info>
 
-This sample demonstrates how to implement preferences that persist across application launches. The selected color swatch is stored across runs. The model.readPreferences function reads stored preferences. The optional third parameter can be used to initialize the preference value the first time. The model.writePreferences function saves the preferences. This example is also useful for learning how to build a container hierarchy using the KPR ECMAScript programming interface.
+This sample demonstrates how to implement preferences settings that persist across application launches. The selected color swatch is stored across runs. The model.readPreferences function reads stored preferences. The optional third parameter can be used to initialize the preference value the first time. The model.writePreferences function saves the preferences. This example is also useful for learning how to build a container hierarchy using KinomaJS.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -575,7 +575,7 @@ This example demonstrates how to use the projectImage function of the port objec
 					
 <x-app-info id="proxyhandler.example.kinoma.marvell.com"><span class="uiSample networkSample mediaSample"></span></x-app-info>
 
-Photo images are fetched from a Flickr feed using a proxy handler which returns array of photo objects. A proxy handler is often used to filter data returned from a web service into a simplified format for use by the host application.
+Displays an auto-scrolling horizontal view of photos. Photo images are fetched from a Flickr feed using a proxy handler which returns an array of photo objects. A proxy handler is often used to filter data returned from a web service into a simplified format for use by the host application.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -615,7 +615,7 @@ This sample uses red/green/blue sliders to control the color of an RGB LED. The 
 
 <x-app-info id="serialcamera.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
 
-An example that captures from a serial digital camera (VC0706) and displays photographs on the screen when a button (connected to pin 53) is pressed. At startup, the main thread waits for three affirmative Messages back from the camera BLL (one after initialization, one after setting the compresion and one after setting the image size). If all goes well, the MainContainer's skin turns green and the user can take a photo by pressing the button.
+An example that captures from a serial digital camera (VC0706) and displays photographs on the screen when a button (connected to pin 53) is pressed. At startup, the main thread waits for three affirmative Messages back from the camera BLL (one after initialization, one after setting the compression and one after setting the image size). If all goes well, the MainContainer's skin turns green and the user can take a photo by pressing the button.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -625,7 +625,7 @@ An example that captures from a serial digital camera (VC0706) and displays phot
 
 <x-app-info id="sketchat.create.kinoma.marvell.com"><span class="createSample pinsSample networkSample uiSample"></span></x-app-info>
 
-Sketchat is the contraction of sketch and chat. Sketchat allows to share a drawing surface between different Creates. The application demonstrates how to  discover other Sketchat and how they can easily exchange information. When something is drawn on one Sketchat, it appears on all others. The color senor allows to select the color of the pen. The accelerometer allows to erase what has been drawn by shaking Create. When the application is stopped, its drawing dissapears from other Sketchat.
+Sketchat, a contraction of "sketch" and "chat", is a "shared whiteboard" application; when something is drawn on one Sketchat, it appears on all others. The application demonstrates how to discover other Sketchats on the network and how they can easily exchange information.  The pen color can be chosen using a TCS34725 color sensor. An accelerometer is used so that shaking a Create will clear the canvas. When the application is stopped, its drawing dissapears from other Sketchats.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -645,7 +645,7 @@ Displays a slideshow of images animating picture scaling, panning and opacity se
 					
 <x-app-info id="somafmplayer.example.kinoma.marvell.com"><span class="createSample mediaSample uiSample networkSample"></span></x-app-info>
 
-This mobile framework Kinoma Create example streams live radio from the SomaFM service. Channels are selected using a touch controlled scrolling tuner. A music artist image collage is displayed and updated on track changes. This example demonstrates how to use KPR media to play HTTP streams, build custom UI elements with canvas, use a proxy handler to fetch data from a web service, and use KPR effects and layers to implement an animated image collage. The SomaFM player also supports KPR DIAL and can be controlled remotely by the SomaFM remote phone application.
+This MobileFramework Kinoma Create example streams live radio from the SomaFM service. Channels are selected using a touch controlled scrolling tuner. A music artist image collage is displayed and updated on track changes. This example demonstrates how to use KPR media to play HTTP streams, build custom UI elements with HTML Canvas, use a proxy handler to fetch data from a web service, and use KPR effects and layers to implement an animated image collage. The SomaFM player also supports KPR DIAL and can be controlled remotely by the somafm-remote phone application.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -655,7 +655,7 @@ This mobile framework Kinoma Create example streams live radio from the SomaFM s
 					
 <x-app-info id="somafmremote.example.kinoma.marvell.com"><span class="mobileSample mediaSample uiSample networkSample"></span></x-app-info>
 
-This mobile framework phone application streams live radio from the SomaFM service and can be used to remotely control the SomaFM player application. Using KPR DIAL, this example discovers the SomaFM player application running on Kinoma Create and can change channels and the volume level remotely. Channels are selected using a touch controlled scrolling tuner. A music artist image collage is displayed and updated on track changes. This example demonstrates how to use KPR media to play HTTP streams, build custom UI elements with canvas, use a proxy handler to fetch data from a web service, and use KPR effects and layers to implement an animated image collage.
+This MobileFramework phone application streams live radio from the SomaFM service and can be used to remotely control the somafm-player application. Using KPR DIAL, this example discovers the SomaFM player application running on Kinoma Create and can change channels and the volume level remotely. Channels are selected using a touch-controlled scrolling tuner. A music artist image collage is displayed and updated on track changes. This example demonstrates how to use KPR media to play HTTP streams, build custom UI elements with HTML Canvas, use a proxy handler to fetch data from a web service, and use KPR effects and layers to implement an animated image collage.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -685,7 +685,7 @@ Displays a spinning busy indicator by rotating a custom graphic using a periodic
 					
 <x-app-info id="ssdp.example.kinoma.marvell.com"><span class="networkSample uiSample"></span></x-app-info>
 
-A simple application that shows SSDP usage. The application starts a HTTP server on port 1234, registers it with the name service named "KPR Server". It also looks for available HTTP servers on the local network.
+A simple application that shows SSDP usage. The application starts an HTTP server on port 1234, registers a service named "KPR Server". It also looks for available HTTP servers on the local network.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -725,7 +725,7 @@ This example displays a vertical scrolling column of text formatted with a wide 
 					
 <x-app-info id="tabs.example.kinoma.marvell.com"><span class="uiSample mobileSample"></span></x-app-info>
 
-This mobile framework example demonstrates how to build a tabbed UI screen. Each tab opens a different style pane. The tabs are placed in the screen footer area and built using the mobile framework screen's TabFooter object and skinned using the default sample theme tab skins. The tab-to-tab transition is managed by the mobile framework TabListSwapTransition. You can customize the tab look and behaviors by replacing and/or overriding these objects. For example, you can use the mobile framework screen's TabLine object to implement a tab bar that can be placed anywhere on the screen and without icons.
+This MobileFramework example demonstrates how to build a tabbed UI screen. Each tab opens a different style pane. The tabs are placed in the screen footer area and built using the MobileFramework screen's TabFooter object and skinned using the default sample theme tab skins. The tab-to-tab transition is managed by the MobileFramework TabListSwapTransition. You can customize the tab look and behaviors by replacing and/or overriding these objects. For example, you can use the MobileFramework screen's TabLine object to implement a tab bar that can be placed anywhere on the screen and without icons.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -735,7 +735,7 @@ This mobile framework example demonstrates how to build a tabbed UI screen. Each
 
 <x-app-info id="text.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
 
-This mobile framework example demonstrates how to use the ECMAScript API to get and set various KPR Text and Style properties, including font, point size, style, alignment, indentation and margins. The example also shows how to implement tappable text links and use text spans to display multi-styled text blocks. Tap the settings button to choose from a scrolling menu of text and style options.
+This MobileFramework example demonstrates how to use KinomaJS to get and set various KPR Text and Style properties, including font, point size, style, alignment, indentation and margins. The example also shows how to implement tappable text links and use text spans to display multi-styled text blocks. Tap the settings button to choose from a scrolling menu of text and style options.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -785,7 +785,7 @@ This sample application demonstrates how to build a simple web server with KPR. 
 					
 <x-app-info id="websocketclient.example.kinoma.marvell.com"><span class="networkSample mobileSample uiSample"></span></x-app-info>
 
-This mobile framework application demonstrates how to implement a web socket client in KPR. Coupled with the websocket-server example, this application implements a web socket based chat client. The client discovers and connects to the server using SSDP and exchanges text messages with the server. This application is useful for understanding how to integrate web sockets, use SSDP to discover server devices, build UIs with editable text fields and transitions.
+This MobileFramework application demonstrates how to implement a WebSocket client in KPR. Coupled with the websocket-server example, this application implements a WebSocket-based chat client. The client discovers and connects to the server using SSDP and exchanges text messages with the server. This application is useful for understanding how to integrate WebSockets, use SSDP to discover server devices, build UIs with editable text fields and transitions.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -795,7 +795,7 @@ This mobile framework application demonstrates how to implement a web socket cli
 					
 <x-app-info id="websocketserver.example.kinoma.marvell.com"><span class="networkSample uiSample"></span></x-app-info>
 
-This application demonstrates how to implement a web socket server in KPR. Coupled with the websocket-client example, this application implements a web socket based chat server. The client discovers and connects to the server using SSDP. Once the connection is established, the client exchanges text messages with the server. This application is useful for understanding how to build a web socket server and use KPR Text and Scroller objects to display a scrolling list of messages.
+This application demonstrates how to implement a WebSockets server in KPR. Coupled with the websocket-client example, this application implements a WebSocket based chat server. The client discovers and connects to the server using SSDP. Once the connection is established, the client exchanges text messages with the server. This application is useful for understanding how to build a WebSockets server and use KPR Text and Scroller objects to display a scrolling list of messages.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -805,7 +805,7 @@ This application demonstrates how to implement a web socket server in KPR. Coupl
 
 <x-app-info id="xmldom.example.kinoma.marvell.com"><span class="networkSample uiSample"></span></x-app-info>
 
-This example demonstrates how to issue an HTTP request to the Open Weather Map service and use the KPR DOM parsing APIs to parse the XML response. The temperature for the requested city is displayed. This example shows how to invoke a HTTP request to a web service, parse the XML response, display a busy indicator while waiting for the result and how to implement a tappable link which opens in the device browser. Note that browser support may not be available on all platforms.
+This example demonstrates how to issue an HTTP request to the OpenWeatherMap service and use the KPR DOM parsing APIs to parse the XML response. The temperature for the requested city is displayed. This example shows how to invoke a HTTP request to a web service, parse the XML response, display a busy indicator while waiting for the result and how to implement a tappable link which opens in the device browser. Note that browser support may not be available on all platforms.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
