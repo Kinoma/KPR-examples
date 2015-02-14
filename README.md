@@ -620,6 +620,16 @@ An example that captures from a serial digital camera (VC0706) and displays phot
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/serial-7segment-display">serial-7segment-display</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/serial-7segment-display"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/serial-7segment-display-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="s7s.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
+
+BLL and sample application for the Sparkfun COM-11442 7-Segment serial display. Includes a BLL simulator for use in Kinoma Studio and device BLL for use on Kinoma Create. Demonstrates how to display text strings (ticker tape style) and a digital clock with blinking colon. The device can display all numbers, some letters and special characters. The sample also shows how to integrate the Kinoma Create full screen standard keyboard.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/sketchat">sketchat</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/sketchat"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/sketchat-example.jpg" height="100" alt=""/></a>
 
