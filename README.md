@@ -70,6 +70,16 @@ This sample shows how to implement a BLL to read from an analog temperature sens
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-trimpot">analog-trimpot</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-trimpot"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/analog-trimpot-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="trimpot.example.kinoma.marvell.com"><span class="createSample pinsSample mediaSample uiSample"></span></x-app-info>
+
+This sample demonstrates how to use an analog trimpot to control the media player volume level. Both device and simulator BLLs are provided. The sample was developed using the Suntan TSR-3386U 10K trimpot available from SparkFun as part number COM-09806. The displayed volume control is implemented using KPR containers and skins.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/audio-detect">audio-detect</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/audio-detect"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/audio-detect-example.jpg" height="100" alt=""/></a>
 
