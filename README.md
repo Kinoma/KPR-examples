@@ -20,6 +20,16 @@ This sample uses a BLL to poll values from an analog sensor. It graphs these val
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-HIH4030">analog-HIH4030</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-HIH4030"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/analog-HIH4030-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="HIH4030.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
+
+BLL and sample application for the Honeywell HIH-4030 humidity sensor. Includes a BLL simulator for use in Kinoma Studio and device BLL for use on Kinoma Create. The sample also uses the Texas Instruments TMP102 temperature sensor to provide a temperature compensated humidity reading. The code demonstrates how to chain sensor readings using KPR Messages invoked from the main screen.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-kinoma-xively">analog-kinoma-xively</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-kinoma-xively"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/analog-kinoma-xively-example.jpg" height="100" alt=""/></a>
 

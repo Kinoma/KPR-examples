@@ -1,0 +1,14 @@
+<example 
+	id="HIH4030.example.kinoma.marvell.com"
+	title="Analog HIH4030"
+	project="Analog HIH4030"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+BLL and sample application for the Honeywell HIH-4030 humidity sensor. Includes a BLL simulator for use in Kinoma Studio and device BLL for use on Kinoma Create. The sample also uses the Texas Instruments TMP102 temperature sensor to provide a temperature compensated humidity reading. The code demonstrates how to chain sensor readings using KPR Messages invoked from the main screen.
+	]]></description>
+
+</example>
