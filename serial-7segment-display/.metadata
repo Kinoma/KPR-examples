@@ -1,0 +1,14 @@
+<example 
+	id="7segment.example.kinoma.marvell.com"
+	title="Serial 7-Segment Display"
+	project="Serial 7-Segment Display"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+BLL and sample application for the Sparkfun COM-11442 7-Segment serial display. Includes a BLL simulator for use in Kinoma Studio and device BLL for use on Kinoma Create. Demonstrates how to display text strings (ticker tape style) and a digital clock with blinking colon. The device can display all numbers, some letters and special characters. The sample also shows how to integrate the Kinoma Create full screen standard keyboard.
+	]]></description>
+
+</example>
