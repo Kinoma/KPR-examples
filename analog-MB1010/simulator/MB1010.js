@@ -20,7 +20,7 @@ var CONTROL = require ("mobile/control");
 var PinsSimulators = require ("PinsSimulators");
 
 exports.pins = {
-	range: {type: "A2D", pin: 62}
+	range: {type: "A2D"}
 };
 
 exports.configure = function() {

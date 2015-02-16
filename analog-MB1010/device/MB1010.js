@@ -24,7 +24,7 @@ var voltsPerInch = 0.009766;
 var supplyVoltage = 5.0;
 
 exports.pins = {
-	range: {type: "A2D", pin: 62}
+	range: {type: "A2D"}
 };
 
 exports.configure = function() {
