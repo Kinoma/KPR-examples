@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<application xmlns="http://www.kinoma.com/kpr/application/1" id="MB1010.example.kinoma.marvell.com" program="src/main" title="Analog MB1010 Sonar Range Finder Example">
+
+</application>

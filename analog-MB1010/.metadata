@@ -1,0 +1,14 @@
+<example 
+	id="MB1010.example.kinoma.marvell.com"
+	title="Analog MB1010"
+	project="Analog MB1010"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+This sample shows how to use the MaxBotix LV-MaxSonar-EZ MB1010 Sonar range finder with Kinoma Create. The BLL reads the MB1010 analog voltage pin and converts the voltage measured to range in inches.
+	]]></description>
+
+</example>

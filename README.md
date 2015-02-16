@@ -40,6 +40,16 @@ This sample sends HTTP requests to the Xively API to upload sensor data to a str
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-MB1010">analog-MB1010</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-MB1010"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/analog-MB1010-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="MB1010.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
+
+This sample shows how to use the MaxBotix LV-MaxSonar-EZ MB1010 Sonar range finder with Kinoma Create. The BLL reads the MB1010 analog voltage pin and converts the voltage measured to range in inches.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-ML8511">analog-ML8511</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-ML8511"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/analog-ML8511-example.jpg" height="100" alt=""/></a>
 
