@@ -193,7 +193,7 @@ This mobile framework example demonstrates how to use the HTML 2D Canvas API. Ta
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/clare">clare</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/clare"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/clare-example.jpg" height="100" alt=""/></a>
 					
-<x-app-info id="canvas.example.kinoma.marvell.com"><span class="uiSample createSample"></span></x-app-info>
+<x-app-info id="clare.example.kinoma.marvell.com"><span class="uiSample createSample"></span></x-app-info>
 
 Clare is an interactive animation using Canvas, with three modes: scan, pleasant surprise, and track, all accompanied by blinking and saccades of the eyes. The first two modes are randomly triggered, but the last responds to touch. The geometry is primarily composed of quadratic Bézier curves, and the eyes take advantage of the asymmetry available in the radial gradient. Every frame is recomputed using a periodic KPR content timer that triggers an elastic state machine.
 
