@@ -75,7 +75,7 @@ var model = application.behavior = Object.create(Object.prototype, {
             MB1010: {
                 require: "MB1010",
                 pins: {
-                    range: {pin: 62}
+                    range: { pin: 62, supplyVoltage: 5.0, voltsPerInch: 0.009766 }
                 }
             }}), Message.JSON);
 

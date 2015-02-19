@@ -23,7 +23,7 @@ exports.pins = {
 	range: {type: "A2D"}
 };
 
-exports.configure = function() {
+exports.configure = function(configuration) {
     this.pinsSimulator = shell.delegate("addSimulatorPart", {
         header : { 
             label : "MB1010 Sonar Range Finder",

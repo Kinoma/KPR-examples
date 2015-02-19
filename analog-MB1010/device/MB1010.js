@@ -20,20 +20,19 @@
 
 // Note: This BLL assumes a +5VDC supply voltage
 
-var voltsPerInch = 0.009766;
-var supplyVoltage = 5.0;
-
 exports.pins = {
 	range: {type: "A2D"}
 };
 
-exports.configure = function() {
+exports.configure = function(configuration) {
+    this.voltsPerInch = configuration.pins.range.voltsPerInch;
+    this.supplyVoltage = configuration.pins.range.supplyVoltage;
 	this.range.init();
 }
 
 exports.read = function() {
     var measured = this.range.read();
-    var range = (measured * supplyVoltage) / voltsPerInch;
+    var range = (measured * this.supplyVoltage) / this.voltsPerInch;
     return range;
 }
 
