@@ -18,15 +18,16 @@
 // http://www.maxbotix.com/Ultrasonic_Sensors/MB1010.htm
 // http://www.maxbotix.com/articles/032.htm
 
-// Note: This BLL assumes a +5VDC supply voltage
+// Note: This BLL assumes a +5VDC supply voltage. The app can override the supply voltage and corresponding volts per inch
+// by providing values in the configuration message
 
 exports.pins = {
-	range: {type: "A2D"}
+	range: {type: "A2D", supplyVoltage: 5.0, voltsPerInch: 0.009766}
 };
 
 exports.configure = function(configuration) {
-    this.voltsPerInch = configuration.pins.range.voltsPerInch;
-    this.supplyVoltage = configuration.pins.range.supplyVoltage;
+	this.voltsPerInch = configuration.pins.range.voltsPerInch;
+	this.supplyVoltage = configuration.pins.range.supplyVoltage;
 	this.range.init();
 }
 
