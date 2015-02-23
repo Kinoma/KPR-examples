@@ -480,6 +480,16 @@ This MobileFramework example demonstrates how to manipulate KPR layers using Kin
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/level-meter">level-meter</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/level-meter"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/level-meter-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="levelmeter.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
+
+This sample shows how to use the LevelMeterWithProbe object found in the sampleGraph module of the built-in Creations library. You can use the object to graph data over time. Configurable options include the number of samples and colors of the graph bars. This is the same object used by the Pin Explorer application. If you press and hold on the graph it freezes the current samples. When the samples are frozen you can slide your finger over the samples to view their values.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/list">list</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/list"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/list-example.jpg" height="100" alt=""/></a>
 					
