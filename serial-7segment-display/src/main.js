@@ -107,7 +107,7 @@ var model = application.behavior = Object.create(Object.prototype, {
             S7S: {
                 require: "s7s",
                 pins: {
-                    display: {tx: 31, rx:33}
+                    display: {tx: 31}
                 }
             }}), Message.JSON);
 
