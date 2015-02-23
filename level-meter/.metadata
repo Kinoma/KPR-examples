@@ -1,0 +1,14 @@
+<example 
+	id="levelmeter.example.kinoma.marvell.com"
+	title="Level Meter with Probe"
+	project="Level Meter"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+This sample shows how to use the LevelMeterWithProbe object found in the sampleGraph module of the built-in Creations library. You can use the object to graph data over time. Configurable options include the number of samples and colors of the graph bars. This is the same object used by the Pin Explorer application. If you press and hold on the graph it freezes the current samples. When the samples are frozen you can slide your finger over the samples to view their values.
+	]]></description>
+
+</example>
