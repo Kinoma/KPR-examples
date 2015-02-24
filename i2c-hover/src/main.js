@@ -1,6 +1,6 @@
 //@program
 /*
-  Copyright 2011-2014 Marvell Semiconductor, Inc.
+  Copyright 2011-2015 Marvell Semiconductor, Inc.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -14,6 +14,9 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
+
+// NOTE: This example application requires Kinoma Software version 6.1.337 or later.
+// Use the Settings app on Kinoma Create to update.
 
 var touchSkin = new Skin({ fill: ["#00FFFFFF", "white" ] } );
 var arrowsTexture = new Texture("./arrows.png");
