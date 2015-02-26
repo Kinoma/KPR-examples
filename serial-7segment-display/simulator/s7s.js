@@ -23,7 +23,7 @@ var PinsSimulators = require ("PinsSimulators");
 var blackFrameSkin = new Skin("white", {left: 1, right: 1, top:1, bottom:1}, "black");
 
 // styles
-var displayStyle = new Style({ font:"bold 75px Fira Mono", color: "#FFFF0000", horizontal:"left" });
+var displayStyle = new Style({ font:"bold 75px Fira Mono", color: "#FFFF0000", horizontal:"center" });
 
 // layouts
 var S7SBehavior = function(column, data) {
@@ -36,14 +36,14 @@ S7SBehavior.prototype = Object.create(Behavior.prototype, {
 });
 
 var S7SLine = Container.template(function($) { return {
-	left:0, right:0, height:120,
+	width: 290, height:120,
 	behavior: Object.create(Behavior.prototype, {
 		onCreate: { value: function(column, data) {
 		}}
 	}),
 	contents: [
 		Container($, {
-			left: 10, right: 10, top: 20, bottom: 20,
+			top: 20, bottom: 20,
 			style: displayStyle,
 			anchor: "DISPLAY",
 			skin: blackFrameSkin,
