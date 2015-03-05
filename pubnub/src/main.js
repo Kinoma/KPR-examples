@@ -18,7 +18,7 @@
 /*
     This is the PubNub JavaScript library ported to KinomaJS.
     You can learn more about the PubNub JavaScript API at http://www.pubnub.com/docs/javascript/javascript-sdk.html.
-
+    
     A large number of warnings are generated when it loads. These are safe.
 
 */
@@ -35,7 +35,7 @@ var PUBNUB_PUBLISH_KEY = "pub-c-49c9d18f-08fe-412c-9f98-f288d5fad0d0";
 var PUBNUB_SUBSCRIBE_KEY = "sub-c-438e4caa-85ad-11e4-9b92-02ee2ddab7fe";
 var PUBNUB_CHANNEL = "hello_kinoma";
 
-var MyLabeledButton = BUTTONS.LabeledButton.template(function($) { return {
+var LabeledButton = BUTTONS.LabeledButton.template(function($) { return {
 	width:130, height:35,
 	behavior: Object.create(BUTTONS.LabeledButtonBehavior.prototype, {
 		onTap: { value: function(container) {
@@ -45,7 +45,7 @@ var MyLabeledButton = BUTTONS.LabeledButton.template(function($) { return {
                 You can also use the PubNub developer console to send messages to this app.
             */
 			pubnub.publish({channel: PUBNUB_CHANNEL,
-                            message: {name: this.name, when: (new Date).toString()},
+                            message: {name: $.name, when: (new Date).toString()},
                             });
 		}},
 	})
@@ -82,10 +82,10 @@ ApplicationBehavior.prototype = Object.create(PubNubBehavior.prototype, {
 
         application.add(new Label({left: 10, right: 0, top: 0, height: 35, style: style, string: "Publish message:"}));
 
-        application.add(new MyLabeledButton({ name : "Hello"}, {top: 35, left: 20}) );
-        application.add(new MyLabeledButton({ name : "Kinoma"}, {top: 35, left: 170}));
-        application.add(new MyLabeledButton({ name : "PubNub"}, {top: 80, left: 20}));
-        application.add(new MyLabeledButton({ name : "Test!"}, {top: 80, left: 170}));
+        application.add(new LabeledButton({ name : "Hello"}, {top: 35, left: 20}) );
+        application.add(new LabeledButton({ name : "Kinoma"}, {top: 35, left: 170}));
+        application.add(new LabeledButton({ name : "PubNub"}, {top: 80, left: 20}));
+        application.add(new LabeledButton({ name : "Test!"}, {top: 80, left: 170}));
 
         application.add(model.receivedLabel = new Label({left: 10, right: 0, top: 120, height: 35, style: style, string: "Last received message:"}));
         application.add(model.receivedMessage = new Text({left: 20, right: 0, top: 160, bottom: 0, style: style, string: "(no messages yet)"}));
