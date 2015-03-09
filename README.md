@@ -10,6 +10,16 @@ This sample uses two different BLLs. One BLL communicates with two potentiometer
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-GP2Y0A02YK0F">analog-GP2Y0A02YK0F</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-GP2Y0A02YK0F"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/analog-GP2Y0A02YK0F-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="GP2Y0A02YK0F.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
+
+This sample shows how to integrate the Sharp GP2Y0A02YK0F (available as Sparkfun SEN-08958) long range infrared proximity sensor with Kinoma Create. The analog sensor supports range readings between 15 and 150cm. The app displays the range reading and plays a beep sound that increases in frequency as you get closer to the sensor.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-graph">analog-graph</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-graph"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/analog-graph-example.jpg" height="100" alt=""/></a>
 

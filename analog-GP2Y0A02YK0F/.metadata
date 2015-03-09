@@ -1,0 +1,14 @@
+<example 
+	id="GP2Y0A02YK0F.example.kinoma.marvell.com"
+	title="Analog GP2Y0A02YK0F Example"
+	project="Analog GP2Y0A02YK0F Example"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+This sample shows how to integrate the Sharp GP2Y0A02YK0F (available as Sparkfun SEN-08958) long range infrared proximity sensor with Kinoma Create. The analog sensor supports range readings between 15 and 150cm. The app displays the range reading and plays a beep sound that increases in frequency as you get closer to the sensor.
+	]]></description>
+
+</example>
