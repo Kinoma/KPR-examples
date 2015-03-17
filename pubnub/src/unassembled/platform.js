@@ -252,6 +252,7 @@ var pubNubContent = null;
 this.PubNubBehavior = function(content, data) {
 	Behavior.call(this, content, data);
 };
+this.PubNubBehavior.template = Behavior.template;
 this.PubNubBehavior.prototype = Object.create(Behavior.prototype, {
 	onCreate: { value: function(content, data) {
 		pubNubContent = content;
