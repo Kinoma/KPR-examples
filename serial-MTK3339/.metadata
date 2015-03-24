@@ -1,0 +1,14 @@
+<example 
+	id="MTK3339.example.kinoma.marvell.com"
+	title="Adafruit GPS breakout v3"
+	project="Adafruit GPS breakout v3"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+BLL and sample application for the Adafruit Ultimate GPS Breakout, MTK3339 GPS chipset. The app polls the GPS position periodically and displays the position on a map requested from the Google Static Maps API. The map is updated when the position changes.
+	]]></description>
+
+</example>
