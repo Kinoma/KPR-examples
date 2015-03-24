@@ -1,0 +1,14 @@
+<example 
+	id="slidebrowser.example.kinoma.marvell.com"
+	title="Multitouch Slide Browser"
+	project="Multitouch Slide Browser"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+Kinoma Create application which allows for browsing multiple images by swiping between them. Supports a wide range of single and multitouch interactions by making use of the slidePictureTouchStates module. These include multitouch pinch to scale and pan, dragging and tossing the image, press and hold to zoom about a particular point, and tapping to zoom to view the entire image again.
+	]]></description>
+
+</example>

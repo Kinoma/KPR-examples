@@ -560,6 +560,16 @@ This example demonstrates how to use features of the MultiTouch Library to creat
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/multitouch-slide-browser">multitouch-slide-browser</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/multitouch-slide-browser"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/multitouch-slide-browser-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="slidebrowser.example.kinoma.marvell.com" platform="mac,iphone,android,linux"><span class="uiSample mediaSample"></span></x-app-info>
+
+Kinoma Create application which allows for browsing multiple images by swiping between them. Supports a wide range of single and multitouch interactions by making use of the slidePictureTouchStates module. These include multitouch pinch to scale and pan, dragging and tossing the image, press and hold to zoom about a particular point, and tapping to zoom to view the entire image again.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/oauth">oauth</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/oauth"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/oauth-example.jpg" height="100" alt=""/></a>
 					
