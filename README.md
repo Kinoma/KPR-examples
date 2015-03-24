@@ -690,6 +690,16 @@ BLL and sample application for the Sparkfun COM-11442 7-Segment serial display. 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/serial-MTK3339">serial-MTK3339</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/serial-MTK3339"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/serial-MTK3339-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="MTK3339.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
+
+BLL and sample application for the Adafruit Ultimate GPS Breakout, MTK3339 GPS chipset. The app polls the GPS position periodically and displays the position on a map requested from the Google Static Maps API. The map is updated when the position changes.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/sketchat">sketchat</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/sketchat"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/sketchat-example.jpg" height="100" alt=""/></a>
 
