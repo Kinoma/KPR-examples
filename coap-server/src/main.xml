@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+|     Copyright (C) 2002-2015 Kinoma, Inc.
+|
+|     All rights reserved.
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+-->
+<program xmlns="http://www.kinoma.com/kpr/1">
+	<require id="SERVER" path="server"/>
+	<require id="CIRCLE_SLIDER" path="slider"/>
+	<skin id="backgroundSkin" color="#F0F0F0"/>
+	<skin id="sideBoardSkin" color="#cccccc"/>
+	<skin id="colorTipBoarderSkin" color="#888"/>
+
+	<style id="statLabelStyle" font="bold 18px" color="gray" align="right,top" lines="1"/>
+	<style id="statValueStyle" font="bold 24px" color="black" align="right,top" lines="1"/>
+	<style id="titleStyle" font="bold 24px" color="black" align="left,top" lines="1"/>
+	<style id="clockStyle" font="bold 24px" color="#444" align="right,top" lines="1"/>
+
+
+	<behavior id="ApplicationBehavior">
+		<method id="onLaunch" params="application"><![CDATA[
+			application.shared = true;
+		]]></method>
+
+		<method id="onQuit" params="application"><![CDATA[
+			application.shared = false;
+		]]></method>
+	</behavior>
+
+	<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	<!-- LAYOUTS -->
+	<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<canvas id = "CircleSlider" left="MARGIN" right="MARGIN" top="MARGIN"
+		bottom="MARGIN" like= "CIRCLE_SLIDER.CircleSlider"/>
+
+	<container id="MainContainer" left="0" right="0" top="0" bottom="0" skin="sideBoardSkin">
+		<column anchor="MAIN_STAGE" left="0" right="100" top="24" bottom="24" skin="backgroundSkin">
+			<behavior>
+				<method id = "onChanged" params = "canvas, value, color">
+					SERVER.color[color] = Math.floor(value);
+
+					updateColorTip();
+					SERVER.brodcastColorToListeners();
+				</method>
+			</behavior>
+		</column>
+		<column anchor="SIDE_BOARD" width="100" right="0" top="0" bottom="24">
+			<text anchor="CLOCK" left="18" right="8" top="0" height="20" style="clockStyle" />
+			<container left="18" top="8" right="8" height="74" skin="colorTipBoarderSkin">
+				<content anchor="COLOR_TIP" left="2" top="2" right="2" bottom="2"/>
+			</container>
+			<text anchor="STATS" left="18" top="8" right="8"/>
+		</column>
+		<text left="8" right="100" top="0" height="24" style="titleStyle">
+			<behavior>
+				<method id="onDisplaying" params="text"><![CDATA[
+					text.invoke(new Message("xkpr://shell/settings/name"), Message.JSON);
+				]]></method>
+
+		 		<method id="onComplete" params="text, message, value"><![CDATA[
+					var TITLE_PREFIX = "Server: ", name;
+
+		 			if (value && value != "None") {
+						name = value;
+		 			} else {
+		 				var suffix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
+		 				var index = Math.floor(Math.random() * suffix.length);
+
+						name = "Color Server " + suffix[index];
+		 			}
+
+		 			SERVER.setName(name);
+					text.string = TITLE_PREFIX + name;
+				]]></method>
+			</behavior>
+		</text>
+		<text left="8" right="8" bottom="0" height="24" style="titleStyle">
+			<behavior>
+				<method id="onDisplaying" params="text"><![CDATA[
+					if (CoAP) {
+						text.invoke(new Message("xkpr://wifi/status"), Message.JSON);
+					} else {
+						text.string = "CoAP is disabled";
+					}
+				]]></method>
+
+				<method id="onComplete" params="text, message, json"><![CDATA[
+					if (json && ("ip_address" in json)) {
+						text.string = 'coap://' + json.ip_address + '/color';
+					}
+				]]></method>
+			</behavior>
+		</text>
+	</container>
+
+	<script><![CDATA[
+		var CIRCLE_RADIUS = 20;
+		var MARGIN = 8;
+
+		try {
+			if (!CoAP) CoAP = null;
+		} catch (e) {
+			CoAP = null;
+		}
+
+		var redSliderData = {
+			label:"red",
+			min:0,
+			max:255,
+			value:0,
+			circleColor: "red",
+			strokeColor: "#8E9595",
+			strokeWidth: 8,
+			radius: CIRCLE_RADIUS
+		};
+
+		var greenSliderData = {
+			label:"green",
+			min:0,
+			max:255,
+			value:0,
+			circleColor: "green",
+			strokeColor: "#8E9595",
+			strokeWidth: 8,
+			radius: CIRCLE_RADIUS
+		};
+
+		var blueSliderData = {
+			label: "blue",
+			min:0,
+			max:255,
+			value:0,
+			circleColor: "blue",
+			strokeColor: "#8E9595",
+			strokeWidth: 8,
+			radius: CIRCLE_RADIUS
+		};
+
+		var model = application.behavior = new ApplicationBehavior();
+
+		var data = {};
+		var mainContainer = new MainContainer(data);
+
+		var mainStage = data.MAIN_STAGE;
+		var sideBoard = data.SIDE_BOARD;
+		var colorTip = data.COLOR_TIP;
+		var statsText = data.STATS;
+		var clock = data.CLOCK;
+
+		var redSlider = new CircleSlider( redSliderData );
+		var greenSlider = new CircleSlider( greenSliderData );
+		var blueSlider = new CircleSlider( blueSliderData );
+
+		mainStage.add( redSlider );
+		mainStage.add( greenSlider );
+		mainStage.add( blueSlider );
+
+		application.add( mainContainer );
+		updateColorTip();
+
+		function updateColors() {
+			updateColorTip();
+
+			var color = SERVER.color;
+			redSlider.delegate('setValue', color.red);
+			greenSlider.delegate('setValue', color.green);
+			blueSlider.delegate('setValue', color.blue);
+		}
+
+		function updateColorTip() {
+			var color = SERVER.color;
+			application.invoke( new MessageWithObject( "pins:/led/write", color ) );
+			colorTip.skin = new Skin("rgb(" + color.red + "," + color.green + "," + color.blue + ")");
+		}
+
+		function updateStats() {
+			statsText.format([
+				{spans:[
+					{
+						style: statLabelStyle,
+						string: 'Received',
+					},
+				]},
+				{spans:[
+					{
+						style: statValueStyle,
+						string: '' + SERVER.stats.received,
+					},
+				]},
+				{spans:[
+					{
+						style: statLabelStyle,
+						string: 'Sent',
+					},
+				]},
+				{spans:[
+					{
+						style: statValueStyle,
+						string: '' + SERVER.stats.sent,
+					},
+				]},
+			]);
+		}
+		updateStats();
+
+		application.invoke(new MessageWithObject( "pins:configure", {
+			led: {
+				require: "led",
+				pins: {
+					red: { pin: 28 },
+					green: { pin: 30 },
+					blue: { pin: 34 },
+					anode: { pin: 24 },
+				}
+			}
+		}));
+
+		// test if CoAP extension are loaded.
+		try {
+			SERVER.start();
+		} catch (e) {
+			trace(e + "\n");
+		}
+
+		// Sample CoAP request to the external world
+		if (CoAP) {
+			var client = new CoAP.Client();
+
+			var request = client.createRequest("coap://iot.eclipse.org/obs", 'GET');
+			request.token = 'clock';
+			request.observe = true;
+			request.onResponse = function(response) {
+				clock.string = response.payload;
+
+				SERVER.stats.received += 1;
+				updateStats();
+			};
+			SERVER.stats.sent += 1;
+			client.send(request);
+		}
+	]]></script>
+</program>

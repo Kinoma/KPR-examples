@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+|     Copyright (C) 2002-2015 Kinoma, Inc.
+|
+|     All rights reserved.
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+-->
+<program xmlns="http://www.kinoma.com/kpr/1">
+	<require path="./client" id="CLIENT"/>
+	<require path="./debug" id="DEBUG"/>
+	<require id="CIRCLE_SLIDER" path="slider"/>
+	<require path="mobile/model" id="MODEL"/>
+	<require path="mobile/control" id="CONTROL"/>
+	<require path="mobile/screen" id="SCREEN"/>
+	<require path="themes/sample/theme" id="THEME"/>
+
+	<skin id="backgroundSkin" color="#F0F0F0"/>
+	<skin id="sideBoardSkin" color="#cccccc"/>
+	<skin id="colorTipBoarderSkin" color="#888"/>
+	<skin id="tabButtonSkin">
+	     <states colors="#444,#888,black"/>
+	</skin>
+	<skin id="tabButtonActiveSkin">
+	     <states colors="#444,black,black"/>
+	</skin>
+
+	<style id="statLabelStyle" font="bold 18px" color="gray" align="right,top" lines="1"/>
+	<style id="statValueStyle" font="bold 20px" color="black" align="right,top" lines="1"/>
+	<style id="tabButtonStyle" font="bold">
+	     <states colors="#888,white,white"/>
+	</style>
+	<style id="titleStyle" font="bold 18px" color="black" align="center" lines="1"/>
+	<style id="commentStyle" font="14px" color="gray" align="center" lines="1"/>
+
+
+	<behavior id="ApplicationBehavior" like="MODEL.ApplicationBehavior">
+		<method id="onLaunch" params="application"><![CDATA[
+			CLIENT.start();
+
+			var message = new MessageWithObject("pins:configure", {
+				light :  {
+					require: "TCS34725",
+					pins: {
+						rgb: { type: "I2C", sda: 53, clock: 54 },
+						led: { type: "Digital", direction: "output", pin: 51, value: 0 }
+					}
+				},
+			});
+			message.setRequestHeader("referrer", "xkpr://" + application.id);
+			application.invoke(message);
+
+			var data = {};
+			application.add(new MainContainer({}));
+		]]></method>
+		<method id="onDisplayed" params="application"><![CDATA[
+			application.discover("coapserver.example.kinoma.marvell.com");
+			updateStats();
+		]]></method>
+		<method id="onQuit" params="application"><![CDATA[
+			application.forget("coapserver.example.kinoma.marvell.com");
+		]]></method>
+	</behavior>
+
+	<handler path="/discover">
+		<behavior>
+			<method id="onInvoke" params="handler, message"><![CDATA[
+				var info = JSON.parse(message.requestText);
+				CLIENT.discoverServer(info);
+			]]></method>
+		</behavior>
+	</handler>
+
+	<handler path="/forget">
+		<behavior>
+			<method id="onInvoke" params="handler, message"><![CDATA[
+				var info = JSON.parse(message.requestText);
+				CLIENT.forgetServer(info);
+			]]></method>
+		</behavior>
+	</handler>
+
+	<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	<!-- LAYOUTS -->
+	<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<container id="MainContainer" left="0" right="0" top="0" bottom="0" skin="sideBoardSkin">
+		<container anchor="STAGE" left="0" top="0" right="100" bottom="35" skin="backgroundSkin"/>
+
+		<line left="8" right="0" height="35" bottom="0">
+			<behavior like="CONTROL.ButtonBehavior"><![CDATA[
+				function onCreate(line, data) {
+					this.data = data;
+					this.tab = 0;
+
+					var tabs = [
+						{ Pane: ColorPallettePane, label: "Palette", selected: true },
+						{ Pane: ColorSliderPane, label: "Slider" },
+						{ Pane: SensorPane, label: "Sensor" },
+					];
+
+					tabs.forEach(function(item, index) {
+						var tab = new TabButton(item);
+						line.add(tab);
+					});
+
+					this.installPane(line, tabs[0]);
+				}
+
+				function onTabTap(line, tab) {
+					this.installPane(line, tab);
+				}
+
+				function installPane(line, data) {
+					var stage = this.data.STAGE;
+
+					var pane = new data.Pane(data);
+					if (stage.first) stage.remove(stage.first);
+					stage.add(pane);
+				}
+
+				function updateColorTip() {
+					this.data.COLOR_TIP.skin = colorToSkin(CLIENT.color);
+				}
+
+				function updateStats(line) {
+					this.data.STATS.format([
+						{spans:[
+							{
+								style: statLabelStyle,
+								string: 'Server',
+							},
+						]},
+						{spans:[
+							{
+								style: statValueStyle,
+								string: CoAP ? (CLIENT.stats.server ? CLIENT.stats.server : "- none -") : "No CoAP",
+							},
+						]},
+						{spans:[
+							{
+								style: statLabelStyle,
+								string: 'Received',
+							},
+						]},
+						{spans:[
+							{
+								style: statValueStyle,
+								string: '' + CLIENT.stats.received,
+							},
+						]},
+						{spans:[
+							{
+								style: statLabelStyle,
+								string: 'Sent',
+							},
+						]},
+						{spans:[
+							{
+								style: statValueStyle,
+								string: '' + CLIENT.stats.sent,
+							},
+						]},
+					]);
+				}
+			]]></behavior>
+		</line>
+
+		<column width="100" right="0" top="0" bottom="35" skin="backgroundSkin">
+			<container left="8" top="8" right="8" height="64" skin="colorTipBoarderSkin">
+				<content anchor="COLOR_TIP" left="0" top="0" right="0" bottom="0"/>
+			</container>
+			<text anchor="STATS" left="8" top="8" right="8"/>
+		</column>
+	</container>
+
+	<container id="TabButton" active="true" left="0" top="0" bottom="0" right="8" skin="tabButtonSkin">
+		<behavior like="CONTROL.ButtonBehavior"><![CDATA[
+			function onCreate(container, data) {
+				this.data = data;
+				if ('selected' in data && data.selected) container.skin = tabButtonActiveSkin;
+			}
+
+			function onTap(container) {
+				var button = container.container.first;
+				while (button) {
+					button.skin = (button == container) ? tabButtonActiveSkin : tabButtonSkin;
+					button = button.next;
+				}
+				container.bubble('onTabTap', this.data);
+			}
+		]]></behavior>
+		<label string="$.label" style="tabButtonStyle"/>
+	</container>
+
+	<!-- COLOR PALETTE PANE -->
+
+	<container id="ColorPallettePane" left="0" right="0" top="0" bottom="0">
+		<behavior><![CDATA[
+			function onCreate(column, data) {
+				this.data = data;
+
+				var x = 10, y = 10;
+
+				data.colors = [];
+				for (var i = 0; i < 16; i++) {
+					data.colors.push({ red:Math.floor(Math.random() * 256),  green:Math.floor(Math.random() * 256),  blue:Math.floor(Math.random() * 256) });
+				}
+
+				data.colors.forEach(function(color, index) {
+					var button = new ColorTipButton({color:color}, {left:x, top:y, width: 40, height:40});
+					column.add(button);
+					if (((index + 1) % 4) == 0) {
+						x = 10;
+						y += 50;
+					} else {
+						x += 50;
+					}
+				});
+			}
+		]]></behavior>
+	</container>
+
+	<container id="ColorTipButton" active="true">
+		<behavior like="CONTROL.ButtonBehavior"><![CDATA[
+			function onCreate(container, data) {
+				this.data = data;
+				container.skin = colorToSkin(this.data.color);
+			}
+
+			function onTap(container) {
+				CLIENT.setColor(this.data.color);
+				CLIENT.sendColor();
+				updateColorTip();
+			}
+		]]></behavior>
+	</container>
+
+	<!-- COLOR SLIDER PANE -->
+
+	<column id="ColorSliderPane" left="0" right="0" top="0" bottom="0">
+		<behavior><![CDATA[
+			function onCreate(column, data) {
+				this.data = data;
+
+				var sliders = [
+					{
+						label:"red",
+						value: CLIENT.color.red,
+						circleColor: "red",
+					}, {
+						label:"green",
+						value: CLIENT.color.green,
+						circleColor: "green",
+					}, {
+						label: "blue",
+						value: CLIENT.color.blue,
+						circleColor: "blue",
+					}
+				];
+
+				data.RED = this.installSlider(column, sliders[0]);
+				data.GREEN = this.installSlider(column, sliders[1]);
+				data.BLUE = this.installSlider(column, sliders[2]);
+			}
+
+			function installSlider(column, data) {
+				data.min = 0;
+				data.max = 255;
+				data.strokeColor = "#8E9595";
+				data.strokeWidth = 10;
+				data.radius = 25;
+
+				var slider = new CircleSlider(data);
+				column.add(slider);
+				return slider;
+			}
+
+			function onChanged(canvas, value, color) {
+				CLIENT.setColor(color, Math.floor(value));
+				CLIENT.sendColor();
+				updateColorTip();
+			}
+
+			function onColorChanged(column) {
+				var color = CLIENT.color;
+				this.data.RED.distribute('setValue', color.red);
+				this.data.GREEN.distribute('setValue', color.green);
+				this.data.BLUE.distribute('setValue', color.blue);
+			}
+		]]></behavior>
+	</column>
+
+	<canvas id = "CircleSlider" left="8" right="0" top="4" bottom="0" like= "CIRCLE_SLIDER.CircleSlider"/>
+
+	<!-- COLOR SLIDER PANE -->
+
+	<column id="SensorPane" left="0" right="0" top="0" bottom="0">
+		<behavior>
+			<method id="onDisplaying" params="column"><![CDATA[
+				model.priviousSensorColor = Object.create(CLIENT.color);
+
+				var message = new Message("pins:/light/LEDOn");
+				message.setRequestHeader("referrer", "xkpr://" + application.id);
+				application.invoke(message);
+
+				message = new Message("pins:/light/getColor?repeat=on&callback=/gotLight&interval=200");
+				message.setRequestHeader("referrer", "xkpr://" + application.id);
+				application.invoke(message);
+			]]></method>
+			<method id="onUndisplayed" params="column"><![CDATA[
+				var message = new Message("pins:/light/LEDOff");
+				message.setRequestHeader("referrer", "xkpr://" + application.id);
+				application.invoke(message);
+
+				message = new Message("pins:/light/getColor?repeat=off");
+				message.setRequestHeader("referrer", "xkpr://" + application.id);
+				application.invoke(message);
+			]]></method>
+		</behavior>
+		<label top="5" string="'RGB Color Sensor'" style="titleStyle"/>
+		<label top="5" string="'Setup Left Front Pins like this:'" style="commentStyle"/>
+		<picture url="'./assets/pins.png'" top="10"/>
+	</column>
+
+	<handler path="/gotLight">
+		<behavior>
+			<method id="onInvoke" params="handler, message"><![CDATA[
+				var result = message.requestObject;
+				var prev = model.priviousSensorColor;
+
+				var factor = 0.3
+				var red = Math.floor(prev.red * factor + result.r * (1 - factor));
+				var green = Math.floor(prev.green * factor + result.g * (1 - factor));
+				var blue = Math.floor(prev.blue * factor + result.b * (1 - factor));
+
+				if (red != prev.red || green != prev.green || blue != prev.blue) {
+					prev.red = red;
+					prev.green = green;
+					prev.blue = blue;
+
+					CLIENT.setColor(prev);
+					CLIENT.sendColor();
+					updateColorTip();
+				}
+			]]></method>
+		</behavior>
+	</handler>
+
+	<script><![CDATA[
+		try {
+			if (!CoAP) CoAP = null;
+		} catch (e) {
+			CoAP = null;
+		}
+
+		// Disable debug information
+		// DEBUG.active = false;
+
+		function colorToSkin(color) {
+			return new Skin("rgb(" + color.red + "," + color.green + "," + color.blue + ")",
+							{left:2, top:2, bottom:2, right:2},
+							['rgba(0,0,0,0)', '#888', '#444']);
+		}
+
+		// var data = {};
+		// var mainContainer = new MainContainer(data);
+		// application.add( mainContainer );
+
+		var model = application.behavior = new ApplicationBehavior(application);
+
+		function updateColors() {
+			updateColorTip();
+			application.distribute('onColorChanged');
+		}
+
+		function updateColorTip() {
+			application.distribute('updateColorTip');
+		}
+
+		function updateStats() {
+			application.distribute('updateStats');
+		}
+	]]></script>
+</program>

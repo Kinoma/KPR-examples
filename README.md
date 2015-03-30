@@ -210,6 +210,26 @@ Clare is an interactive animation using Canvas, with three modes: scan, pleasant
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/coap-client">coap-client</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/coap-client"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/coap-client-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="coapclient.example.kinoma.marvell.com"><span class="uiSample networkSample createSample"></span></x-app-info>
+
+This client app is intended to be run simultaneously with the "coap-server" example and demonstrates how to implement a CoAP protocol client. The app sends an observe request to the Color server running on the same network and receives updates from that server. The client can send a new color by choosing from a palette, slider or RGB color sensor (TCS34725). This example is written using the KinomaJS programming APIs.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/coap-server">coap-server</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/coap-server"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/coap-server-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="coapserver.example.kinoma.marvell.com"><span class="uiSample networkSample createSample"></span></x-app-info>
+
+This server app is intended to be run simultaneously with the "coap-client" example and demonstrates how to implement a CoAP protocol server. The app serves color information and the server name to clients. The server app also changes the color of an attached tri-color LED (Sparkfun 10821) to match the server's info. Since CoAP is a standard protocol, you can use other CoAP clients with the server, such as the Ruby CoAP module. See scripts/test.rb for further information. This example is written using the KinomaJS programming APIs.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/console">console</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/console"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/console-example.jpg" height="100" alt=""/></a>
 

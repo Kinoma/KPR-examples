@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+|     Copyright (C) 2002-2015 Kinoma, Inc.
+|
+|     All rights reserved.
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+-->
+<module xmlns="http://www.kinoma.com/kpr/1">
+
+	<require path="PinsSimulators" id="PinsSimulators"/>
+
+	<behavior id="PWMLEDBehavior">
+		<method id="onCreate" params="column, data"><![CDATA[
+			column.add(new PWMLED(data));
+			column.distribute("onChanged");
+		]]></method>
+	</behavior>
+
+	<texture id="colorLEDTexture" small="color-led.png"/>
+	<skin id="colorLEDSkin" texture="colorLEDTexture" x="0" y="0" width="150" height="150"/>
+
+	<skin id="redSkin" color="red"/>
+
+	<container id="PWMLED" width="150" height="150" skin="redSkin">
+		<canvas left="0" top="0" right="0" bottom="0">
+			<behavior>
+				<method id="onDisplaying" params="canvas"><![CDATA[
+               		this.draw(canvas);
+				]]></method>
+				<method id="draw" params="canvas"><![CDATA[
+               		var ctx = canvas.getContext("2d");
+					ctx.beginPath();
+					ctx.rect(0, 0, canvas.width, canvas.height);
+					ctx.fillStyle = this.getColorString(canvas);
+					ctx.fill();
+				]]></method>
+				<method id="getColorString" params="canvas"><![CDATA[
+					var r = (1 - gColor.r), g = (1 - gColor.g), b = (1 - gColor.b);
+					return "rgb(" + r + "," + g + "," + b + ")";
+				]]></method>
+			</behavior>
+		</canvas>
+
+		<content skin="colorLEDSkin"/>
+	</container>
+
+	<function id="configure" params="configuration"><![CDATA[
+		this.pinsSimulator = shell.delegate("addSimulatorPart", {
+			behavior: PWMLEDBehavior,
+			header : {
+				label : "Tri Color LED",
+				name : "PWM LED",
+				iconVariant : PinsSimulators.SENSOR_LED
+			}
+		});
+	]]></function>
+
+	<function id="close"><![CDATA[
+		shell.delegate("removeSimulatorPart", this.pinsSimulator);
+	]]></function>
+
+	<function id="write" params="parameters"><![CDATA[
+		if ('red' in parameters)
+			gColor.r = (1 - parameters.red);
+		if ('green' in parameters)
+			gColor.g = (1 - parameters.green);
+		if ('blue' in parameters)
+			gColor.b = (1 - parameters.blue);
+		this.pinsSimulator.distribute("draw");
+	]]></function>
+
+	<script><![CDATA[
+		exports.pins = {
+			red: { type: "PWM", value: 1 },
+			green: { type: "PWM", value: 1  },
+			blue: { type: "PWM", value: 1  },
+			anode: { type: "Digital", direction: "output", value: 1  }
+		};
+
+		var gColor = { r : 1, g : 1, b : 1 }
+	]]></script>
+
+</module>
