@@ -730,6 +730,16 @@ BLL and sample application for the Adafruit Ultimate GPS Breakout, MTK3339 GPS c
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/simplesynth">simplesynth</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/simplesynth"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/simplesynth-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="simplesynth.example.kinoma.marvell.com"><span class="createSample pinsSample mediaSample"></span></x-app-info>
+
+Simple Synth shows you how to synthesize audio in real time for low latency playback on Kinoma Create. Use the on-screen multi-touch keyboard to play up to three simultaneous notes on the sine wave based synthesizer.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/sketchat">sketchat</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/sketchat"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/sketchat-example.jpg" height="100" alt=""/></a>
 
