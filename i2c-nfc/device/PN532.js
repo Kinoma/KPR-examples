@@ -19,6 +19,10 @@
     Tested against Adafruit PN532 breakout shield with Mifare Classic tokens.
     
     Based on libnfc and AdaFruit I2C sample
+    
+    Useful URLs
+       	http://www.nxp.com/documents/user_manual/141520.pdf
+    	https://github.com/adafruit/Adafruit-PN532/blob/master/Adafruit_PN532.cpp
 */
 
 
@@ -34,6 +38,7 @@ var type;
 var last_command;
 var last_uid;
 var sam_mode;
+var gLastTransceiveTime;
 
 exports.configure = function(configuration) {
     initializeGlobalConstants();
@@ -49,6 +54,7 @@ exports.configure = function(configuration) {
     type = undefined;
     sam_mode = PSM_NORMAL;
     last_uid = undefined;
+    gLastTransceiveTime = Date.now() - 200;
 
     if (!doCheckCommunication.call(this)) {
         trace_err("communication check failed\n");
@@ -109,34 +115,45 @@ exports.poll = function() {
 }
 
 exports.mifare_CmdAuthA = function(params) {
-    var result = doInDataExchange.call(this, 1, [MIFARE_CMD_AUTH_A, 4].concat(params.key).concat(params.token), 1);
+    var result = doInDataExchange.call(this, 1, [MIFARE_CMD_AUTH_A, params.page].concat(params.key).concat(params.token), 1);
     trace_cmd("doInDataExchange MIFARE_CMD_AUTH_A: " + JSON.stringify(result) + "\n");
 
     return result ? result[0] : -1;
 }
 
 exports.mifare_CmdRead = function(params) {
+	if (("key" in params) && ("token" in params)) {
+		if (-1 == this.mifare_CmdAuthA(params))
+			return -1;
+	}
+
     var result = doInDataExchange.call(this, 1, [MIFARE_CMD_READ, params.page], 17);
     trace_cmd("doInDataExchange MIFARE_CMD_READ: " + JSON.stringify(result) + "\n");
-    if (0 != result[0]) result = undefined;
+    if (!result) return -1;
+    if (0 != result[0]) return -1;
 
-    return result ? result.slice(1) : -1;
+    return result.slice(1);
 }
 
 exports.mifare_CmdWrite = function(params) {
+	if (("key" in params) && ("token" in params)) {
+		if (-1 == this.mifare_CmdAuthA(params))
+			return -1;
+	}
+
     var result = doInDataExchange.call(this, 1, [MIFARE_CMD_WRITE, params.page].concat(params.data), 1);
     trace_cmd("doInDataExchange MIFARE_CMD_WRITE: " + JSON.stringify(result) + "\n");
 
     return result ? result[0] : -1;
 }
 
-
-
 function transceive(request, responseSize)
 {
     trace_comm("transceive command " + request[0] + ", responseSize " + responseSize + "\n");
 
-    sensorUtils.mdelay(200);        //@@ what is the right number here?
+	var now = Date.now(), nextTransceiveTime = gLastTransceiveTime + 50;		//@@ is 50 reasonable?
+	if (now < nextTransceiveTime)
+    	sensorUtils.mdelay(nextTransceiveTime - now);
 
     if (send.call(this, request)) {
         last_command = request[0];
@@ -146,9 +163,12 @@ function transceive(request, responseSize)
         //@@ retry support goes here @@
 
         trace_comm("transceive returns: " + JSON.stringify(result) + "\n");
-        
+        gLastTransceiveTime = Date.now();
+
         return result;
     }
+
+	gLastTransceiveTime = Date.now();
 }
 
 function send(request)
@@ -163,7 +183,7 @@ function send(request)
 
     var readyFrame = waitReadyFrame.call(this, pn53x_ack_frame.length);
     if (!readyFrame) {
-        trace_err("no readyFrame on transcieve\n");
+        trace_err("no readyFrame on transceive\n");
         return;
     }
 
@@ -271,7 +291,7 @@ function buildFrame(frame, request)
 
 function waitReadyFrame(responseSize)
 {
-    var stop = Date.now() + 2000;       /// @@ timeout = 2000 ms
+    var stop = Date.now() + 100;       /// @@ timeout = 100 ms - perhaps allow client to configure based on responsiveness needed
     trace_comm("waitReady start, responseSize " + responseSize + "\n");
     sensorUtils.mdelay(10);
 
@@ -427,10 +447,10 @@ function doSAMConfiguration(mode)
         trace_err("  doSAMConfiguration - not supported by chip " + type + "\n");
         return;
     }
-//@@ note: Adafruit_NFCShield_I2C::SAMConfig sends more parameters.
+
     var request;
     if ((PSM_NORMAL == mode) || (PSM_WIRED_CARD == mode))
-        transceive.call(this, [SAMConfiguration, mode], 0);
+        transceive.call(this, [SAMConfiguration, mode], 0);		// SAM is not used in PSM_NORMAL mode
     else if ((PSM_VIRTUAL_CARD == mode) || (PSM_DUAL_CARD == mode))
         transceive.call(this, [SAMConfiguration, mode, 0], 0);
     else {
