@@ -720,6 +720,16 @@ BLL and sample application for the Sparkfun COM-11442 7-Segment serial display. 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/serial-fingerprint-lock">serial-fingerprint-lock</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/serial-fingerprint-lock"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/serial-fingerprint-lock-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="gt511c3.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
+
+This example integrates a TTL fingerprint scanner (SparkFun GT-511C3) with a 5V solenoid (SparkFun ROB-11015) to prototype a fingerprint locking system. The prototype registers and stores authorized fingerprints on the scanner. Authorized fingerprints can then unlock the door controlled by the solenoid. The prototype was demonstrated at Maker Faire Bay Area 2015 and shows how to control the fingerprint scanner via a serial BLL and the solenoid using a digital output. The prototype also shows how to integrate the Kinoma Create full screen keyboard, play sounds, build scrolling lists and display rotated graphics.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/serial-MTK3339">serial-MTK3339</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/serial-MTK3339"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/serial-MTK3339-example.jpg" height="100" alt=""/></a>
 
