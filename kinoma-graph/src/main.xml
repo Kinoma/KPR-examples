@@ -232,7 +232,7 @@
 					function draw(canvas) {
 						var ctx = canvas.getContext("2d");
 						ctx.clearRect(0, 0, canvas.width, canvas.height);
-						ctx.fillStyle = this.tracking ? "cyan" : "black";
+						ctx.fillStyle = this.tracking ? "aqua" : "black";
 						if (this.data.playing) {
 							ctx.fillRect(7, 5, 10, 30);
 							ctx.fillRect(23, 5, 10, 30);
