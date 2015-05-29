@@ -43,15 +43,15 @@
     	In particular the set of features it includes are suitable for selecting a cropping area from a photo.
     	
     	Options include
-    		- choose to "fit" or "fill" the picture within it's container
+    		- choose to "fit" or "fill" the picture within its container
     		- choose to allow rotation
     	
     	Interactions include
     		- tap to zoom in about tapped location
     		- tap to zoom back to the fit size when zoomed in
-    		- press and hold to progressivly zoom in about location until released
+    		- press and hold to progressively zoom in about location until released
     		- pinch to scale and pan about origin of pinch
-    			- since it is geared towards photo cropping releasing when scaled below the fit size will animate up to the fit size
+    			- since it is geared towards photo cropping, releasing when scaled below the fit size will animate up to the fit size
     			- and releasing while scaled large enough to cover container will animate to edge to ensure coverage
     		- pinch to rotate the picture about origin of pinch (when allowRotation is true)
     			- rotation does not begin until the picture is scaled below 95 percent of fit size and rotated
@@ -67,7 +67,7 @@
     	
     		new TOUCH_STATES.ZoomInAboutPointState(container, picture);
     		
-    	This example loads a local picture, for async pictures you may want to add a loding / busy control
+    	This example loads a local picture; for async pictures you may want to add a loading / busy control
     	and hide it in the onShowingStateComplete callback.
     -->
     
@@ -87,11 +87,11 @@
 				container.multipleTouch = true;
             ]]></method>
              <method id="onShowingStateComplete" params="container"><![CDATA[
-				// could hide a busy indiator here for asyc pictures
+				// could hide a busy indicator here for async pictures
             ]]></method>
              <method id="onPhotoViewChanged" params="container"><![CDATA[
 				// this is called when the touch state machine returns to idle
-				// Connect uses this oportunity send the latest cropped view of the image to the renderer
+				// Kinoma Connect uses this oportunity send the latest cropped view of the image to the renderer
             ]]></method>
   		</behavior>
   		
