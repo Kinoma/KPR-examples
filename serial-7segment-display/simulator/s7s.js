@@ -19,8 +19,10 @@ var THEME = require ("themes/flat/theme");
 var CONTROL = require ("mobile/control");
 var PinsSimulators = require ("PinsSimulators");
 
+var displayFont = "75px Fira Mono";
+
 // styles
-var displayStyle = new Style({ font:"bold 75px Fira Mono", color: "#FFFF0000", horizontal:"center" });
+var displayStyle = new Style({ font:displayFont, color: "#FFFF0000", horizontal:"center" });
 
 // layouts
 var S7SBehavior = function(column, data) {
@@ -33,27 +35,27 @@ S7SBehavior.prototype = Object.create(Behavior.prototype, {
 });
 
 var S7SLine = Container.template(function($) { return {
-	width: 290, height:120,
+	width: 260, height:100,
 	behavior: Object.create(Behavior.prototype, {
 		onCreate: { value: function(column, data) {
 		}}
 	}),
 	contents: [
 		Container($, {
-			top: 20, bottom: 20,
+			top: 18, bottom: 20,
 			style: displayStyle,
 			anchor: "DISPLAY",
 			skin: new Skin( { fill: "black" } ),
 			contents: [
 				Label($, { anchor: "D0", left:10, width:62, string:"0" }),
-				Label($, { anchor: "DECIMAL_1", left:54, width:20, string:".", visible:false }),
+				Label($, { anchor: "DECIMAL_1", left:54, width:25, string:".", visible:false }),
 				Label($, { anchor: "D1", left:65, width:62, string:"0" }),
-				Label($, { anchor: "DECIMAL_2", left:117, width:20, string:".", visible:false }),
-				Label($, { anchor: "COLON", left:120, width:15, top: -3, string: ":", visible:false }),
+				Label($, { anchor: "DECIMAL_2", left:114, width:25, string:".", visible:false }),
+				Label($, { anchor: "COLON", left:114, width:25, string: ":", visible:false }),
 				Label($, { anchor: "D2", left:130, width:62, string:"0"  }),
-				Label($, { anchor: "DECIMAL_3", left:182, width:20, string:".", visible:false }),
+				Label($, { anchor: "DECIMAL_3", left:182, width:25, string:".", visible:false }),
 				Label($, { anchor: "D3", left:190, width:62, string:"0" }),
-				Label($, { anchor: "DECIMAL_4", left:242, width:20, string:".", visible:false }),
+				Label($, { anchor: "DECIMAL_4", left:242, width:25, string:".", visible:false }),
 			]
 		})]
 }});
@@ -83,7 +85,7 @@ exports.brightness = function(level) {
 	var opacity = (Math.floor(255 * level) & 0xFF).toString(16);
 	if (opacity.length < 2)
 		opacity = '0' + opacity;
-	var style = new Style({ font:"bold 75px Fira Mono", color: "#" + opacity + "FF0000", horizontal:"center" });
+	var style = new Style({ font:displayFont, color: "#" + opacity + "FF0000", horizontal:"center" });
 	this.data.DISPLAY.style = style;
 }
 
