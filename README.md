@@ -3,7 +3,7 @@
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-drawing-toy" class="createExampleLink" >analog-drawing-toy</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-drawing-toy"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/analog-drawing-toy-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="analogdrawingtoy.example.kinoma.marvell.com"><span class="createSample pinsSample samplePage"></span></x-app-info>
+<x-app-info id="analogdrawingtoy.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
 
 This sample uses two different BLLs. One BLL communicates with two potentiometers and sends their readings to the main thread, where they are interpreted as XY coordinates. Lines are drawn between the coordinates to make pictures. A second BLL gets readings from an accelerometer, and when these readings exceed a threshold, the drawing is erased.
 
@@ -23,7 +23,7 @@ This sample shows how to integrate the Sharp GP2Y0A02YK0F (available as Sparkfun
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-graph">analog-graph</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-graph"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/analog-graph-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="analoggraph.example.kinoma.marvell.com"><span class="createSample pinsSample samplePage"></span></x-app-info>
+<x-app-info id="analoggraph.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
 
 This sample uses a BLL to poll values from an analog sensor. It graphs these values using a KPR Canvas object.
 
@@ -43,7 +43,7 @@ BLL and sample application for the Honeywell HIH-4030 humidity sensor. Includes 
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-kinoma-xively">analog-kinoma-xively</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-kinoma-xively"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/analog-kinoma-xively-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="analogkinomaxively.example.kinoma.marvell.com"><span class="createSample pinsSample samplePage"></span></x-app-info>
+<x-app-info id="analogkinomaxively.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
 
 This sample sends HTTP requests to the Xively API to upload sensor data to a stream. The values are read from an analog sensor. Before running the app, sign up for a free Xively account and replace the dummy text in the code with your API Key, Feed ID and Sensor ID.
 
@@ -123,7 +123,7 @@ This sample monitors the audio level using the microphone. The audioin BLL recor
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/audio-recorder-player">audio-recorder-player</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/audio-recorder-player"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/audio-recorder-player-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="audiorecorderplayer.example.kinoma.marvell.com"><span class="createSample pinsSample mediaSample samplePage"></span></x-app-info>
+<x-app-info id="audiorecorderplayer.example.kinoma.marvell.com"><span class="createSample pinsSample mediaSample"></span></x-app-info>
 
 Demonstrates how to record and play up to 30 seconds of audio with Kinoma Create’s built-in microphone and speaker.
 
@@ -283,7 +283,7 @@ This example demonstrates how to setup and display MobileFramework dialogs. Vari
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-in-hello-world">digital-in-hello-world</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-in-hello-world"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/digital-in-hello-world-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="digitalinhelloworld.example.kinoma.marvell.com"><span class="createSample pinsSample samplePage"></span></x-app-info>
+<x-app-info id="digitalinhelloworld.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
 
 Uses a digital pin to read input from a physical button. When pressed, it triggers an event in the application which removes a letter from the string 'Hello World!' on the Kinoma Create's screen. Demonstrates the set up and integration of a digital input pin BLL in KinomaJS.
 
@@ -293,7 +293,7 @@ Uses a digital pin to read input from a physical button. When pressed, it trigge
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-light-websockets-client">digital-light-websockets-client</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-light-websockets-client"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/digital-light-websockets-client-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="digitallightwebsocketsclient.example.kinoma.marvell.com"><span class="createSample mobileSample networkSample uiSample samplePage"></span></x-app-info>
+<x-app-info id="digitallightwebsocketsclient.example.kinoma.marvell.com"><span class="createSample mobileSample networkSample uiSample"></span></x-app-info>
 
 This client app runs with the "digital-light-websockets-server" example. It acts as a companion app that can switch on and off an LED hooked up to the server-side Kinoma Create. This example shows how to discover servers using the built-in SSDP support, create and invoke messages to the server using WebSockets, and how to keep the UI of multiple client apps in sync with the server.
 
@@ -313,7 +313,7 @@ This server app runs with the "digital-light-websockets-client" example. This ex
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-out-led">digital-out-led</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-out-led"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/digital-out-led-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="digitaloutled.example.kinoma.marvell.com"><span class="createSample pinsSample samplePage"></span></x-app-info>
+<x-app-info id="digitaloutled.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
 
 Uses a digital pin to turn on and off an LED when a button is pressed on screen. Demonstrates the set up and integration of a digital output pin BLL in KinomaJS.
 
@@ -393,7 +393,7 @@ A minimal application that creates a full-screen container and displays the text
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-color-sensor">i2c-color-sensor</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-color-sensor"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/i2c-color-sensor-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="i2ccolorsensor.example.kinoma.marvell.com"><span class="createSample pinsSample samplePage"></span></x-app-info>
+<x-app-info id="i2ccolorsensor.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
 
 This application changes the MainContainer's skin to the color sensed by a TCS34725 RGB color sensor. R, G, and B readings are sent from the BLL to the main thread, in which they are converted to hex notation.
 
@@ -423,7 +423,7 @@ This sample shows how to use the Adafruit PN532 NFC/RFID Controller Shield for A
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-temperature">i2c-temperature</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-temperature"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/i2c-temperature-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="i2ctemperature.example.kinoma.marvell.com"><span class="createSample pinsSample samplePage"></span></x-app-info>
+<x-app-info id="i2ctemperature.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
 
 Obtains the current temperature from an I2C temperature sensor and displays it on the Kinoma Create's screen. Demonstrates the set up and integration of an I2C BLL in KinomaJS.
 
@@ -683,7 +683,7 @@ This application sends and receives JSON messages using the PubNub messaging ser
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/pwm-continuous-servo">pwm-continuous-servo</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/pwm-continuous-servo"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/pwm-continuous-servo-example.jpg" height="100" alt=""/></a>
 					
-<x-app-info id="pwmcontinuousservo.example.kinoma.marvell.com"><span class="createSample pinsSample samplePage"></span></x-app-info>
+<x-app-info id="pwmcontinuousservo.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
 
 Rotates a 360˚ continuous servo using a PWM pin. Demonstrates the set up and integration of a PWM BLL in KinomaJS.
 
@@ -693,7 +693,7 @@ Rotates a 360˚ continuous servo using a PWM pin. Demonstrates the set up and in
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/pwm-tri-color-led">pwm-tri-color-led</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/pwm-tri-color-led"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/pwm-tri-color-led-example.jpg" height="100" alt=""/></a>
 					
-<x-app-info id="pwmtricolorled.example.kinoma.marvell.com"><span class="createSample pinsSample samplePage"></span></x-app-info>
+<x-app-info id="pwmtricolorled.example.kinoma.marvell.com"><span class="createSample pinsSample "></span></x-app-info>
 
 This sample uses red/green/blue sliders to control the color of an RGB LED. The LED is controlled by PWM pins. Each slider is a KPR Canvas object that triggers an onChanged event when you move it to a new position.
 
@@ -893,7 +893,7 @@ This example demonstrates how to use different timer techniques: One-shot, inter
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/transitions">transitions</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/transitions"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/transitions-example.jpg" height="100" alt=""/></a>
 					
-<x-app-info id="transitions.example.kinoma.marvell.com"><span class="samplePage uiSample"></span></x-app-info>
+<x-app-info id="transitions.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
 
 This example demonstrates how to use the Transitions library to configure and use a variety of transitions. The host application can further customize each transition by overriding the duration, easing function used for pacing time and specifying whether or not the former content should be removed once the transition completes.
 
