@@ -19,9 +19,6 @@ var THEME = require ("themes/flat/theme");
 var CONTROL = require ("mobile/control");
 var PinsSimulators = require ("PinsSimulators");
 
-// assets
-var blackFrameSkin = new Skin("white", {left: 1, right: 1, top:1, bottom:1}, "black");
-
 // styles
 var displayStyle = new Style({ font:"bold 75px Fira Mono", color: "#FFFF0000", horizontal:"center" });
 
@@ -46,13 +43,17 @@ var S7SLine = Container.template(function($) { return {
 			top: 20, bottom: 20,
 			style: displayStyle,
 			anchor: "DISPLAY",
-			skin: blackFrameSkin,
+			skin: new Skin( { fill: "black" } ),
 			contents: [
-				Label($, { anchor: "D0", left:0, width:62 }),
-				Label($, { anchor: "D1", left:60, width:62 }),
-				Label($, { anchor: "COLON", left:115, width:15, string: ":", visible: false }),
-				Label($, { anchor: "D2", left:130, width:62  }),
-				Label($, { anchor: "D3", left:190, width:62 }),
+				Label($, { anchor: "D0", left:10, width:62, string:"0" }),
+				Label($, { anchor: "DECIMAL_1", left:54, width:20, string:".", visible:false }),
+				Label($, { anchor: "D1", left:65, width:62, string:"0" }),
+				Label($, { anchor: "DECIMAL_2", left:117, width:20, string:".", visible:false }),
+				Label($, { anchor: "COLON", left:120, width:15, top: -3, string: ":", visible:false }),
+				Label($, { anchor: "D2", left:130, width:62, string:"0"  }),
+				Label($, { anchor: "DECIMAL_3", left:182, width:20, string:".", visible:false }),
+				Label($, { anchor: "D3", left:190, width:62, string:"0" }),
+				Label($, { anchor: "DECIMAL_4", left:242, width:20, string:".", visible:false }),
 			]
 		})]
 }});
@@ -69,7 +70,7 @@ exports.configure = function(configuration) {
 		header : { 
 			label : this.id, 
 			name : "7-Segment Display", 
-			iconVariant : PinsSimulators.SENSOR_KNOB 
+			iconVariant : PinsSimulators.SENSOR_GUAGE 
 		},
 		cursor: 0,
 	};
@@ -92,6 +93,10 @@ exports.clear = function() {
 	this.data.D2.string = "";
 	this.data.D3.string = "";
 	this.data.COLON.visible = false;
+	this.data.DECIMAL_1.visible = false;
+	this.data.DECIMAL_2.visible = false;
+	this.data.DECIMAL_3.visible = false;
+	this.data.DECIMAL_4.visible = false;
 }
 
 exports.close = function() {
@@ -104,6 +109,10 @@ exports.cursor = function(digit) {
 
 exports.writeDecimalControl = function(command) {
 	this.data.COLON.visible = (command & this.COLON_BIT_MASK);
+	this.data.DECIMAL_1.visible = (command & this.DECIMAL_1_BIT_MASK);
+	this.data.DECIMAL_2.visible = (command & this.DECIMAL_2_BIT_MASK);
+	this.data.DECIMAL_3.visible = (command & this.DECIMAL_3_BIT_MASK);
+	this.data.DECIMAL_4.visible = (command & this.DECIMAL_4_BIT_MASK);
 }
 
 exports.writeString = function(string) {
