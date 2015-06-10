@@ -110,6 +110,16 @@ This sample demonstrates how to use an analog trimpot to control the media playe
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/animated-sprite">animated-sprite</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/animated-sprite"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/animated-sprite-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="animatedsprite.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
+
+This sample shows how to implement a simple animated sprite. The frames are rendered from a horizontal image strip wrapped by a KinomaJS texture and skin. The skin is bound to a KinomaJS content that drives the animation using an interval timer.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/audio-detect">audio-detect</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/audio-detect"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/audio-detect-example.jpg" height="100" alt=""/></a>
 
