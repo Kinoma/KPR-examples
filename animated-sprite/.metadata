@@ -1,0 +1,14 @@
+<example 
+	id="animatedsprite.example.kinoma.marvell.com"
+	title="Animated Sprite Example"
+	project="Animated Sprite Example"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+This sample shows how to implement a simple animated sprite. The frames are rendered from a horizontal image strip wrapped by a KinomaJS texture and skin. The skin is bound to a KinomaJS content that drives the animation using an interval timer.
+	]]></description>
+
+</example>

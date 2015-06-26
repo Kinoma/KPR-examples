@@ -15,6 +15,8 @@
   limitations under the License.
 */
 
+var Pins = require("pins");
+
 Handler.bind("/climateData", {
 	onInvoke: function(handler, message) {
         var data = model.data;
@@ -33,6 +35,8 @@ var model = application.behavior = Object.create(Object.prototype, {
             return;
         }
 
+		Pins.share("http");
+		
         application.invoke(new MessageWithObject("pins:/tesselClimate/read?repeat=on&callback=/climateData&interval=30"));
 
         application.skin = new Skin({ fill: "#76b321" });

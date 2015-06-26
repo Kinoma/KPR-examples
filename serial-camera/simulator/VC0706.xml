@@ -50,7 +50,7 @@
 				),
 			]
 		});
-		this.pinsSimulator.add( new ImageMaker() );
+		this.pinsSimulator.add(new ImageMaker);
 	]]></function>
 
 	<function id="close"><![CDATA[
@@ -60,7 +60,6 @@
 	<function id="setCompression" params="value"><![CDATA[
 		this.pinsSimulator.delegate("setValue", "compression", value);
 		gCompression = value;
-		this.pinsSimulator.last.delegate("createJPEG");
 	]]></function>
 
 	<function id="setImageSize" params="size"><![CDATA[
@@ -68,88 +67,75 @@
 		this.pinsSimulator.delegate("setValue", "height", size.h);
 		gWidth = size.w;
 		gHeight = size.h;
-		this.pinsSimulator.last.delegate("createJPEG");
 	]]></function>
 
 	<function id="capture"><![CDATA[
-	trace("capture is returning chunk with length: " + gJPEG_Chunk.length);
-		return gJPEG_Chunk;
+		if (!gReady) return;
+		var chunk = gChunks[gChunkIndex];
+		if (++gChunkIndex == 3)
+			gChunkIndex = 0;
+		return chunk;
 	]]></function>
 
-	<content id="ImageMaker">
-		<behavior>
-			<method id="onCreate" params="content, data">
-				this.ready = false;
-			</method>
-			<method id="onDisplaying" params="content">
-				this.ready = true;
-				this.createJPEG(content);
-			</method>
-			<method id="onComplete" params="content, message, chunk">
-			trace("\n onComplete chunk.length: " + chunk.length)
-				gJPEG_Chunk = chunk;
-			</method>
-			<method id="createJPEG" params="content">
-				// application triggers this at onLaunch() time, which is before containment hierarchy
-				// has been connected together (content.container links), so we can't yet create the JPEG
-				// so we wait until onDisplaying to do the first capture
-				if (this.ready == true)
-					content.invoke( new Message("/capture-jpeg"), Message.CHUNK );
-			</method>
-		</behavior>
-	</content>
-
+	<texture id="photo1Texture" small="1.jpg"/>
+	<skin id="photo1Skin" texture="photo1Texture" x="0" y="0" width="292" height="386"/>
+	<texture id="photo2Texture" small="2.jpg"/>
+	<skin id="photo2Skin" texture="photo2Texture" x="0" y="0" width="310" height="310"/>
+	<texture id="photo3Texture" small="3.jpg"/>
+	<skin id="photo3Skin" texture="photo3Texture" x="0" y="0" width="366" height="512"/>
+	
 	<handler path="/capture-jpeg">
 		<behavior>
 			<method id="onInvoke" params="handler, message">
-				var canvas = new Canvas( { left : 0, top : 0, width : gWidth, height : gHeight } );
-				var ctx = canvas.getContext( "2d" );
-
-				ctx.translate(canvas.width / 2, canvas.height / 2);		// translate context to center of canvas
-				ctx.rotate(Math.PI);									// rotate 180 degrees
-				ctx.translate(-canvas.width / 2, -canvas.height / 2);	// translate back to normal
-
-				ctx.beginPath();
-				ctx.fillStyle = "black";
-				ctx.rect(0, 0, canvas.width, canvas.height);
-				ctx.fill();
-
-				ctx.beginPath();
-				ctx.fillStyle = "white";
-				ctx.rect(10, 10, canvas.width - 20, canvas.height - 20);
-				ctx.fill();
-
-				ctx.beginPath();
-				ctx.fillStyle = "black";
-				ctx.rect(20, 20, canvas.width - 40, canvas.height - 40);
-				ctx.fill();
-
-				ctx.font = "bold 24px Arial";
-				ctx.textAlign = "left";
-				ctx.fillStyle = "white";
-				ctx.fillText("Compression: " + gCompression, 50, 50);
-				ctx.fillText("Width: " + gWidth, 50, 75);
-				ctx.fillText("Height: " + gHeight, 50, 100);
-				
-				shell.add(canvas);
-				var layer = new Layer( { acceleration : false, alpha : false } );
-				layer.attach(canvas);
+				var container;
+				if (0 == gChunks.length)
+					container = new Container({width: photo1Skin.width, height: photo1Skin.height, skin: photo1Skin});
+				else if (1 == gChunks.length)
+					container = new Container({width: photo2Skin.width, height: photo2Skin.height, skin: photo2Skin});
+				else if (2 == gChunks.length)
+					container = new Container({width: photo3Skin.width, height: photo3Skin.height, skin: photo3Skin});
+					
+				shell.add(container);
+				var layer = new Layer(null, true, true);
+				layer.attach(container);
 
 				layer.setResponseJPEG(message);
 				
 				layer.detach();
-				shell.remove(canvas);
+				shell.remove(container);
 			</method>
 		</behavior>
 	</handler>
+
+	<content id="ImageMaker">
+		<behavior>
+			<method id="onCreate" params="content, data">
+				this.index = 0;
+			</method>
+			<method id="onDisplayed" params="content, data">
+				content.invoke( new Message("/capture-jpeg"), Message.CHUNK);
+			</method>
+			<method id="onComplete" params="content, message, chunk">
+				Files.writeChunk(mergeURI(Files.documentsDirectory, this.index + ".jpg"), chunk);
+				gChunks.push(chunk);
+				++this.index;
+				if (3 == this.index)
+					gReady = true;
+				else
+					content.invoke(new Message("/capture-jpeg"), Message.CHUNK);
+			</method>
+		</behavior>
+	</content>
 
 	<script><![CDATA[
 		exports.pins = {
 			serial: {type: "Serial", baud: 38400  }
 		};
-		var gWidth = 0, gHeight = 0;
-		var gJPEG_Chunk = null;
+		var gWidth = 320, gHeight = 240;
+		var gReady = false;
 		var gCompression = 0;
+		var gChunks = [];
+		var gChunkIndex = 0;
 	]]></script>
 
 </module>

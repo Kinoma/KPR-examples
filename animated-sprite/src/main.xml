@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<program xmlns="http://www.kinoma.com/kpr/1">
+
+	<texture id="spriteTexture" small="./assets/balls.png"/>
+	<skin id="spriteSkin" texture="spriteTexture" x="0" y="0" width="30" height="30">
+		<variants offset="30"/>
+	</skin>
+	<skin id="blackSkin" color="black"/>
+	
+	<content id="SpriteCell" width="$.skin.width" height="$.skin.height" skin="$.skin">
+		<behavior>
+            <method id="onCreate" params="container, data">
+                <![CDATA[
+                    this.data = data;
+					container.interval = this.data.interval;
+                ]]>
+            </method>
+            <method id="onDisplayed" params="container">
+                <![CDATA[
+                    container.start();
+                ]]>
+            </method>
+            <method id="onTimeChanged" params="container">
+                <![CDATA[
+                	var variant = (container.variant + 1) % this.data.frames;
+                    container.variant = variant;
+                ]]>
+            </method>
+        </behavior>
+	</content>
+
+	<container id="MainContainer" left="0" right="0" top="0" bottom="0" skin="blackSkin">
+		<content like="SpriteCell"/>
+	</container>
+	
+    <script>
+        <![CDATA[
+            var data = {
+            	skin: spriteSkin,	// Sprite image strip
+            	frames: 4,			// Number of frames in sprite strip
+            	interval: 100		// Display each frame for 100 ms
+            }
+            application.add(new MainContainer(data));
+        ]]>
+    </script>
+</program>
