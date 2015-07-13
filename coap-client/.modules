@@ -18,4 +18,5 @@
 <modulepath>
    <modulepathentry path="src" type="src"></modulepathentry>
    <modulepathentry path="com.marvell.kinoma.kpr:/libraries/MobileFramework.zip" type="lib" kind="plugin"></modulepathentry>
+   <modulepathentry path="com.marvell.kinoma.kpr:/system/SimulatorRuntime.zip" type="runtime"></modulepathentry>
 </modulepath>
