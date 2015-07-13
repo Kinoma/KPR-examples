@@ -580,6 +580,26 @@ This example demonstrates how to use a MobileFramework menu button. The menu but
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/MonsterMayhem">MonsterMayhem</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/MonsterMayhem"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/MonsterMayhem-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="MonsterMayhem"><span class="uiSample pinsSample createSample"></span></x-app-info>
+
+This project builds on top of the i2c-nfc sample by using the same Adafruit PN532 NFC/RFID Controller shield to create an interactive game that makes use of the NFC cards as a "controller". The user places a card on the reader and is able to select an avatar (or “monster”) from about 15 options. The program takes advantage of the fact that data can also be written to a NFC card and uses it as a storage medium: the user’s choice is effectively serialized onto the card as JSON data, and the card can now be brought to another Kinoma Create where the companion project MonsterMayhemGumball is running to proceed with gameplay.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/MonsterMayhemGumball">MonsterMayhemGumball</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/MonsterMayhemGumball"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/MonsterMayhemGumball-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="MonsterMayhemGumball"><span class="uiSample pinsSample createSample"></span></x-app-info>
+
+This project is the companion project to MonsterMayhem, and requires a properly programmed NFC card from MonsterMayhem in order to properly work. The user places the preprogrammed card onto the NFC reader and then plays a simple memory game. All the possible candidate “monsters” scroll by, and once the correct avatar is shown (the one initially chosen by the user and programmed onto the card), he/she must quickly remove the card from the reader in order to win the game and receive a gumball. The user is given three tries to do so. If all attempts have been exhausted, then the user must select another monster with a Kinoma Create running MonsterMayhem and reprogram their card.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/multitouch-picture">multitouch-picture</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/multitouch-picture"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/multitouch-picture-example.jpg" height="100" alt=""/></a>
 					
