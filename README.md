@@ -485,7 +485,7 @@ This sample integrates the Sparkfun Infrared Proximity Breakout board with Kinom
 
 <x-app-info id="kangaroo.disco.example.douzen.com"><span class="uiSample"></span></x-app-info>
 
-This ECMAScript API example displays a synchronized animation built with 256 balls/sprites. Each sprite’s position and size is changed every screen update. A content clock is used to update the display every screen refresh. Tap the screen to change the animation mode. This example shows how to use KPR content clocks, textures/skins, behaviors and content coordinates to achieve full frame rate animations.
+This ECMAScript API example displays a synchronized animation built with 256 balls/sprites. Each sprite’s position and size is changed every screen update. A content clock is used to update the display every screen refresh. Tap the screen to change the animation mode. This example shows how to use KPR content clocks, textures/skins, behaviors and content coordinates to achieve full frame rate animations.  Also contains icon resources required to allow testing of iOS export from Kinoma Studio.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
