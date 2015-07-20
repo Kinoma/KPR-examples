@@ -775,7 +775,7 @@ BLL and sample application for the Adafruit Ultimate GPS Breakout, MTK3339 GPS c
 
 <x-app-info id="simplesynth.example.kinoma.marvell.com"><span class="createSample pinsSample mediaSample"></span></x-app-info>
 
-Simple Synth shows you how to synthesize audio in real time for low latency playback on Kinoma Create. Use the on-screen multi-touch keyboard to play up to three simultaneous notes on the sine wave based synthesizer.
+Simple Synth shows you how to synthesize audio in real time for low latency playback on Kinoma Create. Use the on-screen multi-touch keyboard to play up to five simultaneous notes on the sine wave based synthesizer. Additional synthesizer modes have been added in, as well as an optional analog input for volume control. 
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
