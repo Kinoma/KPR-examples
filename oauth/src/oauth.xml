@@ -17,8 +17,6 @@
 <module xmlns="http://www.kinoma.com/kpr/1">
 	<script><![CDATA[
 
-	include("Crypt");
-		
 	var OAuth1Authorizer = function(consumer_key, consumer_secret) {
 		this.consumer = {
 			key: consumer_key,
