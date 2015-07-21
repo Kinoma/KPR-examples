@@ -20,17 +20,20 @@
 
 	<behavior id="PWMLEDBehavior">
 		<method id="onCreate" params="column, data"><![CDATA[
+			column.add(new spacer);
 			column.add(new PWMLED(data)); 
 			column.distribute("onChanged");
 		]]></method>	
 	</behavior>
 
 	<texture id="colorLEDTexture" small="color-led.png"/>
-	<skin id="colorLEDSkin" texture="colorLEDTexture" x="0" y="0" width="150" height="150"/>	
+	<skin id="colorLEDSkin" texture="colorLEDTexture" x="0" y="0" width="150" height="233"/>	
 
 	<skin id="redSkin" color="red"/>
+	
+	<container id="spacer" width="150" height="17"/>
 
-	<container id="PWMLED" width="150" height="150" skin="redSkin">
+	<container id="PWMLED" width="150" height="233" skin="redSkin">
 		<canvas left="0" top="0" right="0" bottom="0">
 			<behavior>
 				<method id="onDisplaying" params="canvas"><![CDATA[
@@ -44,16 +47,12 @@
 					ctx.fill();
 				]]></method>
 				<method id="getColorString" params="canvas"><![CDATA[
-					var r = (1 - gColor.r) * 255, g = (1 - gColor.g) * 255, b = (1 - gColor.b) * 255;
-					r = r.toString(16);
-					g = g.toString(16);
-					b = b.toString(16);
-					if ( r.length < 2 ) r = "0" + r;
-					if ( g.length < 2 ) g = "0" + g;
-					if ( b.length < 2 ) b = "0" + b;
-					var str = "#" + r + g + b;
+					var r = Math.floor((1 - gColor.r) * 255);
+					var g = Math.floor((1 - gColor.g) * 255);
+					var b = Math.floor((1 - gColor.b) * 255);
+					var str = "rgb(" + r + "," + g + "," + b +")";
 					
-					trace("\n str: " + str);
+					//trace("\n str: " + str);
 					
 					return str;
 				]]></method>
