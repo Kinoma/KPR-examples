@@ -530,6 +530,16 @@ This sample shows how to use the LevelMeterWithProbe object found in the sampleG
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/license-simple">license-simple</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/license-simple"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/license-simple-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="licensesimple.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
+
+This MobileFramework application shows one approach for integrating display of the Apache License NOTICE file into a KinomaJS application. Refer to the Frequently Asked Questions about KinomaJS and Open Source tech note for details. The application demonstrates how to build a scrolling multi-style text view with active links.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/list">list</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/list"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/list-example.jpg" height="100" alt=""/></a>
 					
