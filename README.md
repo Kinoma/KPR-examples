@@ -730,6 +730,16 @@ This sample uses red/green/blue sliders to control the color of an RGB LED. The 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/ReflexTest">ReflexTest</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/ReflexTest"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/ReflexTest-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="reflextest.example.kinoma.marvell.com"><span class="createSample pinsSample uiSample"></span></x-app-info>
+
+This app demonstrates how to use a digital pin to read input from a physical button and use sub-pixel rendering to get smooth animation. It is a simple reflex testing game to play on a Kinoma Create. Three sheep will attempt to run across the screen, and the player's goal is to tap the button before they make it all the way across.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/serial-camera">serial-camera</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/serial-camera"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/serial-camera-example.jpg" height="100" alt=""/></a>
 
