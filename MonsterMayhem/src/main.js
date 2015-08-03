@@ -4,13 +4,13 @@
  * IMPORTS
  */
  
-var THEME = require('themes/sample/theme');
+THEME = require('themes/sample/theme');
 var TRANSITIONS = require("transitions");
 var SCROLLER = require("mobile/scroller");
 
 var NFCHELP = require("NFCHelper")
-var MONSTERSELECT = require("MonsterSelect.js");
-var MONSTERSTATUS = require("MonsterStatus.js");
+var MONSTERSELECT = require("MonsterSelect");
+var MONSTERSTATUS = require("MonsterStatus");
 
 /**********
  * SKINS AND STYLES
@@ -95,7 +95,7 @@ function instructions() {
 	return new Port({top: 0, left: 0, bottom: 0, right: 0, behavior: stripBehavior}); 
 }
 
-var HomeScreenTemplate = new Column.template(function($){
+var HomeScreenTemplate = Column.template(function($){
 
 	return{
 		left: 0, right: 0, top: 0, bottom: 0,

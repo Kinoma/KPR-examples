@@ -24,7 +24,7 @@
 */
 include("pubnub");
 
-var THEME = require("themes/flat/theme");
+THEME = require("themes/flat/theme");
 var BUTTONS = require("controls/buttons");
 
 /*

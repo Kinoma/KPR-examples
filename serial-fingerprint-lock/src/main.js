@@ -17,7 +17,7 @@
 
 // Sounds from WavSource - http://www.wavsource.com/dis.htm
 
-var THEME = require("themes/flat/theme");
+THEME = require("themes/flat/theme");
 var STHEME = require("themes/sample/theme");
 
 THEME.dialogCaptionStyle = STHEME.dialogCaptionStyle;

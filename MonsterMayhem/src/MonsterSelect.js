@@ -1,5 +1,5 @@
 //@module
-
+var SCROLLER = require("mobile/scroller");
 var img = [
 	"NFCGuys-1.png",
 	"NFCGuys-2.png",

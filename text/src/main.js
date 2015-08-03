@@ -15,7 +15,7 @@
   limitations under the License.
 */
 
-var THEME = require("themes/sample/theme");
+THEME = require("themes/sample/theme");
 var CONTROL = require("mobile/control");
 var DIALOG = require("mobile/dialog");
 var KEYBOARD = require("mobile/keyboard");

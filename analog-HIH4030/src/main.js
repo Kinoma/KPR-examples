@@ -14,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-var THEME = require ("themes/sample/theme");
+THEME = require ("themes/sample/theme");
 var TOOL = require("mobile/tool");
 
 // assets

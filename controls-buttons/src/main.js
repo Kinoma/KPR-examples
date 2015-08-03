@@ -17,7 +17,7 @@
 
 
 
-var THEME = require('themes/flat/theme');
+THEME = require('themes/flat/theme');
 var BUTTONS = require('controls/buttons');
 
 var background = Container( {}, { left: 0, right: 0, top: 0, bottom: 0, skin: THEME.whiteSkin } );

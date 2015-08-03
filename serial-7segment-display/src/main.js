@@ -14,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-var THEME = require ("themes/flat/theme");
+THEME = require ("themes/flat/theme");
 var KEYBOARD = require("creations/keyboard");
 var CONTROL = require("mobile/control");
 var SLIDERS = require("controls/sliders");
