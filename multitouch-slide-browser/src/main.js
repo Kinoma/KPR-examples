@@ -15,8 +15,8 @@
   limitations under the License.
 */
 
-var THEME = require ("themes/sample/theme");
-var SLIDES = require('slidePictureTouchStates');
+THEME = require("themes/sample/theme");
+var SLIDES = require("slidePictureTouchStates");
 
 var SlideBrowser = Container.template(function($) { return { 
 	anchor: 'SLIDE_BROWSER', 
@@ -48,7 +48,7 @@ var SlideBrowser = Container.template(function($) { return {
 	}),
 	
 	contents: [
-		SLIDES.SlideViewer($, { left: 0, right: 0, top: 0, bottom: 0, anchor: 'SCROLLER', }),
+		SLIDES.SlideViewer($, { left: 0, right: 0, top: 0, bottom: 0, anchor: 'SCROLLER' }),
 	], 
 }});
 
