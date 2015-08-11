@@ -26,22 +26,23 @@ aval = 2048;
 // ---------------------------------------------------------------------------------------------------------
 // Skins
 // ---------------------------------------------------------------------------------------------------------
-var keyBoardSkin = new Skin({fill: [ "#59C92C"]});//Kinoma Green!
-var keySkin = new Skin({ fill: ["white", "silver"], stroke:"silver", borders: {left: 1, right: 1, top: 1, bottom: 1} });
-var halfkeySkin = new Skin({ fill: ["black", "silver"], stroke:"silver", borders: {left: 1, right: 1, top: 1, bottom: 1}});
+var KeyBoardSkin = new Skin({fill: [ "#59C92C"]});//Kinoma Green!
+var KeySkin = new Skin({ fill: ["white", "silver"], stroke:"silver", borders: {left: 1, right: 1, top: 1, bottom: 1} });
+var HalfKeySkin = new Skin({ fill: ["black", "silver"], stroke:"silver", borders: {left: 1, right: 1, top: 1, bottom: 1}});
 
 // ---------------------------------------------------------------------------------------------------------
 // Assets
 // ---------------------------------------------------------------------------------------------------------
-var synthTexture = new Texture("./assets/synthiconsborder.png");
-var synthStates = new Skin({ texture: synthTexture,  x:0, y:0, width:80, height:80, states:80, variants:80 });
+
+var SynthTexture = new Texture("./assets/synthiconsborder.png");
+var SynthStates = new Skin({ texture: SynthTexture,  x:0, y:0, width:80, height:80, states:80, variants:80 });
 
 // ---------------------------------------------------------------------------------------------------------
 // UI elements
 // ---------------------------------------------------------------------------------------------------------
 // White keys template
 var Key = Content.template(function($) { return {
-    top: 2, width: 38, height: 150, skin: keySkin,
+    top: 2, width: 38, height: 150, skin: KeySkin,
     behavior: Behavior({
         onCreate: function(container, data) {
             this.frequency = data;
@@ -50,8 +51,8 @@ var Key = Content.template(function($) { return {
 }});
 
 // Black keys template
-var halfKey = Content.template(function($) { return {
-    top: 2, width: 18, height: 90, skin: halfkeySkin,
+var HalfKey = Content.template(function($) { return {
+    top: 2, width: 18, height: 90, skin: HalfKeySkin,
     behavior: Behavior({
         onCreate: function(container, data) {
             this.frequency = data;
@@ -60,8 +61,8 @@ var halfKey = Content.template(function($) { return {
 }});
 
 // Synth mode buttons template 
-var synthButton = Content.template(function($) { return {
-	top:0, width:78, height:78, skin: synthStates, variant: $, state: "OFF", 
+var SynthButton = Content.template(function($) { return {
+	top:0, width:78, height:78, skin: SynthStates, variant: $, state: "OFF", 
 	behavior: Behavior({
 		onCreate: function(container, data){
 			this.name = data;
@@ -70,7 +71,7 @@ var synthButton = Content.template(function($) { return {
 }});
 
 // Button tray container template
-var buttonTray = Container.template(function($) { return {
+var ButtonTray = Container.template(function($) { return {
 	left: 0, right: 0, top: 160, bottom: 0, active: true, 
 	behavior: Behavior({
 		// Calculate index of button of touched based on x-y
@@ -110,13 +111,13 @@ var buttonTray = Container.template(function($) { return {
     }),
     // Map synthesizer mode buttons
     contents: $.map(function(name, index) {
-    	return new synthButton(name, {left: index*80});     	
+    	return new SynthButton(name, {left: index*80});     	
 	}),	
 }})
 
 // Keyboard container template
 var Keyboard = Container.template(function($) { return {
-    left: 0, right: 0, top: 0, bottom: 0, active: true, multipleTouch: true, skin: keyBoardSkin,
+    left: 0, right: 0, top: 0, bottom: 0, active: true, multipleTouch: true, skin: KeyBoardSkin,
     behavior: Behavior({
         // Hit based on x-y coords
         hitIndex: function(container, x, y) {
@@ -212,9 +213,9 @@ var Keyboard = Container.template(function($) { return {
     // Maps keys. white keys are 0-7 index, black keys after
     contents: $.map(function(frequency, index) {
     	if ( index < 8) return new Key(frequency, { left: index * 40 });
-    	else if ( index < 10) return new halfKey(frequency, { left: 30 + (index-8) * 40 });
-       	else if ( index < 13) return new halfKey(frequency, { left: 150 + (index-10) * 40 });
-       	else return new halfKey(frequency, { left: 310});
+    	else if ( index < 10) return new HalfKey(frequency, { left: 30 + (index-8) * 40 });
+       	else if ( index < 13) return new HalfKey(frequency, { left: 150 + (index-10) * 40 });
+       	else return new HalfKey(frequency, { left: 310});
     }),
 }});
 
@@ -243,14 +244,14 @@ application.behavior = Behavior({
             application.add(new Label({ left:0, right:0, top:0, bottom:0, style: style, string:"Error " + message.error }));
             return;
         }
-		
+ 		
         /* Use the initialized analogSensor object and repeatedly 
 	   	call its read method with a given interval(20ms).  */
 		application.invoke(new MessageWithObject("pins:/analogSensor/read?repeat=on&interval=20&callback=/gotAnalogResult"));	
 		// Initialized keyboard, data passed are notes C,D,E,F,G,A,B,C scale, plus all half steps added in order at the end.
 		application.add(new Keyboard([523, 587, 660, 698, 783, 880, 988, 1046, 554, 622, 740, 831, 932, 1109]));
 		// Initialized buttons to the variants defined in theme.xml
-        application.add(new buttonTray([0,1,2,3]));     
+        application.add(new ButtonTray([0,1,2,3]));     
 		/* Use the initialized audio object and repeatedly 
     	   call its synthesize method with a given interval.  */
         application.invoke(new MessageWithObject("pins:/audio/synthesize?repeat=on&timer=speaker&callback=/getSamples"));
@@ -264,8 +265,8 @@ application.behavior = Behavior({
             audio: {
                 require: "synthOut",
                 pins: {
-                /* Lowered sampleRate from 8k to 4k, to allow for more 
-                   simultaneous tones (to support synth modes). You get ~5 at 4k, and ~3 at 8k.*/
+                /* Lowered sampleRate from 8kHz to 4kHz, to allow for more 
+                   simultaneous tones (to support synth modes). You get ~5 at 4kHz, and ~3 at 8kHz.*/
                     speaker: {sampleRate: 4000, amplitude: aval}
                     }
             },
