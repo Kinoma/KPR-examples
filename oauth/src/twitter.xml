@@ -86,6 +86,7 @@
 		});
 		message.requestText = body;
 		message.setRequestHeader("Content-Length", body.length);
+		message.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		
 		authorizer.authorize(message, session.requestToken);
 		
