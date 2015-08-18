@@ -330,6 +330,16 @@ Uses a digital pin to turn on and off an LED when a button is pressed on screen.
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-reflex-test">digital-reflex-test</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-reflex-test"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/digital-reflex-test-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="digital-reflex-test.example.kinoma.marvell.com"><span class="createSample pinsSample uiSample"></span></x-app-info>
+
+This app demonstrates how to use a digital pin to read input from a physical button and use sub-pixel rendering to get smooth animation. It is a simple reflex testing game to play on a Kinoma Create. Three sheep will attempt to run across the screen, and the player's goal is to tap the button before they make it all the way across.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/discovery-client">discovery-client</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/discovery-client"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/discovery-client-example.jpg" height="100" alt=""/></a>
 
@@ -416,6 +426,26 @@ This application changes the MainContainer's skin to the color sensed by a TCS34
 <x-app-info id="i2chover.example.kinoma.marvell.com"><span class="pinsSample createSample"></span></x-app-info>
 
 BLL and sample application for the Hover board touchless gesture sensor from http://hoverlabs.co. Includes a BLL simulator for use in Kinoma Studio and device BLL for use on Kinoma Create. Demonstrates how to write a BLL that uses both I2C and Digital pins, and that changes the direction of Digital pins at runtime.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-monster-mayhem">i2c-monster-mayhem</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-monster-mayhem"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/i2c-monster-mayhem-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="i2c-monster-mayhem"><span class="uiSample pinsSample createSample"></span></x-app-info>
+
+This project builds on top of the i2c-nfc sample by using the same Adafruit PN532 NFC/RFID Controller shield to create an interactive game that makes use of the NFC cards as a "controller". The user places a card on the reader and is able to select an avatar (or “monster”) from about 15 options. The program takes advantage of the fact that data can also be written to a NFC card and uses it as a storage medium: the user’s choice is effectively serialized onto the card as JSON data, and the card can now be brought to another Kinoma Create where the companion project i2c-monster-mayhem-gumball is running to proceed with gameplay.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-monster-mayhem-gumball">i2c-monster-mayhem-gumball</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-monster-mayhem-gumball"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/i2c-monster-mayhem-gumball-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="i2c-monster-mayhem-gumball"><span class="uiSample pinsSample createSample"></span></x-app-info>
+
+This project is the companion project to i2c-monster-mayhem, and requires a properly programmed NFC card from i2c-monster-mayhem in order to properly work. The user places the preprogrammed card onto the NFC reader and then plays a simple memory game. All the possible candidate “monsters” scroll by, and once the correct avatar is shown (the one initially chosen by the user and programmed onto the card), he/she must quickly remove the card from the reader in order to win the game and receive a gumball. The user is given three tries to do so. If all attempts have been exhausted, then the user must select another monster with a Kinoma Create running i2c-monster-mayhem and reprogram their card.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -590,26 +620,6 @@ This example demonstrates how to use a MobileFramework menu button. The menu but
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-monster-mayhem">i2c-monster-mayhem</a>
-<a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-monster-mayhem"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/i2c-monster-mayhem-example.jpg" height="100" alt=""/></a>
-					
-<x-app-info id="i2c-monster-mayhem"><span class="uiSample pinsSample createSample"></span></x-app-info>
-
-This project builds on top of the i2c-nfc sample by using the same Adafruit PN532 NFC/RFID Controller shield to create an interactive game that makes use of the NFC cards as a "controller". The user places a card on the reader and is able to select an avatar (or “monster”) from about 15 options. The program takes advantage of the fact that data can also be written to a NFC card and uses it as a storage medium: the user’s choice is effectively serialized onto the card as JSON data, and the card can now be brought to another Kinoma Create where the companion project i2c-monster-mayhem-gumball is running to proceed with gameplay.
-
-<div style="clear:both; margin-bottom: 16px;"></div>			
-***
-
-### <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-monster-mayhem-gumball">i2c-monster-mayhem-gumball</a>
-<a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-monster-mayhem-gumball"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/i2c-monster-mayhem-gumball-example.jpg" height="100" alt=""/></a>
-					
-<x-app-info id="i2c-monster-mayhem-gumball"><span class="uiSample pinsSample createSample"></span></x-app-info>
-
-This project is the companion project to i2c-monster-mayhem, and requires a properly programmed NFC card from i2c-monster-mayhem in order to properly work. The user places the preprogrammed card onto the NFC reader and then plays a simple memory game. All the possible candidate “monsters” scroll by, and once the correct avatar is shown (the one initially chosen by the user and programmed onto the card), he/she must quickly remove the card from the reader in order to win the game and receive a gumball. The user is given three tries to do so. If all attempts have been exhausted, then the user must select another monster with a Kinoma Create running i2c-monster-mayhem and reprogram their card.
-
-<div style="clear:both; margin-bottom: 16px;"></div>			
-***
-
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/multitouch-picture">multitouch-picture</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/multitouch-picture"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/multitouch-picture-example.jpg" height="100" alt=""/></a>
 					
@@ -736,16 +746,6 @@ Rotates a 360˚ continuous servo using a PWM pin. Demonstrates the set up and in
 <x-app-info id="pwmtricolorled.example.kinoma.marvell.com"><span class="createSample pinsSample "></span></x-app-info>
 
 This sample uses red/green/blue sliders to control the color of an RGB LED. The LED is controlled by PWM pins. Each slider is a KPR Canvas object that triggers an onChanged event when you move it to a new position.
-
-<div style="clear:both; margin-bottom: 16px;"></div>			
-***
-
-### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-reflex-test">digital-reflex-test</a>
-<a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-reflex-test"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/digital-reflex-test-example.jpg" height="100" alt=""/></a>
-					
-<x-app-info id="digital-reflex-test.example.kinoma.marvell.com"><span class="createSample pinsSample uiSample"></span></x-app-info>
-
-This app demonstrates how to use a digital pin to read input from a physical button and use sub-pixel rendering to get smooth animation. It is a simple reflex testing game to play on a Kinoma Create. Three sheep will attempt to run across the screen, and the player's goal is to tap the button before they make it all the way across.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
