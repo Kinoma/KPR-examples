@@ -1,0 +1,14 @@
+<example 
+	id="i2c-monster-mayhem-gumball"
+	title="Monster Mayhem Gumball (NFC/RFID)"
+	project="i2c-monster-mayhem-gumball"
+	resources="application.xml" 
+	tags=""
+	type="application" 
+	category="com.marvell.kinoma.examples.starter">
+
+	<description><![CDATA[
+This project is the companion project to i2c-monster-mayhem, and requires a properly programmed NFC card from i2c-monster-mayhem in order to properly work. The user places the preprogrammed card onto the NFC reader and then plays a simple memory game. All the possible candidate “monsters” scroll by, and once the correct avatar is shown (the one initially chosen by the user and programmed onto the card), he/she must quickly remove the card from the reader in order to win the game and receive a gumball. The user is given three tries to do so. If all attempts have been exhausted, then the user must select another monster with a Kinoma Create running i2c-monster-mayhem and reprogram their card.
+	]]></description>
+
+</example>
