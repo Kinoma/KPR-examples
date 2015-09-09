@@ -19,9 +19,10 @@
 var THEME = require('themes/sample/theme');
 var SCROLLER = require('mobile/scroller');
 var SCREEN = require('mobile/screen');
+var MODEL = require('mobile/model');
 
 /* Skins and Styles */
-var smallStyle = new Style ({ font: 'bold 18px', color: '#FFF' });
+var smallStyle = new Style ({ font: 'bold 18px', horizontal: 'center', color: '#FFF' });
 var titleStyle = new Style ({font: '24px', color: '#000'});
 var whiteBox = new Skin ({fill: 'white'});
 var blueBox = new Skin ({fill: 'blue'});
@@ -31,7 +32,7 @@ var buttonStyle = new Style({font: '22px', color: 'white', horizontal: 'center'}
 
 /* Globals */
 var FadeDuration = 1500;
-var WhiteContent = new Content({height: 150, width: 150, skin: whiteBox});
+
 var EasingFunctionOut = function(fraction) {
 							return fraction;
 						};
@@ -39,37 +40,39 @@ var EasingFunctionIn = function(fraction) {
 							return fraction;
 						};					
 /* Main screen layout */
-var mainContainer = new Container({
+var mainContainer = Container.template(function($) { return {
 	left: 0, right: 0, top: 0, bottom: 0, active: false, skin: whiteBox, name: 'mainCon',
 	contents: [
-		new Column ({left: 0, right: 0, top: 0, bottom: 0, name: 'contentColumn',
+		Column ($, {left: 0, right: 0, top: 0, bottom: 0, name: 'contentColumn',
 			contents: [
-			   		new Container({top: 5, left: 5, right: 5, height: 30, name: 'header',
+			   		Container($, {top: 5, left: 5, right: 5, height: 30, name: 'header',
 			   			contents: [
-			   			            new Label({left: 10, top: 0, string: "Linear (none)", style: titleStyle, name: 'title'}),
-				   			   		new Picture({top: 0, right: 0, width: 30, height: 30, url: 'assets/menu.png',
+			   			            Label($, {left: 10, top: 0, string: "Linear (none)", style: titleStyle, name: 'title'}),
+				   			   		Picture($, {top: 0, right: 0, width: 30, height: 30, url: 'assets/menu.png',
 						   				active: true, name: 'menuButton',
 										behavior: Behavior({
 											onTouchEnded: function(container, id, x, y, ticks) {
-												mainContainer.add(EquationMenu, mainContainer.contentColumn);
+												//this.data = $;
+												//debugger;
+												mainCon.add(new EquationMenu($), mainCon.contentColumn);
 											}						
 										})
 							   		})
 	   			           ]
 			   		
 			   		}),
-			   		new Container({left: 0, right: 0, height: 160, skin: whiteBox, name: 'coloredBoxHolder',
+			   		Container($, {left: 0, right: 0, height: 160, skin: whiteBox, name: 'coloredBoxHolder',
 						contents: [
-					           new Content({width: 150, height: 150, skin: blueBox, name: 'coloredBox'})
+						           Content($, {height: 150, width: 150, skin: blueBox, name: 'coloredBox'})
 				          ]	
 					}),
-					new Container( { left: 20, height: 40, right: 20,
+					Container($, {left: 20, height: 40, right: 20,
 						contents: [
-					           new Label({width: 125, height: 40, string: 'Transition', skin: buttonSkin, style: buttonStyle, active: true,
+					            Label($, {width: 125, height: 40, string: 'Transition', skin: buttonSkin, style: buttonStyle, active: true,
 									behavior: Behavior({
 										onTouchEnded: function(container, id, x, y, ticks) {
-											mainContainer.contentColumn.coloredBoxHolder.run(new FadeOut, mainContainer.contentColumn.coloredBoxHolder.coloredBox, WhiteContent);
-											mainContainer.contentColumn.coloredBoxHolder.run(new FadeIn, WhiteContent, mainContainer.contentColumn.coloredBoxHolder.coloredBox);
+											mainCon.contentColumn.coloredBoxHolder.run(new FadeOut);
+											mainCon.contentColumn.coloredBoxHolder.run(new FadeIn);
 										}
 									})
 								}),
@@ -78,201 +81,200 @@ var mainContainer = new Container({
 	           ]
 		})
 	]
-});
+}});
 
-var EquationLine = Label.template(function ($) { return {style: smallStyle, string: $.title, active: true, top: 10}});
-
-var EquationMenu = new Container({ top: 0, left: 0, right: 0, skin: menuSkin,
+var EquationLine = Line.template(function ($) { return {
+	active: true, left: 0, right: 0, top: 10, height: 30,
 	contents: [
-		   		SCROLLER.VerticalScroller({}, { 
-		   			name: 'scroller', clip: true,
-		   			contents: [
-	              			Column({}, { left: 0, right: 0, top: 0, name: 'menu', 
-	              				contents: [
-	              				         new EquationLine({title: 'None (Linear)'}, {
-	              				        	 behavior: Behavior({
-	              				        		 onTouchEnded: function(container, id, x, y, ticks) {
-	     											EasingFunctionOut = function(fraction) {
-														return fraction;
-													};
-													EasingFunctionIn = function(fraction) {
-														return fraction;
-													};
-													mainContainer.contentColumn.header.title.string = 'None (Linear)'
-													mainContainer.remove(EquationMenu);
-	              				        		 }
-	              				        	 })
-          				        		 
-	              				         }),
-	              				         new EquationLine({title: 'Quad'}, {
-	              				        	 behavior: Behavior({
-	              				        		 onTouchEnded: function(container, id, x, y, ticks) {
-	     											EasingFunctionOut = function(fraction) {
-														return Math.quadEaseOut(fraction);
-													};
-													EasingFunctionIn = function(fraction) {
-														return Math.quadEaseIn(fraction);
-													};
-													mainContainer.contentColumn.header.title.string = 'Quad'
-													mainContainer.remove(EquationMenu);
-	              				        		 }
-	              				        	 })         				        		 
-	              				         }),
-	              				         new EquationLine({title: 'Cubic'}, {
-	              				        	 behavior: Behavior({
-	              				        		 onTouchEnded: function(container, id, x, y, ticks) {
-	     											EasingFunctionOut = function(fraction) {
-														return Math.cubicEaseOut(fraction);
-													};
-													EasingFunctionIn = function(fraction) {
-														return Math.cubicEaseIn(fraction);
-													};
-													mainContainer.contentColumn.header.title.string = 'Cubic'
-													mainContainer.remove(EquationMenu);
-	              				        		 }
-	              				        	 })
-	              				         }),
-	              				         new EquationLine({title: 'Quart'}, {
-	              				        	 behavior: Behavior({
-	              				        		 onTouchEnded: function(container, id, x, y, ticks) {
-	     											EasingFunctionOut = function(fraction) {
-														return Math.quartEaseOut(fraction);
-													};
-													EasingFunctionIn = function(fraction) {
-														return Math.quartEaseIn(fraction);
-													};
-													mainContainer.contentColumn.header.title.string = 'Quart'
-													mainContainer.remove(EquationMenu);
-	              				        		 }
-	              				        	 })
-	              				         }),
-	              				         new EquationLine({title: 'Quint'}, {
-	              				        	 behavior: Behavior({
-	              				        		 onTouchEnded: function(container, id, x, y, ticks) {
-	     											EasingFunctionOut = function(fraction) {
-														return Math.quintEaseOut(fraction);
-													};
-													EasingFunctionIn = function(fraction) {
-														return Math.quintEaseIn(fraction);
-													};
-													mainContainer.contentColumn.header.title.string = 'Quint'
-													mainContainer.remove(EquationMenu);
-	              				        		 }
-	              				        	 })
-	              				         }),	      
-	              				         new EquationLine({title: 'Sine'}, {
-	              				        	 behavior: Behavior({
-	              				        		 onTouchEnded: function(container, id, x, y, ticks) {
-	     											EasingFunctionOut = function(fraction) {
-														return Math.sineEaseOut(fraction);
-													};
-													EasingFunctionIn = function(fraction) {
-														return Math.sineEaseIn(fraction);
-													};
-													mainContainer.contentColumn.header.title.string = 'Sine'
-													mainContainer.remove(EquationMenu);
-	              				        		 }
-	              				        	 })
-	              				         }),	              				         
-	              				         new EquationLine({title: 'Circular'}, {
-	              				        	 behavior: Behavior({
-	              				        		 onTouchEnded: function(container, id, x, y, ticks) {
-	     											EasingFunctionOut = function(fraction) {
-														return Math.circularEaseOut(fraction);
-													};
-													EasingFunctionIn = function(fraction) {
-														return Math.circularEaseIn(fraction);
-													};
-													mainContainer.contentColumn.header.title.string = 'Circular'
-													mainContainer.remove(EquationMenu);
-	              				        		 }
-	              				        	 })         				        		 
-	              				         }),
-	              				         new EquationLine({title: 'Exponetial'}, {
-	              				        	 behavior: Behavior({
-	              				        		 onTouchEnded: function(container, id, x, y, ticks) {
-	     											EasingFunctionOut = function(fraction) {
-														return Math.exponetialEaseOut(fraction);
-													};
-													EasingFunctionIn = function(fraction) {
-														return Math.exponentialEaseIn(fraction);
-													};
-													mainContainer.contentColumn.header.title.string = 'Exponetial'
-													mainContainer.remove(EquationMenu);
-	              				        		 }
-	              				        	 })
-	              				         }),
-	              				         new EquationLine({title: 'Back'}, {
-	              				        	 behavior: Behavior({
-	              				        		 onTouchEnded: function(container, id, x, y, ticks) {
-	     											EasingFunctionOut = function(fraction) {
-														return Math.backEaseOut(fraction);
-													};
-													EasingFunctionIn = function(fraction) {
-														return Math.backEaseIn(fraction);
-													};
-													mainContainer.contentColumn.header.title.string = 'Back'
-													mainContainer.remove(EquationMenu);
-	              				        		 }
-	              				        	 })
-	              				         }), 
-	              				         new EquationLine({title: 'Bounce'}, {
-	              				        	 behavior: Behavior({
-	              				        		 onTouchEnded: function(container, id, x, y, ticks) {
-	     											EasingFunctionOut = function(fraction) {
-														return Math.bounceEaseOut(fraction);
-													};
-													EasingFunctionIn = function(fraction) {
-														return Math.bounceEaseIn(fraction);
-													};
-													mainContainer.contentColumn.header.title.string = 'Bounce'
-													mainContainer.remove(EquationMenu);
-	              				        		 }
-	              				        	 })
-	              				         }),
-	              				         new EquationLine({title: 'Elastic'}, {
-	              				        	 behavior: Behavior({
-	              				        		 onTouchEnded: function(container, id, x, y, ticks) {
-	     											EasingFunctionOut = function(fraction) {
-														return Math.elasticEaseOut(fraction);
-													};
-													EasingFunctionIn = function(fraction) {
-														return Math.elasticEaseIn(fraction);
-													};
-													mainContainer.contentColumn.header.title.string = 'Elastic'
-													mainContainer.remove(EquationMenu);
-	              				        		 }
-	              				        	 })
-	              				         }),	              				         
-          				           ]
-              				}),
-              				SCROLLER.VerticalScrollbar({}, {}),
-              			]
-		   		})	           
+	           Text($, {left: 0, right: 0, height: 30, style: smallStyle, string: $.title}),
+           ] 
+}});
+
+var EquationMenu = Container.template(function($) { return { top: 0, left: 0, right: 0, bottom: 0, skin: menuSkin, name: 'menu',
+	contents: [
+			          SCROLLER.VerticalScroller($, { 
+			   			name: 'scroller', clip: true,
+			   			contents: [
+		              			Column($, { left: 0, right: 0, top: 0, name: 'menu', 
+		              				contents: [
+		              				         EquationLine({title: 'None (Linear)'}, {
+		              				        	 behavior: Behavior({
+		              				        		 onTouchEnded: function(container, id, x, y, ticks) {
+		     											EasingFunctionOut = function(fraction) {
+															return fraction;
+														};
+														EasingFunctionIn = function(fraction) {
+															return fraction;
+														};
+														mainCon.contentColumn.header.title.string = 'None (Linear)'
+														mainCon.remove(mainCon.menu);
+		              				        		 }
+		              				        	 })        				        		 
+		              				         }),
+		              				         EquationLine({title: 'Quad'}, {
+		              				        	 behavior: Behavior({
+		              				        		 onTouchEnded: function(container, id, x, y, ticks) {
+		     											EasingFunctionOut = function(fraction) {
+															return Math.quadEaseOut(fraction);
+														};
+														EasingFunctionIn = function(fraction) {
+															return Math.quadEaseIn(fraction);
+														};
+														mainCon.contentColumn.header.title.string = 'Quad'
+														mainCon.remove(mainCon.menu);
+		              				        		 }
+		              				        	 })         				        		 
+		              				         }),
+		              				         EquationLine({title: 'Cubic'}, {
+		              				        	 behavior: Behavior({
+		              				        		 onTouchEnded: function(container, id, x, y, ticks) {
+		     											EasingFunctionOut = function(fraction) {
+															return Math.cubicEaseOut(fraction);
+														};
+														EasingFunctionIn = function(fraction) {
+															return Math.cubicEaseIn(fraction);
+														};
+														mainCon.contentColumn.header.title.string = 'Cubic'
+														mainCon.remove(mainCon.menu);
+		              				        		 }
+		              				        	 })
+		              				         }),
+		              				         EquationLine({title: 'Quart'}, {
+		              				        	 behavior: Behavior({
+		              				        		 onTouchEnded: function(container, id, x, y, ticks) {
+		     											EasingFunctionOut = function(fraction) {
+															return Math.quartEaseOut(fraction);
+														};
+														EasingFunctionIn = function(fraction) {
+															return Math.quartEaseIn(fraction);
+														};
+														mainCon.contentColumn.header.title.string = 'Quart'
+														mainCon.remove(mainCon.menu);
+		              				        		 }
+		              				        	 })
+		              				         }),
+		              				         EquationLine({title: 'Quint'}, {
+		              				        	 behavior: Behavior({
+		              				        		 onTouchEnded: function(container, id, x, y, ticks) {
+		     											EasingFunctionOut = function(fraction) {
+															return Math.quintEaseOut(fraction);
+														};
+														EasingFunctionIn = function(fraction) {
+															return Math.quintEaseIn(fraction);
+														};
+														mainCon.contentColumn.header.title.string = 'Quint'
+														mainCon.remove(mainCon.menu);
+		              				        		 }
+		              				        	 })
+		              				         }),	      
+		              				         EquationLine({title: 'Sine'}, {
+		              				        	 behavior: Behavior({
+		              				        		 onTouchEnded: function(container, id, x, y, ticks) {
+		     											EasingFunctionOut = function(fraction) {
+															return Math.sineEaseOut(fraction);
+														};
+														EasingFunctionIn = function(fraction) {
+															return Math.sineEaseIn(fraction);
+														};
+														mainCon.contentColumn.header.title.string = 'Sine'
+														mainCon.remove(mainCon.menu);
+		              				        		 }
+		              				        	 })
+		              				         }),	              				         
+		              				         EquationLine({title: 'Circular'}, {
+		              				        	 behavior: Behavior({
+		              				        		 onTouchEnded: function(container, id, x, y, ticks) {
+		     											EasingFunctionOut = function(fraction) {
+															return Math.circularEaseOut(fraction);
+														};
+														EasingFunctionIn = function(fraction) {
+															return Math.circularEaseIn(fraction);
+														};
+														mainCon.contentColumn.header.title.string = 'Circular'
+														mainCon.remove(mainCon.menu);
+		              				        		 }
+		              				        	 })         				        		 
+		              				         }),
+		              				         EquationLine({title: 'Exponetial'}, {
+		              				        	 behavior: Behavior({
+		              				        		 onTouchEnded: function(container, id, x, y, ticks) {
+		     											EasingFunctionOut = function(fraction) {
+															return Math.exponetialEaseOut(fraction);
+														};
+														EasingFunctionIn = function(fraction) {
+															return Math.exponentialEaseIn(fraction);
+														};
+														mainCon.contentColumn.header.title.string = 'Exponetial'
+														mainCon.remove(mainCon.menu);
+		              				        		 }
+		              				        	 })
+		              				         }),
+		              				         EquationLine({title: 'Back'}, {
+		              				        	 behavior: Behavior({
+		              				        		 onTouchEnded: function(container, id, x, y, ticks) {
+		     											EasingFunctionOut = function(fraction) {
+															return Math.backEaseOut(fraction);
+														};
+														EasingFunctionIn = function(fraction) {
+															return Math.backEaseIn(fraction);
+														};
+														mainCon.contentColumn.header.title.string = 'Back'
+														mainCon.remove(mainCon.menu);
+		              				        		 }
+		              				        	 })
+		              				         }), 
+		              				         EquationLine({title: 'Bounce'}, {
+		              				        	 behavior: Behavior({
+		              				        		 onTouchEnded: function(container, id, x, y, ticks) {
+		     											EasingFunctionOut = function(fraction) {
+															return Math.bounceEaseOut(fraction);
+														};
+														EasingFunctionIn = function(fraction) {
+															return Math.bounceEaseIn(fraction);
+														};
+														mainCon.contentColumn.header.title.string = 'Bounce'
+														mainCon.remove(mainCon.menu);
+		              				        		 }
+		              				        	 })
+		              				         }),
+		              				         EquationLine({title: 'Elastic'}, {
+		              				        	 behavior: Behavior({
+		              				        		 onTouchEnded: function(container, id, x, y, ticks) {
+		     											EasingFunctionOut = function(fraction) {
+															return Math.elasticEaseOut(fraction);
+														};
+														EasingFunctionIn = function(fraction) {
+															return Math.elasticEaseIn(fraction);
+														};
+														mainCon.contentColumn.header.title.string = 'Elastic'
+														mainCon.remove(mainCon.menu);
+		              				        		 }
+		              				        	 })
+		              				         }),	              				         
+	          				           ]
+	              				})
+	              			]
+			   		})
        ]
-});
+}});
 var FadeOut = function() {
 	   Transition.call(this, FadeDuration);
 	};
 	FadeOut.prototype = Object.create(Transition.prototype, {
 	   onBegin: { value: 
-	      function(content, oldContent, newContent) {
-		   	 content.add(newContent);
-		   	 this.newContent = newContent;
-		   	 this.origHeight = this.newContent.coordinates.height;
-		   	 this.newContent.coordinates = {top: 5, width: this.newContent.coordinates.width,
-		   			height: this.newContent.coordinates.height}
+	      function(container) {	   	 
+		   	 this.layer = new Layer();
+		   	 this.layer.attach(container.first);	   	 
 	      }
 	   },
 	   onEnd: { value: 
-	      function(content, oldContent, newContent) {
-			content.remove(oldContent);
+	      function(container) {
+		   this.layer.detach();
 	      }
 	   },
 	   onStep: { value: 
 	      function(fraction) {
-		   this.newContent.coordinates = {top: 5, width:this.newContent.coordinates.width,
-				   height: 0 + (this.origHeight * EasingFunctionOut(fraction))}
+		   this.layer.translation = {x:1, y: (-150 * EasingFunctionOut(fraction))};
 	      }
 	   }
    });	   
@@ -282,31 +284,35 @@ var FadeOut = function() {
 		};
 		FadeIn.prototype = Object.create(Transition.prototype, {
 		   onBegin: { value: 
-		      function(content, oldContent, newContent) {
-			   	 content.add(newContent);
-			   	 this.newContent = newContent;
-			   	 this.origHeight = this.newContent.coordinates.height;
-			   	 this.newContent.coordinates = {top: 5, width: this.newContent.coordinates.width,
-			   			 height: this.newContent.coordinates.height}
+		      function(container) {
+			     this.layer = new Layer();
+			   	 this.layer.attach(container.first);
+			   	 this.layer.translation = {x:1, y: -150};
 		      }
 		   },
 		   onEnd: { value: 
-		      function(content, oldContent, newContent) {
-				content.remove(oldContent);
+		      function(container) {
+				this.layer.detach();
 		      }
 		   },
 		   onStep: { value: 
 		      function(fraction) {
-			   this.newContent.coordinates = {top: this.origHeight + 5 - (this.origHeight * EasingFunctionOut(fraction)),
-		   				width: this.newContent.coordinates.width, 
-		   				height: 0 + (this.origHeight * EasingFunctionOut(fraction))}
+			    this.layer.translation = {x:1, y: -150+(150 * EasingFunctionOut(fraction))};
 		      }
 		   }
 	   });	
 	
 /* Application definition */
-application.behavior = {
-	onLaunch: function() { 
-		application.add(mainContainer);
-	}
+var mainCon;
+var ApplicationBehavior = function(application, data, context) {
+			MODEL.ApplicationBehavior.call(this, application, data, context);
 }
+ApplicationBehavior.prototype = Object.create(MODEL.ApplicationBehavior.prototype, {
+	onLaunch: { value: function() {
+		var data = this.data = {};
+		mainCon = new mainContainer(data)
+		application.add(mainCon);
+	}}
+})
+
+var model = application.behavior = new ApplicationBehavior(application);
