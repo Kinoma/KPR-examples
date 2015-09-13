@@ -18,78 +18,78 @@
 /* Modules */
 var THEME = require('themes/sample/theme');
 var SCROLLER = require('mobile/scroller');
-var SCREEN = require('mobile/screen');
-var MODEL = require('mobile/model');
 
 /* Skins and Styles */
-var smallStyle = new Style ({ font: 'bold 18px', horizontal: 'center', color: '#FFF' });
-var titleStyle = new Style ({font: '24px', color: '#000'});
-var whiteSkin = new Skin ({fill: 'white'});
 var blueSkin = new Skin ({fill: 'blue'});
+var buttonSkin = new Skin ({fill: 'green'});
 var menuSkin = new Skin ({fill: '#EEAAAAAA'});
-var buttonSkin = new Skin ({fill: 'Green'});
-var buttonStyle = new Style({font: '22px', color: 'white', horizontal: 'center'})
+var redSkin = new Skin ({fill: 'red'});
+var whiteSkin = new Skin ({fill: 'white'});
+
+var buttonStyle = new Style({font: '22px', color: 'white', horizontal: 'center', vertical: 'middle'})
+var menuStyle = new Style ({ font: 'bold 18px', horizontal: 'center', color: ['white','yellow'] });
+var titleStyle = new Style ({font: '22px', color: '#000'});
 
 /* Globals */
-var TransitionDuration = 1500;
+var TransitionDuration = 1750;
 
-var EasingFunctionOut = function(fraction) {
-	return fraction;
-};
-var EasingFunctionIn = function(fraction) {
-	return fraction;
-};	
 var linearEase = function(fraction) {
 	return fraction;
 };
 				
 /* Main screen layout */
-var mainContainer = Container.template(function($) { return {
-	left: 0, right: 0, top: 0, bottom: 0, active: false, skin: whiteSkin, name: 'mainContainer',
+var MainContainer = Container.template(function($) { return {
+	left: 0, right: 0, top: 0, bottom: 0, active: false, skin: whiteSkin,
 	contents: [
-		Column ($, {left: 0, right: 0, top: 0, bottom: 0, name: 'contentColumn',
+		Column ($, {left: 0, right: 0, top: 0, bottom: 0,
 			contents: [
-			   		Container($, {top: 5, left: 5, right: 5, height: 30, name: 'header',
-			   			contents: [
-			   			            Label($, {left: 10, top: 0, string: $[0].title, style: titleStyle, name: 'title'}),
-				   			   		Picture($, {top: 0, right: 0, width: 30, height: 30, url: 'assets/menu.png',
-						   				active: true, name: 'menuButton',
-										behavior: Behavior({
-											onTouchEnded: function(container, id, x, y, ticks) {
-												application.mainContainer.add(new EquationMenu($), application.mainContainer.contentColumn);
-											}										
-										})
-							   		})
-	   			           ]
-			   		
-			   		}),
-			   		Container($, {left: 0, right: 0, height: 160, skin: whiteSkin, name: 'coloredBoxHolder',
-						contents: [
-						           Content($, {height: 150, width: 150, skin: blueSkin, name: 'coloredBox'})
-				          ],
-				          behavior: Behavior({
-				        	  colorBoxTransitionOut: function(container) {
-				        		  container.run(new TransitionOut);
-				        	  },
-				        	  colorBoxTransitionIn: function(container) {
-				        		  container.run(new TransitionIn);
-				        	  }
-				          })
+				Container($, {top: 5, left: 5, right: 5, height: 30,
+		   			contents: [
+   			            Label($, {left: 10, top: 0, string: $.menu[0].title, style: titleStyle}),
+	   			   		Picture($, {top: 0, right: 0, width: 30, height: 30, url: 'assets/menu.png',
+			   				active: true, name: 'menuButton',
+							behavior: Behavior({
+								onTouchEnded: function(container, id, x, y, ticks) {
+									application.distribute("onMenu");
+								}										
+							})
+				   		})
+					]
+		   		}),
+		   		Container($, {top: 0, width: 150, height: 150, clip: true,
+					behavior: Behavior({
+						onCreate: function(container, data) {
+							this.easingItem = data.menu[0];
+						},
+						onEasingChanged: function(container, data) {
+							this.easingItem = data;
+							container.previous.first.string = data.title;
+						},
+						onTransition: function(container) {
+							if (container.transitioning) return;
+							container.run(new TransitionOut, this.easingItem.easingOutFunction);
+							container.run(new TransitionIn, this.easingItem.easingInFunction);
+						},
 					}),
-					Container($, {left: 20, height: 40, right: 20,
-						contents: [
-					            Label($, {width: 125, height: 40, string: 'Transition', skin: buttonSkin, style: buttonStyle, active: true,
-									behavior: Behavior({
-										onTouchEnded: function(container, id, x, y, ticks) {
-											application.distribute("colorBoxTransitionOut", container.container)
-											application.distribute("colorBoxTransitionIn", container.container)
-										}
-									})
-								}),
-						],	
-					}),          
-	           ]           
-		})
+					contents: [
+						Content($, {left: 0, right: 0, top: 0, bottom: 0, skin: blueSkin}),
+						Content($, {left: 0, right: 0, top: 150, height: 150, skin: redSkin})
+					],
+				}),
+				Container($, {top: 10, width: 150, height: 40, active: true, skin: buttonSkin,
+					contents: [
+			            Label($, {left: 0, right: 0, string: 'Transition', style: buttonStyle, active: true,
+							behavior: Behavior({
+								onTouchEnded: function(container, id, x, y, ticks) {
+									application.distribute("onTransition");
+								}
+							})
+						}),
+					],	
+				}),
+			]           
+		}),
+		EquationMenu($, {visible: false})
 	]
 }});
 
@@ -99,25 +99,37 @@ var EquationLine = Line.template(function ($) { return {
 		onCreate: function(column, data) {
 			this.data = data;
 		},
+		onTouchBegan: function(container, id, x, y, ticks) {
+			container.first.state = 1;
+		},
+		onTouchCancelled: function(container, id, x, y, ticks) {
+			container.first.state = 0;
+		},
 		onTouchEnded: function(container, id, x, y, ticks) {
-			EasingFunctionOut = this.data.easingFunctionOut;
-			EasingFunctionIn = this.data.easingFunctionIn;
-			application.mainContainer.contentColumn.header.title.string = this.data.title;
-			application.mainContainer.remove(application.mainContainer.menu);
+			container.first.state = 0;
+			application.distribute("onEasingChanged", this.data);
 		}
 	}),
 	contents: [
-		Text($, {left: 0, right: 0, height: 30, style: smallStyle, string: $.title}),
+		Label($, {left: 0, right: 0, style: menuStyle, string: $.title}),
 	] 
 }});
 
-var EquationMenu = Container.template(function($) { return { top: 0, left: 0, right: 0, bottom: 0, skin: menuSkin, name: 'menu',
+var EquationMenu = Container.template(function($) { return { top: 0, left: 0, right: 0, bottom: 0, skin: menuSkin,
+	behavior: Behavior({
+		onMenu: function(container) {
+			container.visible = true;
+		},
+		onEasingChanged: function(container, id, x, y, ticks) {
+			container.visible = false;
+		}
+	}),
 	contents: [
-          SCROLLER.VerticalScroller($, { 
-   			name: 'scroller', clip: true,
+		SCROLLER.VerticalScroller($, { 
+			clip: true,
    			contents: [
-      			Column($, { left: 0, right: 0, top: 0, name: 'menu', 
-      				contents: $.map(function(item) {
+      			Column($, { left: 0, right: 0, top: 0, 
+      				contents: $.menu.map(function(item) {
       					return new EquationLine(item);
       				})
   				})
@@ -131,19 +143,26 @@ var TransitionOut = function() {
 };
 TransitionOut.prototype = Object.create(Transition.prototype, {
 	onBegin: { value: 
-		function(container) {	   	 
+		function(container, easingFunction) {
+			var content = container.first; 
+			var newContent = container.last; 
+			this.easingFunction = easingFunction;
+			this.distance = content.height;
 			this.layer = new Layer();
-			this.layer.attach(container.first);	   	 
+			this.layer.attach(content);
+			this.newLayer = new Layer();
+			this.newLayer.attach(newContent);
 		}
 	},
 	onEnd: { value: 
-		function(container) {
+		function(container, easingFunction, former, current) {
 			this.layer.detach();
+			this.newLayer.detach();
 		}
 	},
 	onStep: { value: 
 		function(fraction) {
-			this.layer.translation = {x:0, y: (-150 * EasingFunctionOut(fraction, 0, 0))};
+			this.newLayer.translation = this.layer.translation = {x:0, y: (-this.distance * this.easingFunction(fraction, 0, 0))};
 		}
 	}
 });	   
@@ -153,45 +172,47 @@ var TransitionIn = function() {
 };
 TransitionIn.prototype = Object.create(Transition.prototype, {
 	onBegin: { value: 
-		function(container) {
+		function(container, easingFunction) {
+			var content = container.first; 
+			var newContent = container.last;		
+			this.easingFunction = easingFunction;
+			this.distance = content.height;
 			this.layer = new Layer();
-			this.layer.attach(container.first);
-			this.layer.translation = {x:0, y: -150};
+			this.layer.attach(content);
+			this.layer.translation = {x:0, y: -this.distance};
+			this.newLayer = new Layer();
+			this.newLayer.attach(newContent);
 		}
 	},
 	onEnd: { value: 
-		function(container) {
+		function(container, easingFunction) {
 			this.layer.detach();
+			this.newLayer.detach();
 		}
 	},
 	onStep: { value: 
 		function(fraction) {
-			this.layer.translation = {x:0, y: -150+(150 * EasingFunctionIn(fraction, 0, 0))};
+			this.newLayer.translation = this.layer.translation = {x:0, y: -this.distance+ (this.distance * this.easingFunction(fraction, 0, 0))};		
 		}
 	}
 });	
 	
 /* Application definition */
-var ApplicationBehavior = function(application, data, context) {
-	MODEL.ApplicationBehavior.call(this, application, data, context);
-}
-ApplicationBehavior.prototype = Object.create(MODEL.ApplicationBehavior.prototype, {
-	onLaunch: { value: function() {
-		var data = this.data = [
-			{ title:'None (Linear)', easingFunctionOut:linearEase, easingFunctionIn:linearEase },
-			{ title:'Quad', easingFunctionOut:Math.quadEaseOut, easingFunctionIn:Math.quadEaseIn },
-			{ title:'Cubic', easingFunctionOut:Math.cubicEaseOut, easingFunctionIn:Math.cubicEaseIn },
-			{ title:'Quart', easingFunctionOut:Math.quartEaseOut, easingFunctionIn:Math.quartEaseIn },
-			{ title:'Quint', easingFunctionOut:Math.quintEaseOut, easingFunctionIn:Math.quintEaseIn },
-			{ title:'Sine', easingFunctionOut:Math.sineEaseOut, easingFunctionIn:Math.sineEaseIn },
-			{ title:'Circular', easingFunctionOut:Math.circularEaseOut, easingFunctionIn:Math.circularEaseIn },
-			{ title:'Exponential', easingFunctionOut:Math.exponetialEaseOut, easingFunctionIn:Math.exponentialEaseIn },
-			{ title:'Back', easingFunctionOut:Math.backEaseOut, easingFunctionIn:Math.backEaseIn },
-			{ title:'Bounce', easingFunctionOut:Math.bounceEaseOut, easingFunctionIn:Math.bounceEaseIn },
-			{ title:'Elastic', easingFunctionOut:Math.elasticEaseOut, easingFunctionIn:Math.elasticEaseIn },
-		];
-		application.add(new mainContainer(data));
-	}}
-})
-
-var model = application.behavior = new ApplicationBehavior(application);
+var model = application.behavior = Behavior({
+    onLaunch: function(application) {
+    	var data = this.data = {menu: [
+			{ title:'None (Linear)', easingOutFunction:linearEase, easingInFunction:linearEase },
+			{ title:'Quad', easingOutFunction:Math.quadEaseOut, easingInFunction:Math.quadEaseIn },
+			{ title:'Cubic', easingOutFunction:Math.cubicEaseOut, easingInFunction:Math.cubicEaseIn },
+			{ title:'Quart', easingOutFunction:Math.quartEaseOut, easingInFunction:Math.quartEaseIn },
+			{ title:'Quint', easingOutFunction:Math.quintEaseOut, easingInFunction:Math.quintEaseIn },
+			{ title:'Sine', easingOutFunction:Math.sineEaseOut, easingInFunction:Math.sineEaseIn },
+			{ title:'Circular', easingOutFunction:Math.circularEaseOut, easingInFunction:Math.circularEaseIn },
+			{ title:'Exponential', easingOutFunction:Math.exponetialEaseOut, easingInFunction:Math.exponentialEaseIn },
+			{ title:'Back', easingOutFunction:Math.backEaseOut, easingInFunction:Math.backEaseIn },
+			{ title:'Bounce', easingOutFunction:Math.bounceEaseOut, easingInFunction:Math.bounceEaseIn },
+			{ title:'Elastic', easingOutFunction:Math.elasticEaseOut, easingInFunction:Math.elasticEaseIn },
+		]};
+    	application.add(new MainContainer(data));
+    }
+});
