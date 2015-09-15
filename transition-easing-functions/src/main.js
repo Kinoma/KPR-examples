@@ -26,8 +26,9 @@ var menuSkin = new Skin ({fill: '#EEAAAAAA'});
 var redSkin = new Skin ({fill: 'red'});
 var whiteSkin = new Skin ({fill: 'white'});
 
-var buttonStyle = new Style({font: '22px', color: 'white', horizontal: 'center', vertical: 'middle'})
-var menuStyle = new Style ({ font: 'bold 18px', horizontal: 'center', color: ['white','yellow'] });
+var buttonStyle = new Style ({font: '22px', color: 'white', horizontal: 'center', vertical: 'middle'})
+var hugeStyle = new Style ({font: 'bold 75px', color: 'white', horizontal: 'center', vertical: 'middle'})
+var menuStyle = new Style ({font: 'bold 18px', horizontal: 'center', color: ['white','yellow'] });
 var titleStyle = new Style ({font: '22px', color: '#000'});
 
 /* Globals */
@@ -45,7 +46,13 @@ var MainContainer = Container.template(function($) { return {
 			contents: [
 				Container($, {top: 5, left: 5, right: 5, height: 30,
 		   			contents: [
-   			            Label($, {left: 10, top: 0, string: $.menu[0].title, style: titleStyle}),
+   			            Label($, {left: 10, top: 0, string: $.menu[0].title, style: titleStyle,
+   			            	behavior: Behavior({
+   			            		updateTitle: function(container, title) {
+   			            			container.string = title;
+   			            		}
+   			            	})
+   			            }),
 	   			   		Picture($, {top: 0, right: 0, width: 30, height: 30, url: 'assets/menu.png',
 			   				active: true, name: 'menuButton',
 							behavior: Behavior({
@@ -67,13 +74,13 @@ var MainContainer = Container.template(function($) { return {
 						},
 						onTransition: function(container) {
 							if (container.transitioning) return;
-							container.run(new TransitionOut, this.easingItem.easingOutFunction);
-							container.run(new TransitionIn, this.easingItem.easingInFunction);
+							container.run(new TransitionOut, this.easingItem.easingOutFunction, this.easingItem.title);
+							container.run(new TransitionIn, this.easingItem.easingInFunction, this.easingItem.title);
 						},
 					}),
 					contents: [
-						Content($, {left: 0, right: 0, top: 0, bottom: 0, skin: blueSkin}),
-						Content($, {left: 0, right: 0, top: 150, height: 150, skin: redSkin})
+						Label($, {left: 0, right: 0, top: 0, bottom: 0, skin: blueSkin, style: hugeStyle, string: 'A'}),
+						Label($, {left: 0, right: 0, top: 150, height: 150, skin: redSkin, style: hugeStyle, string: 'B'})
 					],
 				}),
 				Container($, {top: 10, width: 150, height: 40, active: true, skin: buttonSkin,
@@ -143,7 +150,8 @@ var TransitionOut = function() {
 };
 TransitionOut.prototype = Object.create(Transition.prototype, {
 	onBegin: { value: 
-		function(container, easingFunction) {
+		function(container, easingFunction, title) {
+			application.distribute("updateTitle", title + 'Out');
 			var content = container.first; 
 			var newContent = container.last; 
 			this.easingFunction = easingFunction;
@@ -155,9 +163,10 @@ TransitionOut.prototype = Object.create(Transition.prototype, {
 		}
 	},
 	onEnd: { value: 
-		function(container, easingFunction, former, current) {
+		function(container, easingFunction, title) {
 			this.layer.detach();
 			this.newLayer.detach();
+			application.distribute("updateTitle", title);
 		}
 	},
 	onStep: { value: 
@@ -172,7 +181,8 @@ var TransitionIn = function() {
 };
 TransitionIn.prototype = Object.create(Transition.prototype, {
 	onBegin: { value: 
-		function(container, easingFunction) {
+		function(container, easingFunction, title) {
+			application.distribute("updateTitle", title + 'In');
 			var content = container.first; 
 			var newContent = container.last;		
 			this.easingFunction = easingFunction;
@@ -185,9 +195,10 @@ TransitionIn.prototype = Object.create(Transition.prototype, {
 		}
 	},
 	onEnd: { value: 
-		function(container, easingFunction) {
+		function(container, easingFunction, title) {
 			this.layer.detach();
 			this.newLayer.detach();
+			application.distribute("updateTitle", title);
 		}
 	},
 	onStep: { value: 
@@ -201,17 +212,17 @@ TransitionIn.prototype = Object.create(Transition.prototype, {
 var model = application.behavior = Behavior({
     onLaunch: function(application) {
     	var data = this.data = {menu: [
-			{ title:'None (Linear)', easingOutFunction:linearEase, easingInFunction:linearEase },
-			{ title:'Quad', easingOutFunction:Math.quadEaseOut, easingInFunction:Math.quadEaseIn },
-			{ title:'Cubic', easingOutFunction:Math.cubicEaseOut, easingInFunction:Math.cubicEaseIn },
-			{ title:'Quart', easingOutFunction:Math.quartEaseOut, easingInFunction:Math.quartEaseIn },
-			{ title:'Quint', easingOutFunction:Math.quintEaseOut, easingInFunction:Math.quintEaseIn },
-			{ title:'Sine', easingOutFunction:Math.sineEaseOut, easingInFunction:Math.sineEaseIn },
-			{ title:'Circular', easingOutFunction:Math.circularEaseOut, easingInFunction:Math.circularEaseIn },
-			{ title:'Exponential', easingOutFunction:Math.exponetialEaseOut, easingInFunction:Math.exponentialEaseIn },
-			{ title:'Back', easingOutFunction:Math.backEaseOut, easingInFunction:Math.backEaseIn },
-			{ title:'Bounce', easingOutFunction:Math.bounceEaseOut, easingInFunction:Math.bounceEaseIn },
-			{ title:'Elastic', easingOutFunction:Math.elasticEaseOut, easingInFunction:Math.elasticEaseIn },
+			{ title:'linearEase', easingOutFunction:linearEase, easingInFunction:linearEase },
+			{ title:'quadEase', easingOutFunction:Math.quadEaseOut, easingInFunction:Math.quadEaseIn },
+			{ title:'cubicEase', easingOutFunction:Math.cubicEaseOut, easingInFunction:Math.cubicEaseIn },
+			{ title:'quartEase', easingOutFunction:Math.quartEaseOut, easingInFunction:Math.quartEaseIn },
+			{ title:'quintEase', easingOutFunction:Math.quintEaseOut, easingInFunction:Math.quintEaseIn },
+			{ title:'sineEase', easingOutFunction:Math.sineEaseOut, easingInFunction:Math.sineEaseIn },
+			{ title:'circularEase', easingOutFunction:Math.circularEaseOut, easingInFunction:Math.circularEaseIn },
+			{ title:'exponetialEase', easingOutFunction:Math.exponetialEaseOut, easingInFunction:Math.exponentialEaseIn },
+			{ title:'backEase', easingOutFunction:Math.backEaseOut, easingInFunction:Math.backEaseIn },
+			{ title:'bounceEase', easingOutFunction:Math.bounceEaseOut, easingInFunction:Math.bounceEaseIn },
+			{ title:'elasticEase', easingOutFunction:Math.elasticEaseOut, easingInFunction:Math.elasticEaseIn },
 		]};
     	application.add(new MainContainer(data));
     }

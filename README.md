@@ -940,6 +940,16 @@ This example demonstrates how to use different timer techniques: One-shot, inter
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/transition-easing-functions">transition-easing-functions</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/transition-easing-functions"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/transition-easing-functions-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="transition-easing-functions.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
+
+This example demonstrates the array of easing functions available for use when designing transitions. A simple "slide-off" transition is displayed using the selected easing funciton.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/transitions">transitions</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/transitions"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/transitions-example.jpg" height="100" alt=""/></a>
 					
