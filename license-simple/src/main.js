@@ -14,10 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-THEME = require("themes/sample/theme");
-var SCROLLER = require("mobile/scroller");
 var COPYRIGHT = require("./copyright");
-var MODEL = require("mobile/model");
 
 var AboutInfoScreen = new Container({
 	left: 0, right: 0, top: 0, bottom: 0,
@@ -26,5 +23,4 @@ var AboutInfoScreen = new Container({
 	]
 });
 
-application.behavior = new MODEL.ApplicationBehavior(application);
 application.add(AboutInfoScreen);

@@ -14,6 +14,8 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
+THEME = require("themes/sample/theme");
+var SCROLLER = require("mobile/scroller");
 
 var whiteSkin = new Skin("white");
 	
