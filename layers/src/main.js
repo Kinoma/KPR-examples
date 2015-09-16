@@ -108,7 +108,7 @@ var Screen = Container.template(function($) { return {
 			contents: [
 				Layer($, { anchor:"LAYER", width:280, height:210, alpha: true,
 					contents: [
-						Container($, { width:280, height:210, skin:new Skin({ fill:"#F0F0F0" }),
+						Container($, { width:280, height:210, skin:new Skin({ fill:"#DDD",borders: { left:3, right:3, top:3, bottom:3 },stroke: 'black',}),
 							contents: [
 								Label($, { style:titleStyle, string: $.title }),
 							],
@@ -175,6 +175,10 @@ var Menu = Column.template(function($) { return {
 			getter: function() { return this.LAYER.opacity * 100 },
 			setter: function(value) { this.LAYER.opacity = value / 100; },
 		}),
+		MenuSlider({ log: false, min: -180, max: 180, step: 1, title: "Rotate",
+			getter: function() { return this.LAYER.rotation },
+			setter: function(value) { this.LAYER.rotation = value ; },
+		}),
 		MenuSlider({ log: false, min: 0, max: 280, step: 1, title: "Origin X",
 			getter: function() { return this.LAYER.origin.x },
 			setter: function(value) { this.LAYER.origin = { x: value }; },
@@ -190,10 +194,6 @@ var Menu = Column.template(function($) { return {
 		MenuSlider({ log: true, min: 10, max: 1000, step: 10, title: "Scale Y",
 			getter: function() { return 100 * this.LAYER.scale.y },
 			setter: function(value) { this.LAYER.scale = { y: value / 100 }; },
-		}),
-		MenuSlider({ log: false, min: -180, max: 180, step: 1, title: "Rotate",
-			getter: function() { return this.LAYER.rotation },
-			setter: function(value) { this.LAYER.rotation = value ; },
 		}),
 		MenuSlider({ log: false, min: -180, max: 180, step: 1, title: "Skew X",
 			getter: function() { return this.LAYER.skew.x },
@@ -414,15 +414,3 @@ MenuTransition.prototype = Object.create(Transition.prototype, {
 		this.menuLayer.translation = this.toolLayer.translation = { x: this.delta * fraction };
 	}}
 });
-
-
-
-
-
-
-
-
-
-
-
-
