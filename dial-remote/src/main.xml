@@ -89,11 +89,12 @@
 		<method id="onDIALClientFound" params="button, device"><![CDATA[
 			if (model.devices.length > 1) {
 				button.active = true;
-				this.onStateChanged(button);
+				this.changeState(button, 1);
 			}
 		]]></method>			
 		<method id="onDIALClientLost" params="button, device"><![CDATA[
 			button.active = false;
+			this.changeState(button, 0);
 		]]></method>			
 	</behavior>
 
