@@ -55,7 +55,7 @@
 				colorSensor: {
 					require: "TCS34725",
 					pins: {
-						rgb: { sda: 27, clock: 29, integrationTime: 23 },
+						rgb: { sda: 27, clock: 29 },
 						led: { pin: 21 }
 					}
 				}
