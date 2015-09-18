@@ -21,17 +21,20 @@
 
 	<behavior id="PWMLEDBehavior">
 		<method id="onCreate" params="column, data"><![CDATA[
+			column.add(new spacer);
 			column.add(new PWMLED(data));
 			column.distribute("onChanged");
 		]]></method>
 	</behavior>
 
 	<texture id="colorLEDTexture" small="color-led.png"/>
-	<skin id="colorLEDSkin" texture="colorLEDTexture" x="0" y="0" width="150" height="150"/>
+	<skin id="colorLEDSkin" texture="colorLEDTexture" x="0" y="0" width="150" height="233"/>
 
 	<skin id="redSkin" color="red"/>
 
-	<container id="PWMLED" width="150" height="150" skin="redSkin">
+	<container id="spacer" width="150" height="17"/>
+
+	<container id="PWMLED" width="150" height="233" skin="redSkin">
 		<canvas left="0" top="0" right="0" bottom="0">
 			<behavior>
 				<method id="onDisplaying" params="canvas"><![CDATA[
