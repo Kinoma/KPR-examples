@@ -283,7 +283,7 @@ This MobileFramework application demonstrates how to use KPR DIAL to remotely la
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/dialog">dialog</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/dialog"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/dialog-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="dialog.example.kinoma.marvell.com"><span class="uiSample mobileSample"></span></x-app-info>
+<x-app-info id="dialog.example.kinoma.marvell.com" platform="mac,win,iphone,android"><span class="uiSample mobileSample"></span></x-app-info>
 
 This example demonstrates how to setup and display MobileFramework dialogs. Various common controls are integrated into the dialog samples and selected values are output when the dialogs are dismissed. Dialogs are built from a list of items returned by the onDescribe() dialog behavior handler function.
 
