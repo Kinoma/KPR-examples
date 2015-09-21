@@ -27,9 +27,9 @@ var  HSVtoHex = function(h255,s255,v255)
 
 var  RGBtoHex = function(r,g,b)
 {	var hex= "#" + 
-		this.i2h(r/16) + "" + this.i2h(r%16) + "" +
-		this.i2h(g/16) + "" + this.i2h(g%16) + "" + 
-		this.i2h(b/16) + "" + this.i2h(b%16);
+		i2h(r/16) + "" + i2h(r%16) + "" +
+		i2h(g/16) + "" + i2h(g%16) + "" + 
+		i2h(b/16) + "" + i2h(b%16);
 	return hex;
 }	
 
