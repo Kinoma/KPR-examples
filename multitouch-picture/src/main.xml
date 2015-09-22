@@ -95,8 +95,11 @@
             ]]></method>
   		</behavior>
   		
-		<picture name="picture" url="'assets/garden-veggies.jpg'" left="0" top="0">
+		<picture name="picture" left="0" top="0">
 			<behavior>
+	             <method id="onCreate" params="picture, data"><![CDATA[
+					picture.url = "./assets/garden-veggies.jpg";
+	            ]]></method>
 	             <method id="onLoaded" params="picture"><![CDATA[
 					this.loaded = true
 					this.fitType = "fill"						// may be set to "fit" or "fill"
@@ -113,8 +116,7 @@
       
       <script>
         <![CDATA[
-        	var data = {};
-            var picture = new PictureContainer( data );
+            var picture = new PictureContainer({});
             application.add( picture );
         ]]>
     </script>
