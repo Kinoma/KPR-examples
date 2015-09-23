@@ -16,7 +16,7 @@
 */
 
 /* Modules */
-var THEME = require('themes/sample/theme');
+THEME = require('themes/sample/theme');
 var SCROLLER = require('mobile/scroller');
 
 /* Skins and Styles */
