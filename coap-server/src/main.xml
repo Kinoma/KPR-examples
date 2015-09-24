@@ -36,6 +36,44 @@
 		<method id="onQuit" params="application"><![CDATA[
 			application.shared = false;
 		]]></method>
+
+		<method id="onUpdateStats" params="application"><![CDATA[
+			statsText.format([
+				{spans:[
+					{
+						style: statLabelStyle,
+						string: 'Received',
+					},
+				]},
+				{spans:[
+					{
+						style: statValueStyle,
+						string: '' + SERVER.stats.received,
+					},
+				]},
+				{spans:[
+					{
+						style: statLabelStyle,
+						string: 'Sent',
+					},
+				]},
+				{spans:[
+					{
+						style: statValueStyle,
+						string: '' + SERVER.stats.sent,
+					},
+				]},
+			]);
+		]]></method>
+
+		<method id="onUpdateColors" params="application"><![CDATA[
+			updateColorTip();
+
+			var color = SERVER.color;
+			redSlider.delegate('setValue', color.red);
+			greenSlider.delegate('setValue', color.green);
+			blueSlider.delegate('setValue', color.blue);
+		]]></method>
 	</behavior>
 
 	<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
@@ -156,8 +194,9 @@
 		var mainStage = data.MAIN_STAGE;
 		var sideBoard = data.SIDE_BOARD;
 		var colorTip = data.COLOR_TIP;
-		var statsText = data.STATS;
 		var clock = data.CLOCK;
+
+		var statsText = data.STATS;
 
 		var redSlider = new CircleSlider( redSliderData );
 		var greenSlider = new CircleSlider( greenSliderData );
@@ -170,50 +209,13 @@
 		application.add( mainContainer );
 		updateColorTip();
 
-		function updateColors() {
-			updateColorTip();
-
-			var color = SERVER.color;
-			redSlider.delegate('setValue', color.red);
-			greenSlider.delegate('setValue', color.green);
-			blueSlider.delegate('setValue', color.blue);
-		}
-
 		function updateColorTip() {
 			var color = SERVER.color;
 			application.invoke( new MessageWithObject( "pins:/led/write", color ) );
 			colorTip.skin = new Skin("rgb(" + color.red + "," + color.green + "," + color.blue + ")");
 		}
 
-		function updateStats() {
-			statsText.format([
-				{spans:[
-					{
-						style: statLabelStyle,
-						string: 'Received',
-					},
-				]},
-				{spans:[
-					{
-						style: statValueStyle,
-						string: '' + SERVER.stats.received,
-					},
-				]},
-				{spans:[
-					{
-						style: statLabelStyle,
-						string: 'Sent',
-					},
-				]},
-				{spans:[
-					{
-						style: statValueStyle,
-						string: '' + SERVER.stats.sent,
-					},
-				]},
-			]);
-		}
-		updateStats();
+		model.onUpdateStats();
 
 		application.invoke(new MessageWithObject( "pins:configure", {
 			led: {
@@ -229,7 +231,7 @@
 
 		// test if CoAP extension are loaded.
 		try {
-			SERVER.start();
+			SERVER.start(model);
 		} catch (e) {
 			trace(e + "\n");
 		}
@@ -245,7 +247,7 @@
 				clock.string = response.payload;
 
 				SERVER.stats.received += 1;
-				updateStats();
+				model.onUpdateStats();
 			};
 			SERVER.stats.sent += 1;
 			client.send(request);
