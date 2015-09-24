@@ -16,6 +16,12 @@
  *
  */
 
+// behavior which respond to the server event
+var behavior = {
+	onUpdateStats: function(server) {},
+	onUpdateColors: function(server) {},
+};
+
 // instance of CoAP server
 var server;
 // array to keep session ids
@@ -55,7 +61,7 @@ function brodcastColorToListeners() {
 		if (index > -1) sessions.splice(index, 1);
 	});
 
-	updateStats();
+	behavior.onUpdateStats();
 }
 
 
@@ -91,7 +97,7 @@ function handleColorRequest(query, session) {
 	}
 
 	if (changed) {
-		updateColors();
+		behavior.onUpdateColors();
 		brodcastColorToListeners();
 	}
 
@@ -100,15 +106,16 @@ function handleColorRequest(query, session) {
 }
 
 
-function start() {
+function start(aBehavior) {
 	if (!CoAP) return;
 
+	behavior = aBehavior;
 	server = new CoAP.Server();
 
 	server.bind("/name", function(session) {
 		stats.received += 1;
 		stats.sent += 1;
-		updateStats();
+		behavior.onUpdateStats();
 
 		if (session.method != 'GET') return false;
 
@@ -120,7 +127,7 @@ function start() {
 	server.bind("/color", function(session) {
 		stats.received += 1;
 		stats.sent += 1;
-		updateStats();
+		behavior.onUpdateStats();
 
 		var query = parseQuery(session.payload ? session.payload : session.query);
 
