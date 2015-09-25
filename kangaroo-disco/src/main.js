@@ -1,3 +1,4 @@
+//@program
 /*
   Copyright 2014 DouZen, Inc.
 
@@ -13,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-include("sprite.js"); 
+include("sprite"); 
 
 // returns a random number between two values
 //   min - minimum value for the random number

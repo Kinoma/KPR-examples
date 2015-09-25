@@ -1,3 +1,4 @@
+//@program
 /*
   Copyright 2014 DouZen, Inc.
 
