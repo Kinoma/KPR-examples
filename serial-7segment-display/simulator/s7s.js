@@ -72,7 +72,7 @@ exports.configure = function(configuration) {
 		header : { 
 			label : this.id, 
 			name : "7-Segment Display", 
-			iconVariant : PinsSimulators.SENSOR_GUAGE 
+			iconVariant : PinsSimulators.SENSOR_GAUGE 
 		},
 		cursor: 0,
 	};
