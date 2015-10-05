@@ -289,7 +289,7 @@
 				this.data = data;
 				this.pressed = false;
 				this.radius = ( canvas.width >> 1 ) - 5;
-				this.shutterSound = new Sound( mergeURI( application.url, "assets/shutter-02.wav" ) );
+				this.shutterSound = new Sound( mergeURI( application.url, "assets/Shutter-02.wav" ) );
 				this.onDeviceOrientationChange( canvas );
 				this.draw( canvas );
 			]]></method>
