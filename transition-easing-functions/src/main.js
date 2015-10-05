@@ -219,7 +219,7 @@ var model = application.behavior = Behavior({
 			{ title:'quintEase', easingOutFunction:Math.quintEaseOut, easingInFunction:Math.quintEaseIn },
 			{ title:'sineEase', easingOutFunction:Math.sineEaseOut, easingInFunction:Math.sineEaseIn },
 			{ title:'circularEase', easingOutFunction:Math.circularEaseOut, easingInFunction:Math.circularEaseIn },
-			{ title:'exponetialEase', easingOutFunction:Math.exponetialEaseOut, easingInFunction:Math.exponentialEaseIn },
+			{ title:'exponentialEase', easingOutFunction:Math.exponentialEaseOut, easingInFunction:Math.exponentialEaseIn },
 			{ title:'backEase', easingOutFunction:Math.backEaseOut, easingInFunction:Math.backEaseIn },
 			{ title:'bounceEase', easingOutFunction:Math.bounceEaseOut, easingInFunction:Math.bounceEaseIn },
 			{ title:'elasticEase', easingOutFunction:Math.elasticEaseOut, easingInFunction:Math.elasticEaseIn },
