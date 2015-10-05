@@ -40,7 +40,7 @@ exports.configure = function(configuration) {
 			name : "PN532",
 			iconVariant : PinsSimulators.SENSOR_KNOB 
 		},
-		value: -1,
+		value: undefined,
 		last: undefined,
 		authorized: false
 	};
@@ -51,12 +51,87 @@ exports.close = function() {
 	shell.delegate("removeSimulatorPart", this.container);
 }
 
-exports.poll = function() {
+exports.poll = function(params) {
     var data = this.data;
     if (data.last == data.value) return;
-
     data.last = data.value;
-    return (-1 === data.value) ? [] : data.value;
+
+	var result = {token: data.value};
+	if (params && ("command" in params) && data.value) {
+		if ("token" in params.commandParams)
+			params.commandParams.token = data.value;
+		result.commandData = this[params.command](params.commandParams);
+	}
+
+    return result;
+}
+
+exports.getCard = function() {
+	return {token: this.data.value};
+}
+
+exports.mifare_ReadString = function(params) {
+	var data = "";
+	var page = snapToDataPage(params.page);
+
+	var sector = Math.floor(page / 4);
+	var result = this.mifare_CmdRead({page: page, key: params.key, token: params.token});
+	if (result < 0) return result;
+
+	if (('S' != String.fromCharCode(result[0])) || ('t' != String.fromCharCode(result[1])) || ('r' != String.fromCharCode(result[2])))
+		return "";	 
+
+	var pages = result[3];
+
+	for (var i = 4; i < 16; i++) {
+		if (!result[i]) return data;
+		data += String.fromCharCode(result[i]);
+	}
+	
+	for (pages--; pages > 0; pages--) {
+		page = snapToDataPage(page + 1);
+		var thisSector = Math.floor(page / 4);
+		if (thisSector != sector) {
+			sector = thisSector;
+			result = this.mifare_CmdRead({page: page, key: params.key, token: params.token});
+		}
+		else
+			result = this.mifare_CmdRead({page: page});
+		if (result < 0) return result;
+
+		for (var i = 0; i < 16; i++) {
+			if (!result[i]) break;
+			data += String.fromCharCode(result[i]);
+		}
+	}
+	
+	return data;
+}
+
+exports.mifare_WriteString = function(params) {
+	var pages = "Str" + String.fromCharCode(Math.ceil((3 + 1 + params.data.length) / 16)) + params.data;	// 4 byte header - "Str" and page count
+	var page = snapToDataPage(params.page);
+	var data = new Array(16);
+
+	for (var index = 0, count = pages.length; count > 0; count -= 16, page = snapToDataPage(page + 1)) {
+		var i = 0;
+
+		for (var length = (count > 16) ? 16 : count; i < length; i++, index++)
+			data[i] = pages.charCodeAt(index);
+		for (; i < 16; i++)
+			data[i] = 0;
+
+		var result = this.mifare_CmdWrite({data: data, page: page, key: params.key, token: params.token});
+		if (result < 0)
+			return result;
+	}
+
+	return 0;
+}
+
+function snapToDataPage(page)
+{
+	return (3 == (page % 4)) ? page + 1 : page;	// skip over the authentication page at end of sector
 }
 
 exports.mifare_CmdAuthA = function(params) {
@@ -76,25 +151,32 @@ exports.mifare_CmdAuthA = function(params) {
 }
 
 exports.mifare_CmdRead = function(params) {
+	if (("key" in params) && ("token" in params)) {
+		if (-1 == this.mifare_CmdAuthA(params))
+			return -1;
+	}
+
     if (false == this.data.authorized)
         return -1;
 
     if ((params.page < 0) || (params.page > 63))
         return -1;
 
-    var page = this.data.token.pages[params.page];
+    var page = (params.page < this.data.token.pages.length) ? this.data.token.pages[params.page] : undefined;
     if (undefined == page)
         this.data.token.pages[params.page] = page = [];
     
     for (var i = page.length; i < 16; i++)
         page[i] = 0;
-
+	
     return page;
 }
 
 exports.mifare_CmdWrite = function(params) {
-    if (false == this.data.authorized)
-        return -1;
+	if (("key" in params) && ("token" in params)) {
+		if (-1 == this.mifare_CmdAuthA(params))
+			return -1;
+	}
 
     if (false == this.data.authorized)
         return -1;
@@ -154,7 +236,7 @@ var TokensList = Column.template(function($) { return {
 	left:0, right:0,
 	contents: [
 		Label($, { left:0, right:0, top:0, height:30, style:THEME.labeledButtonStyle, string:"NFC Tokens" }),
-        NFCTokenButton({ data:$, string:"[ ] (no token)", value: -1 }, {  })
+        NFCTokenButton({ data:$, string:"[ ] (no token)", value: undefined }, {  })
 	],
 }});
 
