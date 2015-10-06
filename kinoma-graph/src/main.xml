@@ -95,7 +95,7 @@
 		}
 	]]></behavior>
 
-	<skin id="backgroundSkin" color="#F0F0F0"/>
+	<skin id="backgroundSkin" color="#DDD"/>
 	
 	<container id="KinomaGraphScreen" left="0" right="0" top="0" bottom="0" skin="backgroundSkin">
 		<canvas left="0" right="0" top="0" bottom="40" active="true">
@@ -110,7 +110,7 @@
 				function draw(canvas) {
 					var ctx = canvas.getContext("2d");
 					ctx.clearRect(0, 0, canvas.width, canvas.height);
-					var dark = "#F0F0F0"
+					var dark = "#DDD"
 					var lite = "white"
 					var centerX = canvas.width / 2;
 					var centerY = canvas.height / 2;
