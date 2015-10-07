@@ -28,9 +28,10 @@ exports.read = function() {
     var samples = this.audio.read();
     var count = samples.length / 2;
     var total = 0, peak = 0, rms = 0.1;
-    var data = new Int16Array(samples, 0, count);
-    for (var i = 0; i < count; i++) {
-        var sample = data[i];
+    for (var i = 0; i < count; i+=2) {
+        var sample = (samples.peek(i+1) << 8) | samples.peek(i);
+        if (sample & 0x8000)
+        	sample |= 0xFFFF0000;
         if (sample < 0)
             sample = -sample;
 

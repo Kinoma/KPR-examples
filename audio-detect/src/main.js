@@ -20,7 +20,6 @@ var SENSITIVITY = 16;
 Handler.bind("/gotAudio", {
 	onInvoke: function(handler, message) {
         var response = message.requestObject;
-        var power = response.rms;
         var power = response.rms * SENSITIVITY;
 
         power = Math.min(power, 32767);
