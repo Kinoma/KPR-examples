@@ -433,7 +433,7 @@ BLL and sample application for the Hover board touchless gesture sensor from htt
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-monster-mayhem">i2c-monster-mayhem</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-monster-mayhem"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/i2c-monster-mayhem-example.jpg" height="100" alt=""/></a>
 					
-<x-app-info id="i2c-monster-mayhem"><span class="uiSample pinsSample createSample"></span></x-app-info>
+<x-app-info id="i2cmonstermayhem.example.kinoma.marvell.com"><span class="uiSample pinsSample createSample"></span></x-app-info>
 
 This project builds on top of the i2c-nfc sample by using the same Adafruit PN532 NFC/RFID Controller shield to create an interactive game that makes use of the NFC cards as a "controller". The user places a card on the reader and is able to select an avatar (or “monster”) from about 15 options. The program takes advantage of the fact that data can also be written to a NFC card and uses it as a storage medium: the user’s choice is effectively serialized onto the card as JSON data, and the card can now be brought to another Kinoma Create where the companion project i2c-monster-mayhem-gumball is running to proceed with gameplay.
 
@@ -443,7 +443,7 @@ This project builds on top of the i2c-nfc sample by using the same Adafruit PN53
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-monster-mayhem-gumball">i2c-monster-mayhem-gumball</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-monster-mayhem-gumball"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/i2c-monster-mayhem-gumball-example.jpg" height="100" alt=""/></a>
 					
-<x-app-info id="i2c-monster-mayhem-gumball"><span class="uiSample pinsSample createSample"></span></x-app-info>
+<x-app-info id="i2cmonstermayhemgumball.example.kinoma.marvell.com"><span class="uiSample pinsSample createSample"></span></x-app-info>
 
 This project is the companion project to i2c-monster-mayhem, and requires a properly programmed NFC card from i2c-monster-mayhem in order to properly work. The user places the preprogrammed card onto the NFC reader and then plays a simple memory game. All the possible candidate “monsters” scroll by, and once the correct avatar is shown (the one initially chosen by the user and programmed onto the card), he/she must quickly remove the card from the reader in order to win the game and receive a gumball. The user is given three tries to do so. If all attempts have been exhausted, then the user must select another monster with a Kinoma Create running i2c-monster-mayhem and reprogram their card.
 
