@@ -183,7 +183,7 @@ A sample that demonstrates how to run a Kinoma Blinking Light Library (BLL) once
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/browser">browser</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/browser"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/browser-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="browser.example.kinoma.marvell.com" platform="mac,win,iphone,android"><span class="uiSample mobileSample"></span></x-app-info>
+<x-app-info id="browser.example.kinoma.marvell.com" platform="mac,iphone,android"><span class="uiSample mobileSample"></span></x-app-info>
 
 This example demonstrates how to implement an embedded web view container. The code embeds the web view with a browser container. This example demonstrates how to display a web page in the browser, support browser forward/backwards navigation, implement callbacks when the web page is loading/loaded, display a busy indicator using the MobileFramework and use anchor references to containers. Note that the browser container is not available on Windows or Kinoma Create.
 
