@@ -150,6 +150,67 @@ Bouncing ball animation example. Each ball is created as a content using differe
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/basic-checkbox">basic-checkbox</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/basic-container-layout"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/basic-checkbox-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="basiccheckbox.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
+
+This basic example demonstrates the use of the Checkbox object from the Controls framework.  In addition to general setup one option for impleneting "Check all" is also shown.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/basic-container-layout">basic-container-layout</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/basic-container-layout"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/basic-container-layout-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="basiccontainerlayout.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
+
+This basic example demonstrates the impact different ways of declaring the size and position of a container have on the container's appearance.  The example also combines the JavaScript Array.prototype.map() function with a simple container template to allow for very concice code.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/basic-dialog">basic-dialog</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/basic-dialog"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/basic-dialog-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="basicdialog.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
+
+This basic example shows how to display a dialog box and handle the input supplied by the user.  Due to the size of the onscreen keyboard, this example works best with the "Desktop" and "Nexus One" / "iPhone" simulators.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/basic-event-driven-ui">basic-event-driven-ui</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/basic-event-driven-ui"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/basic-event-driven-ui-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="basiceventdrivenui.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
+
+This basic example shows how use events to easily trigger updates in multiple places throughout an interface. 
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/basic-scroller">basic-scroller</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/basic-scroller"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/basic-scroller-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="basicscroller.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
+
+This basic example demonstrates how to dynamically build a scrolling list from a simple array of items.  The elements in the list feature an embedded button (in blue) which triggers a different action than clicking on the rest of the element.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/basic-web-service-request">basic-web-service-request</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/basic-web-service-request"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/basic-web-service-request-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="basicwebservicerequest.example.kinoma.marvell.com"><span class="networkSample"></span></x-app-info>
+
+This basic example makes a request to a simple web service to generate the md5 hash of a string. The example demonstrates making requets using JSON, processing JSON resposnces and basic error handling.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/bing-images">bing-images</a>				
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/bing-images"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/bing-images-example.jpg" height="100" alt=""/></a>
 
