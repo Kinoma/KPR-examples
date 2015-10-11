@@ -21,7 +21,7 @@ var blueSkin = new Skin ({fill: 'blue'});
 var greySkin = new Skin({fill: '#999'});
 var whiteSkin = new Skin({fill:'white'});
 
-var whiteStyle = new Style ({ font: '20px', color: 'white' });
+var whiteStyle = new Style ({ font:'20px', color:'white' });
 
 
 var MyCheckBoxTemplate = BUTTONS.LabeledCheckbox.template(function($){ return{
@@ -48,25 +48,25 @@ var MySimpleButtons = new Line({
 	contents: [
 		new Container({left: 10, right: 10, skin: blueSkin, active: true,
 			behavior : Behavior({
-	    		onTouchEnded: function(container, id, x, y, ticks) {
-	    			checkbox.forEach(checkTheBox);
-	    			MyStatusBar.statusLabel.string = 'All Checked';
-	    		}
-	    	}),		
+				onTouchEnded: function(container, id, x, y, ticks) {
+					checkbox.forEach(checkTheBox);
+					MyStatusBar.statusLabel.string = 'All Checked';
+				}
+			}),		
 			contents: [
-			    new Label({string: 'Check All'})	        
+				new Label({string: 'Check All'})	        
 	        ],
 		}),
 		new Container({left: 10, right: 10, skin: blueSkin, active: true,
 			behavior : Behavior({
-	    		onTouchEnded: function(container, id, x, y, ticks) {
-	    			checkbox.forEach(unCheckTheBox);
-	    			MyStatusBar.statusLabel.string = 'All Unchecked';
-	    		}
-	    	}),		
+				onTouchEnded: function(container, id, x, y, ticks) {
+					checkbox.forEach(unCheckTheBox);
+					MyStatusBar.statusLabel.string = 'All Unchecked';
+				}
+			}),		
 			contents: [
-			    new Label({string: 'Uncheck All'})	        
-	        ],
+				new Label({string: 'Uncheck All'})	        
+			]
 		})
 	]
 });

@@ -51,7 +51,7 @@ var ProcessorLine = Line.template(function($) { return { left: 0, right: 0, acti
     	/* Gives the user visual feedback on which entry they have tapped.
     	 * note that the skin is reverted to white in onTouchEnded and onTouchCanceled */    	 
     	onTouchBegan: function(container, id, x,  y, ticks) {
-    		container.skin = yellowSkin;
+			container.skin = yellowSkin;
     	},
     	/* This catches touches that don't simply end
     	 * and resets the skin back to white.
@@ -67,12 +67,12 @@ var ProcessorLine = Line.template(function($) { return { left: 0, right: 0, acti
 			container.skin = whiteSkin;
 			trace(container.first.first.first.string+"\n");
 		}
-    }),
+	}),
 	contents: [
-     	Column($, { left: 0, right: 0,
+		Column($, { left: 0, right: 0,
 			contents: [
-	     		Container($, { left: 4, right: 4, height: 52, 
-	     			contents: [
+				Container($, { left: 4, right: 4, height: 52, 
+					contents: [
 						/* This label expects that the object passed to ProcessorLine 
 						 * includes a value for title.  Note that this Label is not marked
 						 * as active. Touches registered here will bubble back up through

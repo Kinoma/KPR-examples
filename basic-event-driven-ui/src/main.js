@@ -37,7 +37,7 @@ var MainContainer = Column.template(function($) { return {
 			behavior: Behavior({
 				onUpdate: function(container, string, url) {
 					container.string = string;
-        		} 
+				} 
 			})
 		}),
 		Picture($, {left: 0, right: 0, top: 5, bottom: 5, height: application.height - 80, skin: appSkin,         	 
@@ -52,11 +52,11 @@ var MainContainer = Column.template(function($) { return {
 				Line($, {left: 0, right: 0,
 					contents: [
 						new ButtonTemplate({buttonText: 'A', url: 'http://imgs.xkcd.com/comics/back_seat.png'}),
-		            	new ButtonTemplate({buttonText: 'B', url: 'http://imgs.xkcd.com/comics/board_game.png'}),
-		            	new ButtonTemplate({buttonText: 'C', url: 'http://imgs.xkcd.com/comics/90s_kid.png'}),
+						new ButtonTemplate({buttonText: 'B', url: 'http://imgs.xkcd.com/comics/board_game.png'}),
+						new ButtonTemplate({buttonText: 'C', url: 'http://imgs.xkcd.com/comics/90s_kid.png'}),
 					]
-            	})
-            ]
+				})
+			]
 		})
 	]
 }});

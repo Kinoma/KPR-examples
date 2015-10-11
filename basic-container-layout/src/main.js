@@ -43,12 +43,14 @@ var mainContainer = Container.template(function ($) { return {
 /* Application definition */
 application.behavior = {
 	onLaunch: function() { 
-		var data = this.data = {containers: [
-             {top: 0, bottom: undefined, left: 0, right: 0, height: 100, width: undefined, skin: redSkin, string: 'Positioned By:\ntop, left, right, height', style: whiteStyle},
-             {top: 0, bottom: 0, left: undefined, right: 0, height: undefined, width:100, skin: greenSkin, string: 'Positioned By:\ntop, bottom, \nright, width', style: whiteStyle},
-             {top: undefined, bottom: 0, left: 0, right: 0, height: 75, width: undefined, skin: yellowSkin, string: 'Positioned By:\nbottom, left, right, height', style: blackStyle},
-             {top: undefined, bottom: undefined, left: undefined, right: undefined, height: 100, width: 160, skin: blueSkin, string: 'Positioned By:\nheight, width', style: whiteStyle}
-        ]};
+		var data = this.data = {
+			containers: [
+				{top: 0, bottom: undefined, left: 0, right: 0, height: 100, width: undefined, skin: redSkin, string: 'Positioned By:\ntop, left, right, height', style: whiteStyle},
+				{top: 0, bottom: 0, left: undefined, right: 0, height: undefined, width:100, skin: greenSkin, string: 'Positioned By:\ntop, bottom, \nright, width', style: whiteStyle},
+				{top: undefined, bottom: 0, left: 0, right: 0, height: 75, width: undefined, skin: yellowSkin, string: 'Positioned By:\nbottom, left, right, height', style: blackStyle},
+				{top: undefined, bottom: undefined, left: undefined, right: undefined, height: 100, width: 160, skin: blueSkin, string: 'Positioned By:\nheight, width', style: whiteStyle}
+			]
+		};
 		application.add(new mainContainer(data));
 	}
 }
