@@ -16,6 +16,12 @@
  *
  */
 
+// behavior which respond to the server event
+var behavior = {
+	onUpdateStats: function(server) {},
+	onUpdateColors: function(server) {},
+};
+
 // instance of CoAP client
 var client;
 // server address
@@ -69,19 +75,20 @@ function fromChunkToString(chunk) {
 
 function received() {
 	stats.received += 1;
-	updateStats();
+	behavior.onUpdateStats();
 }
 
 
 function sent() {
 	stats.sent += 1;
-	updateStats();
+	behavior.onUpdateStats();
 }
 
 
-function start() {
+function start(aBehavior) {
 	if (!CoAP) return;
 
+	behavior = aBehavior;
 	client = new CoAP.Client();
 
 	client.onResponse = function(request, response) {
@@ -107,7 +114,7 @@ function connect(server) {
 		var query = JSON.parse(response.payload);
 		setColor(query);
 
-		updateColors();
+		behavior.onUpdateColors();
 		received();
 	};
 
@@ -120,7 +127,7 @@ function disconnect() {
 	// if (observeRequest) observeRequest.cancel();
 	observeRequest = null;
 
-	updateStats();
+	behavior.onUpdateStats();
 }
 
 
@@ -147,7 +154,7 @@ function discoverServer(info) {
 
 	client.send(request);
 	sent();
-	updateStats();
+	behavior.onUpdateStats();
 }
 
 
@@ -167,7 +174,7 @@ function forgetServer(info) {
 		var uuids = Object.keys(servers);
 		if (uuids.length > 0) connect(servers[uuids[0]]);
 
-		updateStats();
+		behavior.onUpdateStats();
 	}
 }
 

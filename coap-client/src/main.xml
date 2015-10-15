@@ -45,7 +45,7 @@
 
 	<behavior id="ApplicationBehavior" like="MODEL.ApplicationBehavior">
 		<method id="onLaunch" params="application"><![CDATA[
-			CLIENT.start();
+			CLIENT.start(this);
 
 			var message = new MessageWithObject("pins:configure", {
 				light :  {
@@ -68,6 +68,13 @@
 		]]></method>
 		<method id="onQuit" params="application"><![CDATA[
 			application.forget("coapserver.example.kinoma.marvell.com");
+		]]></method>
+		<method id="onUpdateStats" params=""><![CDATA[
+			updateStats();
+		]]></method>
+
+		<method id="onUpdateColors" params=""><![CDATA[
+			updateColors();
 		]]></method>
 	</behavior>
 
