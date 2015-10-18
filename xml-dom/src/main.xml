@@ -65,7 +65,8 @@
 					serializeQuery({
 						q: data.location,
 						mode: "xml",
-						units: "imperial"
+						units: "imperial",
+						APPID: data.APPID
 					});
 				container.invoke( new Message( uri ), Message.DOM );
 			]]></method>	
@@ -127,7 +128,8 @@
 	<script><![CDATA[
 		var data = {
 			location: "Del Mar",
-			attribution: "openweathermap.org"
+			attribution: "openweathermap.org",
+			APPID: "94de4cda19a2ba07d3fa6450eb80f091"
 		};
 		application.add( new MainContainer( data ) );
 	]]></script>
