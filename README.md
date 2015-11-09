@@ -394,7 +394,7 @@ Uses a digital pin to turn on and off an LED when a button is pressed on screen.
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-reflex-test">digital-reflex-test</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/digital-reflex-test"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/digital-reflex-test-example.jpg" height="100" alt=""/></a>
 					
-<x-app-info id="digital-reflex-test.example.kinoma.marvell.com"><span class="createSample pinsSample uiSample"></span></x-app-info>
+<x-app-info id="digitalreflextest.example.kinoma.marvell.com"><span class="createSample pinsSample uiSample"></span></x-app-info>
 
 This app demonstrates how to use a digital pin to read input from a physical button and use sub-pixel rendering to get smooth animation. It is a simple reflex testing game to play on a Kinoma Create. Three sheep will attempt to run across the screen, and the player's goal is to tap the button before they make it all the way across.
 
