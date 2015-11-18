@@ -25,9 +25,9 @@ exports.configure = function(config) {
     this.samplesPerRender = 185; // This is the value best supported by the hardware
     this.sampleRate = config.pins.speaker.sampleRate;// can range 4~8k
     this.amplitude = config.pins.speaker.amplitude;// can be reset using the setAmplitude function
-    this.chunk = new Chunk(this.samplesPerRender * 2);// data storage to send to the speaker
-    this.samples = new Int16Array(this.samplesPerRender);
-    this.k = 2 * Math.PI / this.sampleRate;// constant that simplifies sound wave function later
+    this.buffer = new ArrayBuffer(this.samplesPerRender * 2);// data storage to send to the speaker
+	this.samples = new Int16Array(this.buffer);
+	this.k = 2 * Math.PI / this.sampleRate;// constant that simplifies sound wave function later
     this.speaker.init();// calls the initialize speaker function through HPS
     this.setFrequencies(config.pins.speaker.frequencies);// initialize Frequencies to zero
 }
@@ -83,14 +83,7 @@ exports.silence = function() {
 exports.synthesize = function()
 {
     this.renderAudio(0, this.samplesPerRender, this.frequencies);
-	var samples = this.samples;
-	var chunk = this.chunk;
-	for (var i = 0, j = 0; i < this.samplesPerRender; i++) {
-		var sample = samples[i];
-		chunk.poke(j++, sample & 0xFF);
-		chunk.poke(j++, (sample >>> 8) & 0xFF);
-	}
-    this.speaker.write(chunk);
+    this.speaker.write(this.buffer);
 }
 
 // Synthesize silence

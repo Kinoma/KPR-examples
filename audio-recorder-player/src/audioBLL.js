@@ -15,7 +15,7 @@
   limitations under the License.
 */
 
-var soundBite = false;
+var soundBite = undefined;
 var sampleRate = 8000;
 exports.pins = {
     microphone: { type: "Audio", sampleRate: sampleRate, channels: 1, direction: "input" },
@@ -35,15 +35,15 @@ exports.startRecording = function(){
 
 exports.stopRecording = function(){
 	this.microphone.stop();	
-	soundBite = new Object();
+	soundBite = {};
 	soundBite.content = this.microphone.read();
-	soundBite.duration = ( soundBite.content.length / 2 ) / sampleRate;
+	soundBite.duration = (soundBite.content.byteLength / 2) / sampleRate;
 	return( soundBite.duration );
 }
 
 exports.playRecording = function(){
 	if ( soundBite.content ){
-		this.speaker.write( soundBite.content );	
+		this.speaker.write( soundBite.content );
 		this.speaker.start();
 	}
 }
