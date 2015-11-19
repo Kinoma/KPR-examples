@@ -205,8 +205,8 @@
 				if (Files.exists(uri)) {
 	                message.status = 200;
 					message.setResponseHeader("Content-Type", "image/jpeg");
-					message.responseChunk = Files.readChunk(uri);
-	            	message.setResponseHeader("Content-Length", message.responseChunk.length);
+					message.responseBuffer = Files.readBuffer(uri);
+	            	message.setResponseHeader("Content-Length", message.responseBuffer.byteLength);
 	            }
 			}
 		]]></behavior>

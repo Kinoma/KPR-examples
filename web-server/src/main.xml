@@ -105,7 +105,7 @@
 					message.responseText = Files.readText(uri);
 				else {
 					message.responseBuffer = Files.readBuffer(uri);
-            		message.setResponseHeader("Content-Length", message.responseBuffer.length);
+            		message.setResponseHeader("Content-Length", message.responseBuffer.byteLength);
 				}
 			}
 			else {
