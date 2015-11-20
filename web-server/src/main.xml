@@ -69,23 +69,23 @@
 		]]></method>
 		<method id="doIndexAction" params="application, message"><![CDATA[
             message.status = 200;
-            message.responseText = Files.readText(mergeURI(application.url, this.root + "/index.html")).replace("[SERVER]", this.server);
+            message.responseText = Files.readText(mergeURI(application.url, this.root + "/index.html")).replace(/\[SERVER\]/g, this.server);
             message.setResponseHeader("Content-Type", "text/html");
  		]]></method>
 		<method id="doConfigureAction" params="application, message"><![CDATA[
             message.status = 200;
-            message.responseText = Files.readText(mergeURI(application.url, this.root + "/configure.html")).replace("[URL]", this.server + "log");
+            message.responseText = Files.readText(mergeURI(application.url, this.root + "/configure.html")).replace(/\[URL\]/g, this.server + "log");
             message.setResponseHeader("Content-Type", "text/html");
 		]]></method>
 		<method id="doCustomAction" params="application, message"><![CDATA[
             message.status = 200;
-            message.responseText = Files.readText(mergeURI(application.url, this.root + "/custom.html")).replace("[URL]", this.server + "create");
+            message.responseText = Files.readText(mergeURI(application.url, this.root + "/custom.html")).replace(/\[URL\]/g, this.server + "create");
             message.setResponseHeader("Content-Type", "text/html");
 		]]></method>
 		<method id="doCreateAction" params="application, message"><![CDATA[
             message.status = 200;
 			var query = parseQuery(message.query);
-            var html = Files.readText(mergeURI(application.url, this.root + "/create.html")).replace("[NAME]", query.name);
+            var html = Files.readText(mergeURI(application.url, this.root + "/create.html")).replace(/\[NAME\]/g, query.name);
             message.responseText = html;
             message.setResponseHeader("Content-Type", "text/html");
 		]]></method>
@@ -105,12 +105,12 @@
 					message.responseText = Files.readText(uri);
 				else {
 					message.responseBuffer = Files.readBuffer(uri);
-            		message.setResponseHeader("Content-Length", message.responseBuffer.byteLength);
+            		message.setResponseHeader("Content-Length", message.responseBuffer.length);
 				}
 			}
 			else {
                 message.status = 404;
-                var html = Files.readText(mergeURI(application.url, this.root + "/error.html")).replace("[SERVER]", this.server);
+                var html = Files.readText(mergeURI(application.url, this.root + "/error.html")).replace(/\[SERVER\]/g, this.server);
                 message.responseText = html;
                 message.setResponseHeader("Content-Type", "text/html");
 			}
