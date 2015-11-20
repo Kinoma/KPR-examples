@@ -1066,7 +1066,7 @@ This example demonstrates how to issue an HTTP request to the OpenWeatherMap ser
 
 <x-app-info id="zeroconf.example.kinoma.marvell.com" platform="mac,iphone,android,linux"><span class="networkSample uiSample"></span></x-app-info>
 
-A simple application that shows Zeroconf usage. The application starts a HTTP server on port 1234, registers it with the name service named "KPR Server". It also looks for available HTTP servers on the local network. Note: Zeroconf is not yet supported on Windows.
+A simple application that shows Zeroconf usage. The application starts a HTTP server on port 1234, registers it with the name service named "KPR Server". It also looks for available HTTP servers on the local network. To run this application in the simulators on Windows, first install Apple iTunes.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
