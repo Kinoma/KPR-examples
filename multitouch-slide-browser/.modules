@@ -2,4 +2,5 @@
 <modulepath>
    <modulepathentry path="src" type="src"></modulepathentry>
    <modulepathentry path="com.marvell.kinoma.kpr:/libraries/MultiTouch.zip" kind="plugin" type="lib"></modulepathentry>
+   <modulepathentry path="com.marvell.kinoma.kpr:/libraries/MobileFramework.zip" kind="plugin" type="lib"></modulepathentry>
 </modulepath>
