@@ -1076,7 +1076,7 @@ A simple application that shows Zeroconf usage. The application starts a HTTP se
 
 <x-app-info id="zigbeeha.example.kinoma.marvell.com" platform="linux"><span class="createSample pinsSample"></span></x-app-info>
 
-This example integrates Digi's XBee radio (available as Sparkfun WRL-10414) with GE Link light bulbs to build a ZigBee Home Automation gateway with Kinoma Create. The application shows how to commission, discover and control the bulbs on the ZigBee network.
+This example integrates Digi's XBee radio (available as SparkFun WRL-10414) with GE Link light bulbs to build a ZigBee Home Automation gateway with Kinoma Create. The application shows how to commission, discover and control the bulbs on the ZigBee network.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
