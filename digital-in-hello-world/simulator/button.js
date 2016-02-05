@@ -14,35 +14,50 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
+let PinsSimulators = require("PinsSimulators");
 
 exports.pins = {
     button: { type: "Digital", direction: "input" }
 };
 
 exports.configure = function() {
-	this.button.init();
+	this.pinsSimulator = shell.delegate("addSimulatorPart", {
+		header : { 
+			label : "Button", 
+			name : "Digital Input", 
+			iconVariant : PinsSimulators.SENSOR_BUTTON 
+		},
+		axes : [
+			new PinsSimulators.DigitalInputAxisDescription(
+				{
+					valueLabel : "Button",
+					valueID : "buttonValue"
+				}
+			),
+		]
+	});
 	this.state = -1;
 }
 
 exports.read = function() {
-	this.state = this.button.read();
-	return this.state;
+	this.state = this.pinsSimulator.delegate("getValue").buttonValue;
+	return this.state;				
 }
 
 exports.wasPressed = function() {
-	var formerState = this.state;
-	this.state = this.button.read();
-	return ((formerState == 0) && (this.state == 1))
+	let formerState = this.state;
+	this.state = this.pinsSimulator.delegate("getValue").buttonValue;
+	return ((formerState == 1) && (this.state == 0))
 }
 
 exports.wasReleased = function() {
-	var formerState = this.state;
-	this.state = this.button.read();
+	let formerState = this.state;
+	this.state = this.pinsSimulator.delegate("getValue").buttonValue;
 	return ((formerState == 1) && (this.state == 0))
 }
 
 exports.close = function() {
-	this.button.close();
+	shell.delegate("removeSimulatorPart", this.pinsSimulator);
 }
 
 exports.metadata = {
