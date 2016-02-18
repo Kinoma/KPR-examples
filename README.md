@@ -211,16 +211,6 @@ This basic example makes a request to a simple web service to generate the MD5 h
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### <a href="https://github.com/Kinoma/KPR-examples/tree/master/bing-images">bing-images</a>				
-<a href="https://github.com/Kinoma/KPR-examples/tree/master/bing-images"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/bing-images-example.jpg" height="100" alt=""/></a>
-
-<x-app-info id="bing.example.kinoma.marvell.com" platform="mac,win,android,iphone"><span class="uiSample mediaSample mobileSample"></span></x-app-info>
-
-Phone application which implements a Bing Image search. Image thumbnail search results displayed in a photo grid. Tapping an image thumbnail expands to full size. Note - This example requires the 'accountKey' variable set to a valid Windows Azure Marketplace account key associated with a Bing Search API subscription.
-
-<div style="clear:both; margin-bottom: 16px;"></div>			
-***
-
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/bll-repeat">bll-repeat</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/bll-repeat"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/bll-repeat-example.jpg" height="100" alt=""/></a>
 					
