@@ -40,6 +40,16 @@ BLL and sample application for the Honeywell HIH-4030 humidity sensor. Includes 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-kinoma-initialstate">analog-kinoma-initialstate</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-kinoma-initialstate"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/analog-kinoma-initialstate-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="analogkinomainitialstate.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
+
+This sample sends HTTP requests to the Initial State REST API to upload sensor data to a data bucket. The values are read from an analog sensor plugged into Pin 51. Before running the app, sign up for a free Initial State account and replace the dummy text in the code with your Bucket ID and Access Key, shown in your Bucket's settings.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-kinoma-xively">analog-kinoma-xively</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-kinoma-xively"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/analog-kinoma-xively-example.jpg" height="100" alt=""/></a>
 
