@@ -1,4 +1,4 @@
-<x-tag-info tags="createSample,networkSample,uiSample,pinsSample,filesSample,mediaSample,mobileSample" titles="Kinoma Create,Network,User Interface,Pins,Files,Media,Mobile"/>
+<x-tag-info tags="createSample,networkSample,uiSample,pinsSample,filesSample,mediaSample,mobileSample,bluetoothSample" titles="Kinoma Create,Network,User Interface,Pins,Files,Media,Mobile,Bluetooth"/>
 
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-drawing-toy" class="createExampleLink" >analog-drawing-toy</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-drawing-toy"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/analog-drawing-toy-example.jpg" height="100" alt=""/></a>
@@ -217,6 +217,106 @@ This basic example demonstrates how to dynamically build a scrolling list from a
 <x-app-info id="basicwebservicerequest.example.kinoma.marvell.com"><span class="networkSample"></span></x-app-info>
 
 This basic example makes a request to a simple web service to generate the MD5 hash of a string. The example demonstrates making requests using JSON, processing JSON responses and basic error handling.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-ancs">ble-ancs</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-ancs"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/ble-ancs-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="bleancs.example.kinoma.marvell.com"><span class="createSample pinsSample bluetoothSample"></span></x-app-info>
+
+This sample demonstrates how to implement a BLE Apple Notification Center Service (ANCS) consumer. After pairing an iPhone with the application, received text, e-mail and phone call notifications are displayed on the Kinoma Create screen. Both BLE central and peripheral roles are supported by this app, which shows how to advertise the ANCS service solicitation and connect with the ANCS provider.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-clapper">ble-clapper</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-clapper"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/ble-clapper-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="bleclapper.example.kinoma.marvell.com"><span class="createSample pinsSample bluetoothSample"></span></x-app-info>
+
+Clap into the Kinoma Create microphone to turn on/off a light! This sample controls the BLE Satechi IQ Plug by monitoring the recorded audio level in real time and enabling the plug when the audio level reaches a peak threshold. The IQ Plug is discovered by name and controlled by writing to it's control characteristic.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-colorific">ble-colorific</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-colorific"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/ble-colorific-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="blecolorific.example.kinoma.marvell.com"><span class="createSample pinsSample bluetoothSample"></span></x-app-info>
+
+This BLE sample shows how to discover and control the Colorific LED light bulb. An interactive touch color wheel displayed on the Kinoma Create screen is used to change the bulb color in real time. This example additionally shows how to configure the BLE connection intervals to achieve higher responsiveness when controlling BLE peripherals.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-griffin-pm">ble-griffin-pm</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-griffin-pm"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/ble-griffin-pm-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="blegriffinpm.example.kinoma.marvell.com"><span class="createSample pinsSample bluetoothSample"></span></x-app-info>
+
+The Griffin Technology PowerMate BLE control knob is a wireless controller that can be intergrated into other projects. This BLE sample app shows how to discover the button's primary GATT service, connect, detect button presses and left/right spins. 
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-heart-rate-monitor">ble-heart-rate-monitor</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-heart-rate-monitor"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/ble-heart-rate-monitor-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="bleheartratemonitor.example.kinoma.marvell.com"><span class="createSample pinsSample bluetoothSample"></span></x-app-info>
+
+This sample app demonstrates how to build a BLE central application that communicates with a BLE heart rate monitor. Once connected to the monitor, the app discovers both the Bluetooth Heart Rate service (0x180D) and Heart Rate Measurement characteristic (0x2A37). Notifications are requested on the heart rate measurement characteristic, allowing the app to display the beats per minute. This app can also be used as a companion to the ble-heart-rate-peripheral sample app.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-heart-rate-peripheral">ble-heart-rate-peripheral</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-heart-rate-peripheral"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/ble-heart-rate-peripheral-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="bleheartrateperipheral.example.kinoma.marvell.com"><span class="createSample pinsSample bluetoothSample"></span></x-app-info>
+
+This sample app demonstrates how to build a BLE peripheral application that simulates a heart rate monitor. As a peripheral the app advertises the Generic Access (0x1800), Device Information (0x180A), Heart Rate (0x180D) and Battery (0x180F) GATT services. Once connected to a BLE client, the app simulates a heart rate monitor by writing measurement values to it's local GATT database, which in turn automatically notifies the connected client. The app can be paired with any mobile app (e.g. Polar Beat) that communicates with BLE heart rate monitors, or as a companion to the ble-heart-rate-monitor sample app.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-keyboard">ble-keyboard</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-keyboard"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/ble-keyboard-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="blekeyboard.example.kinoma.marvell.com"><span class="createSample pinsSample bluetoothSample"></span></x-app-info>
+
+This sample app integrates Kinoma Create with the Miselu C.24 wireless MIDI keyboard. Notes played on the keyboard are displayed in real time on the Kinoma Create screen and audio played through the Kinoma Create speaker. The BLE app interfaces to the keyboard as an Apple Bluetooth MIDI client. This app demonstrates full BLE service and characteristic discovery, enabling notifications, configuring high performance connections and audio synthesis.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-satechi-iqplug">ble-satechi-iqplug</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-satechi-iqplug"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/ble-satechi-iqplug-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="blesatechiiqplug.example.kinoma.marvell.com"><span class="createSample pinsSample bluetoothSample"></span></x-app-info>
+
+The Satechi IQ Plug lets you control electronic devices and appliances from Bluetooth enabled phones. This BLE sample app shows how to connect to and toggle the plug on/off from the Kinoma Create touch screen. The app discovers the Satechi IQ plug by matching the device name broadcast in BLE scan response packets. Once connected, the app controls the plug by writing commands to the IQ plug's control characteristic. 
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-tempo">ble-tempo</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-tempo"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/ble-tempo-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="bletempo.example.kinoma.marvell.com"><span class="createSample pinsSample bluetoothSample"></span></x-app-info>
+
+This BLE sample app interfaces with the Blue Maestro Tempo Environment Monitor to display the measured temperature, relative humidity and barometric pressure on the Kinoma Create screen. The Tempo provides these measurements in BLE scan response packets as custom manufacturer advertisement data. The app shows how to parse the advertisement data to extract the sensor measurements.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-ti-sensortag">ble-ti-sensortag</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-ti-sensortag"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/ble-ti-sensortag-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="bletisensortag.example.kinoma.marvell.com"><span class="createSample pinsSample bluetoothSample"></span></x-app-info>
+
+The TI SensorTag is a BLE developer platform for prototyping IoT devices. This sample app shows how to interface with each of the on-board BLE sensor services and displays the sensor data on the Kinoma Create screen.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
