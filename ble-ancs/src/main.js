@@ -1,6 +1,6 @@
 //@program
 /*
-  Copyright 2011-2014 Marvell Semiconductor, Inc.
+  Copyright 2011-2015 Marvell Semiconductor, Inc.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -113,7 +113,7 @@ const AppAttributeID = {
 // ----------------------------------------------------------------------------------
 // styles
 // ----------------------------------------------------------------------------------
-var messageStyle = new Style({font:"24px", color:"black", left:5 });
+var messageStyle = new Style({font:"24px", color:"black", horizontal:"left", left:5 });
 var noItemsStyle = new Style({font:"24px", color:"gray", horizontal:"center", vertical:"middle" });
 var statusStyle = new Style({font:"bold 24px", color:"black", horizontal:"center", vertical:"bottom" });
 var titleStyle = new Style({font:"bold 28px", color:"black", left:5 });
@@ -319,9 +319,11 @@ class ANCSNotificationBehavior extends Behavior {
 					}
 					let data = { title:title, message:message, sound:sound, icon:icon, notificationUID:notification.notificationUID };
 					let column = container.first.first;
+					let scroller = container.first;
 					if (0 == this.count++)
 						column.empty();
 					column.add(new ANCSNotificationLine(data));
+					scroller.scrollTo(0, 0x7FFFF);
 					break;
 				}
 			}
@@ -419,17 +421,17 @@ var ANCSNoNotificationsLine = Container.template($ => ({
 }));
 
 var ANCSNotificationLine = Column.template($ => ({
-	left:0, right:0, height:60,
+	left:0, right:0, top:0,
 	contents: [
 		Line($, {
-			left:0, right:0,
+			left:0, right:0, top:5,
 			contents: [
-				Picture($, { width:40, height:40, url:$.icon }),
+				Picture($, { top:0, width:40, height:40, url:$.icon }),
 				Column($, {
 					left:0, right:0,
 					contents: [
 						Label($, { left:0, style:titleStyle, string:$.title }),
-						Label($, { left:0, right:5, style:messageStyle, string:$.message }),
+						Text($, { left:0, right:5, style:messageStyle, string:$.message }),
 					]
 				}),
 				Media($, { Behavior:NotificationSoundBehavior, url:$.sound })
