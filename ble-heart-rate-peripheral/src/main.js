@@ -31,42 +31,6 @@ var GAP_SERVICE = {
 	]
 };
 
-var DEVICE_INFORMATION_SERVICE = {
-	uuid: "180A",
-	characteristics: [
-		{
-			uuid: "2A24",						// model number string
-			properties: ["read"],
-			value: "K7"
-		},
-		{
-			uuid: "2A25",						// serial number string
-			properties: ["read"],
-			value: "12345",
-		},
-		{
-			uuid: "2A26",						// firmware revision string
-			properties: ["read"],
-			value: "1.0"
-		},
-		{
-			uuid: "2A27",						// hardware revision string
-			properties: ["read"],
-			value: "1.0"
-		},
-		{
-			uuid: "2A28",						// software revision string
-			properties: ["read"],
-			value: "1.0"
-		},
-		{
-			uuid: "2A29",						// manufacturer name string
-			properties: ["read"],
-			value: "Kinoma"
-		},
-	]
-};
-
 var HEART_RATE_SERVICE = {
 	uuid: "180D",
 	characteristics: [
@@ -95,8 +59,11 @@ var BATTERY_SERVICE = {
 };
 
 var advertisingData = {
-	shortName: "Polar H7 252D9F",
 	incompleteUUID16List: ['180D']
+};
+
+var scanResponseData = {
+	completeName: "Polar H7 252D9F",
 };
 
 var MainScreen = Container.template($ => ({
@@ -108,11 +75,11 @@ var MainScreen = Container.template($ => ({
 			this.heart_rate = 60;
 			
 			Pins.invoke("/ble/gattAddServices", {
-				services: [GAP_SERVICE, DEVICE_INFORMATION_SERVICE, HEART_RATE_SERVICE, BATTERY_SERVICE]
+				services: [GAP_SERVICE, HEART_RATE_SERVICE, BATTERY_SERVICE]
 			});
 		},
 		onDisplaying(container) {
-			Pins.invoke("/ble/gapSetScanResponseData", advertisingData);
+			Pins.invoke("/ble/gapSetScanResponseData", scanResponseData);
 			Pins.invoke("/ble/gapStartAdvertising", {data: advertisingData});
 			container.first.string = "Advertising";
 		},
