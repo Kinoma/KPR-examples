@@ -531,6 +531,76 @@ This MobileFramework example demonstrates how to build and apply a variety of ef
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-blinking-led">element-blinking-led</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/element-blinking-led"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-blinking-led-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="elementblinkingled"><span class="elementSample pinsSample"></span></x-app-info>
+
+Toggles an LED connected to Kinoma Element on and off every second. Demonstrates the set up of a simple digital BLL.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-button-led">element-button-led</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/element-button-led"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-button-led-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="elementbuttonled"><span class="elementSample pinsSample"></span></x-app-info>
+
+Toggles an LED connected to Kinoma Element on and off whenever a button  is pressed. Demonstrates the use of the built-in digital BLL for the LED and a user-defined BLL for the button. Also demonstrates the process of setting up two BLLs such that the reading of one is used to write the other.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-colors">element-colors</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/element-colors"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-colors-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="elementcolors"><span class="elementSample pinsSample"></span></x-app-info>
+
+This application for Kinoma Element changes the color of a PWM tri-color LED to the color sensed by a TCS34725 RGB color sensor. Demonstrates the process of setting up two BLLs such that the reading of one is used to write the other.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-http-client">element-http-client</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/element-http-client"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-http-client-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="elementhttpclient"><span class="elementSample"></span></x-app-info>
+
+This client app runs with the "element-http-server" example. It sends the message "Hello" and receives a response that says "Hello back!" if the server is active.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-http-server">element-http-server</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/element-http-client"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-http-server-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="elementhttpserver"><span class="elementSample"></span></x-app-info>
+
+This server app can be run with the "element-http-client" example or by sending a request by other means. The HTTP server responds with an echo of the body of each request received.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-2c-temp">element-i2c-temp</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/element-i2c-temp"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-i2c-temp-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="elementi2ctemp"><span class="elementSample pinsSample"></span></x-app-info>
+
+Obtains the current temperature from an I2C temperature sensor (TMP102) and traces the value every second. Demonstrates the set up and integration of an I2C BLL on Kinoma Element.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-pwm-servo">element-pwm-servo</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/element-pwm-servo"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-pwm-servo-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="elementpwmservo"><span class="elementSample pinsSample"></span></x-app-info>
+
+An simple app for Kinoma Element that shows how to turn a continuous rotation servo clockwise and counterclockwise.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/file-explorer">file-explorer</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/file-explorer"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/file-explorer-example.jpg" height="100" alt=""/></a>
 
