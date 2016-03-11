@@ -581,7 +581,7 @@ This server app can be run with the "element-http-client" example or by sending 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-2c-temp">element-i2c-temp</a>
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-i2c-temp">element-i2c-temp</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-i2c-temp"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-i2c-temp-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="elementi2ctemp"><span class="elementSample pinsSample"></span></x-app-info>
