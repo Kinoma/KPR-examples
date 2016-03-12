@@ -1,4 +1,4 @@
-<x-tag-info tags="createSample,networkSample,uiSample,pinsSample,filesSample,mediaSample,mobileSample,bluetoothSample" titles="Kinoma Create,Network,User Interface,Pins,Files,Media,Mobile,Bluetooth"/>
+<x-tag-info tags=“createSample,elementSample,networkSample,uiSample,pinsSample,filesSample,mediaSample,mobileSample,bluetoothSample” titles=“Kinoma Create,Kinoma Element,Network,User Interface,Pins,Files,Media,Mobile,Bluetooth”/>
 
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-drawing-toy" class="createExampleLink" >analog-drawing-toy</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-drawing-toy"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/analog-drawing-toy-example.jpg" height="100" alt=""/></a>
