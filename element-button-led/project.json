@@ -1,1 +1,7 @@
-{   "id”:”elementledbutton.kinoma.marvell.com",   "title”:”element-button-led",   "Element":{       "main":"main"   },}
+{
+  "id":"elementledbutton.kinoma.marvell.com",
+  "title":"element-button-led",
+  "Element":{
+      "main":"main"
+  },
+}
