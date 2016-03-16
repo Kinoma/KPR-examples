@@ -40,3 +40,12 @@ exports.read = function() {
 exports.close = function() {
 	this.range.close();
 }
+
+exports.metadata = {
+	sources: [
+		{
+			name: "read",
+			result: { type: "Number", name: "inches", defaultValue: 10, min: 0, max: 254, decimalPlaces: 3 },
+		},
+	]
+};

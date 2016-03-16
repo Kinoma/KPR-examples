@@ -45,3 +45,20 @@ exports.wasReleased = function() {
 exports.close = function() {
 	this.button.close();
 }
+
+exports.metadata = {
+	sources: [
+		{
+			name: "read",
+			result: { type: "Number", name: "state", defaultValue: 0, min: 0, max: 1, decimalPlaces: 0 },
+		},
+		{
+			name: "wasPressed",
+			result: { type: "Boolean", name: "result" },
+		},
+		{
+			name: "wasReleased",
+			result: { type: "Boolean", name: "result" },
+		},
+	]
+};

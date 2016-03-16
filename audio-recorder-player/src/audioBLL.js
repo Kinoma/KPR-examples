@@ -17,6 +17,7 @@
 
 var soundBite = undefined;
 var sampleRate = 8000;
+
 exports.pins = {
     microphone: { type: "Audio", sampleRate: sampleRate, channels: 1, direction: "input" },
     speaker: { type: "Audio", sampleRate: sampleRate, channels: 1, direction: "output" }
@@ -56,3 +57,20 @@ exports.close = function(){
 	this.speaker.close();
 	this.microphone.close();
 }
+
+exports.metadata = {
+	sinks: [
+		{
+			name: "startRecording",
+			params: {},
+		},
+		{
+			name: "stopRecording",
+			params: {},
+		},
+		{
+			name: "playRecording",
+			params: {},
+		},
+	]
+};

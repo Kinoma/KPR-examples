@@ -1,5 +1,7 @@
 //@program
 
+var Pins = require('pins');
+
 var Pictures = {}; 				// cache of KinomaJS pictures
 var KinomaGreen = new Skin({ fill: "#76b321" });
 var NFC = {token: undefined};	// NFC token found
@@ -130,8 +132,8 @@ function ready(settings)
 		onFinished: function(container) {
 			// Reduce play count stored on card by 1
 			settings.tries -= 1;
-		    application.invoke(new MessageWithObject("pins:/nfc/mifare_WriteString",
-		    		{page: 16, token: NFC.token, key: [0xff, 0xff, 0xff, 0xff, 0xff, 0xff], data: JSON.stringify(settings)}));
+			Pins.invoke("/nfc/mifare_WriteString",
+				{page: 16, token: NFC.token, key: [0xff, 0xff, 0xff, 0xff, 0xff, 0xff], data: JSON.stringify(settings)});
 
 			// start game
 			show(game);
@@ -294,9 +296,9 @@ function gameOver(win)
 			//considered checking id to make sure the put down card is the same but probably irrelevant, would make
 			//restart required if the winning card got lost somewhere
 			if (equalArrays(winningID, data.token)) {
-			 application.invoke(new MessageWithObject("pins:/nfc/mifare_WriteString",
-		   		{page: 16, token: NFC.token, key: [0xff, 0xff, 0xff, 0xff, 0xff, 0xff], data: JSON.stringify({id:1, tries:0})}));
-		   		application.invoke(new MessageWithObject("pins:/gumball/dispense"));
+		   		Pins.invoke("/nfc/mifare_WriteString", 
+		   			{page: 16, token: NFC.token, key: [0xff, 0xff, 0xff, 0xff, 0xff, 0xff], data: JSON.stringify({id:1, tries:0})});
+		   		Pins.invoke("/gumball/dispense");
 		   		show(info("Enjoy your gum!"));
 		   		return;
 			} 
@@ -341,10 +343,13 @@ function gameOver(win)
 }
 
 // show a message until an NFC event
-function info(message)
+function info(message, isError)
 {
-	
-	var screen = new InfoScreen(message); // InfoScreen is a container template
+	var screen;
+	if (undefined != isError && isError == true)
+		var screen = new ErrorScreen(message); // ErrorScreen is a container template
+	else
+		var screen = new InfoScreen(message); // InfoScreen is a container template
 	screen.behavior = Behavior({
 		onNFCLost: function() {
 			
@@ -370,19 +375,10 @@ Handler.bind("/nfcChanged", {
 });
 
 application.behavior = Behavior({
-	onComplete: function(application, message, text) {
-		if (0 != message.error) {
-			show(message("NFC initialization failed (" + message.error + ")"));
-			return;
-		}
-
-		show(loading);
-
-        application.invoke(new MessageWithObject("pins:/nfc/poll?repeat=on&callback=/nfcChanged&interval=100",
-        			{command: "mifare_ReadString", commandParams: {page: 16, token: null, key: [0xff, 0xff, 0xff, 0xff, 0xff, 0xff]}}));
-	},
-	onLaunch: function(application) {
-        var message = new MessageWithObject("pins:configure", {
+	onLaunch: function(application, data) {
+		show(info("Initializing NFC"));
+		
+		Pins.configure({
             nfc: {
                 require: "PN532",
                 pins: {
@@ -395,10 +391,20 @@ application.behavior = Behavior({
                     transistorBase: {pin: 23}
                 }
             }
-            });
-        application.invoke(message, Message.TEXT);
+		},
+		function(success) {
+			if (success) {
+				show(loading);
 
-		show(info("Initializing NFC"));
+				application.invoke(new MessageWithObject("pins:/nfc/poll?repeat=on&callback=/nfcChanged&interval=100",
+							{command: "mifare_ReadString", commandParams: {page: 16, token: null, key: [0xff, 0xff, 0xff, 0xff, 0xff, 0xff]}}));
+
+				Pins.share("ws", {zeroconf: true, name: "i2c-monster-mayhem-gumball"});
+			}
+			else {
+				show(info("Failed to configure Pins", true));
+			}
+		}); 
 	}
 });
 
@@ -461,6 +467,14 @@ var InfoScreen = Container.template(function($) { return {
 	left:0, right:0, top:0, bottom:0, skin: KinomaGreen,
 	contents: [
 		Label($, { left:0, right:0, top:0, bottom:0, style: infoStyle, string: $ })
+	]
+}});
+
+var errorStyle = new Style({ font:"bold 28px", color:"white", horizontal:"center", vertical:"middle" });
+var ErrorScreen = Container.template(function($) { return {
+	left:0, right:0, top:0, bottom:0, skin: KinomaGreen,
+	contents: [
+		Label($, { left:0, right:0, top:0, bottom:0, style: errorStyle, string: $ })
 	]
 }});
 

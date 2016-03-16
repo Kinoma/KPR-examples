@@ -15,79 +15,66 @@
   limitations under the License.
 */
 
-var BallBehavior = function () {
-	this.dx = 2 + Math.round(Math.random() * 5);
-	this.dy = 2 + Math.round(Math.random() * 5);
-}
+/* BEHAVIORS */
 
-BallBehavior.prototype = Object.create(Object.prototype, {
-	dx: { value: 5, writable: true },
-	dy: { value: 5, writable: true },
-	x: { value: 0, writable: true },
-	y: { value: 0, writable: true },
-	width: { value: 0, writable: true },
-	height: { value: 0, writable: true },
-	onDisplaying: {
-		value: function(ball) {
-			ball.start();
-			this.width = ball.container.width - ball.width;
-			this.height = ball.container.height - ball.height;
-			ball.moveBy(Math.round(Math.random() * this.width), Math.round(Math.random() * this.height));
-		}
-	},
-	onTimeChanged: {
-		value: function(ball) {
-			var dx = this.dx;
-			var dy = this.dy;
-			ball.moveBy(dx, dy);
-			var x = ball.x - ball.container.x;
-			var y = ball.y - ball.container.y;
-			if ((x < 0) || (x > this.width)) dx = -dx;
-			if ((y < 0) || (y > this.height)) dy = -dy;
-			this.dx = dx;
-			this.dy = dy;
-		}
-	},
-});
-
-var HandlerBehavior = function(handler, data, context) {
-	Behavior.call(this, handler, data, context);
+class BallBehavior extends Behavior {
+	constructor() {
+		super();
+		this.width = 0;
+		this.height = 0;
+		this.dx = 2 + Math.round(Math.random() * 5);
+		this.dy = 2 + Math.round(Math.random() * 5);
+	}
+	onDisplaying(ball) {
+		ball.start();
+		this.width = ball.container.width - ball.width;
+		this.height = ball.container.height - ball.height;
+		ball.moveBy(Math.round(Math.random() * this.width), Math.round(Math.random() * this.height));
+	}
+	onTimeChanged(ball) {
+		let dx = this.dx;
+		let dy = this.dy;
+		ball.moveBy(dx, dy);
+		let x = ball.x - ball.container.x;
+		let y = ball.y - ball.container.y;
+		if ((x < 0) || (x > this.width)) dx = -dx;
+		if ((y < 0) || (y > this.height)) dy = -dy;
+		this.dx = dx;
+		this.dy = dy;
+	}
 };
 
-// Reconfigure the number of balls requested by the remote app
-HandlerBehavior.prototype = Object.create(Behavior.prototype, {
-	onInvoke: {
-		value: function(handler, message) {
-			if (("query" in message) && message.query) {
-				var query = parseQuery(message.query);
-				if ("count" in query) {
-					var count = parseInt(query.count);
-					if (count > 10) count = 10;
-					else if (count < 1) count = 1;
-					var model = application.behavior;
-					model.count = count;
-					model.onAdapt(application);
-				}
+/* HANDLERS */
+
+Handler.Bind("/dial", class extends Behavior {
+    onInvoke(handler, message) {
+		if (("query" in message) && message.query) {
+			let query = parseQuery(message.query);
+			if ("count" in query) {
+				let count = parseInt(query.count);
+				if (count > 10) count = 10;
+				else if (count < 1) count = 1;
+				let model = application.behavior;
+				model.count = count;
+				model.onAdapt(application);
 			}
 		}
-	},
+    }
 });
 
+/* APPLICATION */
+
 var build = function(container) {
-	var count = application.behavior.count;
+	let count = application.behavior.count;
 	container.skin = new Skin("#a2ffff");
-	var ballTexture = new Texture("balls.png");
-	var ballSkin = new Skin(ballTexture, {x:0, y:0, width:30, height:30}, 30, 0);
-	for (var i = 0; i < count; i++) {
-		var ball = new Content({left:0, width: 30, top: 0, height: 30}, ballSkin);
+	let ballTexture = new Texture("balls.png");
+	let ballSkin = new Skin({ texture:ballTexture, x:0, y:0, width:30, height:30, variants:30 });
+	for (let i = 0; i < count; i++) {
+		let ball = new Content({ left:0, width:30, top:0, height:30, skin:ballSkin });
 		ball.behavior = new BallBehavior();
 		ball.variant = i % 4;
 		container.add(ball);
 	}
-
-	var handler = new Handler("/dial");
-	handler.behavior = new HandlerBehavior(handler);
-	Handler.put(handler);
 }
 
 application.behavior = {

@@ -18,10 +18,12 @@
 // NOTE: This example application requires Kinoma Software version 6.1.337 or later.
 // Use the Settings app on Kinoma Create to update.
 
+var Pins = require('pins');
+
 var touchSkin = new Skin({ fill: ["#00FFFFFF", "white" ] } );
 var arrowsTexture = new Texture("./arrows.png");
 var arrowsSkin = new Skin({ texture: arrowsTexture, x:0, y:0, width:200, height:200, variants:200, states:200 } );
-var errorStyle = new Style({ font:"bold 40px", color:"white", horizontal:"center", vertical:"middle" });
+var errorStyle = new Style({ font:"bold 28px", color:"white", horizontal:"center", vertical:"middle" });
 
 var fadeBehavior = Object.create(Behavior.prototype, {
 	onCreate: { value: function(content, data) {
@@ -50,41 +52,42 @@ var Screen = Container.template(function($) { return {
 var ErrorScreen = Container.template(function($) { return {
 	left:0, right:0, top:0, bottom:0, skin: new Skin({ fill: "#f78e0f" }),
 	contents: [
-		Label($, { left:0, right:0, top:0, bottom:0, style: errorStyle, string:"Error " + $.error })
+		Label($, { left:0, right:0, top:0, bottom:0, style: errorStyle, string: $.error })
 	]
 }});
 
-Handler.bind("/hoverData", {
-	onInvoke: function(handler, message) {
-		var data = model.data;
-		var it = message.requestObject;
-		var content = data[it];
-		content.state = 1;
-		content.time = 0;
-		content.start();
-	}
-});
-
 var model = application.behavior = Object.create(Object.prototype, {
-	onComplete: { value: function(application, message, text) {
-		if (0 != message.error)
-			application.replace(application.first, new ErrorScreen(message));
-        else
-            application.invoke(new MessageWithObject("pins:/hover/read?repeat=on&callback=/hoverData&interval=16"));
-	}},
 	onLaunch: { value: function(application) {
-        var message = new MessageWithObject("pins:configure", {
-            hover: {
+		this.data = { };
+ 		application.add(new Screen(this.data));
+
+		Pins.configure({
+			hover: {
                 require: "hover",
                 pins: {
                     ts: {pin: 23},
                     reset: {pin: 24},
                     data: {sda: 27, clock: 29}
                 }
-            }});
-        application.invoke(message, Message.TEXT);
+            }
+		}, success => this.onPinsConfigured(application, success));
+	}},
+	onPinsConfigured: { value: function(application, success) {
+		if (success) {
+			Pins.repeat("/hover/read", 16, hoverData => this.onHoverData(application, hoverData));
 
-		this.data = { };
- 		application.add(new Screen(this.data));
+			Pins.share("ws", {zeroconf: true, name: "i2c-hover"});
+		}
+		else {
+			var errorMessage = { error: "Failed to configure Pins" };
+			application.replace(application.first, new ErrorScreen(errorMessage));
+		}
+	}},
+	onHoverData: { value: function(application, hoverData) {
+		var data = model.data;
+		var content = data[hoverData];
+		content.state = 1;
+		content.time = 0;
+		content.start();
 	}},
 });

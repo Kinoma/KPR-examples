@@ -103,3 +103,19 @@ function convertAxis(msb, lsb)
 
     return count / ((1 << 12) / (2 * this.scaleRange));
 }
+
+exports.metadata = {
+	sources: [
+		{
+			name: "read",
+			result: 
+				{ type: "Object", name: "result", properties:
+					[
+						{ type: "Number", name: "x", defaultValue:0, min: -0.5, max: 0.5, decimalPlaces: 3 },
+						{ type: "Number", name: "y", defaultValue:0, min: -0.5, max: 0.5, decimalPlaces: 3 },
+						{ type: "Number", name: "z", defaultValue:0, min: -0.5, max: 0.5, decimalPlaces: 3 },
+					]
+				},
+		},
+	]
+};

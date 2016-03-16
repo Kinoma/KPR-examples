@@ -40,3 +40,12 @@ exports.read = function () {
 
     return value;
 }
+
+exports.metadata = {
+	sources: [
+		{
+			name: "read",
+			result: { type: "Number", name: "temperature", defaultValue: 0, min: -30, max: 100, decimalPlaces: 3 },
+		},
+	]
+};

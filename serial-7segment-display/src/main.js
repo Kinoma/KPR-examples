@@ -20,9 +20,10 @@ var CONTROL = require("mobile/control");
 var SLIDERS = require("controls/sliders");
 var TRANSITIONS = require("transitions");
 var S7S = require("s7s");
+var Pins = require("pins");
 
 // styles
-var errorStyle = new Style({ font:"bold 40px", color:"white", horizontal:"center", vertical:"middle" });
+var errorStyle = new Style({ font:"bold 28px", color:"white", horizontal:"center", vertical:"middle" });
 var buttonStyle = new Style({ font:"bold 24px", color:["white","white","black"], horizontal:"center" });
 
 // layouts
@@ -48,7 +49,7 @@ var MainScreen = Container.template(function($) { return {
 			behavior: Object.create(SLIDERS.HorizontalSliderBehavior.prototype, {
 				onTouchEnded: { value: function(container, id, x, y, ticks) {
 					SLIDERS.HorizontalSliderBehavior.prototype.onTouchEnded.call(this, container, id, x, y, ticks);
-        			container.invoke(new MessageWithObject("pins:/S7S/brightness", this.data.value));
+        			Pins.invoke("/S7S/brightness", this.data.value);
 				}}
 			})
 		}),
@@ -83,34 +84,7 @@ var KeyboardScreen = Container.template(function($) { return {
 
 // model
 var model = application.behavior = Object.create(Object.prototype, {
-	onComplete: { value: function(application, message) {
-        if (0 != message.error) {
-            application.skin = new Skin({ fill: "#f78e0f" });
-            application.add(new Label({ left:0, right:0, style: errorStyle, string:"Error " + message.error }));
-            return;
-        }
-
-		// Display the keyboard screen
-		application.add(new MainScreen(this.data));
-
-		// Clear the display and set the display to full brightness level
-        application.invoke(new MessageWithObject("pins:/S7S/clear"));
-        application.invoke(new MessageWithObject("pins:/S7S/brightness", this.data.brightness.value));
-        
-        // Display the clock
-        this.onTimeChanged(application);
-		application.interval = 1000;
-		application.start();
-	}},
 	onLaunch: { value: function(application) {
-        application.invoke(new MessageWithObject("pins:configure", {
-            S7S: {
-                require: "s7s",
-                pins: {
-                    display: {tx: 31}
-                }
-            }}), Message.JSON);
-
         this.data = {
         	clock: true,
         	colon: true,
@@ -132,9 +106,38 @@ var model = application.behavior = Object.create(Object.prototype, {
         		string: ""
         	}
         };
+		Pins.configure({
+			S7S: {
+                require: "s7s",
+                pins: {
+                    display: {tx: 31}
+                }
+            },
+		}, success => this.onPinsConfigured(application, success));
     }},
+	onPinsConfigured: { value: function(application, success) {		
+		if (success) {		
+			Pins.share("ws", {zeroconf: true, name: "serial-7segment-display"});
+
+			// Display the keyboard screen
+			application.add(new MainScreen(this.data));
+
+			// Clear the display and set the display to full brightness level
+			Pins.invoke("/S7S/clear");
+			Pins.invoke("/S7S/brightness", this.data.brightness.value);
+
+			// Display the clock
+			this.onTimeChanged(application);
+			application.interval = 1000;
+			application.start();
+		}
+		else {
+		    application.skin = new Skin({ fill: "#f78e0f" });
+            application.add(new Label({ left:0, right:0, style: errorStyle, string:"Failed to configure Pins" }));
+		}
+	}},
 	onTextEntered: { value: function(application, input) {
-        application.invoke(new MessageWithObject("pins:/S7S/clear"));
+		Pins.invoke("/S7S/clear");
         application.interval = 500;
 		this.data.clock = false;
 		this.data.ticker.string = input;
@@ -156,13 +159,13 @@ var model = application.behavior = Object.create(Object.prototype, {
 		var time = hours + minutes;
 		
 		// display the time string
-        application.invoke(new MessageWithObject("pins:/S7S/writeString", time));
+		Pins.invoke("/S7S/writeString", time);
 
         // blink the colon
         if (this.data.colon)
-        	application.invoke(new MessageWithObject("pins:/S7S/writeDecimalControl", S7S.COLON_BIT_MASK));
-        else
-        	application.invoke(new MessageWithObject("pins:/S7S/writeDecimalControl", 0));
+ 			Pins.invoke("/S7S/writeDecimalControl", S7S.COLON_BIT_MASK);
+       else
+ 			Pins.invoke("/S7S/writeDecimalControl", 0);
         this.data.colon = !this.data.colon;
 	}},
 	updateTicker: { value: function(application) {
@@ -183,10 +186,10 @@ var model = application.behavior = Object.create(Object.prototype, {
 					string += " ";
 				}
 			}
-        	application.invoke(new MessageWithObject("pins:/S7S/writeString", string.slice(0, 4)));
+        	Pins.invoke("/S7S/writeString", string.slice(0, 4));
 		}
 		else {
-        	application.invoke(new MessageWithObject("pins:/S7S/clear"));
+        	Pins.invoke("/S7S/clear");
 			ticker.started = false;
 			this.data.clock = this.data.colon = true;
 			application.interval = 1000;

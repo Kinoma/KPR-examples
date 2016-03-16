@@ -15,6 +15,8 @@
   limitations under the License.
 */
 
+var Pins = require("pins");
+
 var shieldTexture = new Texture("./touch-shield-bkg.png");
 var shieldSkin = new Skin({ texture: shieldTexture, x:0, y:0, width:320, height:240 } );
 var dotsTexture = new Texture("./number-dot-strip.png");
@@ -52,43 +54,43 @@ var ErrorScreen = Container.template(function($) { return {
 	]
 }});
 
-Handler.bind("/touchshieldData", {
-	onInvoke: function(handler, message) {
-		var data = model.data;
-		var it = message.requestObject;
+var model = application.behavior = Object.create(Object.prototype, {
+	onLaunch: { value: function(application) {
+		this.data = { };
+ 		application.add(new Screen(this.data));
+		
+		Pins.configure({
+			touchshield: {
+                require: "touchshield",
+                pins: {
+                    data: {sda: 60, clock: 59, keys: ["NW", "N", "NE", "E", "Home", "W", "SW", "S", "SE"]}
+                }
+            },
+		}, success => this.onPinsConfigured(application, success));
+	}},
+	onPinsConfigured: { value: function(application, success) {		
+		if (success) {			
+			Pins.repeat("/touchshield/read", 16, value => this.onTouchshieldData(application, value));
 
-        for (var i = 0, down = it.down; i < down.length; i++) {
+			Pins.share("ws", {zeroconf: true, name: "i2c-touchshield"});
+		}
+		else
+			application.replace(application.first, new ErrorScreen(message));
+	}},
+	onTouchshieldData: { value: function(application, value) {
+		var data = model.data;
+
+        for (var i = 0, down = value.down; i < down.length; i++) {
             var content = data[down[i]];
             content.stop();
             content.state = 1;
             content.time = 0;
         }
 
-        for (var i = 0, up = it.up; i < up.length; i++) {
+        for (var i = 0, up = value.up; i < up.length; i++) {
             var content = data[up[i]];
             content.start();
         }
-	}
-});
-
-var model = application.behavior = Object.create(Object.prototype, {
-	onComplete: { value: function(application, message, text) {
-		if (0 != message.error)
-			application.replace(application.first, new ErrorScreen(message));
-        else
-            application.invoke(new MessageWithObject("pins:/touchshield/read?repeat=on&callback=/touchshieldData&interval=16"));
-	}},
-	onLaunch: { value: function(application) {
-        var message = new MessageWithObject("pins:configure", {
-            touchshield: {
-                require: "touchshield",
-                pins: {
-                    data: {sda: 60, clock: 59, keys: ["NW", "N", "NE", "E", "Home", "W", "SW", "S", "SE"]}
-                }
-            }});
-        application.invoke(message, Message.TEXT);
-
-		this.data = { };
- 		application.add(new Screen(this.data));
 	}},
 });
+

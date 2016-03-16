@@ -15,7 +15,20 @@
   limitations under the License.
 */
 
-exports.ping = function(parameter) {
-    trace("From application, BLL hello.js received: " + parameter + "\n");
-    return {value: "Everything is working."};
+exports.ping = function() {
+  return { value:"Everything is working at " + new Date };
 }
+
+exports.metadata = {
+	sources: [
+		{
+			name: "ping",
+			result: 
+				{ type: "Object", name: "result", properties:
+					[
+						{ type: "String", name: "value" },
+					]
+				},
+		},
+	]
+};

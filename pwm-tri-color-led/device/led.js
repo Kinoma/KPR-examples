@@ -62,4 +62,17 @@ exports.close = function( led ){
 	this.anode.write( led.pins.anode.value );
 }
 
-
+exports.metadata = {
+	sinks: [
+		{
+			name: "write",
+			params: 
+				{ type: "Object", name: "parameters", properties:
+					[
+						{ type: "String", name: "color", defaultValue: "red" },
+						{ type: "Number", name: "value" },
+					]
+				},
+		},
+	]
+};

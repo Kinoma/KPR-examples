@@ -68,3 +68,18 @@ exports.close = function() {
 exports.read = function() {
     return this.pinsSimulator.delegate("getValue");
 }
+
+exports.metadata = {
+	sources: [
+		{
+			name: "read",
+			result: 
+				{ type: "Object", name: "result", properties:
+					[
+						{ type: "Number", name: "latitude", defaultValue:37.774929, min: 37.75, max: 37.79, decimalPlaces: 6 },
+						{ type: "Number", name: "longitude", defaultValue:-122.419416, min: -122.50, max: -122.30, decimalPlaces: 6 },
+					]
+				},
+		},
+	]
+};

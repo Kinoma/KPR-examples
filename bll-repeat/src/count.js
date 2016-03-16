@@ -22,3 +22,12 @@ exports.configure = function() {
 exports.increment = function() {
     return ++this.value;
 }
+
+exports.metadata = {
+	sources: [
+		{
+			name: "increment",
+			result: { type: "Number", name: "value", defaultValue: 0, min: -30, max: 100, decimalPlaces: 3 },
+		},
+	]
+};

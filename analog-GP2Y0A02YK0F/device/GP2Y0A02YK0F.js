@@ -60,3 +60,12 @@ exports.read = function() {
 		cm = 150;
 	return cm;
 }
+
+exports.metadata = {
+	sources: [
+		{
+			name: "read",
+			result: { type: "Number", name: "proximity", defaultValue: 100, min: 15, max: 150, decimalPlaces: 3 },
+		},
+	]
+};

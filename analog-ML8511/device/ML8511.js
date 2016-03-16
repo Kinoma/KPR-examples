@@ -48,3 +48,18 @@ function mapfloat(x, in_min, in_max, out_min, out_max)
 {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
+
+exports.metadata = {
+	sources: [
+		{
+			name: "read",
+			result: 
+				{ type: "Object", name: "result", properties:
+					[
+						{ type: "Number", name: "intensity", defaultValue: 3, min: 0, max: 15, decimalPlaces: 3 },
+						{ type: "Number", name: "index", defaultValue: 3, min: 3, max: 3, decimalPlaces: 0 },
+					]
+				},
+		},
+	]
+};

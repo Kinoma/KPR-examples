@@ -65,7 +65,7 @@ var LicenseTextBehavior = Behavior({
 	}
 });
 
-exports.ViewerContainer = SCROLLER.VerticalScroller.template(function($) { return {
+exports.ViewerContainer = SCROLLER.VerticalScroller.template($ => ({
 	left: 0, right: 0, top: 0, bottom: 0, clip: true, active: true,
 	skin: whiteSkin,
 	contents:[
@@ -75,4 +75,4 @@ exports.ViewerContainer = SCROLLER.VerticalScroller.template(function($) { retur
 		}),
 		SCROLLER.VerticalScrollbar($, {})
 	]
-}});
+}));

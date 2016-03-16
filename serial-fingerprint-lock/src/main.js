@@ -756,10 +756,11 @@ var model = application.behavior = Object.create(MODEL.ApplicationBehavior.proto
 		};
 
 		var pinConfiguration = JSON.stringify({
-			port0: [PinType.digitalOut, PinType.disconnected, PinType.disconnected, PinType.disconnected, PinType.disconnected, PinType.disconnected, PinType.disconnected, PinType.disconnected], 
-			port1: [PinType.disconnected, PinType.disconnected, PinType.disconnected, PinType.disconnected, PinType.disconnected, PinType.disconnected, PinType.ground, PinType.power], 
-			leftVoltage: 0,		// 5 volts
-			rightVoltage: 0		// 5 volts
+			leftPins: [PinType.digitalOut, PinType.disconnected, PinType.disconnected, PinType.disconnected, PinType.disconnected, PinType.disconnected, PinType.disconnected, PinType.disconnected], 
+			rightPins: [PinType.disconnected, PinType.disconnected, PinType.disconnected, PinType.disconnected, PinType.disconnected, PinType.disconnected, PinType.ground, PinType.power], 
+
+			leftVoltage: 5,		// 5 volts
+			rightVoltage: 5		// 5 volts
 		});
 
 		var message = new Message("xkpr://shell/settings/pinmux");

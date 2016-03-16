@@ -41,3 +41,12 @@ exports.read = function(degreesCelsius) {
 exports.close = function() {
 	this.humidity.close();
 }
+
+exports.metadata = {
+	sources: [
+		{
+			name: "read",
+			result: { type: "Number", name: "humidity", defaultValue: 75, min: 0, max: 100, decimalPlaces: 3 },
+		},
+	]
+};

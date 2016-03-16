@@ -1,6 +1,5 @@
-//@program
 /*
-  Copyright 2011-2014 Marvell Semiconductor, Inc.
+  Copyright 2011-2015 Marvell Semiconductor, Inc.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -15,67 +14,64 @@
   limitations under the License.
 */
 
-var BallBehavior = function (delta) {
-	this.dx = delta;
-	this.dy = delta
-}
-BallBehavior.prototype = Object.create(Object.prototype, {
-	dx: { value: 5, writable: true },
-	dy: { value: 5, writable: true },
-	x: { value: 0, writable: true },
-	y: { value: 0, writable: true },
-	width: { value: 0, writable: true },
-	height: { value: 0, writable: true },
-	onDisplaying: {
-		value: function(ball) {
-			ball.start();
-			this.width = ball.container.width - ball.width;
-			this.height = ball.container.height - ball.height;
-		}
-	},
-	onTimeChanged: {
-		value: function(ball) {
-			var dx = this.dx;
-			var dy = this.dy;
-			ball.moveBy(dx, dy);
-			var x = ball.x - ball.container.x;
-			var y = ball.y - ball.container.y;
-			if ((x < 0) || (x > this.width)) dx = -dx;
-			if ((y < 0) || (y > this.height)) dy = -dy;
-			this.dx = dx;
-			this.dy = dy;
-		}
-	},
-});
+/* BEHAVIORS */
+
+class BallBehavior extends Behavior {
+	constructor(delta) {
+		super(delta);
+		this.dx = delta;
+		this.dy = delta;
+		this.width = 0;
+		this.height = 0;
+    }
+    onDisplaying(ball) {
+		ball.start();
+		this.width = ball.container.width - ball.width;
+		this.height = ball.container.height - ball.height;
+    }
+    onTimeChanged(ball) {
+		let dx = this.dx;
+		let dy = this.dy;
+		ball.moveBy(dx, dy);
+		let x = ball.x - ball.container.x;
+		let y = ball.y - ball.container.y;
+		if ((x < 0) || (x > this.width)) dx = -dx;
+		if ((y < 0) || (y > this.height)) dy = -dy;
+		this.dx = dx;
+		this.dy = dy;
+    }
+};
+
+/* APPLICATION */
 
 var build = function(container) {
-	container.skin = new Skin("white");
-	var ballTexture = new Texture("balls.png");
-	var ballSkin = new Skin(ballTexture, {x:0, y:0, width:30, height:30}, 30, 0);
-	var ball = new Content({left:0, width: 30, top: 0, height: 30}, ballSkin);
+	container.skin = new Skin({ fill:"white" });
+	let ballTexture = new Texture("balls.png");
+	let ballSkin = new Skin({ texture:ballTexture, x:0, y:0, width:30, height:30, variants:30 });
+	var ball = new Content({ left:0, width:30, top:0, height:30, skin:ballSkin });
 	ball.behavior = new BallBehavior(6);
 	ball.variant = 0;
 	container.add(ball);
-	var ball = new Content({right:0, width: 30, top: 0, height: 30}, ballSkin);
+	var ball = new Content({ right:0, width:30, top:0, height:30, skin:ballSkin });
 	ball.behavior = new BallBehavior(5);
 	ball.variant = 1;
 	container.add(ball);
-	var ball = new Content({right:0, width: 30, bottom: 0, height: 30}, ballSkin);
+	var ball = new Content({ right:0, width:30, bottom:0, height:30, skin:ballSkin });
 	ball.behavior = new BallBehavior(4);
 	ball.variant = 2;
 	container.add(ball);
-	var ball = new Content({left:0, width: 30, bottom: 0, height: 30}, ballSkin);
+	var ball = new Content({ left:0, width:30, bottom:0, height:30, skin:ballSkin });
 	ball.behavior = new BallBehavior(3);
 	ball.variant = 3;
 	container.add(ball);
 }
 
-application.behavior = {
-	onAdapt: function(application) {
+application.behavior = Behavior({
+	onAdapt(application) {
 		application.empty();
 		build(application);
 	},
-	onLaunch: function(application) {
+	onLaunch(application) {
 		build(application);
-	},
-}
+	}
+});

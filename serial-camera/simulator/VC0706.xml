@@ -77,11 +77,11 @@
 		return chunk;
 	]]></function>
 
-	<texture id="photo1Texture" small="1.jpg"/>
+	<texture id="photo1Texture" small="./1.jpg"/>
 	<skin id="photo1Skin" texture="photo1Texture" x="0" y="0" width="292" height="386"/>
-	<texture id="photo2Texture" small="2.jpg"/>
+	<texture id="photo2Texture" small="./2.jpg"/>
 	<skin id="photo2Skin" texture="photo2Texture" x="0" y="0" width="310" height="310"/>
-	<texture id="photo3Texture" small="3.jpg"/>
+	<texture id="photo3Texture" small="./3.jpg"/>
 	<skin id="photo3Skin" texture="photo3Texture" x="0" y="0" width="366" height="512"/>
 	
 	<handler path="/capture-jpeg">

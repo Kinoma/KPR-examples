@@ -16,10 +16,10 @@
 */
 var Pins = require("pins");
 
-// styles
+/* ASSETS */
 var errorStyle = new Style({ font:"bold 40px", color:"white", horizontal:"center", vertical:"middle" });
 
-// globals
+/* APPLICATION */
 var SENSITIVITY = 16;
 
 application.behavior = Behavior({
@@ -58,6 +58,8 @@ application.behavior = Behavior({
 	        application.add(this.data.labels.count = new Label({left: 30, right: 0, top: 180, height: 60, style: style}));
 
 			Pins.repeat("/microphone/read", "audio", result => this.onMicrophoneRead(result));
+
+			Pins.share("ws", {zeroconf: true, name: "audio-detect"});
 		}
 		else {
             application.skin = new Skin({ fill:"#f78e0f" });

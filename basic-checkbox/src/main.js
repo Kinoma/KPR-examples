@@ -24,17 +24,17 @@ var whiteSkin = new Skin({fill:'white'});
 var whiteStyle = new Style ({ font:'20px', color:'white' });
 
 
-var MyCheckBoxTemplate = BUTTONS.LabeledCheckbox.template(function($){ return{
+var MyCheckBoxTemplate = BUTTONS.LabeledCheckbox.template($ => ({
 	top:50, bottom:50, left:50, right:50,
 	behavior: BUTTONS.LabeledCheckboxBehavior({
-		onSelected: function(checkBox){
+		onSelected(checkBox){
 			MyStatusBar.statusLabel.string = checkBox.buttonLabel.string + ' checked';
 		},
-		onUnselected: function(checkBox){
+		onUnselected(checkBox){
 			MyStatusBar.statusLabel.string = checkBox.buttonLabel.string + ' unchecked';
 		}
 	}),
-}});
+}));
 
 var MyStatusBar = new Container({
 	top: 5, left: 10, right: 10, height: 35, skin: greySkin, 
@@ -48,7 +48,7 @@ var MySimpleButtons = new Line({
 	contents: [
 		new Container({left: 10, right: 10, skin: blueSkin, active: true,
 			behavior : Behavior({
-				onTouchEnded: function(container, id, x, y, ticks) {
+				onTouchEnded(container, id, x, y, ticks) {
 					checkbox.forEach(checkTheBox);
 					MyStatusBar.statusLabel.string = 'All Checked';
 				}
@@ -59,7 +59,7 @@ var MySimpleButtons = new Line({
 		}),
 		new Container({left: 10, right: 10, skin: blueSkin, active: true,
 			behavior : Behavior({
-				onTouchEnded: function(container, id, x, y, ticks) {
+				onTouchEnded(container, id, x, y, ticks) {
 					checkbox.forEach(unCheckTheBox);
 					MyStatusBar.statusLabel.string = 'All Unchecked';
 				}
@@ -88,8 +88,8 @@ var checkbox = [
 
 
 /* Application definition */
-application.behavior = {
-	onLaunch: function() { 
+application.behavior = Behavior({
+	onLaunch() { 
 		MainContainer.add(MyStatusBar);
 		
 		for (var i = 0, c = checkbox.length; i < c; i++) 
@@ -98,4 +98,4 @@ application.behavior = {
 		MainContainer.add(MySimpleButtons);
 		application.add(MainContainer);
 	}
-}
+})

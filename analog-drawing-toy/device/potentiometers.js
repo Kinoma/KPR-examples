@@ -16,8 +16,8 @@
 */
 
 exports.pins = {
-    xPos: { type: "A2D" },
-    yPos: { type: "A2D" }
+    xPos: { type: "Analog" },
+    yPos: { type: "Analog" }
 };
 
 exports.configure = function(){
@@ -29,3 +29,17 @@ exports.read = function() {
     return { xPos: this.xPos.read(), yPos: this.yPos.read() };
 }
 
+exports.metadata = {
+	sources: [
+		{
+			name: "read",
+			result: 
+				{ type: "Object", name: "result", properties:
+					[
+						{ type: "Number", name: "xPos" },
+						{ type: "Number", name: "yPos" },
+					]
+				},
+		},
+	]
+};

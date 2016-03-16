@@ -15,8 +15,6 @@
   limitations under the License.
 */
 
-var THEME = require ("themes/flat/theme");
-var CONTROL = require ("mobile/control");
 var PinsSimulators = require ("PinsSimulators");
 
 exports.pins = {
@@ -56,3 +54,12 @@ exports.read = function() {
     var result = this.pinsSimulator.delegate("getValue");
     return result.volume;
 }
+
+exports.metadata = {
+	sources: [
+		{
+			name: "read",
+			result: { type: "Number", name: "volume", defaultValue:0.8, min: 0, max: 1, decimalPlaces: 3 }
+		},
+	]
+};

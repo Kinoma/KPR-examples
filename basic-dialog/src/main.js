@@ -26,7 +26,7 @@ var buttonStyle = new Style({ color: 'blue', font: 'bold 24px', horizontal: 'cen
 var headerStyle = new Style({ color: '#444', font: 'bold 18px', horizontal: 'center', vertical: 'middle' });
 
 Handler.bind("/dialog", MODEL.DialogBehavior({
-	onDescribe: function(query) {
+	onDescribe(query) {
 		return {
             Dialog: DIALOG.Box,
             title: "What is your name?",
@@ -57,7 +57,7 @@ Handler.bind("/dialog", MODEL.DialogBehavior({
 }));
 
 Handler.bind("/traceResult", {
-	onInvoke: function(handler, message) {
+	onInvoke(handler, message) {
 		data = parseQuery(message.query);
 		for (var key in data) {
 			trace(key + ": " + data[key] + "\n");
@@ -65,19 +65,20 @@ Handler.bind("/traceResult", {
 	}
 });
 
-var MainScreen = Container.template(function($) { return { left: 0, right: 0, top: 0, bottom: 0, skin: backgroundSkin,
+var MainScreen = Container.template($ => ({
+	left: 0, right: 0, top: 0, bottom: 0, skin: backgroundSkin,
 	contents: [
 		Label($, { left: 0, right: 0, top: 4, style: headerStyle, string: 'Basic Dialog Sample' }),
 		Label($, { height: 35, left: 25, right: 25, active: true, string: 'Show Simple Dialog', skin: buttonSkin, style: buttonStyle,
 			behavior: Behavior({
-				onTouchEnded: function(label, x, y, id, ticks) {			
+				onTouchEnded(label, x, y, id, ticks) {			
 					var dialogData = {first_name: 'Will', greeting: 'Welcome to KinomaJS', secret: '42'};
 					label.invoke(new Message("/dialog?" + serializeQuery(dialogData)));
 				}
 			})
 		})
  	]
-}});
+}));
 
 application.behavior = new MODEL.ApplicationBehavior( application );
 application.add(new MainScreen({}));

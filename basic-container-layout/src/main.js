@@ -25,24 +25,24 @@ var yellowSkin = new Skin ({fill: 'yellow'});
 var blackStyle = new Style ({ font: '18px', color: 'black', horizontal: 'left' });
 var whiteStyle = new Style ({ font: '18px', color: 'white', horizontal: 'left' });
 
-var ContainerTemplate = Container.template(function ($) { return {
+var ContainerTemplate = Container.template($ => ({
 	top: $.top, bottom: $.bottom, left: $.left, right: $.right, height: $.height, width: $.width, skin: $.skin,
 	contents: [
 		Text($, {top: 0, bottom: 0, left: 5, right: 0, string: $.string, style: $.style})
 	]
-}})
+}))
 
 /* Main screen layout */
-var mainContainer = Container.template(function ($) { return {
+var MainContainer = Container.template($ => ({
 	left: 0, right: 0, top: 0, bottom: 0, skin: whiteSkin, 
 	contents: $.containers.map(function(item) {
 		return new ContainerTemplate(item);
 	})	
-}});
+}));
 
 /* Application definition */
-application.behavior = {
-	onLaunch: function() { 
+application.behavior = Behavior({
+	onLaunch() { 
 		var data = this.data = {
 			containers: [
 				{top: 0, bottom: undefined, left: 0, right: 0, height: 100, width: undefined, skin: redSkin, string: 'Positioned By:\ntop, left, right, height', style: whiteStyle},
@@ -51,6 +51,6 @@ application.behavior = {
 				{top: undefined, bottom: undefined, left: undefined, right: undefined, height: 100, width: 160, skin: blueSkin, string: 'Positioned By:\nheight, width', style: whiteStyle}
 			]
 		};
-		application.add(new mainContainer(data));
+		application.add(new MainContainer(data));
 	}
-}
+})

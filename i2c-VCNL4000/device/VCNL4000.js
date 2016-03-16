@@ -83,3 +83,19 @@ function readValue(command, ready, register) {
     var bytes = this.data.readBlockDataSMB(register, 2, "Array");
     return (bytes[0] << 8) | bytes[1];
 }
+
+exports.metadata = {
+	sources: [
+		{
+			name: "read",
+			result: 
+				{ type: "Object", name: "result", properties:
+					[
+						{ type: "Number", name: "proximity", defaultValue:2352, min: 2200, max: 65535, decimalPlaces: 3 },
+						{ type: "Number", name: "ambient", defaultValue:24, min: 18, max: 65535, decimalPlaces: 3 },
+					]
+				},
+		},
+	]
+};
+

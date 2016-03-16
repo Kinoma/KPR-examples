@@ -1,4 +1,3 @@
-//@program
 /*
   Copyright 2011-2014 Marvell Semiconductor, Inc.
 
@@ -18,42 +17,59 @@
   Beep sound from Sound-e-Scape Studios:
   http://www.soundescapestudios.com/Sound-e-Scape-Studios-policy.html
 */
+let Pins = require("pins");
 
-Handler.bind("/proximity", {
-	onInvoke: function(handler, message) {
-		application.distribute("onProximityChanged", message.requestObject);
-	}
-});
+/* TEMPLATES */
 
-var model = application.behavior = Object.create(Object.prototype, {
-	onComplete: { value: function(application, message) {
-        application.invoke(new MessageWithObject("pins:/GP2Y0A02YK0F/read?repeat=on&callback=/proximity&interval=100"));
+let MainScreen = Container.template($ => ({
+	left:0, right:0, top:0, bottom:0, skin:new Skin({ fill:'gray' }),
+	contents:[
+		Label($, {
+			left:0, right:0, string:'- - -',
+			style: new Style({ font:'bold 30px', color:'white' }),
+			Behavior: class extends Behavior {
+				onCreate(label, data) {
+					this.sound = data.sound;
+					label.interval = data.interval;
+				}
+				onDisplayed(label) {
+					Pins.configure({
+			            GP2Y0A02YK0F: {
+			                require: "GP2Y0A02YK0F",
+			                pins: {
+			                    proximity: {pin: 61}
+			                }
+			            }
+					}, success => this.onPinsConfigured(label, success));
+				}
+				onPinsConfigured(label, success) {		
+					if (success) {
+						label.start();
+						
+						Pins.repeat("/GP2Y0A02YK0F/read", 100, value => this.onProximityChanged(label, value));
+						
+						Pins.share("ws", {zeroconf: true, name: "analog-GP2Y0A02YK0F"});
+					}
+					else {
+						trace("failed to configure pins\n");
+					}
+				}
+				onProximityChanged(label, value) {
+					label.string = "Proximity: " + value.toFixed(2) + " cm";
+			        label.interval = value / 15 * 150;
+				}
+				onTimeChanged(label) {
+					this.sound.play();
+				}
+			}
+		})
+	]
+}));
 
-        application.skin = new Skin({ fill: "gray" });
-        var style = new Style({ font:"bold 30px", color:"white", horizontal:"center", vertical:"middle" });
-        application.add(this.data.label = new Label({left: 0, right: 0, style: style, string:"Proximity: " }));
-        
-		Sound.volume = 1;
-		this.data.sound = new Sound( mergeURI( application.url, "assets/Beeps-very-short-01.wav" ) );
-        application.interval = this.data.interval;
-        application.start();
-	}},
-	onLaunch: { value: function(application) {
-        application.invoke(new MessageWithObject("pins:configure", {
-            GP2Y0A02YK0F: {
-                require: "GP2Y0A02YK0F",
-                pins: {
-                    proximity: {pin: 61}
-                }
-            }}), Message.JSON);
+/* APPLICATION */
 
-        this.data = { label: {}, sound: {}, interval: 1000 };
-    }},
-	onProximityChanged: { value: function(application, value) {
-        this.data.label.string = "Proximity: " + value.toFixed(2) + " cm";
-        application.interval = value / 15 * 150;
-	}},
-	onTimeChanged: { value: function(application) {
-		this.data.sound.play();
-    }},
-});
+let data = {
+	sound: new Sound( mergeURI( application.url, "assets/Beeps-very-short-01.wav" ) ),
+	interval: 1000
+};
+application.add(new MainScreen(data));

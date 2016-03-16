@@ -18,6 +18,7 @@
 var THEME = require ("themes/flat/theme");
 var CONTROL = require ("mobile/control");
 var PinsSimulators = require ("PinsSimulators");
+var Pins = require("pins");
 
 exports.pins = {
     accelerometer: {type: "I2C", address: 0x24}
@@ -81,3 +82,20 @@ exports.close = function() {
 exports.read = function() {
     return this.pinsSimulator.delegate("getValue");
 }
+
+exports.metadata = {
+	sources: [
+		{
+			name: "read",
+			result: 
+				{ type: "Object", name: "result", properties:
+					[
+						{ type: "Number", name: "x", defaultValue:0, min: -0.5, max: 0.5, decimalPlaces: 3 },
+						{ type: "Number", name: "y", defaultValue:0, min: -0.5, max: 0.5, decimalPlaces: 3 },
+						{ type: "Number", name: "z", defaultValue:0, min: -0.5, max: 0.5, decimalPlaces: 3 },
+					]
+				},
+		},
+	]
+};
+

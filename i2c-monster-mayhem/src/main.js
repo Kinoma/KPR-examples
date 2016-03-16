@@ -27,6 +27,8 @@ NFCHELP = require("NFCHelper")
 var MONSTERSELECT = require("MonsterSelect");
 var MONSTERSTATUS = require("MonsterStatus");
 
+var Pins = require('pins');
+
 /**********
  * SKINS AND STYLES
  */
@@ -143,20 +145,21 @@ application.behavior = Behavior({
 	onLaunch: function(application, data) {
 		application.add(currentScreen);
 		
-		var message = new MessageWithObject("pins:configure", {
+		Pins.configure({
 			nfc: {
 				require: "PN532",
 				pins: {
 					data: {sda: 27, clock: 29}
 				}
 			}
-		});
-		
-		application.invoke(message, Message.TEXT);
-	},
-	onComplete: function(application, message, text) {
-		//poll only returns if they change, getcard just constantly polls
-		application.invoke(new MessageWithObject("pins:/nfc/poll?repeat=on&callback=/nfc&interval=100", 
-			{command: "mifare_ReadString", commandParams: {page: 16, token: null, key: [0xff, 0xff, 0xff, 0xff, 0xff, 0xff]}}));
+		},
+		function(success) {
+			if (success) {
+				application.invoke(new MessageWithObject("pins:/nfc/poll?repeat=on&callback=/nfc&interval=100", 
+					{command: "mifare_ReadString", commandParams: {page: 16, token: null, key: [0xff, 0xff, 0xff, 0xff, 0xff, 0xff]}}));
+			}
+			else
+				trace("failed to configure pins\n");
+		}); 
 	}
 });

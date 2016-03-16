@@ -116,3 +116,17 @@ function reset()
     IBI = 600;                  // holds the time between beats, must be seeded!
     Pulse = false;
 }
+
+exports.metadata = {
+	sources: [
+		{
+			name: "beat",
+			result: 
+				{ type: "Object", name: "result", properties:
+					[
+						{ type: "Number", name: "BPM", defaultValue:90, min: 0, max: 200, decimalPlaces: 3 },
+					]
+				},
+		},
+	]
+};

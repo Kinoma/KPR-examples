@@ -1,6 +1,5 @@
-//@program
 /*
-  Copyright 2011-2014 Marvell Semiconductor, Inc.
+  Copyright 2011-2015 Marvell Semiconductor, Inc.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -15,44 +14,45 @@
   limitations under the License.
 */
 
-var Pins = require("pins");
+let Pins = require("pins");
 
-Handler.bind("/climateData", {
-	onInvoke: function(handler, message) {
-        var data = model.data;
-        data.climate = message.requestObject;
-        data.labels.temperature.string = "Temperature: " + data.climate.temperature.toPrecision(3) + "°";
-        data.labels.humidity.string = "Humidity: " + (data.climate.humidity * 100).toPrecision(3) + "%";
-	}
-});
+/* TEMPLATES */
 
-var model = application.behavior = Object.create(Object.prototype, {
-	onComplete: { value: function(application, message) {
-        if (0 != message.error) {
-            application.skin = new Skin({ fill: "#f78e0f" });
-            var style = new Style({ font:"bold 36px", color:"white", horizontal:"center", vertical:"middle" });
-            application.add(new Label({ left:0, right:0, top:0, bottom:0, style: style, string:"Error " + message.error }));
-            return;
-        }
+let MainScreen = Column.template($ => ({
+	left:0, right:0, top:0, bottom:0, skin:new Skin({ fill:'#76b321' }),
+	style:new Style({ font:'bold 36px', color:'white', horizontal:'left', vertical:'middle' }),
+	Behavior: class extends Behavior {
+		onClimateRead(container, value) {
+	        container.first.string = "Temperature: " + value.temperature.toPrecision(3) + "°";
+	        container.first.next.string = "Humidity: " + (value.humidity * 100).toPrecision(3) + "%";
+		}
+		onDisplayed(container) {
+			Pins.configure({
+				tesselClimate: {
+					require: "tesselClimate",
+					pins: {
+					    climate: {sda: 27, clock: 29, units: "farenheight", heater: false}
+					}
+				}
+			}, success => this.onPinsConfigured(container, success));
+		}
+		onPinsConfigured(container, success) {		
+			if (success) {
+				Pins.repeat("/tesselClimate/read", 30, value => this.onClimateRead(container, value));
+	
+				Pins.share("ws", {zeroconf: true, name: "i2c-tessel-climate"});
+			}
+			else {
+				trace("failed to configure pins\n");
+	        }
+		}
+	},
+	contents:[
+		Label($, { left:20, right:0, top:0, bottom:0 }),
+		Label($, { left:20, right:0, top:0, bottom:0 })
+	]
+}));
 
-		Pins.share("http");
-		
-        application.invoke(new MessageWithObject("pins:/tesselClimate/read?repeat=on&callback=/climateData&interval=30"));
+/* APPLICATION */
 
-        application.skin = new Skin({ fill: "#76b321" });
-        var style = new Style({ font:"bold 36px", color:"white", horizontal:"left", vertical:"middle" });
-        application.add(model.data.labels.temperature = new Label({left: 20, top: 80, style: style}));
-        application.add(model.data.labels.humidity = new Label({left: 20, top: 120, style: style}));
-	}},
-	onLaunch: { value: function(application) {
-        application.invoke(new MessageWithObject("pins:configure", {
-            tesselClimate: {
-                require: "tesselClimate",
-                pins: {
-                    climate: {sda: 27, clock: 29, units: "farenheight", heater: false}
-                }
-            }}), Message.JSON);
-
-		this.data = { labels: {} };
-	}},
-});
+application.add(new MainScreen);

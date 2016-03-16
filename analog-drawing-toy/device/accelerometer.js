@@ -16,9 +16,9 @@
 */
 
 exports.pins = {
-	x: { type: "A2D" },
-    y: { type: "A2D" },
-    z: { type: "A2D" }
+	x: { type: "Analog" },
+    y: { type: "Analog" },
+    z: { type: "Analog" }
 };
 
 exports.configure = function() {
@@ -30,4 +30,20 @@ exports.configure = function() {
 exports.read = function() {
     return { x: this.x.read(), y: this.y.read(), z: this.z.read() };
 }
+
+exports.metadata = {
+	sources: [
+		{
+			name: "read",
+			result: 
+				{ type: "Object", name: "result", properties:
+					[
+						{ type: "Number", name: "x" },
+						{ type: "Number", name: "y" },
+						{ type: "Number", name: "z" },
+					]
+				},
+		},
+	]
+};
 

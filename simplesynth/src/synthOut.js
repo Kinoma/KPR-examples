@@ -30,10 +30,12 @@ exports.configure = function(config) {
 	this.k = 2 * Math.PI / this.sampleRate;// constant that simplifies sound wave function later
     this.speaker.init();// calls the initialize speaker function through HPS
     this.setFrequencies(config.pins.speaker.frequencies);// initialize Frequencies to zero
+	this.speakerRepeater = PINS.repeat("speaker", this, this.synthesize);
 }
 
 // Close speaker
 exports.close = function() {
+	this.speakerRepeater.close();
     this.speaker.close();
 }
 

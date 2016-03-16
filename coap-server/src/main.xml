@@ -18,6 +18,7 @@
 <program xmlns="http://www.kinoma.com/kpr/1">
 	<require id="SERVER" path="server"/>
 	<require id="CIRCLE_SLIDER" path="slider"/>
+    <require id="Pins" path="pins"/>
 	<skin id="backgroundSkin" color="#F0F0F0"/>
 	<skin id="sideBoardSkin" color="#cccccc"/>
 	<skin id="colorTipBoarderSkin" color="#888"/>
@@ -31,7 +32,26 @@
 	<behavior id="ApplicationBehavior">
 		<method id="onLaunch" params="application"><![CDATA[
 			application.shared = true;
+
+			Pins.configure({
+				led: {
+					require: "led",
+					pins: {
+						red: { pin: 28 },
+						green: { pin: 30 },
+						blue: { pin: 34 },
+						anode: { pin: 24 },
+					}
+				}
+			}, success => this.onPinsConfigured(application, success));
 		]]></method>
+		
+		<method id="onPinsConfigured" params="application, success"><![CDATA[
+			if (success)
+				Pins.share("ws", {zeroconf: true, name: "i2c-color-sensor"});
+			else
+				trace("failed to configure pins\n");
+		]]></method>	
 
 		<method id="onQuit" params="application"><![CDATA[
 			application.shared = false;
@@ -211,23 +231,11 @@
 
 		function updateColorTip() {
 			var color = SERVER.color;
-			application.invoke( new MessageWithObject( "pins:/led/write", color ) );
+			Pins.invoke("/led/write", color);
 			colorTip.skin = new Skin("rgb(" + color.red + "," + color.green + "," + color.blue + ")");
 		}
 
 		model.onUpdateStats();
-
-		application.invoke(new MessageWithObject( "pins:configure", {
-			led: {
-				require: "led",
-				pins: {
-					red: { pin: 28 },
-					green: { pin: 30 },
-					blue: { pin: 34 },
-					anode: { pin: 24 },
-				}
-			}
-		}));
 
 		// test if CoAP extension are loaded.
 		try {

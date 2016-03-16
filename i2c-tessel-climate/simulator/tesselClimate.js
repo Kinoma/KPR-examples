@@ -15,8 +15,6 @@
   limitations under the License.
 */
 
-var THEME = require ("themes/flat/theme");
-var CONTROL = require ("mobile/control");
 var PinsSimulators = require ("PinsSimulators");
 
 exports.pins = {
@@ -87,3 +85,31 @@ exports.read = function() {
 exports.setHeater = function(params) {
     this.pinsSimulator.delegate("setValue", "heater", params.enable ? 1 : 0);
 }
+
+// currently only supports the farenheight case
+
+exports.metadata = {
+	sources: [
+		{
+			name: "read",
+			result: 
+				{ type: "Object", name: "result", properties:
+					[
+						{ type: "Number", name: "temperature", defaultValue:68, min: -4, max: 122, decimalPlaces: 3 },
+						{ type: "Number", name: "humidity", defaultValue:0, min: -0.5, max: 0.5, decimalPlaces: 3 },
+					]
+				},
+		},
+	],
+	sinks: [
+		{
+			name: "setHeater",
+			params: 
+				{ type: "Object", name: "result", properties:
+					[
+						{ type: "Boolean", name: "enable" },
+					]
+				},
+		},
+	]
+};

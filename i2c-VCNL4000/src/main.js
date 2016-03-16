@@ -15,10 +15,40 @@
   limitations under the License.
 */
 
-Handler.bind("/proximityData", {
-	onInvoke: function(handler, message) {
+var Pins = require("pins");
+
+var model = application.behavior = Object.create(Object.prototype, {
+	onLaunch: { value: function(application) {
+        this.data = { labels: {} };
+		
+		Pins.configure({
+			VCNL4000: {
+                require: "VCNL4000",
+                pins: {
+                    data: {sda: 27, clock: 29}
+                }
+            },
+		}, success => this.onPinsConfigured(application, success));
+	}},
+	onPinsConfigured: { value: function(application, success) {		
+		if (success) {			
+			application.skin = new Skin({ fill: "black" });
+			application.add(model.data.labels.ambient = new Label({left: 0, right: 0, top: 0, bottom: 120}));
+			application.add(model.data.labels.proximity = new Label({left: 0, right: 0, top: 120, bottom: 0}));
+
+			Pins.repeat("/VCNL4000/read", 30, value => this.onProximityData(application, value));
+
+			Pins.share("ws", {zeroconf: true, name: "i2c-VCNL4000"});
+		}
+		else {
+           application.skin = new Skin({ fill: "#f78e0f" });
+            var style = new Style({ font:"bold 28px", color:"white", horizontal:"center", vertical:"middle" });
+            application.add(new Label({ left:0, right:0, top:0, bottom:0, style: style, string:"Failed to configure Pins" }));
+  		}
+	}},
+	onProximityData: { value: function(application, value) {
         var data = model.data;
-        data.VCNL4000 = message.requestObject;
+        data.VCNL4000 = value;
         trace(JSON.stringify(data) + "\n");
         data.labels.ambient.string = "Ambient: " + data.VCNL4000.ambient;
         data.labels.proximity.string = "Proximity: " + data.VCNL4000.proximity;
@@ -36,33 +66,6 @@ Handler.bind("/proximityData", {
         var style = new Style({ font:"bold " + (size | 0) + "px", color:"#" + gray + gray + gray, horizontal:"center", vertical:"middle" });
         data.labels.ambient.style = style;
         data.labels.proximity.style = style;
-	}
-});
-
-var model = application.behavior = Object.create(Object.prototype, {
-	onComplete: { value: function(application, message) {
-        if (0 != message.error) {
-            application.skin = new Skin({ fill: "#f78e0f" });
-            var style = new Style({ font:"bold 36px", color:"white", horizontal:"center", vertical:"middle" });
-            application.add(new Label({ left:0, right:0, top:0, bottom:0, style: style, string:"Error " + message.error }));
-            return;
-        }
-
-        application.invoke(new MessageWithObject("pins:/VCNL4000/read?repeat=on&callback=/proximityData&interval=30"));
-
-        application.skin = new Skin({ fill: "black" });
-        application.add(model.data.labels.ambient = new Label({left: 0, right: 0, top: 0, bottom: 120}));
-        application.add(model.data.labels.proximity = new Label({left: 0, right: 0, top: 120, bottom: 0}));
 	}},
-	onLaunch: { value: function(application) {
-        application.invoke(new MessageWithObject("pins:configure", {
-            VCNL4000: {
-                require: "VCNL4000",
-                pins: {
-                    data: {sda: 27, clock: 29}
-                }
-            }}), Message.JSON);
-
-        this.data = { labels: {} };
-    }},
 });
+

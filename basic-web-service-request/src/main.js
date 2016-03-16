@@ -25,53 +25,51 @@ var smallStyle = new Style ({font: '20px', color: 'black'});
 /* Globals */
 var originalText = 'thequickbrownfoxjumpedoverthelazydog';
 
-
 /* Main screen layout */
-var MainContainer = new Container({
+var MainContainer = Container.template($ => ({
 	left: 0, right: 0, top: 0, bottom: 0, skin: whiteSkin,
 	contents: [
-		new Label({ left:0, right:0, active: false, name:'output', style: smallStyle, string: originalText }),
-		new Container( { bottom: 20, height: 40, width: 160, skin: buttonSkin, active: true,
+		Label($, { left:0, right:0, active: false, style: smallStyle, string: originalText }),
+		Container($, { bottom: 20, height: 40, width: 160, skin: buttonSkin, active: true,
 			behavior: Behavior({
-				onTouchEnded: function(container, id, x, y, ticks) {
+				onTouchEnded(container, id, x, y, ticks) {
 					var url = 'http://api.service.cloud.kinoma.com/0/sample/hash';
 					var message = new Message(url);
 					message.method = "POST";
 					message.requestText = JSON.stringify({algorithm: "MD5", string: originalText});
 					container.invoke(message, Message.TEXT);
 				},
-				onComplete: function(container, message, text) {
+				onComplete(container, message, text) {
 					if (0 == message.error && 200 == message.status) {
-						var responseObject;
 						try {
 							var responseObject = JSON.parse(text);
+							if (responseObject.success == true)
+								application.first.first.string = responseObject.result; 
+							else {
+								trace('Request Failed - Raw Response Body: *'+text+'*'+'\n');
+								application.first.first.string = "Request Failed: " + responseObject.message;
+							}						
 						}
 						catch (e) {
-							trace('Web service responded with invalid JSON!\n');
+							throw('Web service responded with invalid JSON!\n');
 						}
-						if (responseObject.success == true)
-							MainContainer.output.string = responseObject.result; 
-						else {
-							trace('Request Failed - Raw Response Body: *'+text+'*'+'\n');
-							MainContainer.output.string = "Request Failed: " + responseObject.message;
-						}						
 					}
 					else {
-						MainContainer.output.string = "Request Failed: " + message.status;
+						application.first.first.string = "Request Failed: " + message.status;
 						trace('Request Failed - Raw Response Body: *'+text+'*'+'\n');
 					}
 				}
 			}),
 			contents: [
-				new Label({string: 'Send Request', style: buttonStyle})
+				Label($, {string: 'Send Request', style: buttonStyle})
 			]
 		}) 
 	]
-});
+}));
 
 /* Application definition */
-application.behavior = {
-	onLaunch: function() { 
-		application.add(MainContainer);
+application.behavior = Behavior({
+	onLaunch() { 
+		application.add(new MainContainer);
 	}
-}
+})

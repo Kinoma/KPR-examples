@@ -17,6 +17,8 @@
 
 <program xmlns="http://www.kinoma.com/kpr/1">
 
+	<require id="Pins" path="pins"/>
+
     <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
     <!-- ASSETS -->
     <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
@@ -40,8 +42,7 @@
 		skin = "backgroundSkin">
 		<behavior>
             <method id = "onChanged" params = "canvas, value, color">
-				application.invoke( new MessageWithObject( "pins:/led/write", 
-					{ color: color, value: value } ) );
+				Pins.invoke("/led/write", { color: color, value: value });
             </method>
         </behavior>
 	</column>
@@ -92,8 +93,9 @@
 		mainContainer.add( new CircleSlider( greenSliderData ) );
 		mainContainer.add( new CircleSlider( blueSliderData ) );
 		application.add( mainContainer );
-		application.invoke( new MessageWithObject( "pins:configure", {
-			led: {
+		
+		Pins.configure({
+           led: {
 	            require: "led",
 	            pins: {
 	                red: { pin: 28 },
@@ -102,6 +104,12 @@
 	                anode: { pin: 24 }
 	            }
 			}
-		}));
+		},
+		function(success) {
+			if (success)
+				Pins.share("ws", {zeroconf: true, name: "pwm-tri-color-led"});
+			else
+				trace("failed to configure pins\n");
+		});
     ]]></script>
 </program>

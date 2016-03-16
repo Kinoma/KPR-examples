@@ -125,7 +125,7 @@
      				content.distribute( "onHardwareFailure" );
      			}
      			content.image.visible = true;      
-     			content.image.load();  	
+     			content.image.load();
      			content.image.load( chunk );
 			]]></method>
         </behavior>

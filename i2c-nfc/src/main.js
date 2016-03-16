@@ -15,6 +15,8 @@
   limitations under the License.
 */
 
+var Pins = require('pins');
+
 var nfcTokenStyle = new Style({ font:"bold 40px", color:"white", horizontal:"center", vertical:"middle" });
 var infoStyle = new Style({ font:"bold 25px", color:"white", horizontal:"center", vertical:"bottom" });
 var errorStyle = new Style({ font:"bold 40px", color:"white", horizontal:"center", vertical:"middle" });
@@ -39,17 +41,15 @@ Handler.bind("/nfcTarget", {
 	onInvoke: function(handler, message) {
 		var data = model.data;
 		var it = message.requestObject;
-        data.token = it;
+        data.token = it.token;
         data.read = false;
         data.written = false;
         application.replace(application.first, new NFCScreen({token: JSON.stringify(data.token), count: "", lastTime: ""}));
 
-        if (data.token.length) {
-            var message = new MessageWithObject("pins:/nfc/mifare_CmdRead", {page: 6, token: data.token, key: [0xff, 0xff, 0xff, 0xff, 0xff, 0xff]});
-            handler.invoke(message, Message.JSON);
-        }
+        if (data.token.length)
+ 			Pins.invoke("/nfc/mifare_CmdRead", {page: 6, token: data.token, key: [0xff, 0xff, 0xff, 0xff, 0xff, 0xff]}, result => this.onResult(result));
 	},
-    onComplete: function(handler, message, result) {
+	onResult: function(result) {
 		var data = model.data;
 
         if (!data.read) {
@@ -74,40 +74,42 @@ Handler.bind("/nfcTarget", {
                 bytes[8] = (now >>  8) & 0xff;
                 bytes[9] = (now >>  0) & 0xff;
 
-                var message = new MessageWithObject("pins:/nfc/mifare_CmdWrite", {page: 6, data: bytes, token: data.token, key: [0xff, 0xff, 0xff, 0xff, 0xff, 0xff]});
-                handler.invoke(message, Message.JSON);
+                Pins.invoke("/nfc/mifare_CmdWrite", {page: 6, data: bytes, token: data.token, key: [0xff, 0xff, 0xff, 0xff, 0xff, 0xff]});
 
 		        application.replace(application.first, new NFCScreen({token: JSON.stringify(data.token), count: "Times seen: " + (count - 1), lastTime: "Last seen: " + (new Date(lastTime * 1000))}));
             }
             else
 		        application.replace(application.first, new NFCScreen({token: JSON.stringify(data.token), count: "(read error)", lastTime: ""}));
         }
-        else if (!data.written) {
+        else if (!data.written)
             data.written = true;
-        }
-    }
+	},
 });
 
-var model = application.behavior = Object.create(Object.prototype, {
-	onComplete: { value: function(application, message, text) {
-		if (0 != message.error)
-			application.replace(application.first, new ErrorScreen(message));
-        else {
-            application.invoke(new MessageWithObject("pins:/nfc/poll?repeat=on&callback=/nfcTarget&interval=100"));
-            application.replace(application.first, new NFCScreen({token: "[]", count: "", lastTime: ""}));
-        }
-	}},
+var model = application.behavior = Object.create(Object.prototype, {	
 	onLaunch: { value: function(application) {
-        var message = new MessageWithObject("pins:configure", {
+		Pins.configure({
             nfc: {
                 require: "PN532",
                 pins: {
                     data: {sda: 27, clock: 29}
                 }
-            }});
-        application.invoke(message, Message.TEXT);
-
+            }
+		}, success => this.onPinsConfigured(application, success));
+	}},
+	onPinsConfigured: { value: function(application, success) {		
 		this.data = { token: "(initializing)"};
         application.add(new NFCScreen({token: "Initializing", count: "", lastTime: ""}));
+
+		if (success) {
+            application.replace(application.first, new NFCScreen({token: "[]", count: "", lastTime: ""}));
+
+            application.invoke(new MessageWithObject("pins:/nfc/poll?repeat=on&callback=/nfcTarget&interval=100"));
+
+			Pins.share("ws", {zeroconf: true, name: "i2c-nfc"});
+		}
+		else
+			application.replace(application.first, new ErrorScreen(message));
 	}},
 });
+

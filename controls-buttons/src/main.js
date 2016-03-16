@@ -1,4 +1,4 @@
-//@module
+//@program
 /*
   Copyright 2011-2014 Marvell Semiconductor, Inc.
 
@@ -14,8 +14,6 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-
-
 
 THEME = require('themes/flat/theme');
 var BUTTONS = require('controls/buttons');

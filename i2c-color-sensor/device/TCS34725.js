@@ -95,3 +95,21 @@ exports.setIntegrationTime = function( time ) {
 exports.setLED = function( value ) {
     this.led.write( value ? 1 : 0 );
 }
+
+exports.metadata = {
+	sources: [
+		{
+			name: "getColor",
+			result: 
+				{ type: "Object", name: "result", properties:
+					[
+						{ type: "Number", name: "r", min: 0, max: 255 },
+						{ type: "Number", name: "g", min: 0, max: 255 },
+						{ type: "Number", name: "b", min: 0, max: 255 },
+					]
+				},
+		},
+	]
+};
+
+

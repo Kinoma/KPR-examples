@@ -1,4 +1,3 @@
-//@program
 /*
   Copyright 2011-2014 Marvell Semiconductor, Inc.
 
@@ -15,25 +14,19 @@
   limitations under the License.
 */
 
-var errorStyle = new Style({ font:"bold 40px", color:"white", horizontal:"center", vertical:"middle" });
-var rangeStyle = new Style({ font:"bold 110px", color:"black", horizontal:"center", vertical:"middle" });
-var captionStyle = new Style({ font:"24px", color:"black", horizontal:"center", vertical:"bottom" });
+let Pins = require("pins");
 
-Handler.bind("/range", {
-	onInvoke: function(handler, message) {
-        var data = model.data;
-        var range = message.requestObject;
-        model.data.label.string = range.toFixed(2);
-	}
-});
+let errorStyle = new Style({ font:"bold 28px", color:"white", horizontal:"center", vertical:"middle" });
+let rangeStyle = new Style({ font:"bold 110px", color:"black", horizontal:"center", vertical:"middle" });
+let captionStyle = new Style({ font:"24px", color:"black", horizontal:"center", vertical:"bottom" });
 
-var Ruler = Canvas.template(function($) { return {
+let Ruler = Canvas.template($ => ({
 	left:0, right:0, top:0, bottom:0,
-	behavior: Object.create(Behavior.prototype, {
-		onDisplaying: { value: function(canvas) {
-			var ctx = canvas.getContext("2d");
+	Behavior: class extends Behavior {
+		onDisplaying(canvas) {
+			let ctx = canvas.getContext("2d");
 			ctx.strokeStyle = "#555555";
-			for (var i = 0, x = 4; i < 5; ++i) {
+			for (let i = 0, x = 4; i < 5; ++i) {
 				ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 6); ctx.stroke(); x += 4;
 				ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 10); ctx.stroke(); x += 4;
 				ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 6); ctx.stroke(); x += 4;
@@ -51,34 +44,39 @@ var Ruler = Canvas.template(function($) { return {
 				ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 6); ctx.stroke(); x += 4;
 				ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 24); ctx.stroke(); x += 4;
 			}
-		}},
-	}),
-}});
+		}
+	}
+}));
 
-var model = application.behavior = Object.create(Object.prototype, {
-	onComplete: { value: function(application, message) {
-        if (0 != message.error) {
-            application.skin = new Skin({ fill: "#f78e0f" });
-            application.add(new Label({ left:0, right:0, style: errorStyle, string:"Error " + message.error }));
-            return;
-        }
-
-        application.invoke(new MessageWithObject("pins:/MB1010/read?repeat=on&callback=/range&interval=250"));
-
-        application.skin = new Skin({ fill: "#ffeb36" });
-        application.add(new Ruler);
-        application.add(model.data.label = new Label({left: 0, right: 0, style: rangeStyle}));
-        application.add(new Label({left: 0, right: 0, bottom: 0, style: captionStyle, skin: new Skin({ fill: "#aaffffff" }), string: "Range in inches"}));
-	}},
-	onLaunch: { value: function(application) {
-        application.invoke(new MessageWithObject("pins:configure", {
+application.behavior = Behavior({
+	onLaunch(application) {
+        this.data = { label: {} };
+ 		Pins.configure({
             MB1010: {
                 require: "MB1010",
                 pins: {
-                    range: { pin: 62 }
+                    range: {pin: 62}
                 }
-            }}), Message.JSON);
+            }
+		}, success => this.onPinsConfigured(application, success));
+	},
+	onPinsConfigured(application, success) {		
+		if (success) {
+			Pins.repeat("/MB1010/read", 250, range => this.onRangeChanged(application, range));
+			
+			application.skin = new Skin({ fill:"#ffeb36" });
+			application.add(new Ruler);
+			application.add(this.data.label = new Label({ left:0, right:0, style:rangeStyle }));
+			application.add(new Label({ left:0, right:0, bottom:0, style:captionStyle, skin:new Skin({ fill:"#aaffffff" }), string:"Range in inches"} ));
 
-        this.data = { label: {} };
-    }},
+			Pins.share("ws", {zeroconf: true, name: "analog-MB1010"});
+		}
+		else {
+            application.skin = new Skin({ fill:"#f78e0f" });
+            application.add(new Label({ left:0, right:0, style:errorStyle, string:"Failed to configure Pins" }));
+		}
+	},
+	onRangeChanged(application, range) {		
+        this.data.label.string = range.toFixed(2);
+	}
 });

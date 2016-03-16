@@ -21,11 +21,6 @@
 	
 	<skin id="mainSkin" color="white"/>
 	
-	<skin id="debugSkin" color="#444"/>
-	<skin id="sampleSkin">
-		<borders left="0" top="0" right="0" bottom="1" color="gray"/>
-	</skin>
-	
 	<style id="mainStyle" font="24px" color="black" align="left,middle"/>
 	
 	<style id="titleStyle" font="36px" color="gray" align="center,middle"/>

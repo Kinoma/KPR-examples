@@ -34,3 +34,14 @@ exports.stop = function() {
 exports.close = function() {
 	this.servo.close();
 }
+
+exports.metadata = {
+	sinks: [
+		{
+			name: "rotate"
+		},
+		{
+			name: "stop"
+		},
+	]
+};

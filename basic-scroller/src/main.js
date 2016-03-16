@@ -46,24 +46,25 @@ var menuItems = [
 
 /* This is a template that will be used to for each entry populating the list. 
  * Note that it is anticipating an object each time in is instantiated */
-var ProcessorLine = Line.template(function($) { return { left: 0, right: 0, active: true, skin: THEME.lineSkin, 
+var ProcessorLine = Line.template($ =>  ({
+	left: 0, right: 0, active: true, skin: THEME.lineSkin, 
     behavior: Behavior({
     	/* Gives the user visual feedback on which entry they have tapped.
     	 * note that the skin is reverted to white in onTouchEnded and onTouchCanceled */    	 
-    	onTouchBegan: function(container, id, x,  y, ticks) {
+    	onTouchBegan(container, id, x,  y, ticks) {
 			container.skin = yellowSkin;
     	},
     	/* This catches touches that don't simply end
     	 * and resets the skin back to white.
     	 */
-    	onTouchCancelled: function(container, id, x,  y, ticks) {
+    	onTouchCancelled(container, id, x,  y, ticks) {
 			container.skin = whiteSkin;
     	},
     	/* Traces out the value of the first Label's string. The
     	 * silly string of "first" in the trace can be thought of as
     	 * container.Column.Container.Label.string.  This pattern can
     	 * be seen reading down the contents of this object below */
-    	onTouchEnded: function(container, id, x,  y, ticks) {	
+    	onTouchEnded(container, id, x,  y, ticks) {	
 			container.skin = whiteSkin;
 			trace(container.first.first.first.string+"\n");
 		}
@@ -87,7 +88,7 @@ var ProcessorLine = Line.template(function($) { return { left: 0, right: 0, acti
 								 * Note that no chain of "first" is needed here because the
 								 * touch happened in the object that contains the property
 								 * we want to trace */
-								onTouchEnded: function(label, id, x,  y, ticks) {	
+								onTouchEnded(label, id, x,  y, ticks) {	
 									trace(label.string+"\n");
 								}
 							})
@@ -98,7 +99,7 @@ var ProcessorLine = Line.template(function($) { return { left: 0, right: 0, acti
      		]
      	}),
      ]
- }});
+ }));
 
 /* This is a template for a container which takes up the
  * whole screen.  It contains only a single object,
@@ -106,7 +107,7 @@ var ProcessorLine = Line.template(function($) { return { left: 0, right: 0, acti
  * referencing any values from an object passed on creation,
  * an object is still required as the SCROLLER object uses it
  * internally. */
-var ScreenContainer = Container.template(function($) { return {
+var ScreenContainer = Container.template($ => ({
 	left:0, right:0, top:0, bottom:0,
 	contents: [
 		/* Note that the scroller is declared as having only an empty
@@ -119,7 +120,7 @@ var ScreenContainer = Container.template(function($) { return {
 			]
 		})
 	]
-}});
+}));
 
 var data = new Object();
 var screen = new ScreenContainer(data);
@@ -133,7 +134,7 @@ function ListBuilder(element, index, array) {
 }
 
 application.behavior = Behavior({
-	onLaunch: function(application) {
+	onLaunch(application) {
 		/* Call the ListBuilder funciton for each element in our
 		 * array of list entries.*/
 		menuItems.forEach(ListBuilder);

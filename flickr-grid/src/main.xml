@@ -145,14 +145,9 @@
 						<method id="load" params="list, more"><![CDATA[
 							if ( this.data.what ) {
 								KEYBOARD.hide();
-								this.addBusyLine(list);
-								list.invoke(this.createMessage(list, this.data), "TEXT");
+								SCREEN.ListBehavior.prototype.load.call( this, list, more );
 								list.adjust();
 							}
-						]]></method>
-						<method id="onComplete" params="list, message, result"><![CDATA[
-							result = JSON.parse(result.replace(/\\'/g, "'"));
-							SCREEN.ListBehavior.prototype.onComplete.call(this, list, message, result);
 						]]></method>
 						<method id="onFocused" params="container"><![CDATA[
 							KEYBOARD.hide();

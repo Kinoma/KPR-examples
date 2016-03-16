@@ -28,7 +28,7 @@ var Utils = require("/lowpan/common/utils");
 var Buffers = require("/lowpan/common/buffers");
 var ByteBuffer = Buffers.ByteBuffer;
 
-var APS = require("/lowpan/zigbee/aps");
+var APS = require("./zigbee/aps");
 
 // Consts from ZigBee HA 1.2 standard
 const PROFILE_HA = 0x0104;

@@ -33,3 +33,12 @@ exports.read = function() {
 exports.close = function() {
 	this.volume.close();
 }
+
+exports.metadata = {
+	sources: [
+		{
+			name: "read",
+			result: { type: "Number", name: "volume", defaultValue:0.8, min: 0, max: 1, decimalPlaces: 3 }
+		},
+	]
+};

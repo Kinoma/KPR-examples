@@ -91,6 +91,22 @@
 		};
 
 		var gColor = { r : 1, g : 1, b : 1 }
+		
+		exports.metadata = {
+			sinks: [
+				{
+					name: "write",
+					params: 
+						{ type: "Object", name: "parameters", properties:
+							[
+								{ type: "Number", name: "red", defaultValue: 0, min: 0, max: 255, decimalPlaces: 0 },
+								{ type: "Number", name: "green", defaultValue: 0, min: 0, max: 255, decimalPlaces: 0 },
+								{ type: "Number", name: "blue", defaultValue: 0, min: 0, max: 255, decimalPlaces: 0 },
+							]
+						},
+				},
+			]
+		};
 	]]></script>
 
 </module>

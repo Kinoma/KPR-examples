@@ -24,22 +24,26 @@
 var Pins = require("pins");
 
 var Utils = require("/lowpan/common/utils");
+var Logger = Utils.Logger;
 
-var ZigBee = require("/lowpan/zigbee");
-var XBee = require("/lowpan/zigbee/xbee/zdo");
+var XBee = require("./xbee/zdo");
 
-var XBEE_CHANNEL_MASK = 0x1FFF800; // Channel 11-24
-var PERMIT_JOIN_DURATION = 80;
-var HA_TC_LINK_KEY = [
+var Address = require("./zigbee/address");
+var APS = require("./zigbee/aps");
+var ZDP = require("./zigbee/zdp");
+
+const XBEE_CHANNEL_MASK = 0x1FFF800; // Channel 11-24
+const PERMIT_JOIN_DURATION = 80;
+const HA_TC_LINK_KEY = [
 	0x5A, 0x69, 0x67, 0x42, 0x65, 0x65, 0x41, 0x6C,
 	0x6C, 0x69, 0x61, 0x6E, 0x63, 0x65, 0x30, 0x39
 ];
 
 // Load ZigBee Applications
-var ZCL = require("OnOffSwitchExample");
+var ZCL = require("./OnOffSwitchExample");
 
-var logger = new Utils.Logger("XBee Demo");
-logger.loggingLevel = Utils.Logger.Level.INFO.level;
+var logger = new Logger("XBee Demo");
+logger.loggingLevel = Logger.Level.INFO;
 
 var discoveredList = {};
 
@@ -52,7 +56,10 @@ class XBeeBehavior extends Behavior {
 		// BLL Configure
 		Pins.configure(
 			{
-				xbee: XBee.API.BLL_DRIVER,
+				xbee: {
+					require: "/xbee/uart",
+					pins: {}
+				},
 				led: {
 					require: "LED",
 					pins: {
@@ -138,7 +145,7 @@ exports.commission = function () {
 	
 	if (nodeType == "Coordinator") {
 		// Use my IEEEAddress for extPANID
-		XBee.API.executeCommand("ID", XBee.getDeviceInfo().ieeeAddress.getRawArray());
+		XBee.API.executeCommand("ID", XBee.getDeviceInfo().ieeeAddress.toArray(false));
 	} else {
 		// Join any available network
 		XBee.API.executeCommand("ID", [0x00]);
@@ -164,8 +171,8 @@ exports.commission2 = function () {
 exports.discovery = function () {
 	logger.debug("******** Discovery ********");
 	sendMatchDescriptorRequest(
-		ZigBee.Address.BROADCAST_MROWI,
-		ZigBee.Address.BROADCAST_MROWI,
+		Address.BROADCAST_MROWI,
+		Address.BROADCAST_MROWI,
 		ZCL.PROFILE_HA,
 		ZCL.SIMPLE_DESCRIPTOR.outputClusters,
 		[],
@@ -207,7 +214,7 @@ function readDiagnostics(responseMap) {
 		stackProfile: responseMap["ZS"].data[0] & 0xFF,
 		operatingExtPANID: responseMap["OP"].data,
 		operatingChannel: responseMap["CH"].data[0] & 0xFF,
-		networkAddress: ZigBee.Address.getNetworkAddress(responseMap["MY"].data)
+		networkAddress: Address.getNetworkAddress(responseMap["MY"].data)
 	};
 }
 
@@ -217,7 +224,7 @@ function readDiagnostics(responseMap) {
 
 // Default values
 const DEFAULT_TX_RADIUS = 0;
-const DEFAULT_TX_OPTIONS = ZigBee.APS.TXOption.ACK | ZigBee.APS.TXOption.FRAGMENTATION;
+const DEFAULT_TX_OPTIONS = APS.TXOption.ACK | APS.TXOption.FRAGMENTATION;
 const DEFAULT_TX_BUFFER_SIZE = 64;
 
 // Sample SimpleDescriptorRequest message
@@ -226,12 +233,12 @@ function sendSimpleDescriptorRequest(address, target, endpoint, callback) {
 		throw "Remote address must be unicast";
 	}
 
-	if (target.mode != ZigBee.Address.AddressMode.NWK) {
+	if (target.mode != Address.AddressMode.NWK) {
 		throw "Target (NOI) must be NWK addressing mode.";
 	}
 
 	XBee.sendZDPCommandPacket(address,
-		ZigBee.ZDP.Command.SIMPLE_DESC_REQ,
+		ZDP.Command.SIMPLE_DESC_REQ,
 		{
 			nwkAddr: target,
 			endpoint: endpoint
@@ -245,12 +252,12 @@ function sendMatchDescriptorRequest(address, target, profileId, inClusters, outC
 //		throw "Remote address must be unicast";
 //	}
 
-	if (target.mode != ZigBee.Address.AddressMode.NWK) {
+	if (target.mode != Address.AddressMode.NWK) {
 		throw "Target (NOI) must be NWK addressing mode.";
 	}
 
 	XBee.sendZDPCommandPacket(address,
-		ZigBee.ZDP.Command.MATCH_DESC_REQ,
+		ZDP.Command.MATCH_DESC_REQ,
 		{
 			nwkAddr: target,
 			profileId: profileId,

@@ -96,3 +96,13 @@ exports.read = function() {
 	this.data.value = undefined;
 	return value;
 }
+
+exports.metadata = {
+	sources: [
+		{
+			name: "read",
+			result: { type: "String", name: "value" },
+		},
+	]
+};
+

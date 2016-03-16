@@ -15,57 +15,58 @@
   limitations under the License.
 */
 
-Handler.bind("/accelData", {
-	onInvoke: function(handler, message) {
+var Pins = require("pins");
+
+var model = application.behavior = Object.create(Object.prototype, {
+	onLaunch: { value: function(application) {
+		this.data = { axes: {x: 0, y: 0, z: 0} };
+		
+		Pins.configure({
+			tesselAccelerometer: {
+                require: "tesselAccelerometer",
+                pins: {
+                    accelerometer: {sda: 27, clock: 29, outputRate: 50}
+                }
+            },
+		}, success => this.onPinsConfigured(application, success));
+	}},
+	onPinsConfigured: { value: function(application, success) {		
+		if (success) {
+			// axis values
+			var style = new Style({ font:"bold 36px", color:"white", horizontal:"left", vertical:"middle" });
+			model.data.labels = {
+				x: new Label({left: 60, top: 70}, null, style, "x: "),
+				y: new Label({left: 60, top: 105}, null, style, "y: "),
+				z: new Label({left: 60, top: 140}, null, style, "z: "),
+			};
+			application.add(model.data.labels.x);
+			application.add(model.data.labels.y);
+			application.add(model.data.labels.z);
+
+			// bouncing ball
+			application.skin = new Skin({ fill: "#76b321" });
+			var ballTexture = new Texture("ball.png");
+			var ballSkin = new Skin(ballTexture, {x:0, y:0, width:50, height:50}, 50, 0);
+			var ball = new Content({left:125, width: 50, top: 95, height: 50}, ballSkin);
+			ball.behavior = new BallBehavior();
+			application.add(ball);
+			
+			Pins.repeat("/tesselAccelerometer/read", 30, value => this.onAccelData(value));
+
+			Pins.share("ws", {zeroconf: true, name: "i2c-tessel-accelerometer"});
+		}
+		else
+			trace("failed to configure pins\n");
+	}},
+	onAccelData: { value: function(value) {
         var data = model.data;
 
-		data.axes = message.requestObject;
+		data.axes = value;
         data.axes.y *= -1;        // adjust y for Kinoma Create orientation
         
         data.labels.x.string = "x: " + formatAcceleration(data.axes.x);
         data.labels.y.string = "y: " + formatAcceleration(data.axes.y);
         data.labels.z.string = "z: " + formatAcceleration(data.axes.z);
-	}
-});
-
-var model = application.behavior = Object.create(Object.prototype, {
-	onComplete: { value: function(application, message) {
-        if (0 != message.error) {
-            return;
-        }
-        
-        // axis values
-        var style = new Style({ font:"bold 36px", color:"white", horizontal:"left", vertical:"middle" });
-        model.data.labels = {
-            x: new Label({left: 60, top: 70}, null, style, "x: "),
-            y: new Label({left: 60, top: 105}, null, style, "y: "),
-            z: new Label({left: 60, top: 140}, null, style, "z: "),
-        };
-        application.add(model.data.labels.x);
-        application.add(model.data.labels.y);
-        application.add(model.data.labels.z);
-
-        // bouncing ball
-        application.skin = new Skin({ fill: "#76b321" });
-        var ballTexture = new Texture("ball.png");
-        var ballSkin = new Skin(ballTexture, {x:0, y:0, width:50, height:50}, 50, 0);
-        var ball = new Content({left:125, width: 50, top: 95, height: 50}, ballSkin);
-        ball.behavior = new BallBehavior();
-        application.add(ball);
-
-        trace("onComplete, error " + message.error + "\n");
-        application.invoke(new MessageWithObject("pins:/tesselAccelerometer/read?repeat=on&callback=/accelData&interval=30"));
-	}},
-	onLaunch: { value: function(application) {
-        application.invoke(new MessageWithObject("pins:configure", {
-            tesselAccelerometer: {
-                require: "tesselAccelerometer",
-                pins: {
-                    accelerometer: {sda: 27, clock: 29, outputRate: 50}
-                }
-            }}), Message.JSON);
-
-		this.data = { axes: {x: 0, y: 0, z: 0} };
 	}},
 });
 
@@ -136,5 +137,4 @@ function formatAcceleration(val)
     }
 
     return result;
-
 }

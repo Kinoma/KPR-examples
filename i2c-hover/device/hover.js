@@ -99,3 +99,12 @@ exports.read = function() {
 
     return result;
 }
+
+exports.metadata = {
+	sources: [
+		{
+			name: "read",
+			result: { type: "String", name: "value" },
+		},
+	]
+};

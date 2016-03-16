@@ -14,6 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
+var Pins = require("pins");
 
 // ---------------------------------------------------------------------------------------------------------
 // Global Vars
@@ -36,6 +37,7 @@ var HalfKeySkin = new Skin({ fill: ["black", "silver"], stroke:"silver", borders
 
 var SynthTexture = new Texture("./assets/synthiconsborder.png");
 var SynthStates = new Skin({ texture: SynthTexture,  x:0, y:0, width:80, height:80, states:80, variants:80 });
+var errorStyle = new Style({ font:"bold 40px", color:"white", horizontal:"center", vertical:"middle" });
 
 // ---------------------------------------------------------------------------------------------------------
 // UI elements
@@ -159,7 +161,7 @@ var Keyboard = Container.template(function($) { return {
         	// Function defines how analog value(0-1) changes audio amplitude(loudness)
             var test = (2*result+.5) *aval;
             // Change Amplitude with analog input values 
-            application.invoke(new MessageWithObject("pins:/audio/setAmplitude", test));
+            Pins.invoke("/audio/setAmplitude", test);
 		},
         // Initialize array for multi touch
         onCreate: function(container, data) {
@@ -192,22 +194,22 @@ var Keyboard = Container.template(function($) { return {
             }
             // Uses synthoption global variable to determine synthesizer mode
             if(synthoption == "violin"){
-           		application.invoke(new MessageWithObject("pins:/audio/setFrequenciesViolin", capped));	
+            	Pins.invoke("/audio/setFrequenciesViolin", capped);
             }
             else if(synthoption == "bell"){
-           		application.invoke(new MessageWithObject("pins:/audio/setFrequenciesBell", capped));
+            	Pins.invoke("/audio/setFrequenciesBell", capped);
             }
             else if(synthoption == "laser"){
-           		application.invoke(new MessageWithObject("pins:/audio/setFrequenciesLaser", capped));
+            	Pins.invoke("/audio/setFrequenciesLaser", capped);
             }
             else
             	// Restrict total # of keys pressed to 5
             	if(frequencies.length > 5){
            			var filtered = frequencies.slice(0,5);
-           			application.invoke(new MessageWithObject("pins:/audio/setFrequencies", filtered));  
+            		Pins.invoke("/audio/setFrequencies", filtered);
            		}
            		else 
-           			application.invoke(new MessageWithObject("pins:/audio/setFrequencies", frequencies));      		
+            		Pins.invoke("/audio/setFrequencies", frequencies);
         },
     }),
     // Maps keys. white keys are 0-7 index, black keys after
@@ -220,64 +222,48 @@ var Keyboard = Container.template(function($) { return {
 }});
 
 // ---------------------------------------------------------------------------------------------------------
-// Handlers
-// ---------------------------------------------------------------------------------------------------------
-// Callback handler for analog input
-Handler.bind("/gotAnalogResult", Behavior({
-	onInvoke: function(handler, message){
-		var result = message.requestObject;  
-        application.distribute( "onAnalogValueChanged", result ); 	
-	},
-}));
-
-// ---------------------------------------------------------------------------------------------------------
 // Application behavior
 // ---------------------------------------------------------------------------------------------------------
 // Construct instances of preceding templates/prototypes
 application.behavior = Behavior({
-	// Checks for configuration errors
-	onComplete: function(application, message) {
-		// If config error
-        if (0 != message.error) {
-            application.skin = new Skin({ fill: "#f78e0f" });
-            var style = new Style({ font:"bold 36px", color:"white", horizontal:"center", vertical:"middle" });
-            application.add(new Label({ left:0, right:0, top:0, bottom:0, style: style, string:"Error " + message.error }));
-            return;
-        }
- 		
-        /* Use the initialized analogSensor object and repeatedly 
-	   	call its read method with a given interval(20ms).  */
-		application.invoke(new MessageWithObject("pins:/analogSensor/read?repeat=on&interval=20&callback=/gotAnalogResult"));	
-		// Initialized keyboard, data passed are notes C,D,E,F,G,A,B,C scale, plus all half steps added in order at the end.
-		application.add(new Keyboard([523, 587, 660, 698, 783, 880, 988, 1046, 554, 622, 740, 831, 932, 1109]));
-		// Initialized buttons to the variants defined in theme.xml
-        application.add(new ButtonTray([0,1,2,3]));     
-		/* Use the initialized audio object and repeatedly 
-    	   call its synthesize method with a given interval.  */
-        application.invoke(new MessageWithObject("pins:/audio/synthesize?repeat=on&timer=speaker&callback=/getSamples"));
-        // Starts audio output hardware 
-        application.invoke(new MessageWithObject("pins:/audio/start"));  
-   },
-   // Configures Audio, and analog pins on start
    onLaunch: function(application,message) {       
-		// Configure audio, and sound
-        application.invoke(new MessageWithObject("pins:configure", {
-            audio: {
-                require: "synthOut",
-                pins: {
-                /* Lowered sampleRate from 8kHz to 4kHz, to allow for more 
-                   simultaneous tones (to support synth modes). You get ~5 at 4kHz, and ~3 at 8kHz.*/
-                    speaker: {sampleRate: 4000, amplitude: aval}
-                    }
-            },
-            // Configuration for analog sensor. 
+		// Configures Audio, and analog pins on start
+		Pins.configure({
+			audio: {
+				require: "synthOut",
+				pins: {
+					/* Lowered sampleRate from 8kHz to 4kHz, to allow for more 
+					   simultaneous tones (to support synth modes). You get ~5 at 4kHz, and ~3 at 8kHz.*/
+					speaker: {sampleRate: 4000, amplitude: aval}
+				},
+			},
             analogSensor: {
-			    require: "analog",
+			    require: "Analog",
 			    pins: {
-		       	 analog: { pin: 54 }
+					analog: { pin: 54 }
 		      	} 
-		    },	
-		  
-        }),Message.JSON);              	
-    }
+		    }
+		}, success => this.onPinsConfigured(application, success));
+    },
+	onPinsConfigured(application, success) {		
+		if (success) {
+	        /* Use the initialized analogSensor object and repeatedly 
+		   	call its read method with a given interval(20ms).  */
+		   	Pins.repeat("/analogSensor/read", 20, result => application.distribute( "onAnalogValueChanged", result ));
+
+			// Initialized keyboard, data passed are notes C,D,E,F,G,A,B,C scale, plus all half steps added in order at the end.
+			application.add(new Keyboard([523, 587, 660, 698, 783, 880, 988, 1046, 554, 622, 740, 831, 932, 1109]));
+			// Initialized buttons to the variants defined in theme.xml
+	        application.add(new ButtonTray([0,1,2,3]));   
+	          
+	        // Starts audio output hardware 
+		   	Pins.invoke("/audio/start");
+
+			Pins.share("ws", {zeroconf: true, name: "simplesynth"});
+		}
+		else {
+            application.skin = new Skin({ fill:"#f78e0f" });
+            application.add(new Label({ left:0, right:0, style:errorStyle, string:"Error" }));
+		}
+	}
 });

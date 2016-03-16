@@ -15,8 +15,6 @@
   limitations under the License.
 */
 
-var THEME = require ("themes/flat/theme");
-var CONTROL = require ("mobile/control");
 var PinsSimulators = require ("PinsSimulators");
 
 exports.pins = {
@@ -52,4 +50,13 @@ exports.close = function() {
 exports.read = function() {
 	var axes = this.pinsSimulator.delegate("getValue");
 	return axes.temperature;				
+};
+
+exports.metadata = {
+	sources: [
+		{
+			name: "read",
+			result: { type: "Number", name: "temperature", defaultValue: 0, min: -30, max: 100, decimalPlaces: 3 },
+		},
+	]
 };

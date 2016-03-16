@@ -15,8 +15,6 @@
   limitations under the License.
 */
 
-var THEME = require ("themes/flat/theme");
-var CONTROL = require ("mobile/control");
 var PinsSimulators = require ("PinsSimulators");
 
 exports.pins = {
@@ -56,3 +54,12 @@ exports.read = function(temperature) {
 	var axes = this.pinsSimulator.delegate("getValue");
 	return axes.humidity;				
 }
+
+exports.metadata = {
+	sources: [
+		{
+			name: "read",
+			result: { type: "Number", name: "humidity", defaultValue: 75, min: 0, max: 100, decimalPlaces: 3 },
+		},
+	]
+};

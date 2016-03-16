@@ -80,4 +80,18 @@ exports.close = function( led ){
 	this.anode.close();
 }
 
-
+exports.metadata = {
+	sinks: [
+		{
+			name: "write",
+			result: 
+				{ type: "Object", name: "parameters", properties:
+					[
+						{ type: "Number", name: "red" },
+						{ type: "Number", name: "green" },
+						{ type: "Number", name: "blue" },
+					]
+				},
+		},
+	]
+};

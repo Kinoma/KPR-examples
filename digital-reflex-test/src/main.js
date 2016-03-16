@@ -16,7 +16,7 @@
 */
 THEME = require('themes/flat/theme');
 var BUTTONS = require('controls/buttons');
-
+var Pins = require('pins');
 
 /*
 levelSpeed stores dx values for levels to make sheep run at different speeds
@@ -305,31 +305,6 @@ var RandomRunBehavior = Behavior.template({
 	},
 });
 
-
-
-
-////////// Handlers ////////// 
-Handler.bind("/gotButtonResult", Object.create(Behavior.prototype, {
-	onInvoke: { value: 
-		function(handler, message) {            
-             var readResult = message.requestObject;            
-             if (( readResult == true ) && (reading) && (!cheated)) { //if button is clicked when no animal is running, nothing happens              
-                application.distribute( "buttonClicked" );
-             } else if ((readResult == true) && (currScreen.name = "gameScreen")) {
-             	if ((!cheated) && (!tooSlow)){
-             		application.add(new FeedbackString({string:"Stop cheating!"})); 
-             		cheated = true;
-             	} else if (!tooSlow){
-             		application.add(new FeedbackString({string:"Cheaters never prosper"})); 
-             	}
-             }
-		},
-	},
-}));
-
-
-
-
 ////////// Other functions ////////// 
 function getRandomIntInclusive(min, max) {
 // from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
@@ -453,19 +428,35 @@ var timesScreen = new Column({
 
 
 // Set up for communication with hardware pins.
-application.invoke( new MessageWithObject( "pins:configure", {
+Pins.configure({
 	button: {
         require: "button",
         pins: {
             button: { pin: 52 }
         }
     }
-}));
+},
+function(success) {
+	if (success) {
+		// call the analogSensors read function every 20 milliseconds and distribute the result
+		Pins.repeat("/button/wasPressed", 20, function(readResult) {
+			if (( readResult == true ) && (reading) && (!cheated)) { //if button is clicked when no animal is running, nothing happens              
+                application.distribute( "buttonClicked" );
+             } 
+             else if ((readResult == true) && (currScreen.name = "gameScreen")) {
+             	if ((!cheated) && (!tooSlow)){
+             		application.add(new FeedbackString({string:"Stop cheating!"})); 
+             		cheated = true;
+             	} 
+             	else if (!tooSlow){
+             		application.add(new FeedbackString({string:"Cheaters never prosper"})); 
+             	}
+             }
+		});
 
-// Continuously check to see if button was pressed
-application.invoke( new MessageWithObject( "pins:/button/wasPressed?" + serializeQuery({       
-		repeat: "on",
-		interval: 20,
-		callback: "/gotButtonResult"
-	})
-));     
+		// share the analogSensor over web sockets
+		Pins.share("ws", {zeroconf: true, name: "digital-reflex-test"});
+	}
+	else
+		trace("failed to configure pins\n");
+});    

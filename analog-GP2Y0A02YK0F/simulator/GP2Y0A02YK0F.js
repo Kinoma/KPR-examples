@@ -15,8 +15,6 @@
   limitations under the License.
 */
 
-var THEME = require ("themes/flat/theme");
-var CONTROL = require ("mobile/control");
 var PinsSimulators = require ("PinsSimulators");
 
 exports.pins = {
@@ -56,3 +54,12 @@ exports.read = function() {
     var result = this.pinsSimulator.delegate("getValue");
     return result.proximity;
 }
+
+exports.metadata = {
+	sources: [
+		{
+			name: "read",
+			result: { type: "Number", name: "proximity", defaultValue: 100, min: 15, max: 150, decimalPlaces: 3 },
+		},
+	]
+};

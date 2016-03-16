@@ -219,10 +219,11 @@
 				this.startedSlideShow = false;
 				
 				var uri = "https://api.flickr.com/services/feeds/groups_pool.gne?" + serializeQuery( { id: "80641914@N00", format: "json", nojsoncallback: 1 } );
-				container.invoke( new Message( uri ), Message.JSON );
+				container.invoke( new Message( uri ), Message.TEXT );
 			]]></method>	
-			<method id="onComplete" params="container, message, json"><![CDATA[
-				if ( json ) {
+			<method id="onComplete" params="container, message, text"><![CDATA[
+				if (text) {
+					var json = JSON.parse(text.replace(/\\'/g, "'"))
 					var items = json.items;
 					this.images.data.length = items.length;
 					this.images.data.index = 0;

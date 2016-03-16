@@ -69,3 +69,32 @@ exports.CURSOR_DIGIT_0 = 0;
 exports.CURSOR_DIGIT_1 = 1;
 exports.CURSOR_DIGIT_2 = 2;
 exports.CURSOR_DIGIT_3 = 3;
+
+exports.metadata = {
+	sinks: [
+		{
+			name: "brightness",
+			params: 
+				{ type: "Number", name: "level", defaultValue:1, min: 0, max: 1, decimalPlaces: 3 },
+		},
+		{
+			name: "clear",
+		},
+		{
+			name: "cursor",
+			params: 
+				{ type: "Number", name: "digit", defaultValue:0, min: 0, max: 3, decimalPlaces: 0 },
+		},
+		{
+			name: "writeDecimalControl",
+			params: 
+				{ type: "Number", name: "command", defaultValue:0x10, min: 0, max: 0x10, decimalPlaces: 0 },
+		},
+		{
+			name: "writeString",
+			params: 
+				{ type: "String", name: "string" },
+		},
+	]
+};
+

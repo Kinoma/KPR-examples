@@ -16,12 +16,13 @@
 */
 THEME = require ("themes/sample/theme");
 var TOOL = require("mobile/tool");
+var Pins = require("pins");
 
-// assets
+/* ASSETS */
 var menuButtonStyle = new Style({ font:"18px", color:"white", horizontal:"left", vertical:"middle" });
 var readingStyle = new Style({ font:"bold 26px", color:"white", horizontal:"left", vertical:"middle" });
 
-// handlers
+/* HANDLERS */
 Handler.bind("/changeUnits", {
 	onInvoke: function(handler, message) {
         var query = parseQuery(message.query);
@@ -29,37 +30,29 @@ Handler.bind("/changeUnits", {
 	}
 });
 
-// layouts
-var MainScreen = Container.template(function($) { return {
+/* LAYOUTS */
+var MainScreen = Container.template($ => ({
 	left:0, right:0, top:0, bottom:0,
 	skin: new Skin({ fill: "gray" }),
-	behavior: Object.create(Behavior.prototype, {
-		onComplete: { value: function(container, message, result) {
-			var path = message.path;
-			if (0 == path.indexOf("/TMP102")) {
-				this.data.temperature = result;
-        		container.invoke(new MessageWithObject("pins:/HIH4030/read", this.data.temperature), Message.TEXT);
-			}
-			else if (0 == path.indexOf("/HIH4030")) {
-				this.data.humidity = result;
-				this.updateTemperatureDisplay(container);
-				container.first.next.string = "Relative Humidity: " + this.data.humidity.toFixed(1) + '%';
-				container.wait(1000);
-			}
-			else {
-				// The "wait" time has completed so read the temperature and then the humidity
-        		container.invoke(new MessageWithObject("pins:/TMP102/read"), Message.TEXT);
-			}
-		}},
-		onCreate: { value: function(container, data) {
+	behavior: Behavior({
+		onCreate(container, data) {
 			this.data = data;
 			container.wait(10);
-		}},
-		onUnitsChanged: { value: function(container, units) {
+		},
+		onReceivedHumidity(container, value) {
+			this.data.humidity = value;
+			this.updateTemperatureDisplay(container);
+			container.first.next.string = "Relative Humidity: " + this.data.humidity.toFixed(1) + '%';
+		},
+		onReceivedTemperature(container, value) {
+			this.data.temperature = value;
+			this.updateTemperatureDisplay(container);
+		},
+		onUnitsChanged(container, units) {
 			this.data.units = units;
 			this.updateTemperatureDisplay(container);
-		}},
-		updateTemperatureDisplay: { value: function(container) {
+		},
+		updateTemperatureDisplay(container) {
 			var temperature = this.data.temperature;
 			if ("fahrenheit" == this.data.units) {
 				temperature = 1.8 * temperature + 32;
@@ -68,53 +61,64 @@ var MainScreen = Container.template(function($) { return {
 			else {
 				container.first.string = "Temperature: " + temperature.toFixed(2) + '°C';
 			}
-		}},
+		},
 	}),
 	contents: [
 		Label($, { left:10, right:10, top:60, style:readingStyle }),
 		Label($, { left:10, right:10, bottom:60, style:readingStyle }),
 		TOOL.MenuButton($.menu, { right:10, top:0, style: menuButtonStyle })
 	]
-}});
+}));
 
 // model
-var model = application.behavior = Object.create(Object.prototype, {
-	onComplete: { value: function(application, message) {
-        if (0 != message.error) {
-            application.skin = new Skin({ fill: "#f78e0f" });
-            var style = new Style({ font:"bold 36px", color:"white", horizontal:"center", vertical:"middle" });
-            application.add(new Label({ left:0, right:0, top:0, bottom:0, style: style, string:"Error " + message.error }));
-            return;
-        }
-        var data = {
-        	temperature: -1,
-        	humidity: -1,
-        	units: "celsius",
-        	menu: {
-				action: "/changeUnits?units=",
-				items: [
-					{ title: "Celsius", value: "celsius" },
-					{ title: "Fahrenheit", value: "fahrenheit" }
-				],
-				selection: 0,
-        	}
-        };
-		application.add(new MainScreen(data));
-	}},
-	onLaunch: { value: function(application) {
-        application.invoke(new MessageWithObject("pins:configure", {
-            HIH4030: {
-                require: "HIH4030",
-                pins: {
-                    humidity: { pin: 65 }
-                }
+application.behavior = Behavior({
+	onLaunch(application) {
+		Pins.configure({
+			HIH4030: {
+				require: "HIH4030",
+				pins: {
+					humidity: { pin: 65 }
+				}
 			},
-            TMP102: {
-                require: "TMP102",
-                pins: {
-                    temperature: { sda: 27, clock: 29 }
-                }
-            }
-		}), Message.JSON);
-    }},
+			TMP102: {
+				require: "TMP102",
+				pins: {
+					temperature: { sda: 27, clock: 29 }
+				}
+			}
+		}, success => this.onPinsConfigured(application, success));
+	},
+	onPinsConfigured(application, success) {		
+		if (success) {
+			var data = {
+				temperature: -1,
+				humidity: -1,
+				units: "celsius",
+				menu: {
+					action: "/changeUnits?units=",
+					items: [
+						{ title: "Celsius", value: "celsius" },
+						{ title: "Fahrenheit", value: "fahrenheit" }
+					],
+					selection: 0,
+				}
+			};
+			application.add(new MainScreen(data));
+
+			Pins.repeat("/HIH4030/read", 200, function(result) {
+				application.distribute("onReceivedHumidity", result);
+			});
+			Pins.repeat("/TMP102/read", 200, function(result) {
+				application.distribute("onReceivedTemperature", result);
+			});
+
+			Pins.share("ws", {zeroconf: true, name: "analog-HIH4030"});
+		}
+		else {
+			trace("Failed to configure Pins\n");
+		}
+	},
+	onQuit(application) {
+		Pins.close();
+	},
 });

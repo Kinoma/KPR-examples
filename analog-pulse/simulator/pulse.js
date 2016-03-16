@@ -27,26 +27,27 @@ PulseBehavior.prototype = Object.create(Behavior.prototype, {
         column.partContentsContainer.add(new PulseLine(data)); 
 	}},
 });
-var PulseLine = Container.template(function($) { return {
+
+var PulseLine = Container.template($ => ({
 	left:0, right:0, height:40,
 	contents: [
 		Canvas($, {
 			width:200, top:0, height:40, active:true,
-			behavior: Object.create(SLIDERS.SliderBehavior.prototype, {
-				onTouchBegan: { value: function(canvas, id, x, y, ticks) {
+			behavior: SLIDERS.SliderBehavior({
+				onTouchBegan(canvas, id, x, y, ticks) {
 					canvas.captureTouch(id, x, y, ticks);
 					this.onTouchMoved(canvas, id, x, y, ticks);
-				}},
-				onTouchEnded: { value: function(canvas, id, x, y, ticks) {
-				}},
-				onTouchMoved: { value: function(canvas, id, x, y, ticks) {
+				},
+				onTouchEnded(canvas, id, x, y, ticks) {
+				},
+				onTouchMoved(canvas, id, x, y, ticks) {
 					var size = canvas.width;
 					var offset = (x - canvas.x);
 					this.setOffset(canvas, size, offset);
 					this.data.changed = true;
 					this.onValueChanged(canvas);
-				}},
-				onValueChanged: { value: function(canvas) {
+				},
+				onValueChanged(canvas) {
 					var active = canvas.active;
 			
 					var knobWidth = 6;
@@ -68,11 +69,11 @@ var PulseLine = Container.template(function($) { return {
 					ctx.fillStyle = "#FFFFFF";
 					ctx.fillRect(inset + offset - knobWidth / 2, 10, knobWidth, knobHeight - 1);
 					ctx.strokeRect(inset + offset - knobWidth / 2, 10, knobWidth, knobHeight - 1);
-				}},
+				},
 			}),
 		}),
 	],
-}});
+}));
 
 exports.pins = {
     sensor: {type: "A2D"}
@@ -106,3 +107,19 @@ exports.beat = function() {
 		return { BPM: data.value };
 	}
 }
+
+exports.metadata = {
+	sources: [
+		{
+			name: "beat",
+			result: 
+				{ type: "Object", name: "result", properties:
+					[
+						{ type: "Number", name: "BPM", defaultValue:90, min: 0, max: 200, decimalPlaces: 3 },
+					]
+				},
+		},
+	]
+};
+
+
