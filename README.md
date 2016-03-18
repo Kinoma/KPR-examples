@@ -291,6 +291,16 @@ This sample app integrates Kinoma Create with the Miselu C.24 wireless MIDI keyb
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-mesh-button">ble-mesh-button</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-mesh-button"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/ble-mesh-button-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="blemeshbutton.example.kinoma.marvell.com"><span class="createSample pinsSample bluetoothSample"></span></x-app-info>
+
+The Sony MESH Tags are small BLE peripherals dedicated to specific functions. This sample app shows how to discover and receive button press/hold notifications from the MESH Button Tag. The BLE app first establishes a secure and encrypted connection as required by the Tag. Once connected and services/characteristics discovered, the app displays button presses on the Kinoma Create screen.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-satechi-iqplug">ble-satechi-iqplug</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/ble-satechi-iqplug"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/ble-satechi-iqplug-example.jpg" height="100" alt=""/></a>
 					
