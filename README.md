@@ -976,7 +976,7 @@ This application sends and receives JSON messages using the PubNub messaging ser
 					
 <x-app-info id="pwmcontinuousservo.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
 
-Rotates a 360˚ continuous servo using a PWM pin. Demonstrates the set up and integration of a PWM BLL in KinomaJS.
+Demonstrates control of 360˚ servos using PWM output from pins on the front (with two-argument pulse-width mode) or back (with one-argument duty-cycle mode). Also demonstrates how to implement a custom parts simulator, and how to use data from an external JSON file.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
