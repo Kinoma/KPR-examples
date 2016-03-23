@@ -1,0 +1,46 @@
+[
+     
+   { 
+        "model": "Modified HS-625MG",
+        "url":  "https://www.servocity.com/html/hs-625mg_ultra_speed.html",
+        "data":  {
+            "period": 20,
+            "cw": 0.8, 
+            "ccw": 0.1,
+            "stop": 0.43,
+            "dutyCycle": 0.99
+        }
+    },
+    { 
+        "model": "LS-3006",
+        "url": "http://osepp.com/wp-content/uploads/2012/09/LS-3006_datasheet.pdf",
+        "data": {
+            "period": 20,
+            "cw": 0.5, 
+            "ccw": 2,
+            "stop": 1.5,
+            "dutyCycle": 0.5
+	    }
+    },
+	{ 
+        "model": "SM-S4303R",
+        "url": "http://www.servodatabase.com/servo/springrc/sm-s4303r",
+        "data": {
+            "period": 20,
+            "cw": 2, 
+            "ccw": 0.4,
+            "stop": 1.28,
+            "dutyCycle": 0.5
+        }
+	},
+	{ 
+        "model": "generic",
+        "data": {
+            "period": 20,
+            "stop": 1.536,
+            "cw": 1,
+            "ccw": 2,
+            "dutyCycle": 0.5
+        }
+	}
+ ]
