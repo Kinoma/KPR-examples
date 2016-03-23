@@ -32,7 +32,6 @@ const MESH_SERVICE_UUID = "72C90001-57A9-4D40-B746-534E22EC9F9E";
 const NOTIFY_CHARACTERISTIC_UUID = "72C90003-57A9-4D40-B746-534E22EC9F9E";
 const INDICATE_CHARACTERISTIC_UUID = "72C90005-57A9-4D40-B746-534E22EC9F9E";
 const WRITE_CHARACTERISTIC_UUID = "72C90004-57A9-4D40-B746-534E22EC9F9E";
-const WRITE2_CHARACTERISTIC_UUID = "72C90002-57A9-4D40-B746-534E22EC9F9E";
 
 // ----------------------------------------------------------------------------------
 // styles
@@ -110,7 +109,7 @@ var MainScreen = Container.template(function($) { return {
 // Application
 // ----------------------------------------------------------------------------------
 
-function findMESHService2(peripheral) {
+function findMESHService(peripheral) {
 	let scanResponseData = peripheral.data;
 	for (let i = 0, c = scanResponseData.length; i < c; ++i) {
 		let entry = scanResponseData[i];
@@ -121,17 +120,6 @@ function findMESHService2(peripheral) {
 					return true;
 				}
 			}
-		}
-	}
-	return false;
-}
-
-function findMESHService(peripheral) {
-	let scanResponseData = peripheral.data;
-	for (let i = 0, c = scanResponseData.length; i < c; ++i) {
-		let entry = scanResponseData[i];
-		if (0x09 == entry.flag && 0 == entry.data.indexOf('MESH-100LE')) {	// Complete local name
-			return true;
 		}
 	}
 	return false;
@@ -192,14 +180,12 @@ class Context {
 	}
 	writeCharacteristicValue(uuid, value) {
 		for (let characteristic of this._characteristics) {
-trace("checking " + characteristic.uuid + "\n");
 			if (characteristic.uuid == uuid) {
 				let params = {
 					connection: this._connection,
 					characteristic: characteristic.characteristic,
 					value: Array.from(value)
 				};
-trace("writing characteristic\n");
 				Pins.invoke("/ble/gattWriteCharacteristicValue", params);
 				return true;
 			}
@@ -207,7 +193,6 @@ trace("writing characteristic\n");
 		return false;
 	}
 	responseReceived(response) {
-trace(JSON.stringify(response) + "\n");
 		let notification = response.notification;
 		if ("system/reset" == notification) {
 			this.startScanning();
@@ -256,8 +241,6 @@ trace(JSON.stringify(response) + "\n");
 				response.clientConfig = null;
 				this._characteristics.push(response);
 			} else if (WRITE_CHARACTERISTIC_UUID == response.uuid) {
-				this._characteristics.push(response);
-			} else if (WRITE2_CHARACTERISTIC_UUID == response.uuid) {
 				this._characteristics.push(response);
 			}
 		} else if ("gatt/descriptor" == notification) {
@@ -316,30 +299,8 @@ trace(JSON.stringify(response) + "\n");
 				this.writeCharacteristicValue(WRITE_CHARACTERISTIC_UUID, Utils.toByteArray(0x00020103, 4, false));
 			} else if ("configure2" == this.state) {
 				this.state = "configure3";
-				//this.writeClientConfiguration(NOTIFY_CHARACTERISTIC_UUID, CLIENT_CONFIG_NOTIFICATION);
-
-// orange blink
-//this.writeCharacteristicValue(WRITE2_CHARACTERISTIC_UUID, [0x01, 0x00, 0x7f, 0x00, 0x40, 0x00, 0x00, 0x64, 0x00, 0x64, 0x00, 0x00, 0x00, 0x01, 0x89]);
-
-// red blink?
-//this.writeCharacteristicValue(WRITE2_CHARACTERISTIC_UUID, [0x01, 0x00, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x64, 0x00, 0x64, 0x00, 0x00, 0x00, 0x01, 0x89]);
-
-// blue blink?
-//this.writeCharacteristicValue(WRITE2_CHARACTERISTIC_UUID, [0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7f, 0x64, 0x00, 0x64, 0x00, 0x00, 0x00, 0x01, 0xee]);
-
-// blue blink?
-this.writeCharacteristicValue(WRITE2_CHARACTERISTIC_UUID, [0x01, 0x00, 0x7f, 0x00, 0x40, 0x00, 0x00, 0x30, 0x75, 0x64, 0x00, 0x00, 0x00, 0x01, 0x2f]);
-
-//this.writeCharacteristicValue(WRITE2_CHARACTERISTIC_UUID, [0x01, 0x00, 0x7f, 0x00, 0x40, 0x00, 0x00, 0x64, 0x00, 0x64, 0x00, 0x00, 0x00, 0x01, 0x89]);
-//this.writeCharacteristicValue(WRITE2_CHARACTERISTIC_UUID, [0x01, 0x00, 0x0c, 0x00, 0x0c, 0x00, 0x0c, 0x64, 0x00, 0x64, 0x00, 0x00, 0x00, 0x01, 0x89]);
-//01: 00: 7f: 00: 40: 00: 00: 64: 00: 64: 00: 00: 00: 01: 89
-this.state = "configure4";
+				this.writeClientConfiguration(NOTIFY_CHARACTERISTIC_UUID, CLIENT_CONFIG_NOTIFICATION);
 			} else if ("configure3" == this.state) {
-				this.state = "configure4";
-				trace("about to write\n");
-				this.writeCharacteristicValue(WRITE2_CHARACTERISTIC_UUID, [0x01, 0x00, 0x0c, 0x00, 0x0c, 0x00, 0x0c, 0x30, 0x75, 0x64, 0x00, 0x00, 0x00, 0x01, 0x2f]);
-				trace("write complete\n");
-			} else if ("configure4" == this.state) {
 				this.state =  "reading";
 				application.distribute("onReady");
 			}
@@ -358,10 +319,8 @@ application.behavior = Behavior({
             }
 		}, success => this.onPinsConfigured(application, success));
 	},
-	onPinsConfigured(application, success) {	
-trace("onPinsConfigured\n");	
+	onPinsConfigured(application, success) {		
 		if (success) {
-trace("Success!\n");
 			this.data = {
 				title: "MESH Button Monitor",
 				titleStyle: CREATIONS.whiteDynamicHeaderTitleStyle
