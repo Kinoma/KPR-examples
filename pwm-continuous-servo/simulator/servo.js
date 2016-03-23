@@ -27,11 +27,6 @@ let whiteSkin = new Skin( {fill: "white"} );
 let ServoPartSim = Container.template($ => ({
 	top: 12, bottom: 12, right: 0, left:0, skin: whiteSkin,	
 	anchor: "CUSTOMITEM",
-	Behavior: class extends Behavior {
-		onCreate( container, data ) {
-			this.servoData = data.servoData;
-		}
-	},
 	contents:[
 		new Column({
 			left:0, right:0, top:0, bottom:0,	
@@ -39,10 +34,10 @@ let ServoPartSim = Container.template($ => ({
 				Container($, {
 					left:0, right:0, top:0, bottom:0, 
 					contents: [
-						new Picture({ url:'./assets/servo-motor.png', name: "MOTOR" }),
+						Picture($, { url:'./assets/servo-motor.png', name: "MOTOR" }),
 						Picture($, {
+							left: 57, top: 10, width: 121, height: 119,
 							url:'./assets/servo-wheel.png', 
-							active: true, 
 							name: "WHEEL",
 							Behavior: WheelBehavior,
 						}),
@@ -76,10 +71,8 @@ class WheelBehavior extends Behavior {
 		this.period = data.servoData.data.period;
 		this.servoData = data.servoData;
 	}
-	onDisplayed( picture ) {
+	onDisplaying( picture ) {
 		picture.origin = { x:picture.width>>1, y:picture.height>>1 };
-		let width = picture.container.first.bounds.width
-		picture.translation = { x: width * -0.135, y: 0 };
 		picture.rotation = 0;
 		picture.start();
 	}
