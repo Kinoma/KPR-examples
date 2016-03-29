@@ -611,6 +611,16 @@ An simple app for Kinoma Element that shows how to turn a continuous rotation se
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-wifigotchi">element-wifigotchi</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/element-wifigotchi"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-wifigotchi-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="elementwifigotchi"><span class="elementSample pinsSample"></span></x-app-info>
+
+A sample by Andrew Chalkley. Calls a web service created by the developer and changes the display on an 8x8 LED matrix (Adafruit product ID 1857) to one of three emojis based on the command received. Command can be changed by selecting an emoji on http://wifigotchi.com before running the application. Demonstrates the use of the HTTPClient module and an I2C sensor.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/file-explorer">file-explorer</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/file-explorer"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/file-explorer-example.jpg" height="100" alt=""/></a>
 
