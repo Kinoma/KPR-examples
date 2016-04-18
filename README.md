@@ -611,6 +611,16 @@ An simple app for Kinoma Element that shows how to turn a continuous rotation se
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-pwm-servo-control">element-pwm-servo-control</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/element-pwm-servo-control"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-pwm-servo-control-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="elementpwmservocontrol"><span class="elementSample pinsSample"></span></x-app-info>
+
+This simple example controls the position of a hobby servo (on pin 9) using input from an analog controller such as a potentiometer, accelerometer, or sensors for proximity, temperature, moisture, flexion etc. on pin 3. For maximum control and responsiveness, both the sensor and the servo can be calibrated with minimum and maximum values. The example uses built-in BLLs for PWM, analog, power and ground; more complex control sensors may call for a custom BLL. See the KinomaJS Tutorial "Building your Own BLLs" for a walkthrough.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-wifigotchi">element-wifigotchi</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-wifigotchi"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-wifigotchi-example.jpg" height="100" alt=""/></a>
 
