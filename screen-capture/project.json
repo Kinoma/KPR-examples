@@ -1,0 +1,8 @@
+{
+    "title":"screen-capture",
+    "description":"Demonstrates capturing a JPEG image of a KinomaJS application and saving that JPEG to disk.",
+    "id":"screencapture.kinoma.marvell.com",
+    "Create":{
+        "main":"src/main"
+    },
+}

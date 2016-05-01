@@ -1011,6 +1011,16 @@ This sample uses red/green/blue sliders to control the color of an RGB LED. The 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/screen-capture">screen-capture</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/screen-capture"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/screen-capture-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="screencapture.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
+
+This sample demonstrates how to capture the contents of the KinomaJS application container as a JPEG image file. It then saves that JPEG to disk in the Documents Directory of the target platform.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/serial-camera">serial-camera</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/serial-camera"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/serial-camera-example.jpg" height="100" alt=""/></a>
 
