@@ -771,6 +771,16 @@ This sample integrates the Sparkfun Infrared Proximity Breakout board with Kinom
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-wii-nunchuck-controller">i2c-wii-nunchuck-controller</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/i2c-wii-nunchuck-controller"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/i2c-wii-nunchuck-controller-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="i2cwiinunchuckcontroller.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
+
+KinomaJS sample for reading an I2C Wii Nunchuck. This project uses the Solarbotic adapter to interface with the I2C line. Values read include the x-y joystick, c and z buttons, and the in-controller 3-axis accelerometer.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/kangaroo-disco">kangaroo-disco</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/kangaroo-disco"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/kangaroo-disco-example.jpg" height="100" alt=""/></a>
 

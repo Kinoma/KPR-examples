@@ -1,0 +1,11 @@
+{
+    "title":"i2c-wii-nunchuck-controller",
+    "description":"KinomaJS sample for reading an I2C Wii Nunchuck. This project uses the Solarbotic adapter to interface with the i2c line. Values read include the x-y joystick, c and z buttons, and the in-controller 3-axis accelerometer.",
+    "id":"i2cwiinunchuckcontroller.project.kinoma.marvell.com",
+    "tags":[
+        "wii","i2c","BLL"
+    ],
+    "Create":{
+        "main":"main"
+    }
+}
