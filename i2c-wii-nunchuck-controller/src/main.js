@@ -28,7 +28,7 @@ application.behavior = Behavior({
 		}, success => {
 			Pins.repeat('/wiiremote/read', 50, result => {
 				trace(JSON.stringify(result)+"\n");
-            });
+			});
 		});
 	}
 });
