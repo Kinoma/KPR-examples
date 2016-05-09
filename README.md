@@ -1241,6 +1241,16 @@ This example demonstrates how to use the Transitions library to configure and us
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/wave-recorder">wave-recorder</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/wave-recorder"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/wave-recorder-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="waverecorder.example.kinoma.marvell.com"><span class="uiSample mediaSample pinsSample"></span></x-app-info>
+
+This example shows how to configure and capture recorded audio into a WAVE file.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/web-server">web-server</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/web-server"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/web-server-example.jpg" height="100" alt=""/></a>
 					

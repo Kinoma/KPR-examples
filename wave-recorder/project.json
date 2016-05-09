@@ -1,0 +1,11 @@
+{
+    "title":"wave-recorder",
+    "description":"This application shows how to capture recorded audio to a WAVE file",
+    "id":"waverecorder.project.kinoma.marvell.com",
+    "tags":[
+        "emptySample"
+    ],
+    "Create":{
+        "main":"main"
+    },
+}
