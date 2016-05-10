@@ -225,6 +225,11 @@ exports.getSimpleDescriptor = function (endpoint) {
 exports.sendZDPCommandPacket = function (address, clusterId, command, radius, txOptions, callback) {
 	var tsn = zdpContext.transactionSequence.nextSequence();
 	var payload = ZDP.toPayload(clusterId, command);
+	var p = new Uint8Array(payload.length + 1);
+	p[0] = tsn;
+	for (let i = 0; i < payload.length; i++) {
+		p[i + 1] = payload[i];
+	}
 	submitDataRequest(
 		{
 			destinationAddress: address,
@@ -234,7 +239,7 @@ exports.sendZDPCommandPacket = function (address, clusterId, command, radius, tx
 			clusterId: clusterId,
 			radius: radius,
 			txOptions: txOptions,
-			payload: ([tsn]).concat(payload)
+			payload: p
 		},
 		{
 			confirm: function (status) {
