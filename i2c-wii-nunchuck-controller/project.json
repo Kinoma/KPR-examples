@@ -6,6 +6,6 @@
         "wii","i2c","BLL"
     ],
     "Create":{
-        "main":"main"
+        "main":"src/main"
     }
 }
