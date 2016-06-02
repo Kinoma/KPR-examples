@@ -538,6 +538,17 @@ This server app is intended to be run simultaneously with the "device-discovery-
 
 This MobileFramework example demonstrates how to build and apply a variety of effects to KPR layers and pictures. Tap the settings icon to display and select from a scrolling menu of effect types. The effect is applied to the ‘Effect’ layer. Tap the ‘Play’ button at the bottom of the menu to apply the selected effect to a bouncing balls animation. This example shows how to build and apply KPR effects using the Kinoma ECMAScript API.
 
+<div style="clear:both; margin-bottom: 16px;"></div>
+
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-analog-led">element-analog-led</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/element-analog-led"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-analog-led-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="element.analog.led.project.kinoma.marvell.com"><span class="elementSample pinsSample"></span></x-app-info>
+
+Changes the brightness of a PWM LED based on the reading from an analog sensor. Demonstrates the use of the built-in analog BLL that works on a variety of sensors including potentiometers and photoresistors. Also demonstrates the use of a user-defined BLL for the LED.
+
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
