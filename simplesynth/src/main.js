@@ -77,13 +77,12 @@ var ButtonTray = Container.template(function($) { return {
 	left: 0, right: 0, top: 160, bottom: 0, active: true, 
 	behavior: Behavior({
 		// Calculate index of button of touched based on x-y
-		 hitIndex: function(container, x, y) {
-            y -= container.y;
+		hitIndex: function(container, x, y) {
+			y -= container.y;
             if ((0 <= y) && (y < 80)) {     	
-	           		x -= container.x;
-	                return Math.floor(x / 80);	            
-            }
-            return -1;
+				x -= container.x;
+				return Math.floor(x / 80);	            
+            } else return -1;
         },
         // Determines current touch index, compares to current, switches modes accordingly
         hitTouch: function(container, id, current) {
@@ -141,20 +140,19 @@ var Keyboard = Container.template(function($) { return {
 	           		x -= container.x;
 	                return Math.floor(x / 40);
 	            }
-            }
-            return -1;
+            } else return -1;
         },
         // Determines current touch ids, sends to update frequencies
         hitTouch: function(container, id, current) {
             var former = this.touches[id];
-	            if (former != current) {
-	                if (former >= 0)
-	                    container.content(former).state = 0;
-	                if (current >= 0)
-	                    container.content(current).state = 1;
-	                this.touches[id] = current;
-	                this.updateFrequencies(container);
-	            }	    
+            if (former != current) {
+                if (former >= 0)
+                    container.content(former).state = 0;
+                if (current >= 0)
+                    container.content(current).state = 1;
+                this.touches[id] = current;
+                this.updateFrequencies(container);
+            }	    
         },
         // Tracks analog sensor value
         onAnalogValueChanged: function(container, result) {
@@ -185,12 +183,12 @@ var Keyboard = Container.template(function($) { return {
             var capped = [];                  
             // For each key currently being touched	
             for (var content = container.first; content; content = content.next){
-	                if (content.state){           	
-	                	// Assigns frequency to the active frequency array. 
-	                	frequencies.push(content.behavior.frequency );
-	                	// Caps complex modes to one frequency
-	                	capped[0] = frequencies[0];	
-	                }   
+                if (content.state){           	
+                	// Assigns frequency to the active frequency array. 
+                	frequencies.push(content.behavior.frequency );
+                	// Caps complex modes to one frequency
+                	capped[0] = frequencies[0];	
+                }   
             }
             // Uses synthoption global variable to determine synthesizer mode
             if(synthoption == "violin"){
@@ -202,14 +200,14 @@ var Keyboard = Container.template(function($) { return {
             else if(synthoption == "laser"){
             	Pins.invoke("/audio/setFrequenciesLaser", capped);
             }
-            else
+            else {
             	// Restrict total # of keys pressed to 5
             	if(frequencies.length > 5){
            			var filtered = frequencies.slice(0,5);
             		Pins.invoke("/audio/setFrequencies", filtered);
            		}
-           		else 
-            		Pins.invoke("/audio/setFrequencies", frequencies);
+           		else Pins.invoke("/audio/setFrequencies", frequencies);
+            }
         },
     }),
     // Maps keys. white keys are 0-7 index, black keys after
