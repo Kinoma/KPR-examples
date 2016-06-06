@@ -123,15 +123,15 @@ var Keyboard = Container.template(function($) { return {
 			y -= container.y;
 			if ((2 <= y) && (y < 150)) {
 				if( y < 90) {    
-						x -= container.x;
-						// Black key hitbox
-						if( 30 < x && x < 50) return 8; 
-						if( 70 < x && x < 90) return 9;
-						if( 150 < x && x < 170) return 10;
-						 if( 190 < x && x < 210) return 11;
-						if( 230 < x && x < 250) return 12;
-						if( 300 < x ) return 13;
-						else return Math.floor(x/40);
+					x -= container.x;
+					// Black key hitbox
+					if( 30 < x && x < 50) return 8; 
+					if( 70 < x && x < 90) return 9;
+					if( 150 < x && x < 170) return 10;
+					if( 190 < x && x < 210) return 11;
+					if( 230 < x && x < 250) return 12;
+					if( 300 < x ) return 13;
+					else return Math.floor(x/40);
 				} else { // white key hitbox
 					x -= container.x;
 					return Math.floor(x / 40);
