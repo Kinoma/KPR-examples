@@ -612,6 +612,16 @@ Obtains the current temperature from an I2C temperature sensor (TMP102) and trac
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-initial-state">element-initial-state</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/element-initial-state"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-initial-state-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="element.initial.state.kinoma.marvell.com"><span class="elementSample pinsSample"></span></x-app-info>
+
+Takes a reading from an analog sensor every three seconds and sends data to an Initial State bucket. Data is logged and can be visualized as a graph or saved in a file and analyzed. Demonstrates the set up and integration of an analog BLL and use of the HTTPClient module to send data to a web service.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-pwm-servo">element-pwm-servo</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-pwm-servo"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-pwm-servo-example.jpg" height="100" alt=""/></a>
 
@@ -628,6 +638,16 @@ An simple app for Kinoma Element that shows how to turn a continuous rotation se
 <x-app-info id="elementpwmservocontrol"><span class="elementSample pinsSample"></span></x-app-info>
 
 This simple example controls the position of a hobby servo (on pin 9) using input from an analog controller such as a potentiometer, accelerometer, or sensors for proximity, temperature, moisture, flexion etc. on pin 3. For maximum control and responsiveness, both the sensor and the servo can be calibrated with minimum and maximum values. The example uses built-in BLLs for PWM, analog, power and ground; more complex control sensors may call for a custom BLL. See the KinomaJS Tutorial "Building your Own BLLs" for a walkthrough.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-temp-led">element-temp-led</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/element-temp-led"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-temp-led-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="element.temp.led.kinoma.marvell.com"><span class="elementSample pinsSample"></span></x-app-info>
+
+Reads the temperature from an I2C temperature sensor (TMP102) and changes the color of an RGB LED accordingly. Demonstrates the set up and integration of I2C and PWM BLLs and the process of setting up two BLLs such that the reading of one is used to write the other.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
