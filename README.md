@@ -652,6 +652,16 @@ Reads the temperature from an I2C temperature sensor (TMP102) and changes the co
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-temp-led">element-touch-relay</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/element-touch-relay"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-touch-relay-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="element.touch.relay.kinoma.marvell.com"><span class="elementSample pinsSample"></span></x-app-info>
+
+Reads a capactive touch sensor and toggles a Tessel relay module when tapped. Demonstrates how to configure digital input and output sensors using the built-in digital BLL from the Pins module.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-wifigotchi">element-wifigotchi</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-wifigotchi"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-wifigotchi-example.jpg" height="100" alt=""/></a>
 
