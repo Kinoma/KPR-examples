@@ -652,7 +652,7 @@ Reads the temperature from an I2C temperature sensor (TMP102) and changes the co
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-temp-led">element-touch-relay</a>
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-touch-relay">element-touch-relay</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-touch-relay"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-touch-relay-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="element.touch.relay.kinoma.marvell.com"><span class="elementSample pinsSample"></span></x-app-info>
