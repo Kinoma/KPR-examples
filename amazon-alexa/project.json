@@ -1,0 +1,11 @@
+{
+    "title":"amazon-alexa",
+    "description":"",
+    "id":"amazonalexa.example.kinoma.marvell.com",
+    "tags":[
+        "emptySample"
+    ],
+    "Create":{
+        "main":"alexa"
+    },
+}
