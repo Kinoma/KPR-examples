@@ -3,7 +3,7 @@
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/amazon-alexa" class="createExampleLink" >amazon-alexa</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/amazon-alexa"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/amazon-alexa-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="amazonalexa.example.kinoma.marvell.com"><span class="createSample pinsSample uiSample"></span></x-app-info>
+<x-app-info id="amazonalexa.example.kinoma.marvell.com"><span class="createSample pinsSample uiSample mediaSample"></span></x-app-info>
 
 This sample shows how to use Amazon's Alexa Voice Service v1 API to build a simple KinomaJS Alexa client. The application captures and uploads spoken voice in real-time using the PINS library and HTTP chunked transfer encoding. A KinomaJS Canvas object animation provides interactive input voice level and Alexa answer feedback. An Amazon developer account and Login With Amazon access tokens are required to use this sample.
 
