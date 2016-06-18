@@ -130,6 +130,16 @@ This sample shows how to implement a simple animated sprite. The frames are rend
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/animation-behaviors">animation-behaviors</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/animation-behaviors"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/animation-behaviors-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="animationbehaviors.example.kinoma.marvell.com"><span class="uiSample createSample"></span></x-app-info>
+
+This sample provides a collection of KinomaJS behaviors for implementing animations commonly found in user interfaces. Examples show how to apply rotation, clipping, translation, fading and blinking behaviors to KinomaJS containers. Easing functions are supported to further customize the animations. A sequencer behavior leverages JavaScript 6 Promises to drive sequential and parallel animations.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/audio-detect">audio-detect</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/audio-detect"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/audio-detect-example.jpg" height="100" alt=""/></a>
 
