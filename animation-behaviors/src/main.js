@@ -14,7 +14,8 @@
   limitations under the License.
 */
 
-import { 
+import {
+	SampleCoordinatesWithLayerContainer,
 	SampleBlinkerContainer,
 	SampleWaitContainer,
 	SampleClipperContainer,
@@ -22,6 +23,7 @@ import {
 	SampleMoverContainer,
 	SampleRotatorContainer,
 	SampleSlideInOutContainer,
+	SampleCanvasContainer,
 } from "containers";
 
 
@@ -42,13 +44,15 @@ var AnimationScreen = Container.template($ => ({
 	left:0, top:0, right:0, bottom:0, skin:whiteSkin,
 	behavior:AnimationScreenBehavior,
 	contents: [
-		SampleBlinkerContainer($, { anchor:"BLINKER", left:0, top:0, right:0, bottom:0, blinkCycles:1, blinkDuration:600 }),
+		SampleCoordinatesWithLayerContainer($, { anchor:"COORDINATES_WITH_LAYER", left:0, top:0, width:320, height:240, visible:false, duration:2000 }),
+		SampleBlinkerContainer($, { anchor:"BLINKER", left:0, top:0, right:0, visible:false, bottom:0, blinkCycles:1, visible:false, blinkDuration:600 }),
 		SampleWaitContainer($, { anchor:"WAIT", left:0, top:0, right:0, bottom:0, duration:1800 }),
-		SampleSlideInOutContainer($, { anchor:"SLIDE_IN_OUT", left:0, top:0, width:320, height:240, slideInDuration:1200, slideOutDuration:1200, slideOutDirection:"right" }),
+		SampleSlideInOutContainer($, { anchor:"SLIDE_IN_OUT", left:0, top:0, width:320, height:240, slideInDuration:1500, slideOutDuration:1500, slideOutDirection:"right" }),
 		SampleRotatorContainer($, { anchor:"ROTATOR", left:0, top:0, width:320, height:240, visible:false, duration:1500 }),
-		SampleClipperContainer($, { anchor:"CLIPPER", left:0, top:0, width:320, height:240, visible:false, clipDuration:1000 }),
+		SampleClipperContainer($, { anchor:"CLIPPER", left:0, top:0, width:320, height:240, visible:false, clipDuration:800 }),
 		SampleFaderContainer($, { anchor:"FADER", left:0, top:0, width:320, height:240, duration:3000 }),
 		SampleMoverContainer($, { anchor:"MOVER", left:0, top:0, width:320, height:240, visible:false, duration:1500, easeType:"bounceEaseOut" }),
+		SampleCanvasContainer($, { left:0, top:70, width:320, height:100 }),	// note the canvas is nested, see the SampleCanvasContainer template for options
 
 		SequencerContainer($, { anchor:"SEQUENCER", left:0, top:0, right:0, bottom:0 }),
 	]

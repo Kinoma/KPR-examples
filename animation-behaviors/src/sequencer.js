@@ -14,6 +14,8 @@
   limitations under the License.
 */
 
+import { mediumTextStyle } from "containers";
+
 class SequencerBehavior extends Behavior {
 	onCreate(container, data, extra) {
 		this.data = data;
@@ -21,6 +23,7 @@ class SequencerBehavior extends Behavior {
 	onDisplayed(container) {
 		var data = this.data;
 		
+		let coordinates = data.COORDINATES_WITH_LAYER;
 		let blinker = data.BLINKER;
 		let wait = data.WAIT;
 		let slideInOut = data.SLIDE_IN_OUT;
@@ -28,26 +31,46 @@ class SequencerBehavior extends Behavior {
 		let clipper = data.CLIPPER;
 		let fader = data.FADER;
 		let mover = data.MOVER;
+		let canvas = data.CANVAS;
+		let canvasContainer = data.CANVAS.container;
 		
-		blinker.delegate("blink", {blinkCycles:4, blinkDuration:700})	
+		// let's first build a long sequence of various animations
+
+		canvas.delegate("animate")
+		.then(() => {
+			coordinates.visible = true;
+			canvasContainer.visible = false;
+			return coordinates.delegate("coordinatesTo", {left:20, top:20, width:120, height:90, duration:1000, opacity:1});
+		})
+		.then(() => coordinates.delegate("coordinatesTo", {left:20, top:20, width:120, height:90, duration:1000, opacity:1}))
+		.then(() => coordinates.delegate("coordinatesTo", {left:0, top:0, width:320, height:240, duration:1000, opacity:1}))
+		.then(() => coordinates.delegate("coordinatesTo", {left:-320, top:-240, width:960, height:720, duration:1500, opacity:0}))
+		.then(() => coordinates.delegate("coordinatesTo", {left:160, top:120, width:0, height:0, duration:1, opacity:0}))
+		.then(() => coordinates.delegate("coordinatesTo", {left:0, top:0, width:320, height:240, duration:1500, opacity:1}))
+		.then(() => {
+			blinker.visible = true;
+			coordinates.visible = false;
+			return blinker.delegate("blink", {blinkCycles:4, blinkDuration:700});
+		})
 		.then(() => {
 			blinker.visible = false;
 			wait.visible = true;
-			return wait.delegate("wait")
+			return wait.delegate("wait");
 		})
 		.then(() => {
 			wait.visible = false;
 			slideInOut.visible = true;
-			return slideInOut.delegate("slideIn")
+			return slideInOut.delegate("slideIn");
 		})
 		.then(() => slideInOut.delegate("slideOut"))
-		.then(() => slideInOut.delegate("slideIn", {slideInDirection:"right"}))
-		.then(() => slideInOut.delegate("slideOut", {slideOutDirection:"down"}))
+		.then(() => slideInOut.delegate("slideIn", {slideInDirection:"right", slideInEaseType:"backEaseOut"}))
+		.then(() => slideInOut.delegate("slideOut", {slideOutDirection:"down", slideOutEaseType:"elasticEaseIn"}))
 		.then(() => {
 			slideInOut.visible = false;
 			rotator.visible = true;
 			return rotator.delegate("rotateBy", {degrees:180, duration:1000})
 		})
+
 		.then(() => rotator.delegate("rotateBy", {degrees:-90, duration:500}))
 		.then(() => rotator.delegate("rotateBy", {degrees:180, duration:1000}))
 		.then(() => rotator.delegate("rotateBy", {degrees:-90, duration:500}))
@@ -73,18 +96,66 @@ class SequencerBehavior extends Behavior {
 			return fader.delegate("show");
 		})
 		.then(() => fader.delegate("hide"))
+
 		.then(() => {
 			fader.visible = false;
 			mover.visible = true;
 			return mover.delegate("moveBy", {leftOffset:0, topOffset:100});
 		})
 		.then(() => mover.delegate("moveBy", {leftOffset:0, topOffset:-200}))
-
 		.then(() => mover.delegate("moveBy", {leftOffset:80, topOffset:0, easeType:"elasticEaseIn"}))
 		.then(() => mover.delegate("moveBy", {leftOffset:-170, topOffset:200, easeType:"quintEaseIn"}))
 		.then(() => mover.delegate("moveBy", {leftOffset:170, topOffset:0, easeType:"elasticEaseIn"}))
 		.then(() => mover.delegate("moveBy", {leftOffset:-80, topOffset:-100, easeType:"elasticEaseOut"}))
+		
+		// now let's reconfigure four of the containers and run four similar animation sequences for each in parallel
+		
+		.then(() => {
 
+			rotator.visible = blinker.visible = slideInOut.visible = mover.visible = true;
+			data.rotatorLabel.style = data.blinkerLabel.style = mediumTextStyle;
+			data.slideInOutLabel.style = data.moverLabel.style = mediumTextStyle;
+			
+			rotator.coordinates = {left:160, top:0, width:160, height:120};
+			blinker.coordinates = {left:0, top:0, width:160, height:120};
+			slideInOut.coordinates = {left:0, top:120, width:160, height:120};
+			mover.coordinates = {left:160, top:120, width:160, height:120};
+
+			// and then run four similar animation sequences for each in parallel
+		
+			Promise.all([
+				blinker.delegate("blink", {blinkCycles:4, blinkDuration:700}),
+
+				rotator.delegate("rotateBy", {degrees:180, duration:1000, originX:160/2, originY:120/2})
+				.then(() => rotator.delegate("rotateBy", {degrees:-90, duration:500}))
+				.then(() => rotator.delegate("rotateBy", {degrees:180, duration:1000}))
+				.then(() => rotator.delegate("rotateBy", {degrees:-90, duration:500}))
+				.then(() => rotator.delegate("rotateBy", {degrees:180, duration:1000})),
+	
+				slideInOut.delegate("slideIn", {slideInEaseType:"quadEaseOut", slideOutEaseType:"quadEaseOut"})
+				.then(() => slideInOut.delegate("slideOut"))
+				.then(() => slideInOut.delegate("slideIn", {slideInDirection:"right"}))
+				.then(() => slideInOut.delegate("slideOut", {slideOutDirection:"down"}))
+				.then(() => slideInOut.delegate("slideIn", {slideOutDirection:"up"})),
+		
+				mover.delegate("moveBy", {leftOffset:0, topOffset:100/2})
+				.then(() => mover.delegate("moveBy", {leftOffset:0, topOffset:-200/2}))
+				.then(() => mover.delegate("moveBy", {leftOffset:80/2, topOffset:0, easeType:"elasticEaseIn"}))
+				.then(() => mover.delegate("moveBy", {leftOffset:-170/2, topOffset:200/2, easeType:"quintEaseIn"}))
+				.then(() => mover.delegate("moveBy", {leftOffset:170/2, topOffset:0, easeType:"elasticEaseIn"}))
+				.then(() => mover.delegate("moveBy", {leftOffset:-80/2, topOffset:-100/2, easeType:"elasticEaseOut"}))
+			])
+			
+			// finally run one last animation after all of the parallel sequences have finished
+			
+			.then(() => {
+				blinker.visible = rotator.visible = slideInOut.visible = mover.visible = false;
+				data.faderLabel.string = "That's all Folks!";
+				fader.visible = true;
+				data.faderLabel.style = mediumTextStyle;
+				fader.delegate("show");
+			})
+		})
 	}
 }
 

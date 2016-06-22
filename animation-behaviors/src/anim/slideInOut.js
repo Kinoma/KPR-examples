@@ -13,6 +13,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
+// __________________________________________________________________________
 /*
 	SlideInOutBehavior options
 	
@@ -50,7 +51,7 @@ export class SlideInOutBehavior extends AnimationBehavior {
 		this.slideOutDirection = "down";
 		this.fadeOnSlideOut = true;
 		this.slideOutDuration = 250;
-		this.slideOutEaseTyoe = "quadEaseOut";
+		this.slideOutEaseType = "quadEaseOut";
 		this.optionNames = "initialState,slideInDirection,fadeOnSlideIn,slideInDuration,slideInEaseType,slideOutDirection,fadeOnSlideOut,slideOutDuration,slideOutEaseType";
 		this.overrideDefaults(container, this.optionNames, dictionary);
 		container.clip = true;
@@ -67,7 +68,7 @@ export class SlideInOutBehavior extends AnimationBehavior {
 	overrideDefaults(container, names, dictionary) {
 		super.overrideDefaults(container, names, dictionary);
 		this.showEaseFunction = Math[this.slideInEaseType];
-		this.hideEaseFunction = Math[this.slideOutEaseTyoe];
+		this.hideEaseFunction = Math[this.slideOutEaseType];
 	}
 	slideIn(container, options) {
 		if (this.state == "hidden") {

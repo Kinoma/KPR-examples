@@ -13,6 +13,11 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
+// __________________________________________________________________________
+/*
+	AnimationBehavior
+	
+*/
 
 export class AnimationBehavior extends Behavior {
 	overrideDefaults(container, names, dictionary) {

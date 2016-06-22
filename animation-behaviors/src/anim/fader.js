@@ -13,6 +13,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
+// __________________________________________________________________________
 /*
 	FaderBehavior options:
 	
@@ -59,8 +60,8 @@ export class FaderBehavior extends AnimationBehavior {
 			this.fraction = 0;
 			var content = container.first;
 			this.layer = new Layer({ alpha:true });
-			this.layer.opacity = 0;
 			this.layer.attach(content);
+			this.layer.opacity = 0;
 			container.time = 0;
 			container.start();		
 		}

@@ -13,6 +13,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
+// __________________________________________________________________________
 /*
 	BlinkerBehavior options:
 	
@@ -42,16 +43,16 @@ export class BlinkerBehavior extends AnimationBehavior {
 			trace("BlinkBehavior expects a child content to blink!\n");
 			debugger;
 		}
+	}
+	blink(container, options) {
+		if (undefined != options)
+			this.overrideDefaults(container, this.optionNames, options);
 		this.layer = new Layer({ alpha:true });
 		this.layer.attach(container.first);
 		if (this.state == "hidden")
 			this.layer.opacity = 0;
 		else
 			this.layer.opacity = 1;
-	}
-	blink(container, options) {
-		if (undefined != options)
-			this.overrideDefaults(container, this.optionNames, options);
 		this.fraction = 0;
 		this.currentCycle = 1;
 		container.time = 0;

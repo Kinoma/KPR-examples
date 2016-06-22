@@ -13,6 +13,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
+// __________________________________________________________________________
 /*
 	RotatorBehavior options:
 	
@@ -49,6 +50,11 @@ export class RotatorBehavior extends AnimationBehavior {
 			trace("RotaterBehavior expects a child content to rotate!\n");
 			debugger;
 		}
+		let b = container.bounds;
+		this.lastX = b.x;
+		this.lastY = b.y;
+		this.lastWidth = b.width;
+		this.lastHeight = b.height;
 	}
 	overrideDefaults(container, names, dictionary) {
 		super.overrideDefaults(container, names, dictionary);
@@ -61,10 +67,24 @@ export class RotatorBehavior extends AnimationBehavior {
 			this.overrideDefaults(container, this.optionNames, options);
 		this.state = "rotatingBy";
 		this.fraction = 0;
-		if (this.layer != null && (this.lastOriginX != this.originX || this.lastOriginY != this.originY)) {
+				
+		let b = container.bounds;
+		if (this.layer != null && (this.lastOriginX != this.originX || this.lastOriginY != this.originY 
+		  || this.lastX != b.x || this.lastY != b.y || this.lastWidth != b.width || this.lastHeight != b.height)) {
+
+			this.lastX = b.x;
+			this.lastY = b.y;
+			this.lastWidth = b.width;
+			this.lastHeight = b.height;
+
+			let c = container.coordinates;
+			let sc = { top: c.top, left: c.left, bottom: c.bottom, right: c.right, width: c.width, height: c.height };
+
 			this.saveRotation = this.layer.rotation;
 			this.layer.detach();
 			this.layer = null;
+			
+			container.coordinates = { top: sc.top, left: sc.left, bottom: sc.bottom, right: sc.right, width: sc.width, height: sc.height };
 		}
 		if (this.layer == null) {
 			this.layer = new Layer({ alpha:true });
