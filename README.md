@@ -145,7 +145,7 @@ This sample shows how to implement a simple animated sprite. The frames are rend
 
 <x-app-info id="animationbehaviors.example.kinoma.marvell.com"><span class="uiSample createSample"></span></x-app-info>
 
-This sample provides a collection of KinomaJS behaviors for implementing animations commonly found in user interfaces. Examples show how to apply rotation, clipping, translation, fading and blinking behaviors to KinomaJS containers. Easing functions are supported to further customize the animations. A sequencer behavior leverages JavaScript 6 Promises to drive sequential and parallel animations.
+This sample provides a collection of KinomaJS behaviors for implementing animations commonly found in user interfaces. Examples show how to apply rotation, clipping, translation, fading, cross-zoom and blinking behaviors to KinomaJS containers. Easing functions are supported to further customize the animations. A sequencer behavior leverages JavaScript 6 Promises to drive sequential and parallel animations.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
