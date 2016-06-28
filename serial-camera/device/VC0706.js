@@ -94,7 +94,7 @@ exports.setImageSize = function( parameters ) {
 	if( parameters.w == 160 && parameters.h == 120 ){
 		size = SIZE_160x120;
 	}
-	else if( parameters.w == 320 && parameters.h == 140 ){
+	else if( parameters.w == 320 && parameters.h == 240 ){
 		size = SIZE_320x240;
 	}
 	else if( parameters.w == 640 && parameters.h == 480 ){
@@ -134,7 +134,7 @@ exports.capture = function() {
 	    var bytesLeft = len;
         var buffer = null;
         
-        chunk = new Chunk();
+       /* chunk = new Chunk();
 	    while( bytesLeft > 0 ){
 	        var bytesToRead = Math.min( readlen, bytesLeft );
 	        var frameptr = len - bytesLeft;
@@ -145,14 +145,30 @@ exports.capture = function() {
 	                                0, 0, frameptr >> 8, frameptr & 0xFF,
 	                                0, 0, 0, bytesToRead,
 	                                0, 0], 5 + bytesToRead + 5 );
+	                                
 			}
 			catch( error ){
 				return false; 
 			}
+			
 	        chunk.append( buffer.slice( 5, bytesToRead + 5 ) );
 	        buffer.free()
 	        bytesLeft -= bytesToRead;
-	    }
+	    }*/
+	    	/* replaced from here */
+	        var bytesToRead = Math.min( readlen, bytesLeft );
+	        var frameptr = len - bytesLeft;
+	    	try{
+				 buffer = sendCommand( this.serial, READ_FBUF, [0x0C, 0, 0x0A,
+	                                0, 0, frameptr >> 8, frameptr & 0xFF,
+	                                0, 0, 0, bytesToRead,
+	                                0, 0], 5 + bytesToRead + 5 );
+	                                
+			}
+			catch( error ){
+				return false; 
+			}
+			/* to here */
 	}
     //after receiving image, send FBUF_CTRL command to resume frame
 	try{
@@ -161,7 +177,7 @@ exports.capture = function() {
 	catch( error ){
 		return false; 
 	}
-	return chunk;
+	return buffer;//chunk;
 }
 
 
