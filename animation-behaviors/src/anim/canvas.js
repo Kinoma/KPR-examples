@@ -17,18 +17,19 @@
 /*
 	CanvasBehavior options:
 	
-		duration = number of milliseconds													default: 1000
-		easeType = "quadEaseOut" | "quadEaseIn" | (any of the Math.easeType functions)		default: "quadEaseOut"
-		originX = x origin																	default: 0
-		originY = y origin																	default: 0
-		fromScaleX = starting x scale														default: 1
-		toScaleX = ending x scale															default: 1
-		fromScaleY = starting y scale														default: 1
-		toScaleY = ending y scale															default: 1
-		fromRotation = starting rotation in degrees											default: 0
-		toRotation = rotation in degrees													default: 0
-		fromOpacity = starting opacity,	0=transparent, 1=opaque								default: 1
-		toOpacity = ending opacity															default: 1
+		duration = number of milliseconds																	default: 1000
+		easeType = "quadEaseOut" | "quadEaseIn" | (any of the Math.easeType functions)						default: "quadEaseOut"
+		originX = x origin																					default: 0
+		originY = y origin																					default: 0
+		fromScaleX = starting x scale																		default: 1
+		toScaleX = ending x scale																			default: 1
+		fromScaleY = starting y scale																		default: 1
+		toScaleY = ending y scale																			default: 1
+		fromRotation = starting rotation in degrees															default: 0
+		toRotation = rotation in degrees																	default: 0
+		fromOpacity = starting opacity,	0=transparent, 1=opaque												default: 1
+		toOpacity = ending opacity																			default: 1
+		allowRestart = if true then calling animate while already animating will restart the animation		default: false
 		
 	animations:
 		
@@ -67,8 +68,10 @@ export class CanvasBehavior extends AnimationBehavior {
 		this.toRotation = 0;
 		this.toOpacity = 1;
 			
-		this.optionNames = "duration,easeType,originX,originY,fromScaleX,fromScaleY,fromRotation,fromOpacity,toScaleX,toScaleY,toRotation,toOpacity";
+		this.optionNames = "duration,easeType,originX,originY,fromScaleX,fromScaleY,fromRotation,fromOpacity,toScaleX,toScaleY,toRotation,toOpacity,allowRestart";
 		this.overrideDefaults(canvas, this.optionNames, dictionary);
+		
+		this.state = "still";
 	}
 	onDisplaying(canvas) {
 		var ctx = canvas.getContext("2d");
@@ -94,15 +97,26 @@ export class CanvasBehavior extends AnimationBehavior {
 		this.easeFunction = Math[this.easeType];
 	}
 	animate(canvas, options) {
+		var restarted = false;
+		if (this.state != "still") {
+			if (this.allowRestart)
+				restarted = true;
+			else
+				return;
+		}
+		this.state = "animating";
 		if (undefined != options)
 			this.overrideDefaults(canvas, this.optionNames, options);
 		this.fraction = 0;
 		canvas.time = 0;
 		canvas.start();		
 		
-		return new Promise( function(resolve, reject) {
-			canvas.behavior.animateResolve = resolve;
-		});
+		if (! restarted) {
+			return new Promise( function(resolve, reject) {
+				canvas.behavior.animateResolve = resolve;
+				canvas.behavior.animateReject = reject;
+			});
+		}
 	}
 	onTimeChanged(canvas) {
 		var fraction = canvas.time / this.duration;
@@ -136,6 +150,7 @@ export class CanvasBehavior extends AnimationBehavior {
 		
 		if (fraction == 1) {
 			canvas.stop();
+			this.state = "still";
 			this.animateResolve();
 			delete this.animateResolve;
 		}

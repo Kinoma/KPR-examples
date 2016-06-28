@@ -14,7 +14,13 @@
   limitations under the License.
 */
 
-import { mediumTextStyle } from "containers";
+import {
+	mediumTextStyle,
+	ClockScreen,
+	MainPageScreen,
+	blackSkin,
+	whiteSkin
+} from "containers";
 
 class SequencerBehavior extends Behavior {
 	onCreate(container, data, extra) {
@@ -22,7 +28,7 @@ class SequencerBehavior extends Behavior {
 	}
 	onDisplayed(container) {
 		var data = this.data;
-		
+
 		let coordinates = data.COORDINATES_WITH_LAYER;
 		let blinker = data.BLINKER;
 		let wait = data.WAIT;
@@ -32,11 +38,24 @@ class SequencerBehavior extends Behavior {
 		let fader = data.FADER;
 		let mover = data.MOVER;
 		let canvas = data.CANVAS;
-		let canvasContainer = data.CANVAS.container;
+		let canvasContainer = canvas.container;
+		let crossZoom = data.CROSS_ZOOM;
+		let mainScreenPage = data.MAIN_SCREEN_PAGE;
 		
 		// let's first build a long sequence of various animations
-
-		canvas.delegate("animate")
+		
+		wait.delegate("wait", { duration:1000 })
+		.then(() => crossZoom.delegate("crossZoom", { newScreen:new ClockScreen(data), backgroundSkin:blackSkin }))
+		.then(() => wait.delegate("wait"))
+		.then(() => crossZoom.delegate("crossZoom", { newScreen:new MainPageScreen(data), backgroundSkin:whiteSkin }))
+		.then(() => wait.delegate("wait"))
+		.then(() => {
+			crossZoom.container.remove(crossZoom);
+			mainScreenPage.container.remove(mainScreenPage);
+			canvasContainer.visible = true;
+			wait.visible = false;
+			return canvas.delegate("animate");
+		})
 		.then(() => {
 			coordinates.visible = true;
 			canvasContainer.visible = false;
@@ -111,7 +130,6 @@ class SequencerBehavior extends Behavior {
 		// now let's reconfigure four of the containers and run four similar animation sequences for each in parallel
 		
 		.then(() => {
-
 			rotator.visible = blinker.visible = slideInOut.visible = mover.visible = true;
 			data.rotatorLabel.style = data.blinkerLabel.style = mediumTextStyle;
 			data.slideInOutLabel.style = data.moverLabel.style = mediumTextStyle;

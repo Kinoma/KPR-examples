@@ -23,6 +23,7 @@ import { BlinkerBehavior } from "anim/blinker";
 import { FaderBehavior } from "anim/fader";
 import { RotatorBehavior } from "anim/rotator";
 import { CanvasBehavior } from "anim/canvas";
+import { CrossZoomBehavior } from "anim/crossZoom";
 
 
 var massiveTextStyle = new Style({ font:"100px", color:"black", horizontal:"center" });
@@ -87,7 +88,7 @@ export var SampleSlideInOutContainer = Container.template($ => ({
 	]
 }));
 
-class SampleCanvasBehavior extends CanvasBehavior {
+export class SampleCanvasBehavior extends CanvasBehavior {
 	draw(canvas, ctx) {
 		var centerX = 0;
 		var centerY = 0;
@@ -98,22 +99,57 @@ class SampleCanvasBehavior extends CanvasBehavior {
 		ctx.fillStyle = 'gray';
 		ctx.fill();
 	}
+	onTouchBegan(canvas, id, x, y, ticks) {
+		canvas.delegate("animate");						// to illustrate allowRestart = true
+	}
 };
 
 export var SampleCanvasContainer = Container.template($ => ({
 	contents:[
-		Canvas($, { Behavior:SampleCanvasBehavior, anchor:"CANVAS", left:0, top:0, right:0, bottom:0, originX:260, originY:120-70, 
+		Canvas($, { Behavior:SampleCanvasBehavior, anchor:"CANVAS", active:true, allowRestart:true, left:0, top:0, right:0, bottom:0, originX:260, originY:120-70, 
 					toScaleX:280, toScaleY:280, fromOpacity:0.4, toOpacity:0.5, duration:2000 }),
 		Label($, { left:30, string:"Canvas", style:mediumTextStyle }),
 	]
 }));
 
+// - CrossZoomBehavior -
 
-export var ClockScreen = Container.template($ => ({
+var whiteLargeClockStyle = new Style({ font:"90px", color:"white", horizontal:"center" });
+var whiteMediumClockStyle = new Style({ font:"60px", color:"white", horizontal:"center" });
+var whiteSmallClockStyle = new Style({ font:"40px", color:"white", horizontal:"center" });
+export var blackSkin = new Skin({ fill:"black" });
+export var whiteSkin = new Skin({ fill:"white" });
+
+export var CrossZoomScreen = Container.template($ => ({
+	skin:blackSkin,
+	left:0, top:0, right:0, bottom:0,
 	contents:[
-		Label($, { left:30, string:"10:32AM", style:massiveTextStyle }),
+		Label($, { top:30, string:"CrossZoom", style:whiteMediumClockStyle }),
 	]
 }));
+
+export var ClockScreen = Container.template($ => ({
+	skin:blackSkin,
+	left:0, top:0, right:0, bottom:0,
+	contents:[
+		Label($, { top:30, string:"10:32", style:whiteLargeClockStyle }),
+		Label($, { bottom:50, string:"Thursday, July 9", style:whiteSmallClockStyle }),
+	]
+}));
+
+let mainPageSkin = new Skin({ texture: new Texture('./assets/cloud-mainpage.png'), width:320, height:240 });
+
+export var MainPageScreen = Content.template($ => ({
+	left:0, top:0, right:0, bottom:0, skin:mainPageSkin
+}));
+
+export var SampleCrossZoomContainer = Container.template($ => ({
+	Behavior:CrossZoomBehavior,
+	contents:[
+		CrossZoomScreen($, { left:0, top:0, right:0, bottom:0 }),
+	]
+}));
+
 
 
 
