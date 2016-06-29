@@ -3,7 +3,7 @@
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/amazon-alexa" class="createExampleLink" >amazon-alexa</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/amazon-alexa"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/amazon-alexa-example.jpg" height="100" alt=""/></a>
 
-<x-app-info id="amazonalexa.example.kinoma.marvell.com"><span class="createSample pinsSample uiSample mediaSample"></span></x-app-info>
+<x-app-info id="amazonalexa.example.kinoma.marvell.com"><span class="createSample pinsSample uiSample mediaSample networkSample"></span></x-app-info>
 
 This sample shows how to use Amazon's Alexa Voice Service v1 API to build a simple KinomaJS Alexa client. The application captures and uploads spoken voice in real-time using the PINS library and HTTP chunked transfer encoding. A KinomaJS Canvas object animation provides interactive input voice level and Alexa answer feedback. An Amazon developer account and Login With Amazon access tokens are required to use this sample.
 
@@ -638,6 +638,16 @@ Obtains the current temperature from an I2C temperature sensor (TMP102) and trac
 <x-app-info id="element.initial.state.kinoma.marvell.com"><span class="elementSample pinsSample"></span></x-app-info>
 
 Takes a reading from an analog sensor every three seconds and sends data to an Initial State bucket. Data is logged and can be visualized as a graph or saved in a file and analyzed. Demonstrates the set up and integration of an analog BLL and use of the HTTPClient module to send data to a web service.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-photo-door">element-photo-door</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/element-photo-door"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-photo-door-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="elementpwmservo"><span class="elementSample pinsSample"></span></x-app-info>
+
+Sample application that takes a picture based on proximity sensing and posts image to AWS S3 cloud storage. The sample uses the VC0706 serial camera and the LV-MaxSonar-EZ MB1010 Sonar range finder. To post images you need to sign up for a free AWS account and replace the dummy text in the credintials.js with your access ID and access key. View your images in your AWS account or use the Photo Door Client App sample.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
