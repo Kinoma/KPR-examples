@@ -739,6 +739,58 @@ This sample code demonstrates how to implement an interactive scrolling photo th
 
 A minimal application that creates a full-screen container and displays the text "Hello, KPR". Tapping the container changes the background color. Useful for understanding how to build a basic KPR application.
 
+<div style="clear:both; margin-bottom: 16px;"></div>
+
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/hid-gamepad">hid-gamepad </a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/hid-gamepad"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/hid-gamepad-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="hid.gamepad.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
+
+16 on-screen buttons and 2 analog joysticks attached to the front pins are used to make Kinoma Create act as a controller for games running on PC, Mac, and Steam Link. Demonstrates use of the gamepad class of the HID library and analog sensors.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/hid-keyboard">hid-keyboard </a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/hid-keyboard"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/hid-keyboard-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="hid.keyboard.example.kinoma.marvell.com"><span class="createSample"></span></x-app-info>
+
+This sample demonstrates basic use of the keyboard class of the HID library to make Kinoma Create act as a USB keyboard. Send input by tapping the on-screen keyboard.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/hid-mouse">hid-mouse</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/hid-mouse"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/hid-mouse-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="hid.mouse.example.kinoma.marvell.com"><span class="createSample"></span></x-app-info>
+
+This sample uses the HID library to make Kinoma Create act as a USB mouse. The gray area on screen acts as a touchpad while the labeled buttons at the bottom allow user to left, middle, and right click.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/hid-spotify">hid-spotify</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/hid-spotify"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/hid-spotify-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="hid. spotify.example.kinoma.marvell.com"><span class="createSample uiSample"></span></x-app-info>
+
+This sample uses the HID library to make Kinoma Create act as a controller for the Spotify desktop app. Volume controller, play/pause button, and skip buttons send keyboard shortcut commands. Also demonstrates how to use KPR effects and layers to implement a colorful, animated background and how to build custom UI elements with HTML Canvas.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/hid-wii-nunchuck">hid-wii-nunchuck</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/hid-wii-nunchuck"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/hid-wii-nunchuck-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="hid.wii.nunchuck.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
+
+A Wii nunchuck interfaced with Kinoma Create acts as a joystick for the game Bit Blaster XL. Builds on the i2c-wii-nunchuck-controller sample. Demonstrates use of the keyboard and gamepad classes of the HID library and an I2C sensor.
+
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 

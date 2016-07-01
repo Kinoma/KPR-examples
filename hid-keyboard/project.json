@@ -1,0 +1,10 @@
+{
+    "title":"hid-keyboard",
+    "id":"hid.keyboard.example.kinoma.marvell.com",
+    "tags":[
+        "createSample",
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

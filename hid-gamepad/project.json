@@ -1,0 +1,1 @@
+{    "title":"hid-gamepad",    "id":"hid.gampead.example.kinoma.marvell.com",    "tags":[        "createSample",        "pinsSample"    ],    "Create":{        "main":"src/main"    },}

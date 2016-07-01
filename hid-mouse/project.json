@@ -1,0 +1,10 @@
+{
+    "title":"hid-mouse",
+    "id":"hid.mouse.example.kinoma.marvell.com",
+    "tags":[
+        "createSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

@@ -1,0 +1,11 @@
+{
+    "title":"hid-spotify",
+    "id":"hid.spotify.example.kinoma.marvell.com",
+    "tags":[
+        "createSample",
+        "uiSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}
