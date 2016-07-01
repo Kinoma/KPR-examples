@@ -28,16 +28,16 @@ let AWS = require("aws");
 let S3 = require("amz").S3;
 
 AWS.config = config;
-const MAX_LIST_ITEMS = 5;
-const savePictureList = false;	// use this as an option to save pictures that are not uploaded yet
+const MAX_LIST_ITEMS = 3;
+const bCleanPicture = true;	// use this as an option to remove pictures that are not uploaded yet
 
 var app = {
 	on: 0,
 	enable: true,
 	pictureSize: 0,
 	directory: "/k3/",
-	pictures: [],
 	intv: undefined,
+	mark: "_pix_",
 	onLaunch(){
 		Pins.configure({
 			camera: {
@@ -80,9 +80,10 @@ var app = {
 			});
 			// upload in background
 			this.intv = setInterval(()=>{
-				for(let i = this.pictures.length - 1; i >= 0; i--){
-					this.sendPicture(this.pictures[i]);
-				}
+				// send one at a time, too many may cause memory failure
+				let arr = this.getPictureFilesFromFlash();
+				if(arr.length)
+					this.sendPicture(arr[0]);
 			}, 60000);
 		});
 	},	
@@ -111,19 +112,7 @@ var app = {
 		});
 	},
 	onUploadComplete(fn, success){
-		if(success){
-			this.deletePicture(fn);
-			this.removePictureFromList(fn);
-		}
-		this.savePictureListToFlash(); // save picture list
-	},
-	removePictureFromList(fn){
-		let idx = this.pictures.indexOf(fn);
-		if(idx != -1) {
-			this.pictures.splice(idx, 1);
-			return true;
-		}
-		return false;
+		if(success) this.deletePicture(fn);
 	},
 	deletePicture(fn){ // delete the file from flash, 
 		try{
@@ -138,6 +127,8 @@ var app = {
 	sendPicture(fn){
 		if (!fn) return;
 		let name = fn;
+		if(name.indexOf(this.mark) != -1)
+			name = name.replace(this.mark, "");
 		let content = new File(this.directory + fn, 0);
 		trace("File size: " + content.length + "\n");
 		let data = {
@@ -148,14 +139,26 @@ var app = {
 		let request = { headers:{ "Content-Length":content.length, "Connection": "close" }, method:"PUT", path:`/${data.bucket}/${name}` };
 		let message = S3.createMessage(data, request, undefined, true);
 		message.onHeaders = ()=>{
-			trace("onHeaders\n");
+			trace("onHeaders: " + message.statusCode + "\n");
 			content.close();
-			this.onUploadComplete(fn, true);
+			if(message.statusCode == 200){
+				this.onUploadComplete(fn, true);
+			}
+			else{
+				// error
+				if(message.statusCode == 403)
+					trace("Authorization failed.\n");
+
+			}	
 		};
 		message.onTransferComplete = success => {
-			trace("onTransferComplete: " + success + '\n');	
 			content.close();
-			this.onUploadComplete(fn, success);
+			trace("onTransferComplete: " + success + ', status: ' + message.statusCode +"\n");	
+			if(message.statusCode == 200)
+				this.onUploadComplete(fn, success);
+			else{
+				trace("Error: http response.\n");
+			}
 		};
 		trace("sendPicture: " + fn + "\n");
 		try{
@@ -179,9 +182,16 @@ var app = {
 	},
 	savePicture(){
 		if (!this.pictureSize) return;
+		// prepare room for saving next picture
+		let arr = this.getPictureFilesFromFlash();
+		if(arr.length >= MAX_LIST_ITEMS){
+			for(let i = MAX_LIST_ITEMS; i < arr.length; i++)
+				this.deletePicture(arr[i]);	
+		}
+
 		let File = require("file");
-		let name = Date.now();
-		let path = this.directory + name;
+		let name = Date.now() + this.mark;
+		let path = this.directory + name ;
 		let f = new File(path,1);
 		trace(path + "\n");
 		let t = Date.now();
@@ -199,6 +209,7 @@ var app = {
 					f.close();
 					// remove file
 					Files.deleteFile(path);
+					this.cleanPictureFilesFromFlash(); // do some cleaning
 					return;
 				}
 			}
@@ -206,12 +217,6 @@ var app = {
 		}
 		f.close();
 		trace("UART transmit: " + ((Date.now() - t)/1000).toFixed(2) + " seconds\n");
-		while(this.pictures.length >= MAX_LIST_ITEMS){
-			this.deletePicture(this.pictures[0]);
-			this.removePictureFromList(this.pictures[0]);
-		}
-		this.pictures.push(name);
-		this.savePictureListToFlash(); // save list
 		return name;
 	},
 	capture(){
@@ -234,50 +239,43 @@ var app = {
 		if(v) this.enable = true;
 		else this.enable = false;
 	},
-	loadPictureListFromFlash(){
-		if(!savePictureList) return;
-		try{
-			let s = String.fromArrayBuffer(Files.read(this.directory + "pictures.txt"));
-			let arr = JSON.parse(s);
-			for (let i = 0; i < arr.length; i++){
-				let info = Files.getInfo(this.directory + arr[i]);
-				if(info.type == Files.fileType){
-					if(this.pictures.length < MAX_LIST_ITEMS) {
-						this.pictures.push(arr[i]);; // only need 5 pictures
-					}
-					else 
-						this.deletePicture(arr[i]); // clean extra files
-				}
+	getPictureFilesFromFlash(){
+		let arr = [];
+		let iter = Files.Iterator(this.directory, 0);
+		for (let item of iter){
+			// 1467326896557.617_pix
+			if(item.name.indexOf(this.mark) != -1){
+				arr.push(item.name);
 			}
-			this.savePictureListToFlash(); // update pictures
+		}
+		return arr;
+	},
+	cleanPictureFilesFromFlash(){
+		let arr = this.getPictureFilesFromFlash();
+		for(let i = 0; i < arr.length; i++){
+			this.deletePicture(arr[i]);
+		}
+	},
+	loadPictureListFromFlash(){
+		if(bCleanPicture){
+			this.cleanPictureFilesFromFlash(); // CLEAN UP so we dont run out of room!!!!
+			return;
+		}
+		try{
+			let arr = this.getPictureFilesFromFlash();
+			if(arr.length <= MAX_LIST_ITEMS) return;
+			for (let i = MAX_LIST_ITEMS; i < arr.length; i++){
+					this.deletePicture(arr[i]); // clean extra files
+			}
 		}
 		catch(error){
 			trace("error#: loadPictureListFromFlash\n ");
 		}
 	},
-	savePictureListToFlash(){
-		if(!savePictureList) return;
-		try{
-			let f = new File(this.directory + "pictures.txt", 1);
-			f.write(JSON.stringify(this.pictures));
-			f.close();	
-		}
-		catch(error){
-			trace("error#: savePictureListToFlash\n ")
-		}
-	},
 	onQuit(){
-		if(!savePictureList){
-			// clean up
-			while(this.pictures.length){
-				let fn = this.pictures[this.pictures.length - 1];
-				this.removePictureFromList(fn);
-				this.deletePicture(fn); 
-			}
+		if(bCleanPicture){
+			this.cleanPictureFilesFromFlash();
 		}
-		else
-			this.savePictureListToFlash();
-		this.pictures = undefined;
 		if(this.intv){
 			clearInterval(this.intv);
 			this.intv = undefined;
