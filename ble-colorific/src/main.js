@@ -127,8 +127,8 @@ var BLERGBLightOneServiceBehavior = Behavior.template({
 		payload[1] = 0x01;
 		payload[2] = 0x03;
 		payload[3] = 0x01;
-		payload[4] = 0x10; // White Brightness
-		payload[5] = 0x00; // ?
+		payload[4] = 0x10; // White brightness
+		payload[5] = 0x00; // Separator byte
 		this.connection = null;
 		this.changeState(container, "idle");
 	},
