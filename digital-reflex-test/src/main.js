@@ -432,7 +432,9 @@ Pins.configure({
 	button: {
         require: "button",
         pins: {
-            button: { pin: 52 }
+            button: { pin: 52 },
+            power: { pin: 51, type: "Power", voltage: 3.3 },
+            ground: { pin: 53, type: "Ground" }
         }
     }
 },
