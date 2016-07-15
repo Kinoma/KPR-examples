@@ -2,6 +2,6 @@
    "id":"elementpwmservocontrol.kinoma.marvell.com",
    "title":"element-pwm-servo-control",
    "Element":{
-       "main":"/src/main"
+       "main":"main"
    },
 }
