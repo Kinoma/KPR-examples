@@ -60,16 +60,6 @@ This sample sends HTTP requests to the Initial State REST API to upload sensor d
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-kinoma-xively">analog-kinoma-xively</a>
-<a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-kinoma-xively"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/analog-kinoma-xively-example.jpg" height="100" alt=""/></a>
-
-<x-app-info id="analogkinomaxively.example.kinoma.marvell.com"><span class="createSample pinsSample"></span></x-app-info>
-
-This sample sends HTTP requests to the Xively API to upload sensor data to a stream. The values are read from an analog sensor. Before running the app, sign up for a free Xively account and replace the dummy text in the code with your API Key, Feed ID and Sensor ID.
-
-<div style="clear:both; margin-bottom: 16px;"></div>			
-***
-
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-MB1010">analog-MB1010</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/analog-MB1010"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/analog-MB1010-example.jpg" height="100" alt=""/></a>
 
