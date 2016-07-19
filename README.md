@@ -637,7 +637,7 @@ Takes a reading from an analog sensor every three seconds and sends data to an I
 
 <x-app-info id="elementpwmservo"><span class="elementSample pinsSample"></span></x-app-info>
 
-Sample application that takes a picture based on proximity sensing and posts image to AWS S3 cloud storage. The sample uses the VC0706 serial camera and the LV-MaxSonar-EZ MB1010 Sonar range finder. To post images you need to sign up for a free AWS account and replace the dummy text in the credintials.js with your access ID and access key. View your images in your AWS account or use the Photo Door Client App sample.
+Sample application that takes a picture based on proximity sensing and posts image to AWS S3 cloud storage. The sample uses the VC0706 serial camera and the LV-MaxSonar-EZ MB1010 Sonar range finder. To post images you need to sign up for a free AWS account and replace the dummy text in the credentials.js with your access ID and access key. View your images in your AWS account or with the photo-door-client sample.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
@@ -1050,6 +1050,16 @@ This example uses a layout container to demonstrate how to adapt layouts to devi
 <x-app-info id="periodic.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
 
 Basic digital clock driven by a periodic update implemented by a pair of handlers. The time handler notifies the application of the time change and then invokes the delay handler to wait 1/2 second. Once the delay has completed the time handler is invoked again. The technique is commonly used by applications that require periodic polling of a resource.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/photo-door-client">photo-door-client</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/photo-door-client"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/photo-door-client-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="photo.door.client.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
+
+Companion app for the element-photo-door sample. Displays images in AWS S3 bucket on screen. Select an image to zoom in. Click the trash button that appears in the top right corner to delete it from the bucket or the back button in the top left corner to go back to the grid view of all images. Can be run on Kinoma Create or packaged for Android/iOS mobile devices. To upload and view images you need to sign up for a free AWS account and replace the dummy text in the credentials.js with your access ID and access key.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
