@@ -1,0 +1,11 @@
+{
+    "title":"Analog Trimpot Volume Contol",
+    "description":"",
+    "id":"trimpot.example.kinoma.marvell.com",
+    "tags":[
+        "createSample,pinsSample,mediaSample,uiSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

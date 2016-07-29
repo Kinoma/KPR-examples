@@ -1,0 +1,11 @@
+{
+    "title":"Analog Pulse Sensor",
+    "description":"",
+    "id":"pulse.example.kinoma.marvell.com",
+    "tags":[
+        "createSample,pinsSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

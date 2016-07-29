@@ -1,0 +1,11 @@
+{
+    "title":"Analog ML8511 UV Sensor",
+    "description":"",
+    "id":"ML8511.example.kinoma.marvell.com",
+    "tags":[
+        "createSample,pinsSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

@@ -1,0 +1,11 @@
+{
+    "title":"Analog Starter",
+    "description":"",
+    "id":"analogstarter.example.kinoma.marvell.com",
+    "tags":[
+        "createSample,pinsSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

@@ -1,0 +1,11 @@
+{
+    "title":"Analog GP2Y0A02YK0F Proximity Sensor",
+    "description":"",
+    "id":"GP2Y0A02YK0F.example.kinoma.marvell.com",
+    "tags":[
+        "createSample,pinsSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

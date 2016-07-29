@@ -1,0 +1,11 @@
+{
+    "title":"Analog MB1010 Sonar Range Finder",
+    "description":"",
+    "id":"MB1010.example.kinoma.marvell.com",
+    "tags":[
+        "createSample,pinsSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

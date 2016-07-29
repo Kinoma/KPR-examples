@@ -1,0 +1,11 @@
+{
+    "title":"analogkinomainitialstate.example.kinoma.marvell.com",
+    "description":"",
+    "id":"Analog Initial State",
+    "tags":[
+        "createSample,pinsSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

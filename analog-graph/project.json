@@ -1,0 +1,11 @@
+{
+    "title":"Analog Graph",
+    "description":"",
+    "id":"analoggraph.example.kinoma.marvell.com",
+    "tags":[
+        "createSample,pinsSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}
