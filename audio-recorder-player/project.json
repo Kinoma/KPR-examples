@@ -1,0 +1,11 @@
+{
+    "title":"Audio Recorder/Player",
+    "description":"",
+    "id":"audiorecorderplayer.example.kinoma.marvell.com",
+    "tags":[
+        "createSample,pinsSample,mediaSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

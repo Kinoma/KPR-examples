@@ -1,0 +1,11 @@
+{
+    "title":"Basic UI Scroller",
+    "description":"",
+    "id":"basicscroller.example.kinoma.marvell.com",
+    "tags":[
+        "uiSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

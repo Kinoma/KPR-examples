@@ -1,0 +1,11 @@
+{
+    "title":"Basic Web Service Request",
+    "description":"",
+    "id":"basicwebservicerequest.example.kinoma.marvell.com",
+    "tags":[
+        "networkSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

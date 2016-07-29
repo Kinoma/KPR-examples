@@ -1,0 +1,11 @@
+{
+    "title":"Animated Sprite",
+    "description":"",
+    "id":"animatedsprite.example.kinoma.marvell.com",
+    "tags":[
+        "uiSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

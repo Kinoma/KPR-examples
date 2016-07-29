@@ -1,0 +1,11 @@
+{
+    "title":"Bouncing Balls Animation",
+    "description":"",
+    "id":"balls.example.kinoma.marvell.com",
+    "tags":[
+        "uiSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

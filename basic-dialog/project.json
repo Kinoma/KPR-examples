@@ -1,0 +1,11 @@
+{
+    "title":"Basic UI Dialog",
+    "description":"",
+    "id":"basicdialog.example.kinoma.marvell.com",
+    "tags":[
+        "uiSample,mobileSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

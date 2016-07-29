@@ -1,0 +1,11 @@
+{
+    "title":"Audio Level Detect",
+    "description":"",
+    "id":"audiodetect.example.kinoma.marvell.com",
+    "tags":[
+        "createSample,pinsSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

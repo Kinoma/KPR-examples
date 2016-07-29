@@ -1,0 +1,11 @@
+{
+    "title":"Animation Behaviors",
+    "description":"",
+    "id":"animationbehaviors.example.kinoma.marvell.com",
+    "tags":[
+        "createSample,uiSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

@@ -1,0 +1,11 @@
+{
+    "title":"Basic Event Driven UI",
+    "description":"",
+    "id":"basiceventdrivenui.example.kinoma.marvell.com",
+    "tags":[
+        "uiSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}
