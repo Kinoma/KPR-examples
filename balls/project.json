@@ -6,6 +6,6 @@
         "uiSample"
     ],
     "Create":{
-        "main":"src/main"
+        "main":"src/balls"
     },
 }
