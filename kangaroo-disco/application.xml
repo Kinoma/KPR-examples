@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<application xmlns="http://www.kinoma.com/kpr/application/1" id="kangaroo.disco.example.douzen.com" program="src/main" title="Kangaroo Disco Example" icon="src/iphone/icon57.png">
+<application xmlns="http://www.kinoma.com/kpr/application/1" id="kangaroo.disco.example.douzen.com" program="src/main" title="Kangaroo Disco Animation" icon="src/iphone/icon57.png">
 
 </application>

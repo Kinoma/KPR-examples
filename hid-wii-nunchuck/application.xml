@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<application xmlns="http://www.kinoma.com/kpr/application/1" id="hid.wii.nunchuck.example.kinoma.marvell.com" program="src/main" title="hid-wii-nunchuck">
+<application xmlns="http://www.kinoma.com/kpr/application/1" id="hid.wii.nunchuck.example.kinoma.marvell.com" program="src/main" title="HID Wii Nunchuck">
 
 </application>

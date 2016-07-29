@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<application xmlns="http://www.kinoma.com/kpr/application/1" id="analogkinomainitialstate.example.kinoma.marvell.com" program="src/main" title="Analog Kinoma Initial State Example">
+<application xmlns="http://www.kinoma.com/kpr/application/1" id="analogkinomainitialstate.example.kinoma.marvell.com" program="src/main" title="Analog Initial State">
 
 </application>
