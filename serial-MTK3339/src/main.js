@@ -55,7 +55,7 @@ var GPSScreen = Container.template(function($) { return {
 			if (-1 == this.latitude && -1 == this.longitude)
 				container.remove(container.first);
 			if (position.latitude != this.latitude || position.longitude != this.longitude) {
-				var url = this.url.replace("[LAT]", position.latitude).replace("[LON]", position.longitude);
+				var url = this.url.replace(/\[LAT\]/g, position.latitude).replace(/\[LON\]/g, position.longitude);
 				this.map = new MapPicture(url);
 			}
 			this.latitude = position.latitude;
