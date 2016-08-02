@@ -55,7 +55,9 @@ application.behavior = Behavior({
             MB1010: {
                 require: "MB1010",
                 pins: {
-                    range: {pin: 62}
+                    range: { pin: 62 },
+					ground: { pin: 66, type: "Ground" },
+					power: { pin: 65, type: "Power", voltage:3.3 },
                 }
             }
 		}, success => this.onPinsConfigured(application, success));

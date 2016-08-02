@@ -77,7 +77,9 @@ application.behavior = Behavior({
 			HIH4030: {
 				require: "HIH4030",
 				pins: {
-					humidity: { pin: 65 }
+					power: { pin: 64, type: "Power", voltage: 5 },
+					humidity: { pin: 65 },
+					ground: { pin: 66, type: "Ground" }
 				}
 			},
 			TMP102: {

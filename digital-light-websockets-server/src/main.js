@@ -41,6 +41,7 @@ class ApplicationBehavior extends Behavior {
 			light: {
 				require: "led",
 				pins: {
+					ground: { pin: 60, type: "Ground" },
 					led: { pin: 59 }
 				}
 			}

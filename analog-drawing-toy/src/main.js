@@ -62,16 +62,20 @@ class CanvasBehavior extends Behavior {
             potentiometers: {
                 require: "potentiometers",
                 pins: {
-					xPos: { pin: 64 },
-					yPos: { pin: 53 },
+          xPos: { pin: 64 },
+          yPos: { pin: 53 },
+          xground: { pin: 65, type: "Ground" },
+                xpower: { pin: 63, type: "Power", voltage: 3.3 },
+          yground: { pin: 54, type: "Ground" },
+                ypower: { pin: 52, type: "Power", voltage: 3.3 },
                 }
             },
             accelerometer: {
                 require: "accelerometer",
                 pins: {
-                    x: { pin: 48 }, 
-					y: { pin: 47 }, 
-					z: { pin: 43 } 
+                    x: { pin: 57 },
+          y: { pin: 58 },
+          z: { pin: 56 },
                 }
             }
 		}, success => this.onPinsConfigured(canvas, success));

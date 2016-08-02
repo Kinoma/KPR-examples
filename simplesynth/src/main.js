@@ -231,7 +231,9 @@ application.behavior = Behavior({
 			analogSensor: {
 				require: "Analog",
 				pins: {
-					analog: { pin: 54 }
+					analog: { pin: 54 },
+		            power: { pin: 52, type: "Power", voltage: 3.3 },
+		            ground: { pin: 51, type: "Ground" }
 				} 
 			}
 		}, success => this.onPinsConfigured(application, success));

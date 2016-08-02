@@ -38,7 +38,8 @@ let MainScreen = Container.template($ => ({
 						light: {
 							require: "Digital",
 							pins: {
-								digital: {pin: 59, type: "Digital", direction: "output"}
+								digital: {pin: 59, type: "Digital", direction: "output"},
+								ground: {pin: 60, type: "Ground"}
 							}
 						}
 					}, success => this.onPinsConfigured(container, success));

@@ -31,7 +31,9 @@ let MainScreen = Container.template($ => ({
 				}
 				onDisplayed(label) {
 					Pins.configure({
+						power: {pin: 51, type: "Power", voltage: 3.3},
 						analogSensor: {pin: 52, type: "Analog"},
+						ground: {pin: 53, type: "Ground"}
 					}, success => this.onPinsConfigured(label, success));
 				}
 				onPinsConfigured(label, success) {		

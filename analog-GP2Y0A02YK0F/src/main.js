@@ -37,7 +37,9 @@ let MainScreen = Container.template($ => ({
 			            GP2Y0A02YK0F: {
 			                require: "GP2Y0A02YK0F",
 			                pins: {
-			                    proximity: {pin: 61}
+			                	power: { pin: 59, type: "Power", voltage: 5 },
+			                	ground: { pin: 60, type: "Ground" },
+			                    proximity: { pin: 61 }
 			                }
 			            }
 					}, success => this.onPinsConfigured(label, success));
