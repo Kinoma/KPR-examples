@@ -3,7 +3,8 @@
     "description":"http://kinoma.com/develop/documentation/projects/twin-lamps/",
     "id":"twin.lamps.example.kinoma.marvell.com",
     "tags":[
-        "emptySample"
+        "elementSample",
+        "pinsSample"
     ],
     "Create":{
         "main":"main"
