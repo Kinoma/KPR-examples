@@ -682,6 +682,17 @@ Reads a capactive touch sensor and toggles a Tessel relay module when tapped. De
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-twin-lamps">element-twin-lamps</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/element-twin-lamps"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-twin-lamps-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="twin.lamps.example.kinoma.marvell.com"><span class="elementSample pinsSample"></span></x-app-info>
+
+
+This sample uses capacitive touch sensors and Tessel relay modules interfaced with Kinoma Element to create a network of two touch-controlled table lamps. Demonstrates the use of pins sharing and discovery. See the "Twin Lamps" tutorial on kinoma.com for a walkthrough of the code and instructions to put the lamps together.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-wifigotchi">element-wifigotchi</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-wifigotchi"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-wifigotchi-example.jpg" height="100" alt=""/></a>
 
@@ -1363,6 +1374,7 @@ This example demonstrates how to use the Transitions library to configure and us
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
+
 
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/wave-recorder">wave-recorder</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/wave-recorder"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/wave-recorder-example.jpg" height="100" alt=""/></a>

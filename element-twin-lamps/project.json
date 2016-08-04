@@ -1,0 +1,14 @@
+{
+    "title":"twin-lamps",
+    "description":"http://kinoma.com/develop/documentation/projects/twin-lamps/",
+    "id":"twin.lamps.example.kinoma.marvell.com",
+    "tags":[
+        "emptySample"
+    ],
+    "Create":{
+        "main":"main"
+    },
+    "Element":{
+        "main":"main"
+    }
+}
