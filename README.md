@@ -1,3 +1,5 @@
+Read Me information
+
 <x-tag-info tags="createSample,elementSample,networkSample,uiSample,pinsSample,filesSample,mediaSample,mobileSample,bluetoothSample" titles="Kinoma Create,Kinoma Element,Network,User Interface,Pins,Files,Media,Mobile,Bluetooth"/>
 
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/amazon-alexa" class="createExampleLink" >amazon-alexa</a>
