@@ -1,4 +1,12 @@
-Read Me information
+#KinomaJS Samples
+
+These samples demonstrate how to build Kinoma applications using JavaScript and XML. 
+
+- Applications that have names of the form **element-xxx** are for Kinoma Element only. Each of these is a complete application that can be imported into Kinoma Code and run in the built-in Kinoma Element simulator (Mac OS version only), or exported as a standalone native application for Kinoma Element.
+- All other samples are complete applications designed to run on any device or platform that KinomaJS supports including iOS, Android and Kinoma Create. Each of these can be imported into Kinoma Code and run in the built-in Kinoma Create simulator, or exported as a standalone native application for iOS or Android devices or Kinoma Create.
+
+The [tutorials folder](./tutorials) contains a collection of walkthrough tutorials for a selection of the samples below. These tutorials are also available on our website on the [Kinoma Tutorials](http://kinoma.com/develop/documentation/tutorials/) and [Kinoma Projects](http://kinoma.com/develop/documentation/projects/) pages. 
+
 
 <x-tag-info tags="createSample,elementSample,networkSample,uiSample,pinsSample,filesSample,mediaSample,mobileSample,bluetoothSample" titles="Kinoma Create,Kinoma Element,Network,User Interface,Pins,Files,Media,Mobile,Bluetooth"/>
 
