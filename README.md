@@ -1,4 +1,4 @@
-#KinomaJS Samples
+<!-- #KinomaJS Samples
 
 These samples demonstrate how to build Kinoma applications using JavaScript and XML. 
 
@@ -8,6 +8,7 @@ These samples demonstrate how to build Kinoma applications using JavaScript and 
 The [tutorials folder](./tutorials) contains a collection of walkthrough tutorials for a selection of the samples below. These tutorials are also available on our website on the [Kinoma Tutorials](http://kinoma.com/develop/documentation/tutorials/) and [Kinoma Projects](http://kinoma.com/develop/documentation/projects/) pages. 
 
 <hr />
+-->
 
 <x-tag-info tags="createSample,elementSample,networkSample,uiSample,pinsSample,filesSample,mediaSample,mobileSample,bluetoothSample" titles="Kinoma Create,Kinoma Element,Network,User Interface,Pins,Files,Media,Mobile,Bluetooth"/>
 
