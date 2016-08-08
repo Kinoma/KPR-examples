@@ -1,0 +1,13 @@
+<handler path="/twitter/pollStream">
+   <behavior like="MODEL.CommandBehavior"><![CDATA[
+      function onQuery(handler, query) {
+
+         // Send HTTP GET request to set up socket for tweets stream
+         var message = new Message(url+keyword);
+         message.method = "GET";
+
+         // Authorize the request by access token
+         authorizer.authorize(message, accessToken);
+         handler.download(message);
+         global_message = message;
+      }

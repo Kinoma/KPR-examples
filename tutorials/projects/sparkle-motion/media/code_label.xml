@@ -1,0 +1,20 @@
+<container left="2" top="2" right="2" height="60" skin="blackSkin">
+   <label anchor="KEYWORD" left="2" top="2" right="2" height="56"
+      style="labelStyle" active="true" string="$.searchTerm" skin="whiteSkin">
+      <behavior>
+         <method id="onCreate" params="container, data, context">
+            <![CDATA[
+               this.data = data;
+            ]]>
+         </method>
+         <method id="onTouchBegan" params="label, id, x, y, ticks">
+            <![CDATA[
+               keyboardScreen = new MyKeyboardScreen(data);
+               application.run( new TRANSITIONS.TimeTravel(), mainScreen, keyboardScreen,
+                  { direction : "forward", easeType : "sineEaseOut", duration : 500,
+                  xOrigin : 160, yOrigin : 92 } );
+            ]]>
+         </method>
+      </behavior>
+   </label>
+</container>

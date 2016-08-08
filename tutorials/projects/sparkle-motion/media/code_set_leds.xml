@@ -1,0 +1,10 @@
+<method id="onChanged" params="container, changed_data"><![CDATA[
+   // Run a one-shot BLL call to set all LEDs
+   var message2 = new Message( "xkpr://shell/pins/run?" + serializeQuery( {
+      require: "PCA9685_BLL",
+      call: "setPWM",
+   } ) );
+
+   message2.requestObject = { ap:AMP, addr:[0x40,0x41,0x42,0x43], brightness:value_array};
+   application.invoke( message2 );
+]]></method>

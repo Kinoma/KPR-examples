@@ -1,14 +1,14 @@
-<!-- #KinomaJS Samples
+#KinomaJS Samples
 
 These samples demonstrate how to build Kinoma applications using JavaScript and XML. 
 
 - Applications that have names of the form **element-xxx** are for Kinoma Element only. Each of these is a complete application that can be imported into Kinoma Code and run in the built-in Kinoma Element simulator (Mac OS version only), or exported as a standalone native application for Kinoma Element.
-- All other samples are complete applications designed to run on any device or platform that KinomaJS supports including iOS, Android and Kinoma Create. Each of these can be imported into Kinoma Code and run in the built-in Kinoma Create simulator, or exported as a standalone native application for iOS or Android devices or Kinoma Create.
+- All other samples are complete applications designed to run on various devices and platforms that KinomaJS supports including iOS, Android and Kinoma Create. Each of these can be imported into Kinoma Code and run in the built-in Kinoma Create simulator or exported as a standalone native application for Kinoma Create. Many can also be exported as iOS or Android apps.
 
 The [tutorials folder](./tutorials) contains a collection of walkthrough tutorials for a selection of the samples below. These tutorials are also available on our website on the [Kinoma Tutorials](http://kinoma.com/develop/documentation/tutorials/) and [Kinoma Projects](http://kinoma.com/develop/documentation/projects/) pages. 
 
 <hr />
--->
+
 
 <x-tag-info tags="createSample,elementSample,networkSample,uiSample,pinsSample,filesSample,mediaSample,mobileSample,bluetoothSample" titles="Kinoma Create,Kinoma Element,Network,User Interface,Pins,Files,Media,Mobile,Bluetooth"/>
 
@@ -400,8 +400,22 @@ A simple camera app supporting live preview and capture. This example demonstrat
 
 This mobile framework example demonstrates how to use the HTML 2D Canvas API. Tap the settings icon to select the drawing color and line thickness. The main container provides a 2D canvas to draw on. Select the ‘Play’ option from the settings menu to replay your drawing. This example shows how to use the Kinoma ECMAScript API to build and draw on a HTML Canvas 2D Context.
 
-<div style="clear:both; margin-bottom: 16px;"></div>			
+<div style="clear:both; margin-bottom: 16px;"></div>	
+
 ***
+
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/catdoor-companion">catdoor-companion</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/catdoor-companion"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/catdoor-companion-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="catdoor.companion.example.kinoma.marvell.com"><span class="createSample pinsSample uiSample"></span></x-app-info>
+
+This sample is an optional mobile companion app for the element-catdoor sample. Displays information about a cat's in-and-out activity based on data shared wirelessly by a Kinoma Element attached to a cat door. See the Cat Door project tutorial on kinoma.com for more information.
+
+<div style="clear:both; margin-bottom: 16px;"></div>	
+	
+***
+
 
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/clare">clare</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/clare"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/clare-example.jpg" height="100" alt=""/></a>
@@ -590,6 +604,16 @@ Toggles an LED connected to Kinoma Element on and off every second. Demonstrates
 <x-app-info id="elementbuttonled"><span class="elementSample pinsSample"></span></x-app-info>
 
 Toggles an LED connected to Kinoma Element on and off whenever a button  is pressed. Demonstrates the use of the built-in digital BLL for the LED and a user-defined BLL for the button. Also demonstrates the process of setting up two BLLs such that the reading of one is used to write the other.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-catdoor">element-catdoor</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/element-catdoor"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-catdoor-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="element.catdoor.example.kinoma.marvell.com"><span class="elementSample pinsSample"></span></x-app-info>
+
+This app allows you to track a cat's in-and-out activity using an off-the-shelf cat door, Kinoma Element, a basic LED, and two sets of magnetic reed sensors. See the Cat Door project tutorial on kinoma.com for a walkthrough of the code and instructions to build the project components. The catdoor-companion sample acts as an optional mobile companion app.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
