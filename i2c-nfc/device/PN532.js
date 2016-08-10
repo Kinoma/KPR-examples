@@ -77,42 +77,7 @@ exports.close = function() {
     this.data.close();
 }
 
-exports.poll = function() {
-    trace_cmd("PN532 Read BEGIN\n");
-    var changed = false, uid, result;
-
-    var target = doInListPassiveTarget.call(this, PM_ISO14443A_106, 1);
-    if (target)
-        uid = target.slice(6, 6 + target[5]);
-
-    // if active device changed, return uid (or empty uid) to caller
-    if (!last_uid && uid) {
-        changed = true;
-        result = uid;
-        last_uid = uid;
-    }
-    else if (last_uid && !uid) {
-        changed = true;
-        result = [];
-        last_uid = undefined;
-    }
-    else if (!last_uid && !uid)
-        ;
-    else {
-        changed = last_uid.length != uid.length;
-        for (var i = 0, length = uid.length; (i < length) && !changed; i++)
-            changed = last_uid[i] != uid[i];
-
-        if (changed) {
-            result = uid;
-            last_uid = uid;
-        }
-    }
-
-    trace_cmd("PN532 Read END, UID: " + result + "\n");
-
-    return result;
-}
+exports.poll = function() {    trace_cmd("PN532 Read BEGIN\n");    var changed = false, uid, result;    var target = doInListPassiveTarget.call(this, PM_ISO14443A_106, 1);    if (target)        uid = target.slice(6, 6 + target[5]);    // if active device changed, return uid (or empty uid) to caller    if (!last_uid && uid) {        changed = true;        result = uid;        last_uid = uid;    }    else if (last_uid && !uid) {        changed = true;        result = [];        last_uid = undefined;    }    else if (!last_uid && !uid)        ;    else {        changed = last_uid.length != uid.length;        for (var i = 0, length = uid.length; (i < length) && !changed; i++)            changed = last_uid[i] != uid[i];        if (changed) {            result = uid;            last_uid = uid;        }    }    trace_cmd("PN532 Read END, UID: " + result + "\n");    return {token: result};} 
 
 exports.mifare_CmdAuthA = function(params) {
     var result = doInDataExchange.call(this, 1, [MIFARE_CMD_AUTH_A, params.page].concat(params.key).concat(params.token), 1);

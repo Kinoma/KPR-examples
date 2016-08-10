@@ -1,0 +1,11 @@
+{
+    "title":"I2C NFC Sensor",
+    "id":"i2cnfc.example.kinoma.marvell.com",
+    "tags":[
+        "pinsSample",
+        "createSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

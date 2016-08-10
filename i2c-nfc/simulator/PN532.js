@@ -62,7 +62,6 @@ exports.poll = function(params) {
 			params.commandParams.token = data.value;
 		result.commandData = this[params.command](params.commandParams);
 	}
-
     return result;
 }
 

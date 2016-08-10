@@ -5,6 +5,8 @@
 
 Break a laser beam and get caught by the Kinoma Create-controlled camera.
 
+![](./media/thumbnail.jpg)
+
 ---
 
 AT A GLANCE
@@ -23,6 +25,7 @@ Here we build a camera trap, which takes pictures of whatever blocks a laser bea
 
 <b>Note:</b> The source code for this older project is no longer available for downloading; only snippets are shown here. If you are interested in getting the full source, you can post an inquiry on the Kinoma Create Forum or send an email to developer@kinoma.com.
 
+![](./media/overview2.jpg)
 
 ##Parts list
 
@@ -35,6 +38,8 @@ Here we build a camera trap, which takes pictures of whatever blocks a laser bea
 ##1 Laser polling
 
 We use a handler to poll the voltage reading of pin 47. Whenever the voltage is higher than the threshold, the handler calls the `takePicture` method to take a picture. We implemented a loop by having the `time1` handler and the `delay1` handler call each other.
+
+![](./media/laser.jpg)
 
 ```
 <handler path="/time1">
@@ -61,6 +66,8 @@ We use a handler to poll the voltage reading of pin 47. Whenever the voltage is 
 
 After a new picture is successfully uploaded from the camera to the Kinoma Create, a request is sent from laptop side and the picture is fetched back in the format of a chunk.
 
+![](./media/camera.jpg)
+
 ```
 <handler path="/request_pic">
     <behavior>
@@ -80,6 +87,8 @@ After a new picture is successfully uploaded from the camera to the Kinoma Creat
 ##3 Photoresistor wiring and project setup
 
 We first connect the photoresistor to a pull-up resistor. The junction where the resistor and photoresistor meet goes to pin 47. Then we connect the serial camera to the Kinoma Create and adjust the laser pointer to point at the photoresistor.
+
+![](./media/wiring.jpg)
 
 ##4 Finish
 

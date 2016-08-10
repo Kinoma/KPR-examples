@@ -1,0 +1,7 @@
+{
+    "id":"element.s7s.example.kinoma.marvell.com",
+    "title":"element-s7s",
+    "Element":{
+        "main":"main"
+    }
+}

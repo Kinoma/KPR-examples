@@ -6,6 +6,8 @@
 
 Ring a bell as an Indiegogo contribution monitor.
 
+![](./media/full-project.jpg)
+
 ---
 
 AT A GLANCE
@@ -44,6 +46,8 @@ For this project, we need a solenoid to ring the bell, batteries to provide a hi
 
 We start by wiring everything up. The connections to and from the Kinoma Create are very simple: one GPIO pin to drive our transistor “switch” and one ground that will be tied to the battery pack ground. We bring the + and – sides of the solenoid assembly (discussed below) back to the breadboard. Finally, two jumpers connect the battery pack to the power rails of the breadboard.
 
+![](./media/step01.jpg)
+
 * (<b>A</b>) The white jumper connects a Kinoma Create GPIO to the breadboard. The green jumper is a ground.
 
 * (<b>B</b>) The yellow jumper connects our high-voltage power supply to the protection diode/solenoid assembly. The green jumper is the ground side of the protection diode/solenoid assembly.
@@ -53,6 +57,8 @@ We start by wiring everything up. The connections to and from the Kinoma Create 
 ##2 Breadboard components
 
 We need two components on the breadboard: a transistor (<b>B</b>) that acts as a switch, allowing Kinoma Create to turn on and off the high-voltage power supply to the solenoid, and a 1k ohm resistor (<b>A</b>) to limit draw along the path from Kinoma Create's GPIO to ground.
+
+![](./media/step02.jpg)
 
 The connections are:
 
@@ -66,15 +72,21 @@ The connections are:
 
 We need a protection diode to prevent unexpected consequences from the kickbase phase of our solenoid. It is best to use a fast-responding Schottky-type diode for this purpose. The cathode side of the diode (with the gray marker) connects to the high-voltage power supply from our breadboard and the + side of the solenoid. The anode side of the diode connects to the collector leg of our transistor and the – side of the solenoid. 
 
+![](./media/step03.jpg)
+
 Being the rough-and-tumble prototypers that we are (and because our soldering iron was stuck in a crate being shipped back from SXSW), we combined the components and jumpers using electrical tape.
 
 ##4 Additional power for solenoid
 
 We use a high-voltage solenoid to get a nice, crisp ring out of our bell. Kinoma Create (like most platforms) can output a maximum of 5V--plenty for most purposes, but not nearly enough here, so we build a high-voltage power supply from AA batteries--16 AAs wired in series, for a total output of roughly 24V. More electrical tape keeps everything together.
 
+![](./media/step04.jpg)
+
 ##5 Solenoid and bell
 
 The last major challenge is to get the solenoid to strike the bell in a satisfactory manner. We achieve the desired effect by elevating the solenoid on a stack of Post-it Notes and positioning it about 4mm from the bell. The solenoid, the bell, and the Post-it stack are all affixed with double-sided Scotch tape.
+
+![](./media/step05.jpg)
 
 ##6 Code snippets
 

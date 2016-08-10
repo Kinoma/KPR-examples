@@ -5,6 +5,8 @@
 
 Create an LED world map driven by global Twitter traffic data. 
 
+![](./media/DSC01461.JPG)
+
 ---
 AT A GLANCE
 
@@ -106,13 +108,27 @@ The `onChanged` method runs a one-shot BLL call to set all LEDs according to the
 
 The materials we need are a frame, the acrylic sheet, and the transparent blue vinyl film. The tools we use are a nicking tool, a bottle of liquid glue, a hot glue gun, and a ruler.
 
+![](./media/DSC01292.JPG)
+
+![](./media/DSC01304.JPG)
+
 ##3 Cutting the world map
 
 We print the world map and cut the vinyl film according to the map. In this design, we cut the continents out and leave the oceans on the map. After that, we glue the blue vinyl film onto the acrylic sheet.
 
+![](./media/DSC01327.JPG)
+
+![](./media/DSC01351.JPG)
+
 ##4 LED wiring
 
 Insert all 50 LEDs into the back of the frame and wire them according to the schematic diagram below. Each PWM driver can control up to 15 LEDs, so we use four drivers to cover all 50 (12, 12, 12, and 14). Here we illustrate how one of the LEDs would be wired on one column of the driver and how you can chain the drivers together. We show only two drivers in the illustration, but remember that there are four in our real implementation.
+
+![](./media/wiring-1000w.jpg)
+
+![](./media/DSC01364.JPG)
+
+![](./media/DSC01369.JPG)
 
 ##5 Finish
 

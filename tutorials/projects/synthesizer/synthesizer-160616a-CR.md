@@ -6,6 +6,8 @@
 
 Build a keyboard UI with five sound synthesis modes.
 
+![](./media/full-project.jpg)
+
 ---
 
 AT A GLANCE
@@ -22,7 +24,8 @@ Time: 1 hour
 
 Here we build a keyboard UI with five synthesis modes all in JavaScript, to show the power of using Kinoma Create's audio output hardware pin. As discussed in the Tech Note Playing Audio with KinomaJS, using the audio output hardware pin is the most flexible--and the most complex--way to play sounds from Kinoma Create. This simple example will serve as a good starting point.
 
-If you get stuck along the way, try getting help from the Kinoma Create Forum.
+See a video demonstration of this project [here](https://youtu.be/WJbplCZTUTI).
+
 
 ## Parts list
 
@@ -36,7 +39,11 @@ You can run this project using the Create simulator in Kinoma Code; however, to 
 
 The wiring is trivial: simply connect the ground, power, and analog input to the front pins.
 
+![](./media/wires.jpg)
+
 In the program, the analog input is set to pin 54. You can use the Front Pins app to configure it like so:
+
+![](./media/pin_setup.jpg)
 
 ##2 The code
 
@@ -147,6 +154,8 @@ hitTouch: function(container, id, current) {
 },
 ```
 
+![](./media/screen_UI.jpg)
+
 ##4 Sound synthesis
 
 The article Creating sound waves with JavaScript by Rodrigo Siqueira is a good resource for finding out what functions produce what kinds of sound. Keep in mind that Kinoma Create’s sampling rate will be 4-8 kHz and will support only about three to five different tones at once. If you examine the synthesizer functions in `synthOut.js`, you can see how the different synthesizer modes are being created. In this project, the sampling rate is set to 4 kHz in `main.js` as follows:
@@ -176,6 +185,8 @@ samples[i++] = ( Math.sin(time) + .5 * Math.sin(time*2) + 1/3*Math.sin(time*3) )
 ```
 
 As you can see, the violin mode adds different wave forms together. At an 8 kHz sampling rate, this calculation requires too much CPU for Kinoma Create to handle in real time.
+
+![](./media/sound_wave.jpg)
 
 ##5 The analog input
 

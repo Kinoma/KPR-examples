@@ -5,6 +5,8 @@
 
 Use your fingerprint instead of a key to unlock a door.
 
+![](./media/project.jpg)
+
 ---
 
 AT A GLANCE
@@ -23,6 +25,8 @@ In this project, we build a biometric fingerprint-controlled lock prototype. A f
 
 If you get stuck along the way, try getting help from the Kinoma Create Forum.
 
+See a video demonstration of this project [here](https://youtu.be/OMNmsOsXZq8).
+
 ##Parts list
 
 The fingerprint scanner module is powered by an ARM Cortex-M3 CPU, which controls the onboard optical sensor and fingerprint recognition. Fingerprints are stored and processed by the module, which supports a UART protocol for communicating with a host application. The solenoid is powered from Kinoma Create and controlled by a digital output pin.
@@ -40,9 +44,16 @@ The fingerprint scanner module is powered by an ARM Cortex-M3 CPU, which control
 
 The protoboard is connected to the solenoid and Kinoma Create back-header pins, and the fingerprint scanner is connected to the back-header UART TX and RX pins.
 
+![](./media/wiring.jpg)
+
 Both front pin headers are configured for +5V, and pin 51 is configured as a digital output. The application programmatically configures the front pins and displays the Pins Settings dialog.
 
+![](./media/pins_settings.jpg)
+
+
 ##2 Protoboard
+
+![](./media/protoboard.jpg)
 
 The solenoid used to lock and unlock the door requires three additional bits of electronics: 
 
@@ -53,6 +64,8 @@ The solenoid used to lock and unlock the door requires three additional bits of 
 - A resistor. The value of the resistor varies depending on the transistor used and its threshold voltage.
 
 ##3 Application overview
+
+![](./media/registered.jpg)
 
 The KinomaJS application opens to a screen that displays a list of registered fingerprints. Three buttons are provided at the bottom of the screen to interact with the scanner:
 
@@ -126,6 +139,8 @@ onFingerPressed: { value: function(container) {
 ##6 Fingerprint images
 
 The fingerprint scanner captures fingerprints to a binary template format and stores the templates in an onboard database. In addition to the fingerprint templates, the scanner provides the ability to read the raw fingerprint image. The application displays the fingerprint image on the Kinoma Create screen.
+
+![](./media/your-fingerprint.jpg)
 
 The `get_rawimage` BLL function is invoked to retrieve the raw fingerprint image from the scanner.
 

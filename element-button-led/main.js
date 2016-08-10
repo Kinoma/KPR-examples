@@ -10,18 +10,36 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import Pins from "pins";var main = {	onLaunch(){		Pins.configure({
+import Pins from "pins";
+
+var main = {
+	onLaunch(){
+		Pins.configure({
 			button: {
 				require: "button", // Uses custom BLL button.js
 				pins: {
 					button: { pin: 1 },
-					buttonGround: { pin: 2, type: "Ground" },					buttonPower: { pin: 3, type: "Power" },
+					buttonGround: { pin: 2, type: "Ground" },
+					buttonPower: { pin: 3, type: "Power" },
 				}
 			},
 			led: { pin: 10, type: "Digital", direction: "output" }, // Uses built-in digital BLL
-			ledGround: { pin: 9, type: "Ground" }		}, success => {			if (success) {
+			ledGround: { pin: 9, type: "Ground" }
+		}, success => {
+			if (success) {
 				Pins.invoke("/led/write", 1); // Turn light on once configured
-				var ledVal = 1;				Pins.repeat("/button/wasPressed", 100, result => {				    if (result) {
+				var ledVal = 1;
+				Pins.repeat("/button/wasPressed", 100, result => {
+				    if (result) {
 				    	ledVal = !ledVal;
 				    	Pins.invoke("/led/write", ledVal);
-				    }				}); 			} else {				trace("Failed to configure pins.\n");			}		});	}};export default main;
+				    }
+				}); 
+			} else {
+				trace("Failed to configure pins.\n");
+			}
+		});
+	}
+};
+
+export default main;
