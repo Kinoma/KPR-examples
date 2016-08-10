@@ -678,7 +678,7 @@ Sample application that takes a picture based on proximity sensing and posts ima
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
-### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-pwm-servo">element-serial-7segment-display</a>
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-serial-7segment-display">element-serial-7segment-display</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-serial-7segment-display"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-serial-7segment-display-example.jpg" height="100" alt=""/></a>
 
 <x-app-info id="element.s7s.example.kinoma.marvell.com"><span class="elementSample pinsSample"></span></x-app-info>
