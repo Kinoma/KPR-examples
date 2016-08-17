@@ -1281,6 +1281,16 @@ Displays a slideshow of images animating picture scaling, panning and opacity se
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/somafm-nfc">somafm-nfc</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/somafm-nfc"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/somafm-nfc-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="somafmplayernfc.example.kinoma.marvell.com"><span class="createSample pinsSample mediaSample uiSample networkSample"></span></x-app-info>
+
+This Kinoma Create example streams live radio from the SomaFM service. Channels are selected using NFC cards and the Adafruit PN532 NFC/RFID Controller shield. Change entries in the channels dictionary in credentials.js to make individual cards correspond to a unique station. This example demonstrates how to use KPR media to play HTTP streams, build custom UI elements with HTML Canvas, use a proxy handler to fetch data from a web service, and use KPR effects and layers to implement an animated image collage. Channel selections can optionally be streamed to a PubNub channel by changing the keys in credentials.js.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/somafm-player">somafm-player</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/somafm-player"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/somafm-player-example.jpg" height="100" alt=""/></a>
 					

@@ -1,0 +1,14 @@
+{
+    "title":"somafm-player-nfc",
+    "id":"somafmplayernfc.example.kinoma.marvell.com",
+    "tags":[
+        "pinsSample",
+        "createSample",
+        "mediaSample",
+        "uiSample", 
+        "networkSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}
