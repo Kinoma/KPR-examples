@@ -628,6 +628,16 @@ This application for Kinoma Element changes the color of a PWM tri-color LED to 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-hello-velo">element-hello-velo</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/element-hello-velo"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-hello-velo-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="element.hello.velo.project.kinoma.marvell.com"><span class="elementSample pinsSample"></span></x-app-info>
+
+A sample by Valkyrie Savage. Hello, Velo is a Kinoma Element-powered bicycle-mounted device which aids the cycling commuter. It contains a GPS receiver and a SIM card (connected via an AdaFruit FONA board) which allows it to communicate with its owner via text message, informing her of where the bike is parked and updating her partner with an ETA when it detects that she leaves the office. See the Hello, Velo project page on kinoma.com for set-up instructions.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-http-client">element-http-client</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-http-client"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-http-client-example.jpg" height="100" alt=""/></a>
 

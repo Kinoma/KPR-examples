@@ -1,0 +1,11 @@
+{
+    "title":"element-hello-velo",
+    "id":"element.hello.velo.project.kinoma.marvell.com",
+    "tags":[
+        "elementSample",
+        "pinsSample"
+    ],
+    "Element":{
+        "main":"main"
+    }
+}
