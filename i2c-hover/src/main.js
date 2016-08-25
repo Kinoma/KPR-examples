@@ -1,6 +1,6 @@
 //@program
 /*
-  Copyright 2011-2015 Marvell Semiconductor, Inc.
+  Copyright 2011-2016 Marvell Semiconductor, Inc.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -25,39 +25,39 @@ var arrowsTexture = new Texture("./arrows.png");
 var arrowsSkin = new Skin({ texture: arrowsTexture, x:0, y:0, width:200, height:200, variants:200, states:200 } );
 var errorStyle = new Style({ font:"bold 28px", color:"white", horizontal:"center", vertical:"middle" });
 
-var fadeBehavior = Object.create(Behavior.prototype, {
-	onCreate: { value: function(content, data) {
+class FadeBehavior extends Behavior {
+	onCreate(content, data) {
 		content.duration = 1500;
-	}},
-	onTimeChanged: { value: function(content) {
+	}
+	onTimeChanged(content) {
 		content.state = 1 - Math.cubicEaseOut(content.fraction);
-	}},
-});
+	}
+}
 
 var Screen = Container.template(function($) { return {
 	left:0, right:0, top:0, bottom:0, skin: new Skin({ fill: "#76b321" }),
 	contents: [
-		Content($, { anchor:"touch left", behavior:fadeBehavior, left:0, width:20, top:0, bottom:0, skin: touchSkin }),
-		Content($, { anchor:"touch top", behavior:fadeBehavior, left:20, right:20, top:0, height:20, skin: touchSkin }),
-		Content($, { anchor:"touch right", behavior:fadeBehavior, width:20, right:0, top:0, bottom:0, skin: touchSkin }),
-		Content($, { anchor:"touch bottom", behavior:fadeBehavior, left:20, right:20, height:20, bottom:0, skin: touchSkin }),
-		Content($, { anchor:"touch center", behavior:fadeBehavior, left:20, right:20, top:20, bottom:20, skin: touchSkin }),
-		Content($, { anchor:"swipe to right", behavior:fadeBehavior, skin: arrowsSkin, variant:0 }),
-		Content($, { anchor:"swipe to left", behavior:fadeBehavior, skin: arrowsSkin, variant:1 }),
-		Content($, { anchor:"swipe down", behavior:fadeBehavior, skin: arrowsSkin, variant:2 }),
-		Content($, { anchor:"swipe up", behavior:fadeBehavior, skin: arrowsSkin, variant:3 }),
+		Content($, { anchor:"touch left", Behavior:FadeBehavior, left:0, width:20, top:0, bottom:0, skin: touchSkin }),
+		Content($, { anchor:"touch top", Behavior:FadeBehavior, left:20, right:20, top:0, height:20, skin: touchSkin }),
+		Content($, { anchor:"touch right", Behavior:FadeBehavior, width:20, right:0, top:0, bottom:0, skin: touchSkin }),
+		Content($, { anchor:"touch bottom", Behavior:FadeBehavior, left:20, right:20, height:20, bottom:0, skin: touchSkin }),
+		Content($, { anchor:"touch center", Behavior:FadeBehavior, left:20, right:20, top:20, bottom:20, skin: touchSkin }),
+		Content($, { anchor:"swipe to right", Behavior:FadeBehavior, skin: arrowsSkin, variant:0 }),
+		Content($, { anchor:"swipe to left", Behavior:FadeBehavior, skin: arrowsSkin, variant:1 }),
+		Content($, { anchor:"swipe down", Behavior:FadeBehavior, skin: arrowsSkin, variant:2 }),
+		Content($, { anchor:"swipe up", Behavior:FadeBehavior, skin: arrowsSkin, variant:3 }),
 	]
 }});
 
-var ErrorScreen = Container.template(function($) { return {
+var ErrorScreen = Container.template( $ => ({
 	left:0, right:0, top:0, bottom:0, skin: new Skin({ fill: "#f78e0f" }),
 	contents: [
-		Label($, { left:0, right:0, top:0, bottom:0, style: errorStyle, string: $.error })
+		Label( $, { left:0, right:0, top:0, bottom:0, style: errorStyle, string: $.error })
 	]
-}});
+}));
 
-var model = application.behavior = Object.create(Object.prototype, {
-	onLaunch: { value: function(application) {
+class ApplicationBehavior extends Behavior {
+	onLaunch(application) {
 		this.data = { };
  		application.add(new Screen(this.data));
 
@@ -71,8 +71,8 @@ var model = application.behavior = Object.create(Object.prototype, {
                 }
             }
 		}, success => this.onPinsConfigured(application, success));
-	}},
-	onPinsConfigured: { value: function(application, success) {
+	}
+	onPinsConfigured(application, success) {
 		if (success) {
 			Pins.repeat("/hover/read", 16, hoverData => this.onHoverData(application, hoverData));
 
@@ -82,12 +82,14 @@ var model = application.behavior = Object.create(Object.prototype, {
 			var errorMessage = { error: "Failed to configure Pins" };
 			application.replace(application.first, new ErrorScreen(errorMessage));
 		}
-	}},
-	onHoverData: { value: function(application, hoverData) {
+	}
+	onHoverData(application, hoverData) {
 		var data = model.data;
 		var content = data[hoverData];
 		content.state = 1;
 		content.time = 0;
 		content.start();
-	}},
-});
+	}
+}
+
+var model = application.behavior = new ApplicationBehavior
