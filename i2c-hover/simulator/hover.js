@@ -1,6 +1,6 @@
 //@module
 /*
-  Copyright 2011-2014 Marvell Semiconductor, Inc.
+  Copyright 2011-2016 Marvell Semiconductor, Inc.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -19,31 +19,30 @@ var THEME = require ("themes/flat/theme");
 var CONTROL = require ("mobile/control");
 var PinsSimulators = require ("PinsSimulators");
 var buttonStyle = new Style({ font:"bold 20px", color:["white","white","black"], horizontal:"center" });
-var OrientationBehavior = function(column, data) {
-	Behavior.call(this, column, data);
-}
-OrientationBehavior.prototype = Object.create(Behavior.prototype, {
-	onCreate: { value: function(column, data) {
+
+class OrientationBehavior extends Behavior {
+	onCreate( column, data ) {
         column.partContentsContainer.add(new OrientationLine(data)); 
-	}},
-});
-var OrientationButton = Container.template(function($) { return {
+	}
+};
+
+let OrientationButton = Container.template( $ => ({
 	width:80, height:30, active:true, skin:THEME.buttonSkin,
-	behavior: Object.create(CONTROL.ButtonBehavior.prototype, {
-		onCreate: { value: function(container, $) {
+	Behavior: class extends CONTROL.ButtonBehavior {
+		onCreate(container, $) {
 			CONTROL.ButtonBehavior.prototype.onCreate.call(this, container, $.data);
 			this.value = $.value;
-		}},
-		onTap: { value: function(container) {
+		}
+		onTap(container) {
 			this.data.value = this.value;
-		}},
-	}),
+		}
+	},
 	contents: [
 		Label($, { top:0, bottom:0, style:buttonStyle, string:$.string }),
 	]
-}});
+}));
 
-var OrientationLine = Container.template(function($) { return {
+let OrientationLine = Container.template( $ => ({
 	left:0, right:0, height:260,
 	contents: [
 		Label($, { left:0, right:0, top:0, height:30, style:THEME.labeledButtonStyle, string:"Touch" }),
@@ -68,7 +67,7 @@ var OrientationLine = Container.template(function($) { return {
 			],
 		}),
 	],
-}});
+}));
 
 exports.pins = {
     ts: {type: "Digital", direction: "input"},
@@ -105,4 +104,3 @@ exports.metadata = {
 		},
 	]
 };
-
