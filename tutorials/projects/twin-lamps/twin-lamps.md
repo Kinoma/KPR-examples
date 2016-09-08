@@ -11,9 +11,9 @@ AT A GLANCE
 
 Project: Twin Lamps
 
-Difficulty: Easy
+Difficulty: Moderate
 
-Time: 3-4 hours
+Time: 5-6 hours
 
 ---
 
@@ -37,12 +37,14 @@ The listed parts are for two lamps.
 4. [Capacitive Touch Breakout](https://www.sparkfun.com/products/12041) (x2)
 5. [Pin Headers]()
 6. [M2F Jumper Wires]()
+7. 1" pieces of wood (x2)
+8. Metal circle (we used a [pie tin bottom from Sur La Table] (http://www.surlatable.com/product/PRO-703082/Gobel+Tinned+Steel+Tart+Pans))
 
 ##1 Touch modes
 
 The sample app includes two touch modes.
 
-A **short touch** (less than 2 seconds) will toggle a single lamp on and off.
+A **short touch** (less than two seconds) will toggle a single lamp on and off.
 
 ![](media/touch_mode1.gif)
 
@@ -141,7 +143,7 @@ If the sensor is being touched, we change the state of the local relay and wait 
 Pins.invoke("/Relay/write",  this.state);
 ```
 
-The reference to the remote device's pins are stored in `main.remote`, but the rest of the call looks identical to the local sensor call.
+The reference to the remote device's pins is stored in `main.remote`, but the rest of the call looks identical to the local sensor call.
 
 ```
 this.remote.invoke("/Relay/write", this.state);
@@ -159,21 +161,36 @@ var main = {
 
 In order to make this project look more like a real product, we put additional effort into crafting a wooden base that nests all the parts for the lamp.
 
+We used the [removable bottom of a pie tin] (http://www.surlatable.com/product/PRO-703082/Gobel+Tinned+Steel+Tart+Pans) as the metal surface of the lamp to get a perfect circle. Two pieces of 1" wood were roughed out to a circle then using a top bearing bit were cut on a router to match the metal circle. The piece we used for the bottom was center bored to hold the components. 
+
+With a rabbet bit we routed a 1/8" grove in the lower piece to hold an acrylic plate to protect the components. We were able to purchase acrylic disc's from a [local plastics vendor] (http://www.tapplastics.com/product/plastics/cake_circles/clear_acrylic_circles/140).
+
 ![](media/base0.jpg)
 
 ![](media/base1.jpg)
+
+[Determine the exact center of the circle] (http://www.mathopenref.com/printcirclecenter.html) and drill holes for lamp post and attachment nut.
+
+A nut to hold the lamp post was pressed flush into a tight fit hole in the upper wooden piece. A wire was attached to the bottom side of the metal and passed through a hole in the top piece to conduct the touch to the capitative touch sensor board.
 
 ![](media/base2.jpg)
 
 ![](media/base3.jpg)
 
+
+Finally the 2 wooden pieces and metal plate were glued together to make the base.
+
 ![](media/base4.jpg)
+
+Components were installed as illustrated. Be sure to make good connections on the 110v relay with no bare wire showing. Add stress relief to the power cord for safety.
+
+Screw in rubber feet give the lamp stabilty and secure the acrylic plate.
 
 ![](media/base5.jpg)
 
 ##5 Finish
 
-Once you've wired everything up, download the [twin-lamps](https://github.com/Kinoma/KPR-examples/tree/master/element-twin-lamps) sample application and open it in Kinoma Code. Run it on both of your Kinoma Elements and tap the touch sensor to switch the lamps on and off.
+Once you've wired everything up, download the [twin-lamps](media/twin-lamps.zip) sample application and open it in Kinoma Code. Run it on both of your Kinoma Elements and tap the touch sensor to switch the lamps on and off.
 
 Keep in mind that you are not limited to creating a network of just two lamps. You can add additional lamps to the network with just a few changes to the code, and the relay can be attached to other devices. Perhaps you want to turn on your coffee machine when you touch your alarm clock, or wirelessly control the fan, speakers and lamp in your room with a touch pad on your desk.
 

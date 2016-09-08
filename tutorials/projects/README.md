@@ -26,7 +26,7 @@ Kinoma Element can power 3.3V sensors, but some projects call for the use of hig
 
 Connect Kinoma Element and sensors to a cat door to keep track of your pet’s activity.
 
-This simple project can track a cat's in-and-out activity using an off-the-shelf cat door, Kinoma Element, a basic LED, and two sets of magnetic reed sensors. The optional mobile companion app, also built with KinomaJS, tells you where your cat currently is and keeps track of how 
+This simple project can track a cat's in-and-out activity using an off-the-shelf cat door, Kinoma Element, a basic LED, and two sets of magnetic reed sensors. The optional mobile companion app, also built with KinomaJS, tells you where your cat currently is and keeps track of how much time your cat spends outside.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 

@@ -14,15 +14,21 @@ var HTTPClient = require("HTTPClient");
 
 var main = {
 	onLaunch() {
-		let serverIP = "IP_ADDRESS_HERE"; // IP address of Kinoma Element running http-server-element app goes here		let request = new HTTPClient(`http://${serverIP}:80`); 
+		let serverIP = "IP_ADDRESS_HERE"; // IP address of Kinoma Element running http-server-element app goes here
+		let request = new HTTPClient(`http://${serverIP}:80`); 
 		
 		request.onDataReady = response => { 
-			if (request.statusCode == 200) {				let body = String.fromArrayBuffer(response);				trace(`Response from server: ${body}`);
+			if (request.statusCode == 200) {
+				let body = String.fromArrayBuffer(response);
+				trace(`Response from server: ${body}\n`);
 			} else {
-				trace("Error: "+request.statusCode+"\n");
-			}		} 
-				let message = "Hello";
-		trace(`Saying "${message}" to server...\n`);		request.start(message); // send the request
+				trace(`Error: ${request.statusCode}\n`);
+			}
+		} 
+		
+		let message = "Hello";
+		trace(`Saying "${message}" to server...\n`);
+		request.start(message); // send the request
 	},
 }
 
