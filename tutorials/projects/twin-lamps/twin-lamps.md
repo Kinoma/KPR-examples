@@ -68,68 +68,69 @@ In the application's `onLaunch` function, we use the [Pins module](http://kinoma
 
 1. A call to `Pins.configure` to set up the connection to the pins on the local device. This is where the pin numbering and types are specified. It is also where we specify which [BLL](http://kinoma.com/develop/documentation/element-bll/) each sensor requires; because we only need simple `read` and `write` functions, we use the built-in Digital BLL.
 
-```
-Pins.configure({	
-	TouchSensor: {
-		require: "Digital",
-		pins:{
-			power: { pin: 9, type: "Power" },
-			digital: { pin: 10, direction: "input" },
-			ground: { pin: 11, type: "Ground" },
-			ground2: { pin: 15, type: "Ground" },
-		}
-	},
-	Relay: {
-		require: "Digital",
-		pins:{
-			ground: { pin: 12, type: "Ground" },
-			power: { pin: 13, type: "Power" },
-			digital: { pin:14, direction: "ouput" },	
-		}
-	},
-}, ..
-```
+	```
+	Pins.configure({	
+		TouchSensor: {
+			require: "Digital",
+			pins:{
+				power: { pin: 9, type: "Power" },
+				digital: { pin: 10, direction: "input" },
+				ground: { pin: 11, type: "Ground" },
+				ground2: { pin: 15, type: "Ground" },
+			}
+		},
+		Relay: {
+			require: "Digital",
+			pins:{
+				ground: { pin: 12, type: "Ground" },
+				power: { pin: 13, type: "Power" },
+				digital: { pin:14, direction: "ouput" },	
+			}
+		},
+	}, ..
+	```
 
 2. A call to the relay's BLL to toggle the switch on using `Pins.invoke`. This turns the lamp on to signal that everything was configured properly.
 
-```
-success=> {
-	Pins.invoke("/Relay/write", this.state);
-...
-```
+	```
+	success=> {
+		Pins.invoke("/Relay/write", this.state);
+	...
+	```
 
 3. A call to `Pins.share` to make the hardware capabilities of this device accessible to the others on the same network. Here we specify that other devices can connect to this device using WebSockets and request that the shared pins be advertised using ZeroConf.
 
-```
-...
-	Pins.share({ type: "ws" }, { zeroconf: true, name: this.shareName });
-...
+	```
+	...
+		Pins.share({ type: "ws" }, { zeroconf: true, name: this.shareName });
+	...
 ```
 
 4. A call to `Pins.discover`, which begins the search for devices being advertised using ZeroConf. The first argument passed into this is a function that is called when a device is discovered. We check the `name` property of the description of the device to make sure it's the twin lamp, and establish the connection to it by calling `Pins.connect`.
+	
+	```
+	...
+		Pins.discover(connectionDescription => {
+			trace("onFound: " + JSON.stringify(connectionDescription) + "\n");
+			if(connectionDescription.name.indexOf(this.shareName) != -1){
+					this.remote = Pins.connect(connectionDescription);
+			}
+	...
+	```
 
-```
-...
-	Pins.discover(connectionDescription => {
-		trace("onFound: " + JSON.stringify(connectionDescription) + "\n");
-		if(connectionDescription.name.indexOf(this.shareName) != -1){
-				this.remote = Pins.connect(connectionDescription);
-		}
-...
-```
-
-The second argument is a function that is called when a device is lost. If it's the other lamp in our network, we remove the reference to the remote device by setting `main.remote` back to `undefined`.
-
-```
-	}, connectionDescription => {
-		trace("onLost" + JSON.stringify(connectionDescription) + "\n");
-		if(connectionDescription.name.indexOf(this.shareName) != -1){
-			if (this.remote) this.remote.close();
-			this.remote = undefined;
-		}
-	});
-...
-```
+	The second argument is a function that is called when a device is lost. If it's the other lamp in our network, we remove the reference to the remote device by setting `main.remote` back to `undefined`.
+	
+	```
+		}, connectionDescription => {
+			trace("onLost" + JSON.stringify(connectionDescription) + "\n");
+			if(connectionDescription.name.indexOf(this.shareName) != -1){
+				if (this.remote) this.remote.close();
+				this.remote = undefined;
+			}
+		});
+	...
+	```
+	
 Once the pins are all set up, we call the `startReading` function. This is where we begin to make repeated calls to the `read` function of the capacitive touch sensor's BLL. The `read` function returns 1 if the sensor is being touched and 0 otherwise.
 
 ```		
