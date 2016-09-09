@@ -56,6 +56,9 @@ var leadingSample2 = new Style({ leading: -10 });
 
 var marginSample = new Style({ left: 20, right: 20, top: 10, bottom: 10 });
 
+var extraSample1 = new Style({ extra:5 });
+var extraSample2 = new Style({ extra:-2 });
+
 /* TEMPLATES */
 
 var LabelSample = Label.template($ => ({ left:8, right:8, style:$.style, string:$.label }));
@@ -133,6 +136,9 @@ var data = {
 		
 		{label:sample, comment: "margins left=10 right=10 top=10 bottom=10", style: marginSample},
 		
+		{label:"Wider", comment: "extra = 5", style: extraSample1},
+		{label:"Narrow", comment: "extra = -2", style: extraSample2},
+
 		{label:"Text Examples", style: titleStyle},
 		
 		{text:sample, comment: "font = 16px", style: fontSizeSample1},
