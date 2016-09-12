@@ -1,32 +1,31 @@
-//@program
 /*
-  Copyright 2011-2015 Marvell Semiconductor, Inc.
-  
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-  
-      http://www.apache.org/licenses/LICENSE-2.0
-      
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-*/
-THEME = require('themes/sample/theme');
-var SCROLLER = require('mobile/scroller');
+ *     Copyright (C) 2010-2016 Marvell International Ltd.
+ *     Copyright (C) 2002-2010 Kinoma, Inc.
+ *
+ *     Licensed under the Apache License, Version 2.0 (the "License");
+ *     you may not use this file except in compliance with the License.
+ *     You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *     Unless required by applicable law or agreed to in writing, software
+ *     distributed under the License is distributed on an "AS IS" BASIS,
+ *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *     See the License for the specific language governing permissions and
+ *     limitations under the License.
+ */
+ import {    VerticalScroller,    VerticalScrollbar,    TopScrollerShadow,    BottomScrollerShadow} from 'scroller';
 
 /* ASSETS */
-var blackSkin = new Skin({ fill: 'black'});
-var blueSkin = new Skin({fill: 'blue'})
-var separatorSkin = new Skin({ fill: 'silver'});
-var yellowSkin	= new Skin({ fill: 'yellow'});
-var whiteSkin = new Skin({ fill: 'white'});
+let lineSkin = new Skin({ 
+	fill: [ 'white', 'yellow' ],
+    borders: { left: 0, right: 0, top: 0, bottom: 1 },     stroke: 'silver'	
+});
+var blueSkin = new Skin({fill: 'blue' });
 
 /* STYLES */
 var productDescriptionStyle = new Style({  font: '18px', horizontal: 'left', vertical: 'middle', left: 1, color: 'white' });
-var productNameStyle = new Style({  font: 'bold 22px', horizontal: 'left', vertical: 'middle', lines: 1 });
+var productNameStyle = new Style({  font: 'bold 22px', horizontal: 'left', vertical: 'middle', lines: 1, color: 'black' });
 
 /* STATIC */
 /* A simple array of objects. Each will be used as an
@@ -44,100 +43,80 @@ var menuItems = [
 	{title: 'Core i7', button: 'Sandy Bridge'}
 ];
 
+/* Changing the state in the touch events gives the user
+ * visual feedback on which entry they have tapped by changing
+ * the background color of the line. Note that the skin turns 
+ * yellow when the state is 1 (while it's being tapped)
+ * and reverts back to white when the state is 0. */
+class ProcessorLineBehavior extends Behavior {
+	/* data is an object from the menuItems array */
+	onCreate(line, data) {
+		this.data = data;
+	}	 	onTouchBegan(line, id, x,  y, ticks) {
+		line.state = 1;	}	onTouchCancelled(line, id, x,  y, ticks) {		line.state = 0;	}
+	/* Traces out the value of the first Label's string, which we 
+	 * get by referencing this.data.title */	onTouchEnded(line, id, x,  y, ticks) {	
+		line.state = 0;
+		trace(this.data.title+"\n");	}
+}
+
+/* The 'button' property of each item in the menuItems array
+ * is used as the string of a label. Each of those labels 
+ * is assigned an instance of the following behavior. */
+class ProductDescriptionButtonBehavior extends Behavior {
+	/* When this label is touched, simply trace out its string. */
+	onTouchEnded(label, id, x,  y, ticks) {	
+		trace(label.string+"\n");
+	}
+}
+
 /* This is a template that will be used to for each entry populating the list. 
- * Note that it is anticipating an object each time in is instantiated */
+ * Note that it is anticipating an object each time it is instantiated; the
+ * object it gets is an item from the menuItems array. */
 var ProcessorLine = Line.template($ =>  ({
-	left: 0, right: 0, active: true, skin: THEME.lineSkin, 
-    behavior: Behavior({
-    	/* Gives the user visual feedback on which entry they have tapped.
-    	 * note that the skin is reverted to white in onTouchEnded and onTouchCanceled */    	 
-    	onTouchBegan(container, id, x,  y, ticks) {
-			container.skin = yellowSkin;
-    	},
-    	/* This catches touches that don't simply end
-    	 * and resets the skin back to white.
-    	 */
-    	onTouchCancelled(container, id, x,  y, ticks) {
-			container.skin = whiteSkin;
-    	},
-    	/* Traces out the value of the first Label's string. The
-    	 * silly string of "first" in the trace can be thought of as
-    	 * container.Column.Container.Label.string.  This pattern can
-    	 * be seen reading down the contents of this object below */
-    	onTouchEnded(container, id, x,  y, ticks) {	
-			container.skin = whiteSkin;
-			trace(container.first.first.first.string+"\n");
-		}
-	}),
+	left: 0, right: 0, height: 52, active: true, skin: lineSkin, 
+    behavior: new ProcessorLineBehavior($),
 	contents: [
-		Column($, { left: 0, right: 0,
-			contents: [
-				Container($, { left: 4, right: 4, height: 52, 
-					contents: [
-						/* This label expects that the object passed to ProcessorLine 
-						 * includes a value for title.  Note that this Label is not marked
-						 * as active. Touches registered here will bubble back up through
-						 * the parent objects until it hits one which is active. */
-						Label($, { left: 10, style: productNameStyle, string: $.title,}),
+		/* This label expects that the object passed to ProcessorLine 
+		 * includes a value for title.  Note that this Label is not marked
+		 * as active. Touches registered here will bubble back up through
+		 * the parent objects until it hits one which is active. */
+		Label($, { left: 14, right: 0, style: productNameStyle, string: $.title,}),
 						
-						/* This label is expecting a value for button.  Note that this Label
-						 * is marked active.  Touches registered here will be handled here */
-						Label($, { right: 10, style: productDescriptionStyle, skin: blueSkin, active: true, string: $.button,
-							behavior: Behavior({
-								/* When this label is touched, simply trace out its string.
-								 * Note that no chain of "first" is needed here because the
-								 * touch happened in the object that contains the property
-								 * we want to trace */
-								onTouchEnded(label, id, x,  y, ticks) {	
-									trace(label.string+"\n");
-								}
-							})
-						})
-					]
-				}),
-	     		Line($, { left: 0, right: 0, height: 1, skin: separatorSkin })
-     		]
-     	}),
+		/* This label is expecting a value for button.  Note that this Label
+		 * is marked active. Touches registered here will be handled by its
+		 * own behavior */
+		Label($, { 
+			right: 14, style: productDescriptionStyle, skin: blueSkin, 
+			active: true, string: $.button, behavior: new ProductDescriptionButtonBehavior()
+		})							
      ]
  }));
 
 /* This is a template for a container which takes up the
  * whole screen.  It contains only a single object,
- * a SCROLLER.VerticalScroller.  Although we are not
- * referencing any values from an object passed on creation,
- * an object is still required as the SCROLLER object uses it
- * internally. */
+ * a VerticalScroller. */
 var ScreenContainer = Container.template($ => ({
-	left:0, right:0, top:0, bottom:0,
+	left: 0, right: 0, top: 0, bottom: 0,
 	contents: [
-		/* Note that the scroller is declared as having only an empty
-		 * Column. All the entries will be added 
-		 * programmatically to the colum. */ 
-		SCROLLER.VerticalScroller($, { 
+		VerticalScroller($, { 
 			name: 'scroller',
 			contents: [
-				Column($, { left: 0, right: 0, top: 0, name: 'menu' })             			
+				Column($, { 
+					left: 0, right: 0, top: 0, name: 'menu',
+					/* Add a ProcessorLine object for each item in the menuItems array */
+					contents: menuItems.map(element => new ProcessorLine(element))
+				})             			
 			]
 		})
 	]
 }));
 
-var data = new Object();
-var screen = new ScreenContainer(data);
-
-/* This simple function exists so we can call the "forEach" 
- * method of our array of list entries (menuItems).  It adds a new 
- * ProcessorLine object to the Column named "menu" in the
- * screen object's SCROLLER */
-function ListBuilder(element, index, array) {
-	screen.scroller.menu.add(new ProcessorLine(element));
-}
-
-application.behavior = Behavior({
+/* When the application is launched, add an instance of ScreenContainer
+ * to the application to display a scrolling menu of items */
+class AppBehavior extends Behavior {
 	onLaunch(application) {
-		/* Call the ListBuilder funciton for each element in our
-		 * array of list entries.*/
-		menuItems.forEach(ListBuilder);
-		application.add(screen);
+		application.add(new ScreenContainer());
 	}
-});
+}
+application.behavior = new AppBehavior();

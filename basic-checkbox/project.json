@@ -1,11 +1,10 @@
 {
     "title":"Basic UI Checkbox",
-    "description":"",
     "id":"basiccheckbox.example.kinoma.marvell.com",
     "tags":[
-        "uiSample,mobileSample"
+        "createSample,uiSample"
     ],
     "Create":{
-        "main":"src/main"
+        "main":"main"
     },
 }
