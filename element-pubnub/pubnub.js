@@ -15,7 +15,9 @@
  *     limitations under the License.
  */
 
-const DEFAULT_QUERY_COUNT = 50; // for Kinoma Create
+import HTTPClientRequest from "HTTPClient";
+
+const DEFAULT_QUERY_COUNT = 10; // for Kinoma Element
 
 const DEFAULT_RETRY_DELAY = 300000; // 5 minutes
 
@@ -157,8 +159,8 @@ export default class PubNub {
 		let delay = this.delay;
 		this.remembers = [];
 		this.delay = 0;
-		remembers.forEach(message => {
-			message.cancel();
+		remembers.forEach(request => {
+			if (request.sock) request.sock.close();
 		});
 		this.delay = delay;
 	}
@@ -217,46 +219,46 @@ function makeRequest(params, callback, scope = null) {
 		url += "?" + serializeQuery(requirement);
 	}
 	//trace(url + "\n");
-	let message = scope
-				? scope.remember(new Message(url))
-				: new Message(url);
-	message.timeout = params.timeout;
-	if (data) {
-		message.method = "POST";
-		message.requestText = JSON.stringify(data);
-		message.setRequestHeader("Content-Length", message.requestText.length);
-		message.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
-	}
-	let promise = message.invoke();
-	promise.then(message => {
-		if (message.error || (message.status / 100 !== 2)) {
-			callback.call(scope, message.error || message.status || "unknown");
-		}
-		else {
+	let request = scope
+				? scope.remember(new HTTPClientRequest(url))
+				: new HTTPClientRequest(url);
+	//request.timeout = params.timeout;
+	request.onTransferComplete = success => {
+		if (success && ((request.statusCode / 100) === 2)) {
 			try {
-				callback.call(scope, null, JSON.parse(message.responseText));
+				let responseText = String.fromArrayBuffer(request.content);
+				callback.call(scope, null, JSON.parse(responseText));
 			}
 			catch (exception) {
 				callback.call(scope, exception.message || "JSON.parse: unknown");
 			}
 		}
-	}).catch(message => {
-		callback.call(scope, message.error || message.status || "unknown");
-	});
-	return message;
+		else {
+			callback.call(scope, request.statusCode || "unknown");
+		}
+	}
+	request.addHeader("Connection", "close");
+	if (data) {
+		request.method = "POST";
+		let requestText = JSON.stringify(data);
+		request.setHeader("Content-Length", requestText.length);
+		request.setHeader("Content-Type", "application/json; charset=UTF-8");
+		request.start(requestText);
+	}
+	else {
+		request.setHeader("Content-Length", 0);
+		request.start();
+	}
+	return request;
 }
 
-Handler.bind("/pubnub/wait", {
-	onInvoke: (handler, message) => {
-		let delay = message.requestObject || 0;
-		handler.wait(delay);
+function serializeQuery(obj, sep = "&", eq = "=") {
+	let queryString = "";
+	for (let key in obj) {
+		if (queryString) queryString += sep;
+		queryString += key + eq + encodeURIComponent(obj[key]);
 	}
-});
-
-function setTimeout(callback, delay, param) {
-	new MessageWithObject("/pubnub/wait", delay).invoke().then(() => {
-		if (callback) callback(param);
-	});
+	return queryString;
 }
 
 export function updateConfig(config) {
@@ -335,4 +337,4 @@ export class REST_API {
 	}
 }
 
-REST_API.config = { authority:"pubsub.pubnub.com", pnsdk:"PubNub-JS-Kinoma/1.0", scheme:"http", timeout:0, uuid:system.deviceID }; // timeout?
+REST_API.config = { authority:"pubsub.pubnub.com", pnsdk:"PubNub-JS-Kinoma/1.0", scheme:"http", timeout:0, uuid:require.weak("uuid").create() }; // timeout?

@@ -1,5 +1,13 @@
-#Kinoma SamplesThese samples demonstrate how to write Kinoma applications. They are all complete, open source code applications that you can borrow from.- Samples that have names of the form `element-xxx` (easily accessible using the Kinoma Element filter) are for Kinoma Element only. They can be imported into [Kinoma Code] and run in the built-in Kinoma Element simulator (Mac OS version only) or deployed and run on the Kinoma Element device.
-- All other samples are designed to run on the devices and platforms that KinomaJS supports, including Kinoma Create, iOS, and Android. They can be imported into [Kinoma Code] and run in the built-in Kinoma Create simulator or built as standalone native applications for Kinoma Create, iOS, and Android.The samples are also available on our website, on the [Kinoma Samples](http://kinoma.com/develop/samples/) page. 
+#Kinoma Samples
+
+These samples demonstrate how to write Kinoma applications. They are all complete, open source code applications that you can borrow from.
+
+- Samples that have names of the form `element-xxx` (easily accessible using the Kinoma Element filter) are for Kinoma Element only. They can be imported into [Kinoma Code] and run in the built-in Kinoma Element simulator (Mac OS version only) or deployed and run on the Kinoma Element device.
+
+- All other samples are designed to run on the devices and platforms that KinomaJS supports, including Kinoma Create, iOS, and Android. They can be imported into [Kinoma Code] and run in the built-in Kinoma Create simulator or built as standalone native applications for Kinoma Create, iOS, and Android.
+
+The samples are also available on our website, on the [Kinoma Samples](http://kinoma.com/develop/samples/) page. 
+
 Walk-through tutorials and projects based on a selection of these samples may be found in the [`tutorials` folder](./tutorials).
 
 <hr />
@@ -462,6 +470,16 @@ This example demonstrates how to integrate MobileFramework buttons and behaviors
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/create-analog-pubnub">create-analog-pubnub</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/create-analog-pubnub"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/create-analog-pubnub-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="create.analog.pubnub.example.kinoma.marvell.com"><span class="createSample,networkSample"></span></x-app-info>
+
+This sample is a companion to the element-analog-pubnub sample. It subscribes to a PubNub channel that receives temperature data from a Kinoma Element and displays the most current temperature reading on a label on the Kinoma Create screen. The application includes the KinomaJS module for PubNub.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/dial-client">dial-client</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/dial-client"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/dial-client-example.jpg" height="100" alt=""/></a>
 
@@ -580,8 +598,21 @@ This MobileFramework example demonstrates how to build and apply a variety of ef
 
 Changes the brightness of a PWM LED based on the reading from an analog sensor. Demonstrates the use of the built-in analog BLL that works on a variety of sensors including potentiometers and photoresistors. Also demonstrates the use of a user-defined BLL for the LED.
 
+<div style="clear:both; margin-bottom: 16px;"></div>		
+	
+***
+
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-analog-pubnub">element-analog-pubnub</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/element-analog-pubnub"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-analog-pubnub-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="element.analog.pubnub.example.kinoma.marvell.com"><span class="elementSample,pinsSample,networkSample"></span></x-app-info>
+
+This sample takes a reading from any analog sensor interfaced with Kinoma Element and and streams the temperature data to a PubNub channel. The application includes the Kinoma Element module for PubNub. You can view the data by connecting to your channel in the PubNub developer console, or by running the create-analog-pubnub sample on the Kinoma Create simulator or an actual Kinoma Create device.
+
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
+
 
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-blinking-led">element-blinking-led</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-blinking-led"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-blinking-led-example.jpg" height="100" alt=""/></a>
@@ -682,6 +713,17 @@ Sample application that takes a picture based on proximity sensing and posts ima
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-pubnub">element-pubnub</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/element-pubnub"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-pubnub-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="element.pubnub.example.kinoma.marvell.com"><span class="elementSample,networkSample"></span></x-app-info>
+
+This sample sends and receives JSON messages using the PubNub messaging service. It is a good starting point for learning how to add device-to-device and device-to-web communication to your application. PubNub provides low-latency delivery of messages through the cloud. The application includes the Kinoma Element module for PubNub.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-serial-7segment-display">element-serial-7segment-display</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/element-serial-7segment-display"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/element-serial-7segment-display-example.jpg" height="100" alt=""/></a>
@@ -1179,9 +1221,19 @@ Displays an auto-scrolling horizontal view of photos. Photo images are fetched f
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/pubnub">pubnub</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/pubnub"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/pubnub-example.jpg" height="100" alt=""/></a>
 					
-<x-app-info id="pubnum.example.kinoma.marvell.com"><span class="networkSample"></span></x-app-info>
+<x-app-info id="pubnub.example.kinoma.marvell.com"><span class="networkSample"></span></x-app-info>
 
-This application sends and receives JSON messages using the PubNub messaging service. It provides a good starting point to learn how to add device-to-device and device-to-web communication to your application. PubNub provides low latency delivery of messages through the cloud. This application includes a full KinomaJS version of PubNub's JavaScript API.
+This sample sends and receives JSON messages using the PubNub messaging service. It is a good starting point for learning how to add device-to-device and device-to-web communication to your application. PubNub provides low-latency delivery of messages through the cloud. The application includes the KinomaJS module for PubNub.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/pubnub-temp-stream">pubnub-temp-stream</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/pubnub-temp-stream"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/pubnub-temp-stream-example.jpg" height="100" alt=""/></a>
+					
+<x-app-info id="pubnub.temp.stream.example.kinoma.marvell.com"><span class="createSample,pinsSample,networkSample"></span></x-app-info>
+
+This sample obtains the current temperature from a TMP102 temperature sensor, displays it on the Kinoma Create screen, and streams the temperature data to a PubNub channel. The application includes the KinomaJS module for PubNub.
 
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***

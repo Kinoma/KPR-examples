@@ -36,7 +36,8 @@ let easeOut = function(start, stop, fraction) {
 	v1	:	terminating velocity
 	k	:	coefficient of kinetic friction
 */
-class ScrollerMode {	constructor(params) {
+class ScrollerMode {
+	constructor(params) {
 		this.absV1 = 0.005;
 		this.k = 0.0015;
 	}
@@ -525,7 +526,6 @@ export var HorizontalScrollbar = Content.template($ => ({ left: 0, width: 20, he
 export var LeftScrollerShadow = Content.template($ => ({ left: 0, width: 20, top: 0, bottom: 0, skin: leftScrollerShadowSkin, state: 0, Behavior: LeftScrollerShadowBehavior }));
 export var RightScrollerShadow = Content.template($ => ({ width: 20, right: 0, top: 0, bottom: 0, skin: rightScrollerShadowSkin, state: 1, Behavior: RightScrollerShadowBehavior }));
 
-
 class VerticalScrollerBehavior extends ScrollerBehavior {
 	predictTo(scroller, coordinate) {
 		scroller.predictTo(0, coordinate);
@@ -619,3 +619,17 @@ export var VerticalScroller = Scroller.template($ => ({ left: 0, right: 0, top: 
 export var VerticalScrollbar = Content.template($ => ({ width: 10, right: 0, top: 0, height: 20, skin: verticalScrollbarSkin, Behavior: VerticalScrollbarBehavior }));
 export var TopScrollerShadow = Content.template($ => ({ left: 0, right: 0, top: 0, height: 20, skin: topScrollerShadowSkin, state: 0, Behavior: TopScrollerShadowBehavior }));
 export var BottomScrollerShadow = Content.template($ => ({ left: 0, right: 0, height: 20, bottom: 0, skin: bottomScrollerShadowSkin, state: 1, Behavior: BottomScrollerShadowBehavior }));
+
+
+export default {
+	HorizontalScroller,
+	HorizontalScrollbar,
+	LeftScrollerShadow,
+	RightScrollerShadow,
+	VerticalScroller,
+	VerticalScrollbar,
+	TopScrollerShadow,
+	BottomScrollerShadow
+}
+
+

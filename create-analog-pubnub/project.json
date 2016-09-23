@@ -1,0 +1,10 @@
+{
+    "title":"create-analog-pubnub",
+    "id":"create.analog.pubnub.example.kinoma.marvell.com",
+    "tags":[
+        "createSample,networkSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

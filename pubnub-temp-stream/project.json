@@ -1,0 +1,10 @@
+{
+    "title":"pubnub-temp",
+    "id":"pubnub.temp.project.kinoma.marvell.com",
+    "tags":[
+        "createSample,pinsSample,networkSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

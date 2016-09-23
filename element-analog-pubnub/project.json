@@ -1,0 +1,10 @@
+{
+    "id":"element.analog.pubnub.project.kinoma.marvell.com",
+    "title":"element-analog-pubnub",
+	"tags":[
+		"elementSample,networkSample,pinsSample"
+	],
+    "Element":{
+        "main":"main"
+    }
+}
