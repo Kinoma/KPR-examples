@@ -1,0 +1,10 @@
+{
+    "title":"pins-share-led",
+    "id":"pins.share.led.project.kinoma.marvell.com",
+    "tags":[
+        "createSample,pinsSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

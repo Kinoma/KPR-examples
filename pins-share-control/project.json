@@ -1,0 +1,13 @@
+{
+    "title":"pins-share-control",
+    "id":"pins.share.control.project.kinoma.marvell.com",
+    "tags":[
+        "createSample,pinsSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+    "iap140":{
+        "main":"src/main"
+    }
+}

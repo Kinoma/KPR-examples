@@ -1168,6 +1168,27 @@ Companion app for the element-photo-door sample. Displays images in AWS S3 bucke
 <div style="clear:both; margin-bottom: 16px;"></div>			
 ***
 
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/pins-share-control">pins-share-control</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/pins-share-control"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/pins-share-control-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="pins.share.control.example.kinoma.marvell.com"><span class="pinsSample"></span></x-app-info>
+
+
+This sample is intended to run simultaneously with the pins-share-led sample; it demonstrates how to use the discover function of the Pins module to discover and connect to remote pins and call their BLL functions. Once connected to the remote device, tapping the screen toggles the remote LED on and off.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
+### <a href="https://github.com/Kinoma/KPR-examples/tree/master/pins-share-led">pins-share-led</a>
+<a href="https://github.com/Kinoma/KPR-examples/tree/master/pins-share-led"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/pins-share-led-example.jpg" height="100" alt=""/></a>
+
+<x-app-info id="pins.share.led.example.kinoma.marvell.com"><span class="uiSample"></span></x-app-info>
+
+This sample is intended to run simultaneously with the pins-share-control sample; it demonstrates how to use the share function of the Pins module to allow remote devices to call BLL functions. This application simply configures an LED and advertises their presence on the network.
+
+<div style="clear:both; margin-bottom: 16px;"></div>			
+***
+
 ### <a href="https://github.com/Kinoma/KPR-examples/tree/master/platform-identifier">platform-identifier</a>
 <a href="https://github.com/Kinoma/KPR-examples/tree/master/platform-identifier"><img src="https://raw.githubusercontent.com/Kinoma/KPR-examples/master/screenshots/platform-identifier-example.jpg" height="100" alt=""/></a>
 
