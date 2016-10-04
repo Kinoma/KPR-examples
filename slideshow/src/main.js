@@ -31,148 +31,148 @@ class SlideShowPictureBehavior extends Behavior{
   }
   onLoaded(picture){
     if ( !picture.ready ) {
-			application.distribute( "onSlideShowPictureFailed", picture );
-			return;
-		}
-		this.originalSize = { width: picture.width, height: picture.height };
-		this.containerSize = { width: this.container.width, height: this.container.height };
-		this.scaledSize = this.getScaledSize( picture );
-		this.scale = this.scaledSize.scale;
+      application.distribute( "onSlideShowPictureFailed", picture );
+      return;
+    }
+    this.originalSize = { width: picture.width, height: picture.height };
+    this.containerSize = { width: this.container.width, height: this.container.height };
+    this.scaledSize = this.getScaledSize( picture );
+    this.scale = this.scaledSize.scale;
 
-		picture.visible = false;
-		picture.opacity = 0;
-		picture.subPixel = true;
-		picture.aspect = 'draw';
+    picture.visible = false;
+    picture.opacity = 0;
+    picture.subPixel = true;
+    picture.aspect = 'draw';
 
-		application.distribute( "onSlideShowPictureLoaded", picture );
+    application.distribute( "onSlideShowPictureLoaded", picture );
   }
   startTransition(picture){
     picture.visible = true;
-		picture.duration = this.transition.totalDuration;
-		picture.start();
+    picture.duration = this.transition.totalDuration;
+    picture.start();
   }
   onTimeChanged(picture){
     var time = picture.time;
-		var fraction = picture.fraction / 2;
-		var scale = this.scale;
-		var scaledSize = this.scaledSize;
-		var containerSize = this.containerSize;
-		var tx, ty = 0;
+    var fraction = picture.fraction / 2;
+    var scale = this.scale;
+    var scaledSize = this.scaledSize;
+    var containerSize = this.containerSize;
+    var tx, ty = 0;
 
-		if ( !this.startedTransition ) {
-			this.startedTransition = true;
-			application.distribute( "onSlideShowPictureStarting", picture );
-			if ( 0 == this.transition.index || 4 == this.transition.index ) {	// The transition index tested here matches the pan transitions below
-				var scaleBump = 1.1;
-				// Adjust the scale for pan transitions to ensure that there's horizontal space to pan
-				if ( this.scaledSize.width < (scaleBump * this.containerSize.width) ) {
-					this.containerSize.width *= scaleBump;
-					this.containerSize.height *= scaleBump;
-					this.scaledSize = this.getScaledSize( picture );
-					this.containerSize.width /= scaleBump;
-					this.containerSize.height /= scaleBump;
-					this.scale = scale = this.scaledSize.scale;
-				}
-			}
-		}
+    if ( !this.startedTransition ) {
+      this.startedTransition = true;
+      application.distribute( "onSlideShowPictureStarting", picture );
+      if ( 0 == this.transition.index || 4 == this.transition.index ) {	// The transition index tested here matches the pan transitions below
+      	var scaleBump = 1.1;
+      	// Adjust the scale for pan transitions to ensure that there's horizontal space to pan
+      	if ( this.scaledSize.width < (scaleBump * this.containerSize.width) ) {
+          this.containerSize.width *= scaleBump;
+          this.containerSize.height *= scaleBump;
+          this.scaledSize = this.getScaledSize( picture );
+          this.containerSize.width /= scaleBump;
+          this.containerSize.height /= scaleBump;
+          this.scale = scale = this.scaledSize.scale;
+      	}
+      }
+    }
 
-		if ( time <= this.transition.fadeInDuration ) picture.opacity = time / this.transition.fadeInDuration
-		else if ( time >= ( this.transition.totalDuration - this.transition.fadeOutDuration ) ) {
-			picture.opacity = 1 - ( ( time - ( this.transition.totalDuration - this.transition.fadeOutDuration ) ) / this.transition.fadeOutDuration );
-			if ( !this.endedTransition ) {
-				this.endedTransition = true;
-				application.distribute( "onSlideShowPictureEnding", picture );
-			}
-		}
-		else
-			picture.opacity = 1;
+    if ( time <= this.transition.fadeInDuration ) picture.opacity = time / this.transition.fadeInDuration
+    else if ( time >= ( this.transition.totalDuration - this.transition.fadeOutDuration ) ) {
+      picture.opacity = 1 - ( ( time - ( this.transition.totalDuration - this.transition.fadeOutDuration ) ) / this.transition.fadeOutDuration );
+      if ( !this.endedTransition ) {
+        this.endedTransition = true;
+        application.distribute( "onSlideShowPictureEnding", picture );
+      }
+    }
+    else
+      picture.opacity = 1;
 
-		switch( this.transition.index ) {
-			case 0:	// Picture anchored at bottom/right, pan right
-				picture.scale = { x: scale, y: scale };
-				picture.coordinates = { right: 0, bottom: 0 };
-				picture.origin = { x: this.originalSize.width, y: this.originalSize.height };
-				tx = ( ( scaledSize.width - containerSize.width ) * fraction );
-				picture.translation = { x: tx, y: ty };
-				break;
-			case 1:	// Picture anchored at bottom/right, zoom in, pan left
-				scale *= 1 + ( fraction * this.transition.scaleFactor );
-				picture.scale = { x: scale, y: scale };
-				picture.coordinates = { right: 0, bottom: 0 };
-				picture.origin = { x: this.originalSize.width, y: this.originalSize.height };
-				break;
-			case 2:	// Picture anchored at bottom/right, zoom in
-				scale *= 1 + ( fraction * this.transition.scaleFactor );
-				picture.scale = { x: scale, y: scale };
-				picture.coordinates = { right: 0, bottom: 0 };
-				picture.origin = { x: this.originalSize.width, y: this.originalSize.height };
-				tx = ( ( scaledSize.width - containerSize.width ) * fraction );
-				picture.translation = { x: tx, y: ty };
-				break;
-			case 3:	// Picture anchored at bottom/right, zoom out
-				fraction = 1 - fraction;
-				scale *= 1 + ( fraction * this.transition.scaleFactor );
-				picture.scale = { x: scale, y: scale };
-				picture.coordinates = { right: 0, bottom: 0 };
-				picture.origin = { x: this.originalSize.width, y: this.originalSize.height };
-				tx = ( ( scaledSize.width - containerSize.width ) * fraction );
-				picture.translation = { x: tx, y: ty };
-				break;
-			case 4:	// Picture anchored at left/top, pan left
-				picture.scale = { x: scale, y: scale };
-				picture.coordinates = { left: 0, top: 0 };
-				picture.origin = { x: 0, y: 0 };
-				tx = -( ( scaledSize.width - containerSize.width ) * fraction );
-				picture.translation = { x: tx, y: ty };
-				break;
-			case 5:	// Picture anchored at left/top, zoom in, pan right
-				scale *= 1 + ( fraction * this.transition.scaleFactor );
-				picture.scale = { x: scale, y: scale };
-				picture.coordinates = { left: 0, top: 0 };
-				picture.origin = { x: 0, y: 0 };
-				break;
-			case 6:	// Picture anchored at left/top, zoom in
-				scale *= 1 + ( fraction * this.transition.scaleFactor );
-				picture.scale = { x: scale, y: scale };
-				picture.coordinates = { left: 0, top: 0 };
-				picture.origin = { x: 0, y: 0 };
-				tx = -( ( scaledSize.width - containerSize.width ) * fraction );
-				picture.translation = { x: tx, y: ty };
-				break;
-			case 7:	// Picture anchored at left/top, zoom out
-				fraction = 1 - fraction;
-				scale *= 1 + ( fraction * this.transition.scaleFactor );
-				picture.scale = { x: scale, y: scale };
-				picture.coordinates = { left: 0, top: 0 };
-				picture.origin = { x: 0, y: 0 };
-				tx = -( ( scaledSize.width - containerSize.width ) * fraction );
-				picture.translation = { x: tx, y: ty };
-				break;
-			case 8:	// Picture anchored at left/bottom, zoom out
-				fraction = 1 - fraction;
-				scale *= 1 + ( fraction * this.transition.scaleFactor );
-				picture.scale = { x: scale, y: scale };
-				picture.coordinates = { left: 0, bottom: 0 };
-				picture.origin = { x: 0, y: this.originalSize.height };
-				tx = -( ( scaledSize.width - containerSize.width ) * fraction );
-				picture.translation = { x: tx, y: ty };
-				break;
-			case 9:	// Picture anchored at left/bottom, zoom in, pan right
-				scale *= 1 + ( fraction * this.transition.scaleFactor );
-				picture.scale = { x: scale, y: scale };
-				picture.coordinates = { left: 0, bottom: 0 };
-				picture.origin = { x: 0, y: this.originalSize.height };
-				break;
-		}
+    switch( this.transition.index ) {
+      case 0:	// Picture anchored at bottom/right, pan right
+        picture.scale = { x: scale, y: scale };
+        picture.coordinates = { right: 0, bottom: 0 };
+        picture.origin = { x: this.originalSize.width, y: this.originalSize.height };
+        tx = ( ( scaledSize.width - containerSize.width ) * fraction );
+        picture.translation = { x: tx, y: ty };
+        break;
+      case 1:	// Picture anchored at bottom/right, zoom in, pan left
+        scale *= 1 + ( fraction * this.transition.scaleFactor );
+        picture.scale = { x: scale, y: scale };
+        picture.coordinates = { right: 0, bottom: 0 };
+        picture.origin = { x: this.originalSize.width, y: this.originalSize.height };
+        break;
+      case 2:	// Picture anchored at bottom/right, zoom in
+        scale *= 1 + ( fraction * this.transition.scaleFactor );
+        picture.scale = { x: scale, y: scale };
+        picture.coordinates = { right: 0, bottom: 0 };
+        picture.origin = { x: this.originalSize.width, y: this.originalSize.height };
+        tx = ( ( scaledSize.width - containerSize.width ) * fraction );
+        picture.translation = { x: tx, y: ty };
+        break;
+      case 3:	// Picture anchored at bottom/right, zoom out
+        fraction = 1 - fraction;
+        scale *= 1 + ( fraction * this.transition.scaleFactor );
+        picture.scale = { x: scale, y: scale };
+        picture.coordinates = { right: 0, bottom: 0 };
+        picture.origin = { x: this.originalSize.width, y: this.originalSize.height };
+        tx = ( ( scaledSize.width - containerSize.width ) * fraction );
+        picture.translation = { x: tx, y: ty };
+        break;
+      case 4:	// Picture anchored at left/top, pan left
+        picture.scale = { x: scale, y: scale };
+        picture.coordinates = { left: 0, top: 0 };
+        picture.origin = { x: 0, y: 0 };
+        tx = -( ( scaledSize.width - containerSize.width ) * fraction );
+        picture.translation = { x: tx, y: ty };
+        break;
+      case 5:	// Picture anchored at left/top, zoom in, pan right
+        scale *= 1 + ( fraction * this.transition.scaleFactor );
+        picture.scale = { x: scale, y: scale };
+        picture.coordinates = { left: 0, top: 0 };
+        picture.origin = { x: 0, y: 0 };
+        break;
+      case 6:	// Picture anchored at left/top, zoom in
+        scale *= 1 + ( fraction * this.transition.scaleFactor );
+        picture.scale = { x: scale, y: scale };
+        picture.coordinates = { left: 0, top: 0 };
+        picture.origin = { x: 0, y: 0 };
+        tx = -( ( scaledSize.width - containerSize.width ) * fraction );
+        picture.translation = { x: tx, y: ty };
+        break;
+      case 7:	// Picture anchored at left/top, zoom out
+        fraction = 1 - fraction;
+        scale *= 1 + ( fraction * this.transition.scaleFactor );
+        picture.scale = { x: scale, y: scale };
+        picture.coordinates = { left: 0, top: 0 };
+        picture.origin = { x: 0, y: 0 };
+        tx = -( ( scaledSize.width - containerSize.width ) * fraction );
+        picture.translation = { x: tx, y: ty };
+        break;
+      case 8:	// Picture anchored at left/bottom, zoom out
+        fraction = 1 - fraction;
+        scale *= 1 + ( fraction * this.transition.scaleFactor );
+        picture.scale = { x: scale, y: scale };
+        picture.coordinates = { left: 0, bottom: 0 };
+        picture.origin = { x: 0, y: this.originalSize.height };
+        tx = -( ( scaledSize.width - containerSize.width ) * fraction );
+        picture.translation = { x: tx, y: ty };
+        break;
+      case 9:	// Picture anchored at left/bottom, zoom in, pan right
+        scale *= 1 + ( fraction * this.transition.scaleFactor );
+        picture.scale = { x: scale, y: scale };
+        picture.coordinates = { left: 0, bottom: 0 };
+        picture.origin = { x: 0, y: this.originalSize.height };
+        break;
+    }
   }
   onFinished(picture){
     application.distribute( "onSlideShowPictureEnded", picture );
   }
   getScaledSize(picture){
     var hScale = this.containerSize.width / this.originalSize.width;
-		var vScale = this.containerSize.height / this.originalSize.height;
-		var scale = hScale > vScale ? hScale : vScale;
-		return { width: Math.round( this.originalSize.width * scale ), height: Math.round( this.originalSize.height * scale ), scale: scale };
+    var vScale = this.containerSize.height / this.originalSize.height;
+    var scale = hScale > vScale ? hScale : vScale;
+    return { width: Math.round( this.originalSize.width * scale ), height: Math.round( this.originalSize.height * scale ), scale: scale };
   }
 };
 
