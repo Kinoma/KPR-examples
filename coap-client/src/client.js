@@ -1,44 +1,31 @@
-//@module
-/*
- *     Copyright (C) 2002-2015 Kinoma, Inc.
- *
- *     All rights reserved.
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- */
+/* *     Copyright (C) 2010-2016 Marvell International Ltd. *     Copyright (C) 2002-2010 Kinoma, Inc. * *     Licensed under the Apache License, Version 2.0 (the "License"); *     you may not use this file except in compliance with the License. *     You may obtain a copy of the License at * *      http://www.apache.org/licenses/LICENSE-2.0 * *     Unless required by applicable law or agreed to in writing, software *     distributed under the License is distributed on an "AS IS" BASIS, *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. *     See the License for the specific language governing permissions and *     limitations under the License. */
 
-// behavior which respond to the server event
+// Behavior to respond to server events
 var behavior = {
 	onUpdateStats: function(server) {},
 	onUpdateColors: function(server) {},
 };
 
-// instance of CoAP client
+// Instance of CoAP client
 var client;
-// server address
+
+// Server address
 var host;
-// server informations discovered
+
+// Information about discovered servers
 var servers = {};
-// request object for observing color
+
+// Request object for observing color
 var observeRequest;
-// current color
-var color = {red:0, green:0, blue:0};
+
+// Current color
+var color = { red:0, green:0, blue:0 };
 
 var stats = {
 	sent: 0,
 	received: 0,
 	server: null,
 };
-
 
 function setColor(component, value) {
 	if (value === undefined) {
@@ -50,7 +37,6 @@ function setColor(component, value) {
 	}
 }
 
-
 function sendColor() {
 	if (!isConnected() || !client) return;
 
@@ -60,7 +46,6 @@ function sendColor() {
 
 	sent();
 }
-
 
 function fromChunkToString(chunk) {
 	if (!chunk) return "";
@@ -72,18 +57,15 @@ function fromChunkToString(chunk) {
 	return String.fromCharCode.apply(String, chars);
 }
 
-
 function received() {
 	stats.received += 1;
 	behavior.onUpdateStats();
 }
 
-
 function sent() {
 	stats.sent += 1;
 	behavior.onUpdateStats();
 }
-
 
 function start(aBehavior) {
 	if (!CoAP) return;
@@ -95,7 +77,6 @@ function start(aBehavior) {
 		received();
 	};
 }
-
 
 function connect(server) {
 	if (!client) return;
@@ -122,14 +103,11 @@ function connect(server) {
 	sent();
 }
 
-
 function disconnect() {
 	// if (observeRequest) observeRequest.cancel();
 	observeRequest = null;
-
 	behavior.onUpdateStats();
 }
-
 
 function isConnected() {
 	return !!host;
@@ -157,7 +135,6 @@ function discoverServer(info) {
 	behavior.onUpdateStats();
 }
 
-
 function forgetServer(info) {
 	trace("## forgetServer\n");
 
@@ -178,15 +155,6 @@ function forgetServer(info) {
 	}
 }
 
-
-exports.start = start;
-exports.connect = start;
-exports.isConnected = isConnected;
-exports.setColor = setColor;
-exports.sendColor = sendColor;
-exports.color = color;
-exports.stats = stats;
-exports.discoverServer = discoverServer;
-exports.forgetServer = forgetServer;
-
-
+export default {
+	start, connect, isConnected, setColor, sendColor, color, stats, discoverServer, forgetServer
+}

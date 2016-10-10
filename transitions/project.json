@@ -1,0 +1,10 @@
+{
+    "title":"Transitions",
+    "id":"transitions.example.kinoma.marvell.com",
+    "tags":[
+        "uiSample"
+    ],
+    "Create":{
+        "main":"main"
+    }
+}

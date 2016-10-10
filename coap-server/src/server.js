@@ -1,32 +1,18 @@
-//@module
-/*
- *     Copyright (C) 2002-2015 Kinoma, Inc.
- *
- *     All rights reserved.
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- */
+/* *     Copyright (C) 2010-2016 Marvell International Ltd. *     Copyright (C) 2002-2010 Kinoma, Inc. * *     Licensed under the Apache License, Version 2.0 (the "License"); *     you may not use this file except in compliance with the License. *     You may obtain a copy of the License at * *      http://www.apache.org/licenses/LICENSE-2.0 * *     Unless required by applicable law or agreed to in writing, software *     distributed under the License is distributed on an "AS IS" BASIS, *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. *     See the License for the specific language governing permissions and *     limitations under the License. */
 
-// behavior which respond to the server event
+// Behavior that responds to server events
 var behavior = {
 	onUpdateStats: function(server) {},
 	onUpdateColors: function(server) {},
 };
 
-// instance of CoAP server
+// Instance of CoAP server
 var server;
-// array to keep session ids
+
+// Array to keep session ids
 var sessions = [];
-// current color
+
+// Current color
 var color = {red:0, green:0, blue:0};
 
 var stats = {
@@ -38,10 +24,9 @@ var name = null;
 
 /*
  * Dependencies:
- * updateXXXX() functions are defined in main.xml to update UI
+ * updateXXXX() functions are defined in main.js to update UI
  */
-
-function brodcastColorToListeners() {
+function broadcastColorToListeners() {
 	if (!server) return;
 
 	var missing = [];
@@ -71,7 +56,6 @@ function sendColor(session) {
 	session.send(response);
 }
 
-
 function handleColorRequest(query, session) {
 	var changed = false;
 
@@ -98,7 +82,7 @@ function handleColorRequest(query, session) {
 
 	if (changed) {
 		behavior.onUpdateColors();
-		brodcastColorToListeners();
+		broadcastColorToListeners();
 	}
 
 	var response = session.createResponse();
@@ -157,13 +141,11 @@ function start(aBehavior) {
 	server.start();
 }
 
-
-exports.start = start;
-exports.brodcastColorToListeners = brodcastColorToListeners;
-exports.color = color;
-exports.stats = stats;
-
-exports.setName = function(value) {
+function setName(value) {
 	name = value;
+}
+
+export default {
+	start, broadcastColorToListeners, color, stats, setName
 }
 

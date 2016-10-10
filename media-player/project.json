@@ -1,0 +1,10 @@
+{
+    "title":"Media Player",
+    "id":"mediaplayer.example.kinoma.marvell.com",
+    "tags":[
+        "uiSample,mediaSample,mobileSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

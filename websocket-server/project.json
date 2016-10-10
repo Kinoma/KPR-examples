@@ -1,0 +1,5 @@
+{    "title":"WebSocket Server",    "id":"websocketserver.example.kinoma.marvell.com",
+    "tags": [
+    	"networkSample,uiSample"
+    ],    "Create": {        "main":"src/main"    },
+    "iap140": {        "main":"src/main"    },}

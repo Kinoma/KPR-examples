@@ -1,0 +1,10 @@
+{
+    "title":"Multitouch Slide Browser",
+    "id":"slidebrowser.example.kinoma.marvell.com",
+    "tags": [
+    	"uiSample,mobileSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

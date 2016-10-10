@@ -1,0 +1,10 @@
+{
+    "title":"Zeroconf Browser",
+    "id":"zeroconf.example.kinoma.marvell.com",
+    "tags":[
+        "networkSample,uiSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    }
+}

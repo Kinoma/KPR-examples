@@ -1,0 +1,1 @@
+{    "title":"CoAP Client",    "id":"coapclient.example.kinoma.marvell.com",    "tags":[        "uiSample,networkSample,createSample"    ],    "Create":{        "main":"src/main"    },}

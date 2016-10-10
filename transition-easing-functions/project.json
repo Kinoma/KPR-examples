@@ -1,0 +1,10 @@
+{
+    "title":"Transition Easing Functions",
+    "id":"transitioneasingfunctions.example.kinoma.marvell.com",
+    "tags":[
+        "uiSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    }
+}

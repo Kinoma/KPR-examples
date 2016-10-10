@@ -1,0 +1,10 @@
+{
+    "title":"SSDP",
+    "id":"ssdp.example.kinoma.marvell.com",
+    "tags":[
+        "networkSample,uiSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    }
+}

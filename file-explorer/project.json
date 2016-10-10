@@ -1,0 +1,13 @@
+{
+    "title":"File Explorer",
+    "id":"fileexplorer.example.kinoma.marvell.com",
+    "tags":[
+        "uiSample,filesSample,mediaSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+    "iap140":{
+        "main":"src/main"
+    }
+}

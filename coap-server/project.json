@@ -1,0 +1,10 @@
+{
+    "title":"CoAP Server",
+    "id":"coapserver.example.kinoma.marvell.com",
+    "tags":[
+        "uiSample,networkSample,createSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}

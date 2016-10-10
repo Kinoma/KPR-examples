@@ -1,23 +1,20 @@
-//@program
 /*
-  Copyright 2011-2015 Marvell Semiconductor, Inc.
-  
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-  
-      http://www.apache.org/licenses/LICENSE-2.0
-      
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-*/
-
-/* Modules */
-THEME = require('themes/sample/theme');
-var SCROLLER = require('mobile/scroller');
+ *     Copyright (C) 2010-2016 Marvell International Ltd.
+ *     Copyright (C) 2002-2010 Kinoma, Inc.
+ *
+ *     Licensed under the Apache License, Version 2.0 (the "License");
+ *     you may not use this file except in compliance with the License.
+ *     You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *     Unless required by applicable law or agreed to in writing, software
+ *     distributed under the License is distributed on an "AS IS" BASIS,
+ *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *     See the License for the specific language governing permissions and
+ *     limitations under the License.
+ */
+import SCROLLER from  'scroller';
 
 /* Skins and Styles */
 var blueSkin = new Skin ({fill: 'blue'});
@@ -39,7 +36,7 @@ var linearEase = function(fraction) {
 };
 				
 /* Main screen layout */
-var MainContainer = Container.template(function($) { return {
+var MainContainer = Container.template($ => ({
 	left: 0, right: 0, top: 0, bottom: 0, active: false, skin: whiteSkin,
 	contents: [
 		Column ($, {left: 0, right: 0, top: 0, bottom: 0,
@@ -98,9 +95,9 @@ var MainContainer = Container.template(function($) { return {
 		}),
 		EquationMenu($, {visible: false})
 	]
-}});
+}));
 
-var EquationLine = Line.template(function ($) { return {
+var EquationLine = Line.template($ => ({
 	active: true, left: 0, right: 0, top: 10, height: 30,
 	behavior: Behavior({
 		onCreate: function(column, data) {
@@ -120,9 +117,9 @@ var EquationLine = Line.template(function ($) { return {
 	contents: [
 		Label($, {left: 0, right: 0, style: menuStyle, string: $.title}),
 	] 
-}});
+}));
 
-var EquationMenu = Container.template(function($) { return { top: 0, left: 0, right: 0, bottom: 0, skin: menuSkin,
+var EquationMenu = Container.template($ => ({ top: 0, left: 0, right: 0, bottom: 0, skin: menuSkin,
 	behavior: Behavior({
 		onMenu: function(container) {
 			container.visible = true;
@@ -143,74 +140,62 @@ var EquationMenu = Container.template(function($) { return { top: 0, left: 0, ri
       		],
    		})
 	]
-}});
+}));
 
-var TransitionOut = function() {
-	Transition.call(this, TransitionDuration);
-};
-TransitionOut.prototype = Object.create(Transition.prototype, {
-	onBegin: { value: 
-		function(container, easingFunction, title) {
-			application.distribute("updateTitle", title + 'Out');
-			var content = container.first; 
-			var newContent = container.last; 
-			this.easingFunction = easingFunction;
-			this.distance = content.height;
-			this.layer = new Layer();
-			this.layer.attach(content);
-			this.newLayer = new Layer();
-			this.newLayer.attach(newContent);
-		}
-	},
-	onEnd: { value: 
-		function(container, easingFunction, title) {
-			this.layer.detach();
-			this.newLayer.detach();
-			application.distribute("updateTitle", title);
-		}
-	},
-	onStep: { value: 
-		function(fraction) {
-			this.newLayer.translation = this.layer.translation = {x:0, y: (-this.distance * this.easingFunction(fraction, 0, 0))};
-		}
+class TransitionOut extends Transition {
+	constructor() {
+		super(TransitionDuration);
 	}
-});	   
+	onBegin(container, easingFunction, title) {
+		application.distribute("updateTitle", title + 'Out');
+		var content = container.first; 
+		var newContent = container.last; 
+		this.easingFunction = easingFunction;
+		this.distance = content.height;
+		this.layer = new Layer();
+		this.layer.attach(content);
+		this.newLayer = new Layer();
+		this.newLayer.attach(newContent);
+	}
+	onEnd(container, easingFunction, title) {
+		this.layer.detach();
+		this.newLayer.detach();
+		application.distribute("updateTitle", title);
+	}
+	onStep(fraction) {
+		this.newLayer.translation = this.layer.translation = {x:0, y: (-this.distance * this.easingFunction(fraction, 0, 0))};
+	}
+};	   
 
-var TransitionIn = function() {
-	Transition.call(this, TransitionDuration);
-};
-TransitionIn.prototype = Object.create(Transition.prototype, {
-	onBegin: { value: 
-		function(container, easingFunction, title) {
-			application.distribute("updateTitle", title + 'In');
-			var content = container.first; 
-			var newContent = container.last;		
-			this.easingFunction = easingFunction;
-			this.distance = content.height;
-			this.layer = new Layer();
-			this.layer.attach(content);
-			this.layer.translation = {x:0, y: -this.distance};
-			this.newLayer = new Layer();
-			this.newLayer.attach(newContent);
-		}
-	},
-	onEnd: { value: 
-		function(container, easingFunction, title) {
-			this.layer.detach();
-			this.newLayer.detach();
-			application.distribute("updateTitle", title);
-		}
-	},
-	onStep: { value: 
-		function(fraction) {
-			this.newLayer.translation = this.layer.translation = {x:0, y: -this.distance+ (this.distance * this.easingFunction(fraction, 0, 0))};		
-		}
+class TransitionIn extends Transition {
+	constructor() {
+		super(TransitionDuration);
 	}
-});	
+	onBegin(container, easingFunction, title) {
+		application.distribute("updateTitle", title + 'In');
+		var content = container.first; 
+		var newContent = container.last;		
+		this.easingFunction = easingFunction;
+		this.distance = content.height;
+		this.layer = new Layer();
+		this.layer.attach(content);
+		this.layer.translation = {x:0, y: -this.distance};
+		this.newLayer = new Layer();
+		this.newLayer.attach(newContent);
+	}
+	onEnd(container, easingFunction, title) {
+		this.layer.detach();
+		this.newLayer.detach();
+		application.distribute("updateTitle", title);
+	}
+	onStep(fraction) {
+		this.newLayer.translation = this.layer.translation = {x:0, y: -this.distance+ (this.distance * this.easingFunction(fraction, 0, 0))};		
+	}
+};	
 	
 /* Application definition */
-var model = application.behavior = Behavior({
-    onLaunch: function(application) {
+class AppBehavior extends Behavior {
+	onLaunch(application) {
     	var data = this.data = {menu: [
 			{ title:'linearEase', easingOutFunction:linearEase, easingInFunction:linearEase },
 			{ title:'quadEase', easingOutFunction:Math.quadEaseOut, easingInFunction:Math.quadEaseIn },
@@ -225,5 +210,6 @@ var model = application.behavior = Behavior({
 			{ title:'elasticEase', easingOutFunction:Math.elasticEaseOut, easingInFunction:Math.elasticEaseIn },
 		]};
     	application.add(new MainContainer(data));
-    }
-});
+	}
+}	
+application.behavior = new AppBehavior();
