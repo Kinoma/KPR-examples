@@ -294,7 +294,6 @@ export var Field = Line.template($ => ({
 								}
 								onUnfocused(label) {
 									//label.container.next.active = false;
-									super.onUnfocused(label);
 								}
 							}
 						}),
