@@ -15,7 +15,6 @@
 */
 
 /* ASSETS */
-
 var level1Skin = new Skin({ fill:'#fff' });
 var level2Skin = new Skin({ fill:'#eee' });
 var level3Skin = new Skin({ fill:'#ddd' });
@@ -37,7 +36,7 @@ var rightStyle = new Style({ horizontal:'right' });
 /* LAYOUTS */
 
 var Caption = Label.template($ => ({ left:4, right:4, bottom:4, style:captionStyle }));
-var Sample = Label.template($ => ({ left:4, right:4, top:4, string:"sample" }));
+var Sample = Label.template($ => ({ left:4, right:4, top:4, string:sample }));
 
 let MainScreen = Container.template($ => ({
 	left:0, right:0, top:0, bottom:0, skin:level1Skin,
@@ -63,14 +62,14 @@ let MainScreen = Container.template($ => ({
 										Container($, {
 											left:30, right:0, top:40, bottom:40, skin:level4Skin, style:leftStyle,
 											contents: [
-												Sample($, { string:'shortSample' }),
+												Sample($, { string:shortSample }),
 												Caption($, { string:'leftStyle' }),
 											]
 										}),
 										Container($, {
 											left:30, right:30, top:40, bottom:40, skin:level4Skin, style:rightStyle,
 											contents: [
-												Sample($, { string:'shortSample' }),
+												Sample($, { string:shortSample }),
 												Caption($, { string:'rightStyle' }),
 											]
 										}),
@@ -89,14 +88,14 @@ let MainScreen = Container.template($ => ({
 										Container($, {
 											left:30, right:0, top:40, bottom:40, skin:level4Skin, style:smallSizeStyle,
 											contents: [
-												Sample($, { string:'shortSample' }),
+												Sample($, { string:shortSample }),
 												Caption($, { string:'smallSizeStyle' }),
 											]
 										}),
 										Container($, {
 											left:30, right:30, top:40, bottom:40, skin:level4Skin, style:largeSizeStyle,
 											contents: [
-												Sample($, { string:'shortSample' }),
+												Sample($, { string:shortSample }),
 												Caption($, { string:'largeSizeStyle' }),
 											]
 										}),
@@ -114,4 +113,5 @@ let MainScreen = Container.template($ => ({
 /* APPLICATION */
 
 application.style = baseStyle;
+let sample = "The quick brown fox jumps over the lazy dog. ";let shortSample = "Hello world.";
 application.add( new MainScreen );

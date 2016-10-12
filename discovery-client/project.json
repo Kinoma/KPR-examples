@@ -1,0 +1,1 @@
+{    "title":"Device Discovery Client",    "id":"discoveryclient.example.kinoma.marvell.com",    "tags":[        "networkSample,mobileSample,uiSample"    ],    "Create":{        "main":"src/main"    },    "iap140":{        "main":"src/main"    },}
