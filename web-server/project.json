@@ -1,0 +1,10 @@
+{
+    "title":"Web Server",
+    "id":"webserver.example.kinoma.marvell.com",
+    "tags":[
+        "networkSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "title":"Flickr Photo Grid",
+    "id":"flickrgrid.example.kinoma.marvell.com",
+    "tags":[
+        "uiSample,mediaSample,mobileSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+    "iap140":{
+    	"main":"src/main"
+    }
+}
