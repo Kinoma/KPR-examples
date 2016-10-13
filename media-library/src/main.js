@@ -122,7 +122,7 @@ class MainBehavior extends MODEL.ScreenBehavior{
   					more: false,
   					scroll: {x: 0, y:0},
   					selection: -1,
-  					letiant: 2,
+  					variant: 2,
   					title: "Photos",
 					},
 					{
@@ -132,7 +132,7 @@ class MainBehavior extends MODEL.ScreenBehavior{
 						more: false,
 						scroll: {x: 0, y:0},
 						selection: -1,
-						letiant: 1,
+						variant: 1,
 						title: "Videos",
 					},
 					{
@@ -142,7 +142,7 @@ class MainBehavior extends MODEL.ScreenBehavior{
 						more: false,
 						scroll: {x: 0, y:0},
 						selection: -1,
-						letiant: 0,
+						variant: 0,
 						title: "Songs",
 					}
 				]
