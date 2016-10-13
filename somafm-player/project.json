@@ -1,0 +1,13 @@
+{
+    "title":"SomaFM Player",
+    "id":"somafmplayer.example.kinoma.marvell.com",
+    "tags":[
+        "createSample",
+        "mediaSample",
+        "uiSample",
+        "networkSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}
