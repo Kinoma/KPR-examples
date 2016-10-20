@@ -1,0 +1,13 @@
+{
+    "title":"SomaFM Remote Test",
+    "id":"somafmremote.example.kinoma.marvell.com",
+    "tags":[
+        "createSample",
+        "mediaSample",
+        "uiSample",
+        "networkSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}
