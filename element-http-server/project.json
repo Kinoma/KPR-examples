@@ -1,1 +1,4 @@
-{   "id":"httpserver.element.kinoma.marvell.com",   "title":"http-server-element",   "Element":{       "main":"main"   },}
+{   "id":"httpserver.element.kinoma.marvell.com",   "title":"Element HTTP Server",
+   "tags":[
+        "elementSample,networkSample"
+   ],   "Element":{       "main":"main"   },}
