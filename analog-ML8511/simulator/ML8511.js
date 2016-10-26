@@ -18,8 +18,8 @@
 var PinsSimulators = require ("PinsSimulators");
 
 exports.pins = {
-    uv: {type: "A2D", pin: 52},
-    vref: {type: "A2D", pin: 54},
+    uv: {type: "Analog", pin: 52},
+    vref: {type: "Analog", pin: 54},
 }
 
 exports.configure = function(configuration) {

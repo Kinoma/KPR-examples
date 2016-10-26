@@ -53,6 +53,8 @@ application.behavior = Behavior({
             pulse: {
                 require: "pulse",
                 pins: {
+                	ground: {pin: 59, type: "Ground"},
+                	power: {pin: 60, type:"Power", voltage:3.3},
                     sensor: {pin: 61}
                }
             }

@@ -24,9 +24,11 @@ application.behavior = Behavior({
             ML8511: {
                 require: "ML8511",
                 pins: {
-					uv: {pin: 52},
-					vref: {pin: 54}
-               }
+                  power: {pin: 51, type:"Power", voltage:3.3},
+        					uv: {pin: 52},
+                  ground: {pin: 53, type:"Ground"},
+        					vref: {pin: 54}
+                }
             }
 		}, success => this.onPinsConfigured(application, success));
 	},

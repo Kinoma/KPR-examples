@@ -19,8 +19,8 @@
 // http://media.digikey.com/pdf/Application%20Notes/Rohm%20Application%20Notes/ML8511_UV.pdf
 
 exports.pins = {
-    uv: {type: "A2D", pin: 52},
-    vref: {type: "A2D", pin: 54},
+    uv: {type: "Analog", pin: 52},
+    vref: {type: "Analog", pin: 54},
 }
 
 exports.configure = function(configuration) {
