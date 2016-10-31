@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modulepath>
+   <modulepathentry path="src" type="src"></modulepathentry>
+   <modulepathentry path="com.marvell.kinoma.kpr:/system/SimulatorRuntime.zip" type="runtime"></modulepathentry>
+</modulepath>

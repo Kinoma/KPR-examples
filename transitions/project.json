@@ -5,6 +5,6 @@
         "uiSample"
     ],
     "Create":{
-        "main":"main"
+        "main":"src/main"
     }
 }
