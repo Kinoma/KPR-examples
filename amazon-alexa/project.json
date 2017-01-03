@@ -6,6 +6,6 @@
         "createSample,pinsSample,uiSample,mediaSample,networkSample"
     ],
     "Create":{
-        "main":"alexa"
+        "main":"application"
     },
 }

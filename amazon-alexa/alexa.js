@@ -13,230 +13,6 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-const CLIENT_ID="YOUR_CLIENT_ID";
-const CLIENT_SECRET="YOUR_CLIENT_SECRET";
-const REDIRECT_URI="https://localhost:8443/authresponse";
-
-var ACCESS_TOKEN = "YOUR_ACCESS_TOKEN";
-var REFRESH_TOKEN = "YOUR_REFRESH_TOKEN";
-
-const BOUNDARY = "------------------------817ac683095ea5f8";
-const FIRST_CHUNK = "--" + BOUNDARY + "\r\n"
-				  + "Content-Disposition: form-data; name=\"request\"\r\n"
-				  + "Content-Type: application/json; charset=UTF-8\r\n\r\n"
-				  + `{ "messageHeader": {}, "messageBody": { "profile": "alexa-close-talk", "locale": "en-us", "format": "audio/L16; rate=16000; channels=1" } }`
-				  + "\r\n\r\n--" + BOUNDARY + "\r\n"
-				  + "Content-Disposition: form-data; name=\"audio\"\r\n"
-				  + "Content-Type: audio/L16; rate=16000; channels=1\r\n\r\n"
-const LAST_CHUNK = "\r\n--" + BOUNDARY + "--\r\n";
-
-const MEDIA_URL = mergeURI(Files.documentsDirectory, "alexa.mp3");
-
-Handler.Bind("/ask", class extends Behavior {
-	onComplete(handler, message) {
-		if (200 == message.status) {
-			Files.writeBuffer(MEDIA_URL, message.responseBuffer);
-			application.distribute("onAnswering");
-		}
-		else
-			application.distribute("onAnswered");
-	}
-	onInvoke(handler) {
-		let message = new Message("https://access-alexa-na.amazon.com/v1/avs/speechrecognizer/recognize");
-		message.method = "POST";
-		message.setRequestHeader("Authorization", "Bearer " + ACCESS_TOKEN);
-		message.setRequestHeader("Content-Type", "multipart/form-data; boundary=" + BOUNDARY);
-		message.setRequestHeader("Transfer-Encoding", "chunked");
-		handler.uploadChunk(message, FIRST_CHUNK);
-		
-		model.handler = handler;
-		model.message = message;
-	}
-});
-
-var model = application.behavior = {
-	onAsked() {
-		this.handler.uploadChunk(this.message, LAST_CHUNK);
-		this.handler.uploadChunk(this.message);
-		this.message = null;
-		this.handler = null;
-	},
-	onAsking() {
-		application.invoke(new Message("/ask"));
-	},
-	onDisplaying() {
-		if ("microphone" in this) {
-			application.interval = 10;
-			application.start();
-		}
-	},
-	onLaunch() {
-		if ("YOUR_CLIENT_ID" == CLIENT_ID || "YOUR_CLIENT_SECRET" == CLIENT_SECRET || "YOUR_ACCESS_TOKEN" == ACCESS_TOKEN || "YOUR_REFRESH_TOKEN" == REFRESH_TOKEN) {
-			let errorStyle = new Style({ font:"24px", color:"black", horizontal:"middle", vertical:"center" });
-			application.skin = whiteSkin;
-			application.add(new Text({ string:"This application requires an Amazon developer account and Login With Amazon access tokens. You can sign up for a free account at developer.amazon.com", left:0, right:0, style:errorStyle }));
-		}
-		else {
-			this.refreshToken();
-			this.microphone = new PINS.constructors.Audio({ direction:"input", sampleRate:16000, channels:1 });
-			this.microphone.init();
-			this.microphone.start();
-			application.add(new Screen(this));
-		}
-	},
-	onQuit() {
-		this.microphone.stop();
-		this.microphone.close();
-	},
-	onTimeChanged() {
-		let buffer = this.microphone.read();
-		if (buffer.byteLength) {
-			let samples = new Int16Array(buffer);
-			let sum = samples.reduce((sum, x) => sum + (x * x), 0);
-			let volume = Math.sqrt(sum / samples.length);
-			this.CANVAS.behavior.onVolumeChanged(this.CANVAS, volume);
-			if (this.handler && this.message)
-				this.handler.uploadChunk(this.message, buffer);
-		}
-		if (this.when < Date.now())
-			this.refreshToken();
-	},
-	refreshToken() {
-		let uri = "https://api.amazon.com/auth/o2/token";
-		let payload = {
-			grant_type: "refresh_token",
-			refresh_token: REFRESH_TOKEN,
-			client_id: CLIENT_ID,
-			client_secret: CLIENT_SECRET,
-			redirect_uri: REDIRECT_URI
-		};
-		let body = JSON.stringify(payload);
-		let message = new Message(uri);
-		message.method = "POST";
-		message.setRequestHeader("Content-Length", body.length);
-		message.setRequestHeader("Content-Type", "application/json");
-		message.requestText = body;
-		message.invoke(Message.JSON).then(json => {
-			ACCESS_TOKEN = json.access_token;
-			REFRESH_TOKEN = json.refresh_token;
-			this.when = Date.now() + (900 * json.expires_in);
-		})
-	},
-};
-
-
-const CYAN = "#6497ff";
-const GREEN = "#7fbd3b";
-const ORANGE = "#fe9d27";
-const BLACK = "black";
-const MASK = "#80FFFFFF";
-const WHITE = "white";
-
-const alexaTexture = new Texture("alexa.png", 1);
-const alexaSkin = new Skin({ texture:alexaTexture, x:0, y:0, width:120, height:120, variants:120 });
-const whiteSkin = new Skin({ fill:WHITE });
-
-const BUTTON_RADIUS = 60;
-const VOLUME_RANGE = 20000;
-
-var Screen = Container.template($ => ({
-	left:0, right:0, top:0, bottom:0, skin:whiteSkin,
-	contents: [
-		Media($, {
-			width:0, height:0,
-			Behavior: class extends Behavior {
-				onFinished(media) {
-					media.stop();
-					application.distribute("onAnswered");
-				}
-				onAnswering(media) {
-					media.url = MEDIA_URL;
-				}
-				onLoaded(media) {
-					media.volume = 0.9;
-					media.start();
-				}
-				onTimeChanged(media) {
-					let canvas = media.next;
-					canvas.behavior.onTimeChanged(canvas, media.fraction);
-				}
-			},
-		}),
-		Canvas($, {
-			anchor:"CANVAS", left:0, right:0, top:0, bottom:0,
-			Behavior: class extends Behavior {
-				clear(canvas) {
-					let ctx = canvas.getContext("2d");
-					ctx.clearRect(0, 0, canvas.width, canvas.height);
-				}
-				onAnswered(canvas) {
-					this.clear(canvas);
-					canvas.state = 0;
-				}
-				onAnswering(canvas) {
-					this.clear(canvas);
-				}
-				onAsked(canvas) {
-					this.clear(canvas);
-					canvas.state = 1;
-				}
-				onTimeChanged(canvas, fraction) {
-					if (fraction) {
-						let ctx = canvas.getContext("2d");
-						let width = canvas.width;
-						let height = canvas.height;
-						let x = width >> 1;
-						let y = height >> 1;
-						let r = BUTTON_RADIUS + (BUTTON_RADIUS >> 1);
-						ctx.clearRect(0, 0, width, height);
-						ctx.fillStyle = CYAN;
-						ctx.beginPath();
-						ctx.moveTo(x, y);
-						ctx.lineTo(x, y - r);
-						ctx.arc(x, y, r, 0 - (Math.PI / 2), (2 * Math.PI * fraction) - (Math.PI / 2));
-						ctx.closePath();
-						ctx.fill();
-					}
-				}
-				onVolumeChanged(canvas, volume) {
-					if (!canvas.state) {
-						let ctx = canvas.getContext("2d");
-						let width = canvas.width;
-						let height = canvas.height;
-						let r = BUTTON_RADIUS + Math.round(BUTTON_RADIUS * volume / VOLUME_RANGE);
-						ctx.fillStyle = MASK;
-						ctx.fillRect(0, 0, width, height);
-						ctx.lineWidth = 2;
-						ctx.fillStyle = canvas.next.variant ? ORANGE : GREEN;
-						ctx.beginPath();
-						ctx.arc(width >> 1 ,height >> 1, r, 0, 2 * Math.PI);
-						ctx.closePath();
-						ctx.fill();
-					}
-				}
-			},
-		}),
-		Content($, {
-			left:0, right:0, top:0, bottom:0, skin:alexaSkin, variant:0, active:true, 
-			Behavior: class extends Behavior {
-				onAsking(content) {
-					content.variant = 1;
-				}
-				onAsked(content) {
-					content.variant = 2;
-					content.active = false;
-				}
-				onAnswered(content) {
-					content.variant = 0;
-					content.active = true;
-				}
-				onTouchBegan(content) {
-					if (content.variant == 0)
-						application.distribute("onAsking");
-					else if (content.variant == 1)
-						application.distribute("onAsked");
-				}
-			},
-		}),
-	]
-}));
+import {	CLIENT_ID,	model,} from "application";import {	CONTENT_ID,	CONTENT_TYPE,	Multipart} from "multipart";// ASSETSimport {	BLACK, BLUE, GREEN, ORANGE, WHITE,	alexaSkin,	blueSkin,	subtitleStyle,} from "assets";const MASK = "#80FFFFFF";// BEHAVIORSimport {	Client,	ClientConnection} from "http/2/client";import {	unpack} from "http/2/frame";function log(msg) {
+	trace(msg + '\n');
+}const BOUNDARY = "------------------------81d6029d76295358";const FIRST_CHUNK = "--" + BOUNDARY + "\r\n"				  + "Content-Disposition: form-data; name=\"request\"\r\n"				  + "Content-Type: application/json; charset=UTF-8\r\n\r\n"				  + `{ "messageHeader": { }, "messageBody": { "profile": "alexa-close-talk", "locale": "en-us", "format": "audio/L16; rate=16000; channels=1" } }`				  + "\r\n\r\n--" + BOUNDARY + "\r\n"				  + "Content-Disposition: form-data; name=\"audio\"\r\n"				  + "Content-Type: audio/L16; rate=16000; channels=1\r\n\r\n"const LAST_CHUNK = "\r\n--" + BOUNDARY + "--\r\n";const MEDIA_URL = mergeURI(Files.temporaryDirectory, "alexa");const SAMPLE_RATE = 16000;const VOLUME_RANGE = 10000;class AlexaScreenBehavior extends Behavior {	onAsked(container) {		this.alexa.onAsked(container);	}	onAsking(container, dialogRequestId) {		this.alexa.doRecognize(dialogRequestId);	}	onAnswered(container) {		this.alexa.onAnswered(container);	}	onCreate(container, data) {		this.data = data;		this.alexa = new Alexa(container, data.SYNTHESISER, data.PLAYER, data.ALERTS);		this.alexa.connect()	}	onDisplaying(container) {		container.interval = 10;		container.start();	}	onTimeChanged(container) {		this.alexa.idle(container);		if (model.expiration < Date.now())			model.updateTokens(false);	}	onUndisplayed(container) {		this.alexa.disconnect();	}	onAudioMedia(container, url, type) {		this.alexa.AudioPlayer.onAudioMedia(url, type);	}};// TEMPLATESconst BUTTON_RADIUS = 60;export var AlexaScreen = Container.template($ => ({	left:0, right:0, top:0, bottom:0, skin:blueSkin,	Behavior: AlexaScreenBehavior,	contents: [		Container($, {			left:0, right:0, top:0, bottom:0,			contents: [				Media($, {					anchor:"PLAYER", width:0, height:0,					Behavior: class extends Behavior {						onCreate(media, $) {							this.data = $;							this.interface = null;						}						onFinished(media) {							media.stop();							if (this.interface)								this.interface.onFinished();						}						onLoaded(media) {							if (this.interface)								media.volume = this.interface.volume;							media.start();						}						onTimeChanged(media) {							if (this.interface)								this.interface.onTimeChanged();						}						onStateChanged(media) {							if (this.interface)								this.interface.onStateChanged(media.state);						}					},				}),				Media($, {					anchor:"ALERTS", width:0, height:0,					Behavior: class extends Behavior {						onCreate(media, $) {							this.data = $;						}						onFinished(media) {							media.time = 0;							media.start();						}						onLoaded(media) {							if (this.interface)								media.volume = this.interface.volume;							media.start();						}					},				}),				Media($, {					anchor:"SYNTHESISER", width:0, height:0,					Behavior: class extends Behavior {						onCreate(media, $) {							this.data = $;							this.interface = null;						}						onFinished(media) {						    media.stop();						    media.url = null;   // @@							if (this.interface)								this.interface.onFinished();						}						onLoaded(media) {							if (this.interface)								media.volume = this.interface.volume;							media.start();						}						onTimeChanged(media) {							let canvas = media.next;							canvas.behavior.onTimeChanged(canvas, media.fraction);						}					},				}),				Canvas($, {					anchor:"CANVAS", left:0, right:0, top:0, bottom:0,					Behavior: class extends Behavior {						clear(canvas) {							let ctx = canvas.getContext("2d");							let width = canvas.width;							let height = canvas.height;							ctx.clearRect(0, 0, width, height);							ctx.fillStyle = WHITE;							ctx.beginPath();							ctx.arc(width >> 1, height >> 1, BUTTON_RADIUS << 1, 0, 2 * Math.PI);							ctx.closePath();							ctx.fill();						}						onAnswered(canvas) {							this.clear(canvas);							canvas.state = 0;						}						onAnswering(canvas) {							this.clear(canvas);						}						onAsked(canvas) {							this.clear(canvas);							canvas.state = 1;						}						onConnecting(canvas) {							this.clear(canvas);							canvas.state = 1;						}						onDisplaying(canvas) {							this.clear(canvas);							canvas.state = 1;						}						onTimeChanged(canvas, fraction) {							if (fraction) {								let ctx = canvas.getContext("2d");								let width = canvas.width;								let height = canvas.height;								let x = width >> 1;								let y = height >> 1;								let r = BUTTON_RADIUS + (BUTTON_RADIUS >> 1);								ctx.fillStyle = BLUE;								ctx.beginPath();								ctx.moveTo(x, y);								ctx.lineTo(x, y - r);								ctx.arc(x, y, r, 0 - (Math.PI / 2), (2 * Math.PI * fraction) - (Math.PI / 2));								ctx.closePath();								ctx.fill();							}						}						onVolumeChanged(canvas, volume) {							if (!canvas.state) {								let ctx = canvas.getContext("2d");								let width = canvas.width;								let height = canvas.height;								let r = BUTTON_RADIUS + Math.round(BUTTON_RADIUS * volume / VOLUME_RANGE);								if (r > 2 * BUTTON_RADIUS) r = 2 * BUTTON_RADIUS;								ctx.fillStyle = MASK;								ctx.beginPath();								ctx.arc(width >> 1 ,height >> 1, BUTTON_RADIUS << 1, 0, 2 * Math.PI);								ctx.closePath();								ctx.fill();								ctx.fillStyle = canvas.next.variant ? ORANGE : GREEN;								ctx.beginPath();								ctx.arc(width >> 1 ,height >> 1, r, 0, 2 * Math.PI);								ctx.closePath();								ctx.fill();							}						}					},				}),				Content($, {					left:0, right:0, top:0, bottom:0, skin:alexaSkin, variant:2, active:true,					Behavior: class extends Behavior {						onAsking(content) {							content.variant = 1;						}						onAsked(content) {							content.variant = 2;							content.active = false;						}						onAnswered(content) {							content.variant = 0;							content.active = true;						}						onConnecting(content) {							content.variant = 2;							content.active = false;						}						onTouchBegan(content) {							if (content.variant == 0)								application.distribute("onAsking");							else if (content.variant == 1)								application.distribute("onAsked");						}					},				}),			]		}),		Label($, {			left:0, right:0, height:60, bottom:0, style:subtitleStyle,			Behavior: class extends Behavior {				onAsking(label) {					label.string = "I am listening";				}				onAsked(label) {					label.string = "";				}				onAnswered(label) {					label.string = "Tap to ask a question";				}				onConnecting(label) {					label.string = "Connecting to Alexa";				}				onDisplaying(label) {					this.onConnecting(label);				}			}		}),	]}));const AVS_DIRECTIVES_URL = 'https://avs-alexa-na.amazon.com/v20160207/directives';const AVS_EVENTS_URL = 'https://avs-alexa-na.amazon.com/v20160207/events';const AVS_PING_URL = 'https://avs-alexa-na.amazon.com/ping';const END_MULTIPART = `--${BOUNDARY}--`;const EVENT = `--${BOUNDARY}Content-Disposition: form-data; name="metadata"Content-Type: application/json; charset=UTF-8`;const AUDIO = `--${BOUNDARY}Content-Disposition: form-data; name="audio"Content-Type: application/octet-stream`;function toCRLF(s) {	return s.replace(/\n/g, "\r\n");}const FRAGMENTS = {	EVENT: toCRLF(EVENT),	AUDIO: toCRLF(AUDIO),	END_MULTIPART: toCRLF(END_MULTIPART),};class AlexaClientConnection extends ClientConnection {	onTransportClose() {		this.client.onTransportClose();	}	onTransportError() {		this.client.onTransportError();	}}class AlexaClient extends Client {	constructor(alexa) {		super();		this.alexa = alexa;		this.Connection = AlexaClientConnection;		this.Transport = KPR.Socket;	}	onHeaders(headers, stream) {		if (!stream) return;		log('onHeaders(stream = ' + stream.id + ')', headers);		let status = headers[':status'];		if (status[0] >= 4) {			log('failure: ' + status);//			return;		}		stream.responseHeaders = headers;		if (stream == this.alexa.downstream) {			if (status == 200)				stream.multipart = Multipart.createMultipart(headers, (multipart, part) => this.alexa.onDownstreamPart(multipart, part));			this.alexa.System.doSynchronizeState();		}		else {			if (status == 200)				stream.multipart = Multipart.createMultipart(headers, (multipart, part) => this.alexa.onStreamPart(multipart, part));		}		this.alexa.reschedule();	}	onData(bytes /* ArrayBuffer */, stream) {		log('onData(stream = ' + stream.id + ')', bytes);		if (stream.multipart)			stream.multipart.process(bytes, stream.id == 1);	}	onComplete(stream) {		let status = stream.responseHeaders[':status'];		log('onComplete(stream = ' + stream.id + ')', status);		if (stream.multipart)			this.alexa.doProcessMultipart(stream.multipart);		else if (stream == this.alexa.dialogStream) {			application.distribute("onAnswered");			this.alexa.dialogStream = null;		}		else if (status[0] >= 4)			application.distribute("onAnswered");		else if (stream.id == 3) // alexa is connected and ready			this.alexa.onConnected();	}	onError(err, stream) {		err = findKey(Error, err) + ' (' + err + ')'		log('onError(stream = ' + (stream ? stream.id : 'null') + ')', err);	}	onPush(requestHeaders, stream) {		log('onPush(stream = ' + stream.id + ')', requestHeaders);		debugger	}	onGoAway(stream, err, payload) {		log('onGoAway(last stream = ' + stream.id + ')', err, String.fromArrayBuffer(payload));		this.alexa.reconnect();	}	onTransportClose() {		log('onTransportClose()');		this.alexa.reconnect();	}	onTransportError() {		log('onTransportError()');		this.alexa.reconnect();	}}class Alexa {	constructor(container, synthesizer, player, alerts) {		this.container = container;		this._eventId = 0;		this.client = null;		this.System = new SystemInterface(this);		this.Speaker = new SpeakerInterface(this);		this.SpeechRecognizer = new SpeechRecognizerInterface(this);		this.SpeechSynthesizer = new SpeechSynthesizerInterface(this, synthesizer);		this.AudioPlayer = new AudioPlayerInterface(this, player);		this.Alerts = new AlertsInterface(this, alerts);		this.interfaces = [ this.Speaker, this.SpeechRecognizer, this.SpeechSynthesizer, this.Alerts, this.AudioPlayer ];		this.activities = { Dialog:false, Alert:false };		this.connecting = false;		this.downstream = null;		this.expiration = 0;				this.dialogStream = null;		this.directives = [];				this.preferencesURI = mergeURI(Files.preferencesDirectory, application.di + "/alexa.json");		this.readPreferences();	}	// PREFERENCES	readPreferences() {		try {			let url = this.preferencesURI;			if (Files.exists(url)) {				let preferences = JSON.parse(Files.readText(url));				this.interfaces.forEach(avsInterface => avsInterface.readPreferences(preferences));			}		}		catch(e) {		}	}	writePreferences() {		try {			let url = this.preferencesURI;			let preferences = { 			};			this.interfaces.forEach(avsInterface => avsInterface.writePreferences(preferences));			Files.ensureDirectory(url);			Files.deleteFile(url);			Files.writeText(url, JSON.stringify(preferences, null, 4));		}		catch(e) {		}	}	// PARTS	onDownstreamPart(multipart, part) {		if (part && ("json" in part) && ("directive" in part.json))			this.processDirective(part.json.directive);	}	onStreamPart(multipart, part) {		multipart.parts.push(part);	}	// AVS	canAnalyseVolume() {		return !this.SpeechSynthesizer.isSpeaking() && !this.Alerts.isRinging();	}	connect() {		this.interfaces.forEach(avsInterface => avsInterface.connect());		this.reconnect();	}	get context() {		return this.interfaces.map(feature => feature.context).filter(item => item);	}	disconnect() {		this.interfaces.forEach(avsInterface => avsInterface.disconnect());		this.downstream = null;		this.expiration = 0;		this.writePreferences();	}	get eventId() {		return "event-" + this._eventId++;	}	idle(container) {		if (!this.downstream) return;		let now = Date.now();		if (this.expiration && (this.expiration < now))			this.ping();		this.System.idle(container, now);		this.SpeechRecognizer.idle(container, now);		this.Alerts.idle(container, now);	}	doEvent(event, addContext=true, keepOpen=false) {		let metadata = { event };		if (addContext)			metadata.context = this.context;		log("EVENT:", metadata);		return this.client.post(AVS_EVENTS_URL, ArrayBuffer.fromString(FRAGMENTS.EVENT + JSON.stringify(metadata) + (keepOpen ? "" : FRAGMENTS.END_MULTIPART)), {			authorization: `Bearer ${model.accessToken}`,			'content-type': `multipart/form-data; boundary=${BOUNDARY}`		}, keepOpen);	}	doProcessMultipart(multipart) {//		log('doProcessMultipart', multipart);		let json;		let parts = multipart.parts;		let files = this.files = {};		let directives = [];		for (let i = 0; i < parts.length; i++) {			let part = parts[i];			if (("json" in part) && ("directive" in part.json))				directives.push(part.json.directive);			else if ((CONTENT_TYPE in part.headers) && (part.headers[CONTENT_TYPE] == "application/octet-stream")) {				let url = MEDIA_URL + i + ".mp3";				files[part.headers[CONTENT_ID]] = url;				Files.writeBuffer(url, part.data);			}			else				debugger		}		// remove unprocessed directives with different dialogRequestId		this.directives = this.directives.filter(directive => {			return ("dialogRequestId" in directive.header) ?  (directive.header == dialogRequestId): true;		});		this.directives = this.directives.concat(directives);		this.process();	}	doRecognize(dialogRequestId=null) {		this.SpeechRecognizer.doRecognize(dialogRequestId);	}	get mute() {		return this.Speaker.mute;	}	onAlertStarted() {		if (this.activities.Alert) return;		this.activities.Alert = true;		this.interfaces.forEach(item => item.onAlertStarted());	}	onAlertStopped() {		if (!this.activities.Alert) return;		this.activities.Alert = false;		this.interfaces.forEach(item => item.onAlertStopped());	}	onAnswered(container) {		this.onDialogStopped();	}	onAsked(container) {		this.SpeechRecognizer.onAsked(container);	}	onConnected() {		this.connecting = false;		application.distribute("onAnswered");	}	onDialogStarted() {		if (this.activities.Dialog) return;		this.activities.Dialog = true;		this.interfaces.forEach(item => item.onDialogStarted());	}	onDialogStopped() {		if (!this.activities.Dialog) return;		this.activities.Dialog = false;		this.interfaces.forEach(item => item.onDialogStopped());	}	onVolumeChanged() {		this.interfaces.forEach(item => item.onVolumeChanged());	}	process() {		let directives = this.directives;		if (directives.length > 0) {			let directive = directives.shift();			this.processDirective(directive);		}		else {			application.distribute("onAnswered");		}	}	processDirective(directive) {		log("PROCESS", directive);		let namespace = directive.header.namespace;		if (namespace in this)			this[namespace].process(directive);		else			this.System.doExceptionEncountered(directive, 1, "No device side component to handle the directive.");	}	reconnect() {		if (this.connecting) return;		trace("RECONNECT\n");		this.connecting = true;		application.distribute("onConnecting");		this.client = new AlexaClient(this);		this.downstream = this.client.get(AVS_DIRECTIVES_URL, {			authorization: `Bearer ${model.accessToken}`,		});	}	get volume() {		return this.Speaker.volume / 100;	}	// ping	ping() {		trace("PING\n");		this.reschedule();		this.client.get(AVS_PING_URL, {			authorization: `Bearer ${model.accessToken}`,		});	}	reschedule() {		this.expiration = Date.now() + (1000 * 300); // 5 minutes ping	}}class AVSInterface {	static get namespace() {		debugger	}	constructor(alexa) {		this.alexa = alexa;		this.notifiers = {};	}	// PREFERENCES	readPreferences(preferences) {	}	writePreferences(preferences) {	}	// AVS	connect() {	}	disconnect() {	}	onDialogStarted() {	}	onDialogStopped() {	}	onAlertStarted() {	}	onAlertStopped() {	}	onVolumeChanged() {	}	process(directive) {//		this.directive = directive;		let name = directive.header.name;		if (name in this)			this[name](directive);		else			this.alexa.process();	}	get volume() {		return this.alexa.volume;	}}class SystemInterface extends AVSInterface {	static get namespace() {		return "System";	}	constructor(alexa) {		super(alexa);		this.reschedule();		// error types		this.types = [ "UNEXPECTED_INFORMATION_RECEIVED", "UNSUPPORTED_OPERATION", "INTERNAL_ERROR" ];	}	// API	doExceptionEncountered(directive, type, message) {		let alexa = this.alexa;		alexa.doEvent({			header : {				namespace: this.constructor.namespace,				name: "ExceptionEncountered",				messageId: alexa.eventId			},			payload: {	            unparsedDirective: directive,	            error: {	                type: this.types[type],	                message: message	            }			}		});	}	doSynchronizeState() {		let alexa = this.alexa;		alexa.doEvent({			header : {				namespace: this.constructor.namespace,				name: "SynchronizeState",				messageId: alexa.eventId			},			payload: { }		});	}	doUserInactivityReport() {		let alexa = this.alexa;		alexa.doEvent({			header : {				namespace: this.constructor.namespace,				name: "UserInactivityReport",				messageId: alexa.eventId			},			payload: {				"inactiveTimeInSeconds": (Date.now() - this.inactivity) / 1000			}		}, false);		this.reschedule()	}	// helpers	idle(container, now) {		if (this.expiration < now)			this.doUserInactivityReport();	}	onDialogStarted() {		this.reset();	}	onDialogStopped() {		this.reset();	}	reschedule() {		this.expiration = Date.now() + (1000 * 3600); // 1 hour		this.reset();	}	reset() {		this.inactivity = Date.now();	}	ResetUserInactivity() {		this.reset();	}}const SILENCE_THRESHOLD = 0.05;const SPEECH_THRESHOLD = 0.2;class SpeechRecognizerInterface extends AVSInterface {	static get namespace() {		return "SpeechRecognizer";	}	constructor(alexa) {		super(alexa);		this.id = 0;		this.averageArray = new Int16Array(SAMPLE_RATE / 500);		this.averageIndex = -1;		this.average = 0;		this.loud = 0;		this.silence = VOLUME_RANGE * 4;		this.speaking = false;		this.stream = null;		this.microphone = new PINS.constructors.Audio({ direction:"input", sampleRate:SAMPLE_RATE, channels:1 });	}	ExpectSpeech(directive) {		application.distribute("onAsking", directive.header.dialogRequestId);	}	StopCapture(directive) {		application.distribute("onAsked");	}	// API	doRecognize(dialogRequestId) {		let alexa = this.alexa;		alexa.onDialogStarted();		alexa.dialogRequestId = dialogRequestId ? dialogRequestId : this.dialogRequestId;		this.stream = alexa.dialogStream = alexa.doEvent({			header : {				namespace: this.constructor.namespace,				name: "Recognize",				messageId: alexa.eventId,				dialogRequestId: alexa.dialogRequestId			},			payload: {				profile: "NEAR_FIELD",				format: "AUDIO_L16_RATE_16000_CHANNELS_1"			}		}, true, true);		this.alexa.client.upload(this.stream, FRAGMENTS.AUDIO);	}	// helpers	analyseVolume(volume, length) {		length = Math.round(length / 500);		if (this.averageIndex < 0) {			this.averageArray.fill(volume);			this.averageIndex = length;		}		else {			for (let i = length; i > 0; i--) {				if (this.averageIndex >= this.averageArray.length) this.averageIndex = 0;				this.averageArray[this.averageIndex++] = volume;			}		}		this.average = this.averageArray.reduce((average, x) => average + x, 0);		if (this.silence > this.average) {			this.silence = this.average;		}		if (this.loud < this.average) {			this.loud = this.average;		}		if ((this.average - this.silence) < (SILENCE_THRESHOLD * (this.loud - this.silence)))			this.silence = this.average;//		trace(Date.now() + "\t" + (this.stream ? "1" : "0") + "\t" + volume + "\t" + length + "\t" + this.silence + "\t" + this.loud + "\t" + this.average + "\t" + (this.isSilence() ? "1" : "0") + "\t" + (this.isSpeaking() ? "1" : "0") + "\n");	}	connect() {		this.microphone.init();		this.microphone.start();	}	get dialogRequestId() {		return "dialog-" + this.id++;	}	disconnect() {		this.microphone.stop();		this.microphone.close();	}	idle(container, now) {		let buffer = this.microphone.read();		if (buffer.byteLength) {			let canvas = container.behavior.data.CANVAS;			let samples = new Int16Array(buffer);			let sum = samples.reduce((sum, x) => sum + (x * x), 0);			let volume = Math.sqrt(sum / samples.length);			canvas.behavior.onVolumeChanged(canvas, volume);			if (this.alexa.canAnalyseVolume())				this.analyseVolume(volume, samples.length);			if (this.stream) {				this.alexa.client.upload(this.stream, buffer);				if (!this.speaking)					this.speaking = this.isSpeaking();//				else if (this.isSilence())//					application.distribute("onAsked");			}		}	}	isSilence() {		return (this.average - this.silence) < (SILENCE_THRESHOLD * (this.loud - this.silence));	}	isSpeaking() {		return (this.average - this.silence) > (SPEECH_THRESHOLD * (this.loud - this.silence));	}	onAsked(container) {		this.alexa.client.upload(this.stream, ArrayBuffer.fromString(FRAGMENTS.END_MULTIPART), true);		this.stream = null;		this.speaking = false;	}}const IDLE = "IDLE";const PLAYING = "PLAYING";const FAILED = "FAILED";const BUFFER_UNDERRUN = "BUFFER_UNDERRUN";const FINISHED = "FINISHED";const STOPPED = "STOPPED";class AVSPlayerInterface extends AVSInterface {	constructor(alexa, media) {		super(alexa);		this.queue = [];		this.stream = null;		this.media = media;		media.behavior.interface = this;		this.notifiers = {		};		this.messageId = null;	}	clear(all) {//		log("CLEAR " + this.constructor.namespace, all);		this.queue = [];		if (all)			this.stop();	}	enqueue(stream, files) {		this.queue.push(stream);		if (stream.url.startsWith("cid:"))			stream.file = this.alexa.files["<" + stream.url.substring(4) + ">"];//		log("ENQUEUE " + this.constructor.namespace, this.queue);	}	notify(it) {		if (!(it in this.notifiers)) return;		let name = this.notifiers[it];		let notification = {			header : {				namespace: this.constructor.namespace,				name: name,				messageId: this.messageId,			},			payload: {				token: this.token,			}		};		if (name in this)			this[name](notification);		if (notification)			this.alexa.doEvent(notification, false);	}	play() {		let media = this.media;		let done = true;		if (this.stream) {			media.start();		}		else if (this.queue.length) {			this.nearlyFinished = 0;			let stream = this.stream = this.queue.shift();//			log("PLAY STREAM " + this.constructor.namespace, stream);			this.messageId = stream.messageId;			this.token = stream.token;			if ("progressReport" in stream) {				if (("progressReportDelayInMilliseconds" in stream.progressReport) && (stream.progressReport.progressReportDelayInMilliseconds > 0))					this.progressReportDelayElapsed = Date.now() + stream.progressReport.progressReportDelayInMilliseconds;				else					this.progressReportDelayElapsed = 0;				if (("progressReportIntervalInMilliseconds" in stream.progressReport) && (stream.progressReport.progressReportIntervalInMilliseconds > 0))					this.progressReportIntervalElapsed = Date.now() + stream.progressReport.progressReportIntervalInMilliseconds;				else					this.progressReportIntervalElapsed = 0;			}			if ("file" in stream)				media.load(stream.file);			else {				media.url = null;				this.nearlyFinished = 15000;				let query = { url:stream.url };				(new Message("/getAudioMedia?" + serializeQuery(query))).invoke();			}		}		else {			done = false;		}		if (done)			this.state = PLAYING;		return done;	}	readPreferences(preferences) {		this.media.volume = this.volume;	}	stop() {//		log("STOP " + this.constructor.namespace, this.stream);		this.state = STOPPED;		if (this.stream) {			this.media.stop();			this.stream = null;		}	}	get offsetInMilliseconds() {		return this.context.payload.offsetInMilliseconds;	}	set offsetInMilliseconds(it) {		this.context.payload.offsetInMilliseconds = it;	}	get state() {		return this.context.payload.playerActivity;	}	set state(it) {		if (it == this.state) return;		this.context.payload.playerActivity = it;		this.notify(it, this.media);	}	get token() {		return this.context.payload.token;	}	set token(it) {		this.context.payload.token = it;	}	// events from media	onFinished() {//		log("FINISHED " + this.constructor.namespace, this.stream);		this.offsetInMilliseconds = this.media.time;		this.state = FINISHED;		this.stream = null;	}	onStateChanged(state) {	}	onTimeChanged() {	}}// playerActivity: PLAYING or FINISHEDclass SpeechSynthesizerInterface extends AVSPlayerInterface {	static get namespace() {		return "SpeechSynthesizer";	}	constructor(alexa, synthesizer) {		super(alexa, synthesizer);		this.context = {			header: {				namespace: "SpeechSynthesizer",				name: "SpeechState"			},			payload: {				token : "",				offsetInMilliseconds : 0,				playerActivity : FINISHED			}		};		this.notifiers = {			PLAYING: "SpeechStarted",			FINISHED: "SpeechFinished",		};	}	Speak(directive) {		let stream = directive.payload;		stream.messageId = directive.header.messageId		this.enqueue(stream);		this.play();	}	SpeechFinished(notification) {		notification.payload.offsetInMilliseconds = this.media.duration;	}	SpeechStarted(notification) {		notification.payload.offsetInMilliseconds = this.media.time;	}	isSpeaking() {		return this.media.running;	}	onFinished() {		super.onFinished();		application.distribute("onAnswered");		this.alexa.process();	}	onVolumeChanged() {		this.media.volume = this.volume;	}}// playerActivity: IDLE, PLAYING, BUFFER_UNDERRUN, FINISHED, and STOPPEDclass AudioPlayerInterface extends AVSPlayerInterface {	static get namespace() {		return "AudioPlayer";	}	constructor(alexa, media) {		super(alexa, media);		this.context = {			header: {				namespace: "AudioPlayer",				name: "PlaybackState"			},			payload: {				token : "",				offsetInMilliseconds : 0,				playerActivity : IDLE			}		};		this.notifiers = {			PLAYING: "PlaybackStarted",			FINISHED: "PlaybackFinished",			FAILED: "PlaybackFailed"		};	}	ClearQueue(directive) {		this.clear(directive.payload.clearBehavior == "CLEAR_ALL");		this.alexa.process();	}	Play(directive) {		let payload = directive.payload;		let stream = payload.audioItem.stream;		let media = this.media;		if (payload.playBehavior == "REPLACE_ALL")			this.clear(true);		else if (payload.playBehavior == "REPLACE_ENQUEUED")			this.clear(false);		else if (payload.playBehavior != "ENQUEUE") {			debugger		}		stream.messageId = directive.header.messageId		this.enqueue(stream);		this.play();		this.alexa.process();	}	PlaybackFailed(notification) {		notification.error = {			type: "MEDIA_ERROR_UNKNOWN",		}	}	PlaybackFinished(notification) {		notification.payload.offsetInMilliseconds = this.media.duration;	}	PlaybackStarted(notification) {		notification.payload.offsetInMilliseconds = this.media.time;	}	Stop(directive) {		this.stop();		this.alexa.process();	}	onAudioMedia(url, type) {		this.media.load(url, type);	}	onFinished() {		super.onFinished();		this.play();	}	onDialogStarted() {		this.media.volume = 0;	}	onDialogStopped() {		if (this.alexa.activities.Alert)			this.media.volume = 0.2 * this.volume;		else			this.media.volume = this.volume;	}	onAlertStarted() {		if (this.alexa.activities.Dialog)			this.media.volume = 0;		else			this.media.volume = 0.2 * this.volume;	}	onAlertStopped() {		if (this.alexa.activities.Dialog)			this.media.volume = 0;		else			this.media.volume = this.volume;	}	onStateChanged(state) {	}	onTimeChanged() {		let date = Date.now();		if (this.progressReportDelayElapsed && (this.progressReportDelayElapsed < date)) {			this.alexa.doEvent({				header : {					namespace: this.constructor.namespace,					name: "ProgressReportDelayElapsed",					messageId: this.messageId,				},				payload: {					token: this.token,					offsetInMilliseconds: this.media.time				}			}, false);			this.progressReportDelayElapsed = 0;		}		if (this.progressReportIntervalElapsed && (this.progressReportIntervalElapsed < date)) {			this.alexa.doEvent({				header : {					namespace: this.constructor.namespace,					name: "ProgressReportIntervalElapsed",					messageId: this.messageId,				},				payload: {					token: this.token,					offsetInMilliseconds: this.media.time				}			}, false);			this.progressReportIntervalElapsed = date + this.stream.progressReport.progressReportIntervalInMilliseconds;		}		if (this.nearlyFinished && this.media.duration && (this.nearlyFinished > (this.media.duration - this.media.time))) {			this.alexa.doEvent({				header : {					namespace: this.constructor.namespace,					name: "PlaybackNearlyFinished",					messageId: this.messageId,				},				payload: {					token: this.token,					offsetInMilliseconds: this.media.time				}			}, false);			this.nearlyFinished = 0;		}	}	onVolumeChanged() {		this.media.volume = this.volume;	}	get volume() {		if (this.alexa.mute)			return 0;		else			return this.alexa.volume;	}}const AlertEnteredBackground = "AlertEnteredBackground";const AlertEnteredForeground = "AlertEnteredForeground";const AlertStarted = "AlertStarted";const AlertStopped = "AlertStopped";const DeleteAlertFailed = "DeleteAlertFailed";const DeleteAlertSucceeded = "DeleteAlertSucceeded";const SetAlertFailed = "SetAlertFailed";const SetAlertSucceeded = "SetAlertSucceeded";class AlertsInterface extends AVSInterface {	static get namespace() {		return "Alerts";	}	constructor(alexa, media) {		super(alexa);		this.media = media;		media.behavior.interface = this;		this.alerts = {};		this.ringing = [];		this.alarmURI = mergeURI(application.url, "./assets/alarm.wav");		this.timerURI = mergeURI(application.url, "./assets/timer.wav");	}	// PREFERENCES	readPreferences(preferences) {		if ("alerts" in preferences)			this.alerts = preferences.alerts;		// cleanup alerts older than 30 minutes		let timeout = Date.now() - 1800000;		for (let token in this.alerts) {			let alert = this.alerts[token];			if (alert.date < timeout)				delete this.alerts[token];		}		this.media.volume = this.volume;	}	writePreferences(preferences) {		preferences.alerts = this.alerts;	}	// AVS	cancel(directive) {		let index = this.ringing.findIndex(item => item.payload.token == directive.payload.token);		if (index < 0) return;		this.media.stop();		this.ringing.splice(index, 1);		this.notify(AlertStopped, directive);		if (this.ringing.length == 0)			this.alexa.onAlertStopped();		else			this.trigger(this.ringing.shift());	}	get context() {		let allAlerts = [];		for (let token in this.alerts) {			allAlerts.push(this.alerts[token].payload);		}		let activeAlerts = this.ringing.map(item => item.payload);		let result = {			header: {				namespace: "Alerts",				name: "AlertsState"			},			payload: {				allAlerts: allAlerts,				activeAlerts: activeAlerts,			}		};		return result;	}	idle(container, now) {		for (let token in this.alerts) {			let directive = this.alerts[token];			if ((directive.date < now) && (this.ringing.findIndex(item => item.payload.token == directive.payload.token) < 0))				this.trigger(directive);		}	}	isRinging() {		return this.media.running && (this.media.volume > 0);	}	notify(name, directive) {		let notification = {			header : {				namespace: this.constructor.namespace,				name,				messageId: directive.header.messageId,			},			payload: {				token: directive.payload.token,			}		};		if (name in this)			this[name](notification);		if (notification)			this.alexa.doEvent(notification, false);	}	onDialogStarted() {		this.ringing.forEach(item => this.notify(AlertEnteredBackground, item));		this.media.volume = 0;	}	onDialogStopped() {		this.ringing.forEach(item => this.notify(AlertEnteredForeground, item));		this.media.volume = this.volume;	}	onVolumeChanged() {		this.media.volume = this.volume;	}	trigger(directive) {//		log("TRIGGER", directive);		if (this.ringing.length == 0) {			this.alexa.onAlertStarted();			this.media.url = directive.payload.type == "TIMER" ? this.timerURI : this.alarmURI;			this.media.start();		}		this.ringing.push(directive);		this.notify(AlertStarted, directive);	}	SetAlert(directive) {		directive.date = Date.parse(directive.payload.scheduledTime);		this.alerts[directive.payload.token] = directive;		this.alexa.writePreferences();		this.notify(SetAlertSucceeded, directive);	}	DeleteAlert(directive) {		if (directive.payload.token in this.alerts) {			this.cancel(directive);			delete this.alerts[directive.payload.token];			this.alexa.writePreferences();			this.notify(DeleteAlertSucceeded, directive);		}		else			this.notify(DeleteAlertFailed, directive);	}}class SpeakerInterface extends AVSInterface {	static get namespace() {		return "Speaker";	}	constructor(alexa) {		super(alexa);		this.context = {			header: {				namespace: "Speaker",				name: "VolumeState"			},			payload: {				volume: 50,				muted: false			}		};		this.messageId = null;	}	get mute() {		return this.context.payload.muted;	}	set mute(it) {		if (it == this.mute) return;		this.context.payload.muted = it;		this.notify("MuteChanged");	}	get volume() {		return this.context.payload.volume;	}	set volume(it) {		if (it == this.volume) return;		this.context.payload.volume = it;		this.notify("VolumeChanged");	}	// PREFERENCES	readPreferences(preferences) {		if ("volume" in preferences)			this.volume = preferences.volume;		if ("mute" in preferences)			this.mute = preferences.mute;	}	writePreferences(preferences) {		preferences.volume = this.volume;		preferences.mute = this.mute;	}	// AVS	notify(name) {		if (this.messageId) {			this.alexa.doEvent({				header : {					namespace: this.constructor.namespace,					name: name,					messageId: this.messageId,				},				payload: {					volume: this.volume,					muted: this.mute				}			}, false);			this.alexa.onVolumeChanged();		}	}	process(directive) {		this.messageId = directive.header.messageId;		super.process(directive);	}	AdjustVolume(directive) {		let volume = this.volume + directive.payload.volume;		if (volume < 0) volume = 0;		else if (volume > 100) volume = 100;		this.volume = volume		this.alexa.process();	}	SetMute(directive) {		this.mute = directive.payload.mute;		this.alexa.process();	}	SetVolume(directive) {		this.volume = directive.payload.volume;		this.alexa.process();	}}Handler.Bind("/getAudioMedia", class extends Behavior {	onComplete(handler, message) {		let redirect;		let value;		let type = message.getResponseHeader("Content-Type");		if (type && type.startsWith("audio/x-mpegurl")) {			let text = message.responseText;			let split = text.split("\n");			let m3u = split.find(item => item.endsWith(".m3u"));			let pls = split.find(item => item.endsWith(".pls"));			if (m3u)				redirect = m3u;			else if (pls)				redirect = pls;			else if (text) {				let lines = text.split("\n");				let c = lines.length;				if (lines[0] == "[playlist]") {					for (var i = 1; i < c; i++) {						var pair = lines[i].split("=");						if (pair.length == 2) {							var name = pair[0].toLowerCase();							if (name.indexOf("file") == 0) {								value = pair[1];								break;							}						}					}				}				else if (lines[0].startsWith("http")) {					type = "audio/mpeg";					value = lines[0];				}			}		}		else {			if (type == "audio/x-m4a")				type = "audio/mp4";			value = message.url;		}		if (redirect) {			let info = new Message(redirect);			info.method = "GET";			info.setRequestHeader("Range", "bytes=0-1000");			handler.invoke(info, Message.TEXT);		}		else if (value) {			let uri = value;			let parts = parseURI(uri);			let query = parseQuery(parts.query);			if ("response-content-disposition" in query && -1 != query["response-content-disposition"].indexOf(".m4a"))				type = "audio/mp4";			application.distribute("onAudioMedia", value, type);		}	}	onInvoke(handler, message) {		var query = parseQuery(message.query);		let info = new Message(query.url);		info.method = "GET";		info.setRequestHeader("Range", "bytes=0-1000");		handler.invoke(info, Message.TEXT);	}});
