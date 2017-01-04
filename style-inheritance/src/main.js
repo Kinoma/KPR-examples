@@ -113,5 +113,6 @@ let MainScreen = Container.template($ => ({
 /* APPLICATION */
 
 application.style = baseStyle;
-let sample = "The quick brown fox jumps over the lazy dog. ";let shortSample = "Hello world.";
+let sample = "The quick brown fox jumps over the lazy dog. ";
+let shortSample = "Hello world.";
 application.add( new MainScreen );

@@ -1,2 +1,13 @@
-{    "title":"Tabbed UI",    "id":"tabs.example.kinoma.marvell.com",    "tags":[        "uiSample,mobileSample"    ],    "Create":{        "main":"src/main"    },
-    "iap140":{        "main":"src/main"    },}
+{
+    "title":"Tabbed UI",
+    "id":"tabs.example.kinoma.marvell.com",
+    "tags":[
+        "uiSample,mobileSample"
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+    "iap140":{
+        "main":"src/main"
+    },
+}

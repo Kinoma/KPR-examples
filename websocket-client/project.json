@@ -1,7 +1,13 @@
-{    "title":"WebSocket Client",    "id":"websocketclient.example.kinoma.marvell.com",
+{
+    "title":"WebSocket Client",
+    "id":"websocketclient.example.kinoma.marvell.com",
     "tags": [
     	"networkSample,mobileSample,uiSample"
-    ],    "Create": {        "main":"src/main"    },
+    ],
+    "Create": {
+        "main":"src/main"
+    },
     "iap140": {
     	"main":"src/main"
-    },}
+    },
+}

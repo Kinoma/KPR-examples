@@ -14,12 +14,18 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
- import {    VerticalScroller,    VerticalScrollbar,    TopScrollerShadow,    BottomScrollerShadow} from 'scroller';
+ import {
+    VerticalScroller,
+    VerticalScrollbar,
+    TopScrollerShadow,
+    BottomScrollerShadow
+} from 'scroller';
 
 /* ASSETS */
 let lineSkin = new Skin({ 
 	fill: [ 'white', 'yellow' ],
-    borders: { left: 0, right: 0, top: 0, bottom: 1 },     stroke: 'silver'	
+    borders: { left: 0, right: 0, top: 0, bottom: 1 }, 
+    stroke: 'silver'	
 });
 var blueSkin = new Skin({fill: 'blue' });
 
@@ -52,12 +58,19 @@ class ProcessorLineBehavior extends Behavior {
 	/* data is an object from the menuItems array */
 	onCreate(line, data) {
 		this.data = data;
-	}	 	onTouchBegan(line, id, x,  y, ticks) {
-		line.state = 1;	}	onTouchCancelled(line, id, x,  y, ticks) {		line.state = 0;	}
-	/* Traces out the value of the first Label's string, which we 
-	 * get by referencing this.data.title */	onTouchEnded(line, id, x,  y, ticks) {	
+	}	 
+	onTouchBegan(line, id, x,  y, ticks) {
+		line.state = 1;
+	}
+	onTouchCancelled(line, id, x,  y, ticks) {
 		line.state = 0;
-		trace(this.data.title+"\n");	}
+	}
+	/* Traces out the value of the first Label's string, which we 
+	 * get by referencing this.data.title */
+	onTouchEnded(line, id, x,  y, ticks) {	
+		line.state = 0;
+		trace(this.data.title+"\n");
+	}
 }
 
 /* The 'button' property of each item in the menuItems array

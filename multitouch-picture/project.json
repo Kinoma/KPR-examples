@@ -1,4 +1,10 @@
-{    "title":"Multitouch Picture",    "id":"multitouchpicture.example.kinoma.marvell.com",
+{
+    "title":"Multitouch Picture",
+    "id":"multitouchpicture.example.kinoma.marvell.com",
     "tags": [
     	"uiSample,mobileSample"
-    ],    "Create":{        "main":"src/main"    },}
+    ],
+    "Create":{
+        "main":"src/main"
+    },
+}
